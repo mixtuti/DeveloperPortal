@@ -77,27 +77,202 @@ const DocsReference = {
     },
 
     /**
- * スクリプト詳細画面を生成する。
+ * スクリプトの詳細ページを生成する。
  * @param {Object} script スクリプト情報
- * @returns {string} 詳細画面のHTML
+ * @returns {string} 生成したHTML
  */
     render(script) {
 
         const groups = this.getGroups(script);
 
+        const isTest =
+            DocsTestAnalyzer.isTestScript(script);
+
         return `
+
         ${this.renderHeader(script)}
+
         ${this.renderOverview(script)}
+
+        ${isTest
+                ? this.renderTestAnalysis(script)
+                : ""
+            }
+
         ${this.renderDependencies(script)}
-        ${this.renderMemberSummary(groups)}
+
+        ${groups.length
+                ? this.renderMemberSummary(groups)
+                : ""
+            }
+
         ${groups.map(group =>
-            this.renderMemberGroup(group)
-        ).join("")}
+                this.renderMemberGroup(group)
+            ).join("")}
+
         ${this.renderSupplements(script)}
+
         ${this.renderSource(script)}
+
         ${this.renderMetadata(script)}
     `;
     },
+
+    /**
+     * テストスクリプトの解析結果を表示する。
+     * @param {Object} script テストスクリプト情報
+     * @returns {string} 生成したHTML
+     */
+    renderTestAnalysis(script) {
+
+        const analysis = DocsTestAnalyzer.analyze(script);
+
+        return `
+
+        <h2 id="ref-test-analysis">テスト情報</h2>
+
+        <div class="card-grid">
+
+            <div class="card">
+                <div class="card-title">検証項目</div>
+                <div class="card-value">
+                    ${analysis.items.length}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">動作確認</div>
+                <div class="card-value">
+                    ${analysis.observations.length}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">テスト対象候補</div>
+                <div class="card-value">
+                    ${analysis.targets.length}
+                </div>
+            </div>
+
+        </div>
+
+        <h3>テスト対象候補</h3>
+
+        ${analysis.targets.length
+                ? `
+                <div class="dependency-list">
+
+                    ${analysis.targets.map(target => `
+
+                        <a class="dependency-item"
+                            href="#script/${encodeURIComponent(target.id)}">
+
+                            <div class="dependency-icon">
+                                ♯
+                            </div>
+
+                            <div class="dependency-content">
+
+                                <strong>
+                                    ${this.escape(target.name)}
+                                </strong>
+
+                                <div class="muted">
+                                    ${this.escape(target.namespace)}
+                                </div>
+
+                            </div>
+
+                            <span class="dependency-arrow">
+                                ›
+                            </span>
+
+                        </a>
+
+                    `).join("")}
+
+                </div>
+            `
+                : `<p class="muted">対象候補が見つかりません。</p>`
+            }
+
+        <h3>テスト項目</h3>
+
+        ${this.renderTestItems(analysis.items)}
+
+        <h3>その他の動作確認</h3>
+
+        ${this.renderTestItems(analysis.observations)}
+
+        <p class="muted">
+            ソースコードから自動抽出された項目です。
+            テストの実行結果は含まれません。
+        </p>
+    `;
+    },
+
+    /**
+ * テスト項目の一覧を生成する。
+ * @param {Array<Object>} items テスト項目一覧
+ * @returns {string} 生成したHTML
+ */
+renderTestItems(items) {
+
+    if (!items.length) {
+
+        return `
+            <p class="muted">
+                自動抽出された項目はありません。
+            </p>
+        `;
+    }
+
+    return `
+
+        <div class="reference-table-wrap">
+
+            <table class="reference-table">
+
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>確認項目</th>
+                        <th>検出元</th>
+                        <th>行番号</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    ${items.map((item, index) => `
+
+                        <tr>
+
+                            <td>${index + 1}</td>
+
+                            <td>
+                                ${this.escape(item.title)}
+                            </td>
+
+                            <td>
+                                <code>
+                                    ${this.escape(item.method)}
+                                </code>
+                            </td>
+
+                            <td>${item.line}</td>
+
+                        </tr>
+
+                    `).join("")}
+
+                </tbody>
+
+            </table>
+
+        </div>
+    `;
+},
 
     /**
  * クラス名・型・修飾子を表示する。
