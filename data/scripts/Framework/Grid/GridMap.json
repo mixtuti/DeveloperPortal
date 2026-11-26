@@ -1,0 +1,703 @@
+{
+    "parserVersion": 2,
+    "id": "Framework.Grid.GridMap",
+    "name": "GridMap",
+    "fileName": "GridMap.cs",
+    "namespace": "Framework.Grid",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public class GridMap<T>",
+    "typeParameters": [
+        {
+            "name": "T",
+            "description": "各マスに格納するデータ型"
+        }
+    ],
+    "summary": "任意のデータ型を格納できる二次元グリッド管理クラス。 地形、アイテム、配置情報などの管理に使用する。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "UnityEngine"
+    ],
+    "members": [
+        {
+            "name": "Width",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int Width",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "グリッドの横方向のマス数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Height",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int Height",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "グリッドの縦方向のマス数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Count",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int Count => cells.Length",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "グリッド全体のマス数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Size",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int Size => new Vector2Int(Width, Height)",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "グリッドの縦横サイズ。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Bounds",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public RectInt Bounds => new RectInt(0, 0, Width, Height)",
+            "returnType": "",
+            "valueType": "RectInt",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "グリッドが占める座標範囲。 最大座標は範囲に含まれない。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CellChanged",
+            "kind": "event",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public event Action<Vector2Int, T, T> CellChanged",
+            "returnType": "",
+            "valueType": "Action<Vector2Int, T, T>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "マスのデータが変更された際に発生するイベント。 引数：変更座標、変更前のデータ、変更後のデータ。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GridMap",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridMap(\r\n            int width,\r\n            int height,\r\n            Func<Vector2Int, T> initializer = null)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "width",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "横方向のマス数"
+                },
+                {
+                    "name": "height",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "縦方向のマス数"
+                },
+                {
+                    "name": "initializer",
+                    "type": "Func<Vector2Int, T>",
+                    "modifier": "",
+                    "defaultValue": "null",
+                    "description": "各マスの初期データを生成する処理。 未指定の場合はデータ型の既定値を使用する。"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたサイズでグリッドを生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GridMap",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridMap(\r\n            Vector2Int size,\r\n            Func<Vector2Int, T> initializer = null)\r\n            : this(size.x, size.y, initializer)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "size",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "グリッドの縦横サイズ"
+                },
+                {
+                    "name": "initializer",
+                    "type": "Func<Vector2Int, T>",
+                    "modifier": "",
+                    "defaultValue": "null",
+                    "description": "各マスの初期化処理"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "Vector2Intで指定されたサイズからグリッドを生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsInside",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsInside(int x, int y)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "x",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "判定対象のX座標"
+                },
+                {
+                    "name": "y",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "判定対象のY座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された座標がグリッドの範囲内か判定する。",
+            "returns": "範囲内の場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsInside",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsInside(Vector2Int position)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "判定対象の座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された座標がグリッドの範囲内か判定する。",
+            "returns": "範囲内の場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetCell",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public T GetCell(Vector2Int position)",
+            "returnType": "T",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象の座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された座標のマスデータを取得する。 範囲外の場合は例外を発生させる。",
+            "returns": "指定座標のマスデータ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetCell",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public T GetCell(int x, int y)",
+            "returnType": "T",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "x",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象のX座標"
+                },
+                {
+                    "name": "y",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象のY座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "X座標とY座標を指定してマスデータを取得する。",
+            "returns": "指定座標のマスデータ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetCell",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryGetCell(\r\n            Vector2Int position,\r\n            out T value)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象の座標"
+                },
+                {
+                    "name": "value",
+                    "type": "T",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "取得したマスデータ"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された座標のマスデータを安全に取得する。 範囲外の場合でも例外を発生させない。",
+            "returns": "取得に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetCell",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryGetCell(int x, int y, out T value)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "x",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象のX座標"
+                },
+                {
+                    "name": "y",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象のY座標"
+                },
+                {
+                    "name": "value",
+                    "type": "T",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "取得したマスデータ"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "X座標とY座標を指定して安全にデータを取得する。",
+            "returns": "取得に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SetCell",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void SetCell(Vector2Int position, T value)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "変更対象の座標"
+                },
+                {
+                    "name": "value",
+                    "type": "T",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "変更後のデータ"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された座標のマスデータを変更する。 データが変更された場合はCellChangedを通知する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SetCell",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void SetCell(int x, int y, T value)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "x",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "変更対象のX座標"
+                },
+                {
+                    "name": "y",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "変更対象のY座標"
+                },
+                {
+                    "name": "value",
+                    "type": "T",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "変更後のデータ"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "X座標とY座標を指定してマスデータを変更する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TrySetCell",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TrySetCell(Vector2Int position, T value)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "変更対象の座標"
+                },
+                {
+                    "name": "value",
+                    "type": "T",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "変更後のデータ"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された座標のマスデータを安全に変更する。",
+            "returns": "座標が有効で処理できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "UpdateCell",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void UpdateCell(\r\n            Vector2Int position,\r\n            Func<T, T> updater)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "更新対象の座標"
+                },
+                {
+                    "name": "updater",
+                    "type": "Func<T, T>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "現在のデータから更新後のデータを生成する処理"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在のマスデータを利用して新しいデータに更新する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetPositions",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public IEnumerable<Vector2Int> GetPositions()",
+            "returnType": "IEnumerable<Vector2Int>",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "グリッド内のすべての座標を列挙する。",
+            "returns": "グリッド内の全座標",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetNeighbors",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public IEnumerable<Vector2Int> GetNeighbors(\r\n            Vector2Int position,\r\n            bool includeDiagonal = false)",
+            "returnType": "IEnumerable<Vector2Int>",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "基準となる座標"
+                },
+                {
+                    "name": "includeDiagonal",
+                    "type": "bool",
+                    "modifier": "",
+                    "defaultValue": "false",
+                    "description": "斜め方向のマスを含める場合はtrue"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された座標に隣接するマスの座標を列挙する。 グリッドの範囲外にある座標は除外する。",
+            "returns": "隣接するマスの座標",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "FindPositions",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public IEnumerable<Vector2Int> FindPositions(\r\n            Func<T, bool> predicate)",
+            "returnType": "IEnumerable<Vector2Int>",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "predicate",
+                    "type": "Func<T, bool>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "検索条件"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された条件に一致するマスの座標を列挙する。",
+            "returns": "条件に一致するマスの座標",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CountCells",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int CountCells(Func<T, bool> predicate)",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "predicate",
+                    "type": "Func<T, bool>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "集計条件"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された条件に一致するマスの数を取得する。",
+            "returns": "条件に一致するマスの数",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Fill",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Fill(T value)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "T",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "各マスに設定するデータ"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "全マスを指定されたデータで埋める。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Fill",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Fill(Func<Vector2Int, T> initializer)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "initializer",
+                    "type": "Func<Vector2Int, T>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "各マスの初期化処理"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "全マスを指定された初期化処理で埋める。 座標ごとに異なるデータを設定できる。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Clear",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Clear()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "全マスをデータ型の既定値に戻す。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing UnityEngine;\r\n\r\nnamespace Framework.Grid\r\n{\r\n    /// <summary>\r\n    /// 任意のデータ型を格納できる二次元グリッド管理クラス。\r\n    /// 地形、アイテム、配置情報などの管理に使用する。\r\n    /// </summary>\r\n    /// <typeparam name=\"T\">各マスに格納するデータ型</typeparam>\r\n    public class GridMap<T>\r\n    {\r\n        #region Fields\r\n\r\n        /// <summary>\r\n        /// 各マスのデータを保持する二次元配列。\r\n        /// </summary>\r\n        private readonly T[,] cells;\r\n\r\n        /// <summary>\r\n        /// 上下左右の4方向を表す座標オフセット。\r\n        /// </summary>\r\n        private static readonly Vector2Int[] directions4 =\r\n        {\r\n            Vector2Int.up,\r\n            Vector2Int.down,\r\n            Vector2Int.left,\r\n            Vector2Int.right\r\n        };\r\n\r\n        /// <summary>\r\n        /// 上下左右と斜め方向を含む8方向の座標オフセット。\r\n        /// </summary>\r\n        private static readonly Vector2Int[] directions8 =\r\n        {\r\n            Vector2Int.up,\r\n            Vector2Int.down,\r\n            Vector2Int.left,\r\n            Vector2Int.right,\r\n\r\n            new Vector2Int( 1,  1),\r\n            new Vector2Int(-1,  1),\r\n            new Vector2Int( 1, -1),\r\n            new Vector2Int(-1, -1)\r\n        };\r\n\r\n        #endregion\r\n\r\n        #region Properties\r\n\r\n        /// <summary>グリッドの横方向のマス数。</summary>\r\n        public int Width { get; }\r\n\r\n        /// <summary>グリッドの縦方向のマス数。</summary>\r\n        public int Height { get; }\r\n\r\n        /// <summary>グリッド全体のマス数。</summary>\r\n        public int Count => cells.Length;\r\n\r\n        /// <summary>グリッドの縦横サイズ。</summary>\r\n        public Vector2Int Size => new Vector2Int(Width, Height);\r\n\r\n        /// <summary>\r\n        /// グリッドが占める座標範囲。\r\n        /// 最大座標は範囲に含まれない。\r\n        /// </summary>\r\n        public RectInt Bounds => new RectInt(0, 0, Width, Height);\r\n\r\n        #endregion\r\n\r\n        #region Events\r\n\r\n        /// <summary>\r\n        /// マスのデータが変更された際に発生するイベント。\r\n        /// 引数：変更座標、変更前のデータ、変更後のデータ。\r\n        /// </summary>\r\n        public event Action<Vector2Int, T, T> CellChanged;\r\n\r\n        #endregion\r\n\r\n        #region Constructors\r\n\r\n        /// <summary>\r\n        /// 指定されたサイズでグリッドを生成する。\r\n        /// </summary>\r\n        /// <param name=\"width\">横方向のマス数</param>\r\n        /// <param name=\"height\">縦方向のマス数</param>\r\n        /// <param name=\"initializer\">\r\n        /// 各マスの初期データを生成する処理。\r\n        /// 未指定の場合はデータ型の既定値を使用する。\r\n        /// </param>\r\n        public GridMap(\r\n            int width,\r\n            int height,\r\n            Func<Vector2Int, T> initializer = null)\r\n        {\r\n            // 不正なサイズでの生成を防止する。\r\n            if (width <= 0)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(width),\r\n                    \"横幅は1以上である必要があります。\");\r\n            }\r\n\r\n            if (height <= 0)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(height),\r\n                    \"縦幅は1以上である必要があります。\");\r\n            }\r\n\r\n            Width = width;\r\n            Height = height;\r\n\r\n            // マスの格納領域を確保する。\r\n            cells = new T[width, height];\r\n\r\n            // 初期化処理が指定されている場合のみ実行する。\r\n            if (initializer != null)\r\n            {\r\n                foreach (Vector2Int position in GetPositions())\r\n                {\r\n                    cells[position.x, position.y] =\r\n                        initializer(position);\r\n                }\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// Vector2Intで指定されたサイズからグリッドを生成する。\r\n        /// </summary>\r\n        /// <param name=\"size\">グリッドの縦横サイズ</param>\r\n        /// <param name=\"initializer\">各マスの初期化処理</param>\r\n        public GridMap(\r\n            Vector2Int size,\r\n            Func<Vector2Int, T> initializer = null)\r\n            : this(size.x, size.y, initializer)\r\n        {\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Indexers\r\n\r\n        /// <summary>\r\n        /// X座標とY座標を指定してマスのデータを取得・変更する。\r\n        /// </summary>\r\n        public T this[int x, int y]\r\n        {\r\n            get => GetCell(x, y);\r\n            set => SetCell(x, y, value);\r\n        }\r\n\r\n        /// <summary>\r\n        /// Vector2Intを指定してマスのデータを取得・変更する。\r\n        /// </summary>\r\n        public T this[Vector2Int position]\r\n        {\r\n            get => GetCell(position);\r\n            set => SetCell(position, value);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Validation\r\n\r\n        /// <summary>\r\n        /// 指定された座標がグリッドの範囲内か判定する。\r\n        /// </summary>\r\n        /// <param name=\"x\">判定対象のX座標</param>\r\n        /// <param name=\"y\">判定対象のY座標</param>\r\n        /// <returns>範囲内の場合はtrue</returns>\r\n        public bool IsInside(int x, int y)\r\n        {\r\n            return x >= 0 && x < Width &&\r\n                   y >= 0 && y < Height;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された座標がグリッドの範囲内か判定する。\r\n        /// </summary>\r\n        /// <param name=\"position\">判定対象の座標</param>\r\n        /// <returns>範囲内の場合はtrue</returns>\r\n        public bool IsInside(Vector2Int position)\r\n        {\r\n            return IsInside(position.x, position.y);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Get Methods\r\n\r\n        /// <summary>\r\n        /// 指定された座標のマスデータを取得する。\r\n        /// 範囲外の場合は例外を発生させる。\r\n        /// </summary>\r\n        /// <param name=\"position\">取得対象の座標</param>\r\n        /// <returns>指定座標のマスデータ</returns>\r\n        public T GetCell(Vector2Int position)\r\n        {\r\n            ValidatePosition(position);\r\n\r\n            return cells[position.x, position.y];\r\n        }\r\n\r\n        /// <summary>\r\n        /// X座標とY座標を指定してマスデータを取得する。\r\n        /// </summary>\r\n        /// <param name=\"x\">取得対象のX座標</param>\r\n        /// <param name=\"y\">取得対象のY座標</param>\r\n        /// <returns>指定座標のマスデータ</returns>\r\n        public T GetCell(int x, int y)\r\n        {\r\n            return GetCell(new Vector2Int(x, y));\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された座標のマスデータを安全に取得する。\r\n        /// 範囲外の場合でも例外を発生させない。\r\n        /// </summary>\r\n        /// <param name=\"position\">取得対象の座標</param>\r\n        /// <param name=\"value\">取得したマスデータ</param>\r\n        /// <returns>取得に成功した場合はtrue</returns>\r\n        public bool TryGetCell(\r\n            Vector2Int position,\r\n            out T value)\r\n        {\r\n            if (!IsInside(position))\r\n            {\r\n                value = default(T);\r\n                return false;\r\n            }\r\n\r\n            value = cells[position.x, position.y];\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// X座標とY座標を指定して安全にデータを取得する。\r\n        /// </summary>\r\n        /// <param name=\"x\">取得対象のX座標</param>\r\n        /// <param name=\"y\">取得対象のY座標</param>\r\n        /// <param name=\"value\">取得したマスデータ</param>\r\n        /// <returns>取得に成功した場合はtrue</returns>\r\n        public bool TryGetCell(int x, int y, out T value)\r\n        {\r\n            return TryGetCell(new Vector2Int(x, y), out value);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Set Methods\r\n\r\n        /// <summary>\r\n        /// 指定された座標のマスデータを変更する。\r\n        /// データが変更された場合はCellChangedを通知する。\r\n        /// </summary>\r\n        /// <param name=\"position\">変更対象の座標</param>\r\n        /// <param name=\"value\">変更後のデータ</param>\r\n        public void SetCell(Vector2Int position, T value)\r\n        {\r\n            ValidatePosition(position);\r\n\r\n            // 変更前のデータを保持する。\r\n            T previousValue = cells[position.x, position.y];\r\n\r\n            // データが同一の場合は更新処理を行わない。\r\n            if (EqualityComparer<T>.Default.Equals(\r\n                previousValue, value))\r\n            {\r\n                return;\r\n            }\r\n\r\n            // 新しいデータを格納する。\r\n            cells[position.x, position.y] = value;\r\n\r\n            // 外部システムへ変更内容を通知する。\r\n            CellChanged?.Invoke(position, previousValue, value);\r\n        }\r\n\r\n        /// <summary>\r\n        /// X座標とY座標を指定してマスデータを変更する。\r\n        /// </summary>\r\n        /// <param name=\"x\">変更対象のX座標</param>\r\n        /// <param name=\"y\">変更対象のY座標</param>\r\n        /// <param name=\"value\">変更後のデータ</param>\r\n        public void SetCell(int x, int y, T value)\r\n        {\r\n            SetCell(new Vector2Int(x, y), value);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された座標のマスデータを安全に変更する。\r\n        /// </summary>\r\n        /// <param name=\"position\">変更対象の座標</param>\r\n        /// <param name=\"value\">変更後のデータ</param>\r\n        /// <returns>座標が有効で処理できた場合はtrue</returns>\r\n        public bool TrySetCell(Vector2Int position, T value)\r\n        {\r\n            if (!IsInside(position))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            SetCell(position, value);\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在のマスデータを利用して新しいデータに更新する。\r\n        /// </summary>\r\n        /// <param name=\"position\">更新対象の座標</param>\r\n        /// <param name=\"updater\">\r\n        /// 現在のデータから更新後のデータを生成する処理\r\n        /// </param>\r\n        public void UpdateCell(\r\n            Vector2Int position,\r\n            Func<T, T> updater)\r\n        {\r\n            if (updater == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(updater));\r\n            }\r\n\r\n            // 現在のデータを取得する。\r\n            T currentValue = GetCell(position);\r\n\r\n            // 更新処理から新しいデータを生成する。\r\n            T newValue = updater(currentValue);\r\n\r\n            SetCell(position, newValue);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Enumeration\r\n\r\n        /// <summary>\r\n        /// グリッド内のすべての座標を列挙する。\r\n        /// </summary>\r\n        /// <returns>グリッド内の全座標</returns>\r\n        public IEnumerable<Vector2Int> GetPositions()\r\n        {\r\n            for (int y = 0; y < Height; y++)\r\n            {\r\n                for (int x = 0; x < Width; x++)\r\n                {\r\n                    yield return new Vector2Int(x, y);\r\n                }\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された座標に隣接するマスの座標を列挙する。\r\n        /// グリッドの範囲外にある座標は除外する。\r\n        /// </summary>\r\n        /// <param name=\"position\">基準となる座標</param>\r\n        /// <param name=\"includeDiagonal\">\r\n        /// 斜め方向のマスを含める場合はtrue\r\n        /// </param>\r\n        /// <returns>隣接するマスの座標</returns>\r\n        public IEnumerable<Vector2Int> GetNeighbors(\r\n            Vector2Int position,\r\n            bool includeDiagonal = false)\r\n        {\r\n            ValidatePosition(position);\r\n\r\n            // 取得対象となる方向を選択する。\r\n            Vector2Int[] directions =\r\n                includeDiagonal ? directions8 : directions4;\r\n\r\n            foreach (Vector2Int direction in directions)\r\n            {\r\n                // 基準座標から隣接座標を算出する。\r\n                Vector2Int neighbor = position + direction;\r\n\r\n                if (IsInside(neighbor))\r\n                {\r\n                    yield return neighbor;\r\n                }\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された条件に一致するマスの座標を列挙する。\r\n        /// </summary>\r\n        /// <param name=\"predicate\">検索条件</param>\r\n        /// <returns>条件に一致するマスの座標</returns>\r\n        public IEnumerable<Vector2Int> FindPositions(\r\n            Func<T, bool> predicate)\r\n        {\r\n            if (predicate == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(predicate));\r\n            }\r\n\r\n            foreach (Vector2Int position in GetPositions())\r\n            {\r\n                if (predicate(GetCell(position)))\r\n                {\r\n                    yield return position;\r\n                }\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された条件に一致するマスの数を取得する。\r\n        /// </summary>\r\n        /// <param name=\"predicate\">集計条件</param>\r\n        /// <returns>条件に一致するマスの数</returns>\r\n        public int CountCells(Func<T, bool> predicate)\r\n        {\r\n            if (predicate == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(predicate));\r\n            }\r\n\r\n            // 条件に一致したマスの合計数。\r\n            int count = 0;\r\n\r\n            foreach (Vector2Int position in GetPositions())\r\n            {\r\n                if (predicate(GetCell(position)))\r\n                {\r\n                    count++;\r\n                }\r\n            }\r\n\r\n            return count;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Bulk Operations\r\n\r\n        /// <summary>\r\n        /// 全マスを指定されたデータで埋める。\r\n        /// </summary>\r\n        /// <param name=\"value\">各マスに設定するデータ</param>\r\n        public void Fill(T value)\r\n        {\r\n            foreach (Vector2Int position in GetPositions())\r\n            {\r\n                SetCell(position, value);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 全マスを指定された初期化処理で埋める。\r\n        /// 座標ごとに異なるデータを設定できる。\r\n        /// </summary>\r\n        /// <param name=\"initializer\">各マスの初期化処理</param>\r\n        public void Fill(Func<Vector2Int, T> initializer)\r\n        {\r\n            if (initializer == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(initializer));\r\n            }\r\n\r\n            foreach (Vector2Int position in GetPositions())\r\n            {\r\n                SetCell(position, initializer(position));\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 全マスをデータ型の既定値に戻す。\r\n        /// </summary>\r\n        public void Clear()\r\n        {\r\n            Fill(default(T));\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Private Methods\r\n\r\n        /// <summary>\r\n        /// 指定された座標が有効であることを確認する。\r\n        /// 範囲外の場合は例外を発生させる。\r\n        /// </summary>\r\n        /// <param name=\"position\">確認対象の座標</param>\r\n        private void ValidatePosition(Vector2Int position)\r\n        {\r\n            if (!IsInside(position))\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(position),\r\n                    $\"座標 {position} はグリッドの範囲外です。\");\r\n            }\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-26T16:01:49.882Z"
+}

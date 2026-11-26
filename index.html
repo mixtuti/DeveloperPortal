@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Unity Development Docs</title>
+
+    <!-- スタイルシート -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- データ管理 -->
+    <script src="js/data.js" defer></script>
+
+    <!-- C#スクリプト解析 -->
+    <script src="js/parser.js" defer></script>
+
+    <!-- 補完情報の編集・管理 -->
+    <script src="js/manager.js" defer></script>
+
+    <!-- JSON出力 -->
+    <script src="js/exporter.js" defer></script>
+    <script defer src="js/dependency.js"></script>
+    <script defer src="js/reference.js"></script>
+
+    <!-- 依存関係グラフ描画ライブラリ -->
+    <script defer src="https://cdn.jsdelivr.net/npm/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
+
+    <!-- 依存関係グラフ管理 -->
+    <script defer src="js/graph.js"></script>
+
+    <!-- 画面制御・初期化 -->
+    <script src="js/app.js" defer></script>
+</head>
+
+<body>
+
+    <!-- ヘッダー -->
+    <header class="header">
+
+        <a href="#home" class="brand">
+            ◈ Unity Development Docs
+        </a>
+
+        <input id="search" type="search" placeholder="クラス・API・テスト・Tips を検索" aria-label="全文検索">
+
+        <span class="version">PROTOTYPE / 0.1</span>
+
+    </header>
+
+    <!-- メインレイアウト -->
+    <div class="layout">
+
+        <!-- 左サイドバー -->
+        <aside class="sidebar left">
+
+            <!-- メインナビゲーション -->
+            <section class="sidebar-section">
+                <h2 class="sidebar-title">WORKSPACE</h2>
+                <nav id="nav" aria-label="メインメニュー"></nav>
+            </section>
+
+            <!-- 名前空間ツリー -->
+            <section class="sidebar-section">
+                <h2 class="sidebar-title">NAMESPACE</h2>
+                <div id="tree"></div>
+            </section>
+
+        </aside>
+
+        <!-- メインコンテンツ -->
+        <main id="main">
+
+            <!-- JavaScriptによって表示内容を切り替える -->
+
+            <h1>Unity Development Docs</h1>
+            <p>ドキュメントを読み込んでいます...</p>
+
+        </main>
+
+        <!-- 右サイドバー -->
+        <aside class="sidebar right">
+
+            <!-- ページ内目次 -->
+            <section class="sidebar-section">
+                <h2 class="sidebar-title">ON THIS PAGE</h2>
+                <nav id="outline" aria-label="ページ内目次"></nav>
+            </section>
+
+            <!-- 関連ドキュメント -->
+            <section class="sidebar-section">
+                <h2 class="sidebar-title">RELATED</h2>
+                <div id="related"></div>
+            </section>
+
+            <!-- データ管理状況 -->
+            <section class="sidebar-section">
+                <h2 class="sidebar-title">DOCUMENT STATUS</h2>
+                <div id="status"></div>
+            </section>
+
+        </aside>
+
+    </div>
+
+    <!-- 通知メッセージ -->
+    <div id="notification" role="status" hidden></div>
+
+    <!-- フッター -->
+    <footer class="footer">
+        Unity Development Docs · Local documentation workspace
+    </footer>
+
+</body>
+
+</html>

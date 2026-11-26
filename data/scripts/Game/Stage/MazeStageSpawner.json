@@ -1,0 +1,159 @@
+{
+    "parserVersion": 2,
+    "id": "Game.Stage.MazeStageSpawner",
+    "name": "MazeStageSpawner",
+    "fileName": "MazeStageSpawner.cs",
+    "namespace": "Game.Stage",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public class MazeStageSpawner : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "ステージ内のキャラクターや配置物の GameObject生成と消去を管理するクラス。 ステージの進行管理やキャラクター制御は行わない。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "UnityEngine",
+        "Framework.Grid",
+        "Game.Map",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "PlayerInstance",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GameObject PlayerInstance =>\r\n            playerInstance",
+            "returnType": "",
+            "valueType": "GameObject",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "生成済みのプレイヤー。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "EnemyInstances",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public IReadOnlyList<GameObject> EnemyInstances =>\r\n            enemyInstances.AsReadOnly()",
+            "returnType": "",
+            "valueType": "IReadOnlyList<GameObject>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "生成済みの敵一覧。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GemInstanceCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int GemInstanceCount =>\r\n            gemInstances.Count",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在生成されている宝石の数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ItemInstanceCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int ItemInstanceCount =>\r\n            itemInstances.Count",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在生成されているアイテムの数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SpawnStage",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void SpawnStage(\r\n            MazeStageGenerationResult result,\r\n            GridCoordinateConverter converter)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "result",
+                    "type": "MazeStageGenerationResult",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "ステージ生成結果"
+                },
+                {
+                    "name": "converter",
+                    "type": "GridCoordinateConverter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "座標変換システム"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "ステージ生成結果に基づいて キャラクターと配置物を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ClearStage",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void ClearStage()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在のステージで生成した すべてのGameObjectを消去する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing UnityEngine;\r\nusing Framework.Grid;\r\nusing Game.Map;\r\n\r\nnamespace Game.Stage\r\n{\r\n    /// <summary>\r\n    /// ステージ内のキャラクターや配置物の\r\n    /// GameObject生成と消去を管理するクラス。\r\n    ///\r\n    /// ステージの進行管理やキャラクター制御は行わない。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    public class MazeStageSpawner : MonoBehaviour\r\n    {\r\n        #region Inspector Fields\r\n\r\n        [Header(\"生成Prefab設定\")]\r\n\r\n        /// <summary>\r\n        /// プレイヤーのPrefab。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private GameObject playerPrefab;\r\n\r\n        /// <summary>\r\n        /// 敵のPrefab。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private GameObject enemyPrefab;\r\n\r\n        /// <summary>\r\n        /// 宝石のPrefab。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private GameObject gemPrefab;\r\n\r\n        /// <summary>\r\n        /// アイテムのPrefab。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private GameObject itemPrefab;\r\n\r\n        [Header(\"生成先設定\")]\r\n\r\n        /// <summary>\r\n        /// 生成オブジェクトの親Transform。\r\n        /// 未設定の場合は自身のTransformを使用する。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private Transform spawnParent;\r\n\r\n        [Header(\"描画位置設定\")]\r\n\r\n        /// <summary>\r\n        /// キャラクターのZ座標補正値。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private float characterZOffset = -0.2f;\r\n\r\n        /// <summary>\r\n        /// 宝石やアイテムのZ座標補正値。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private float collectibleZOffset = -0.1f;\r\n\r\n        #endregion\r\n\r\n        #region Runtime Fields\r\n\r\n        /// <summary>\r\n        /// 現在監視しているマップ。\r\n        /// </summary>\r\n        private GridMap<MazeCell> map;\r\n\r\n        /// <summary>\r\n        /// 現在使用している座標変換システム。\r\n        /// </summary>\r\n        private GridCoordinateConverter coordinateConverter;\r\n\r\n        /// <summary>\r\n        /// 現在生成されているプレイヤー。\r\n        /// </summary>\r\n        private GameObject playerInstance;\r\n\r\n        /// <summary>\r\n        /// 現在生成されている敵の一覧。\r\n        /// </summary>\r\n        private readonly List<GameObject> enemyInstances =\r\n            new List<GameObject>();\r\n\r\n        /// <summary>\r\n        /// 宝石の座標とGameObjectの対応表。\r\n        /// </summary>\r\n        private readonly Dictionary<Vector2Int, GameObject>\r\n            gemInstances =\r\n                new Dictionary<Vector2Int, GameObject>();\r\n\r\n        /// <summary>\r\n        /// アイテムの座標とGameObjectの対応表。\r\n        /// </summary>\r\n        private readonly Dictionary<Vector2Int, GameObject>\r\n            itemInstances =\r\n                new Dictionary<Vector2Int, GameObject>();\r\n\r\n        #endregion\r\n\r\n        #region Properties\r\n\r\n        /// <summary>\r\n        /// 生成済みのプレイヤー。\r\n        /// </summary>\r\n        public GameObject PlayerInstance =>\r\n            playerInstance;\r\n\r\n        /// <summary>\r\n        /// 生成済みの敵一覧。\r\n        /// </summary>\r\n        public IReadOnlyList<GameObject> EnemyInstances =>\r\n            enemyInstances.AsReadOnly();\r\n\r\n        /// <summary>\r\n        /// 現在生成されている宝石の数。\r\n        /// </summary>\r\n        public int GemInstanceCount =>\r\n            gemInstances.Count;\r\n\r\n        /// <summary>\r\n        /// 現在生成されているアイテムの数。\r\n        /// </summary>\r\n        public int ItemInstanceCount =>\r\n            itemInstances.Count;\r\n\r\n        #endregion\r\n\r\n        #region Unity Methods\r\n\r\n        /// <summary>\r\n        /// オブジェクト破棄時の後処理。\r\n        /// </summary>\r\n        private void OnDestroy()\r\n        {\r\n            ClearStage();\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Public Methods\r\n\r\n        /// <summary>\r\n        /// ステージ生成結果に基づいて\r\n        /// キャラクターと配置物を生成する。\r\n        /// </summary>\r\n        /// <param name=\"result\">ステージ生成結果</param>\r\n        /// <param name=\"converter\">座標変換システム</param>\r\n        public void SpawnStage(\r\n            MazeStageGenerationResult result,\r\n            GridCoordinateConverter converter)\r\n        {\r\n            if (result == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(result));\r\n            }\r\n\r\n            if (converter == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(converter));\r\n            }\r\n\r\n            // 以前のステージの生成物を消去する。\r\n            ClearStage();\r\n\r\n            map = result.Map;\r\n            coordinateConverter = converter;\r\n\r\n            // プレイヤーを生成する。\r\n            playerInstance = SpawnObject(\r\n                playerPrefab,\r\n                result.PlayerSpawnPosition,\r\n                characterZOffset,\r\n                \"Player\");\r\n\r\n            // 敵を生成する。\r\n            for (int i = 0;\r\n                 i < result.EnemySpawnPositions.Count;\r\n                 i++)\r\n            {\r\n                GameObject enemy = SpawnObject(\r\n                    enemyPrefab,\r\n                    result.EnemySpawnPositions[i],\r\n                    characterZOffset,\r\n                    $\"Enemy_{i + 1}\");\r\n\r\n                if (enemy != null)\r\n                {\r\n                    enemyInstances.Add(enemy);\r\n                }\r\n            }\r\n\r\n            // マップ全体から宝石とアイテムを生成する。\r\n            foreach (Vector2Int position in map.GetPositions())\r\n            {\r\n                MazeCell cell = map.GetCell(position);\r\n\r\n                if (cell.HasGem)\r\n                {\r\n                    SpawnGem(position);\r\n                }\r\n\r\n                if (cell.HasItem)\r\n                {\r\n                    SpawnItem(position);\r\n                }\r\n            }\r\n\r\n            // マップ変更時に生成物を同期する。\r\n            map.CellChanged += OnCellChanged;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在のステージで生成した\r\n        /// すべてのGameObjectを消去する。\r\n        /// </summary>\r\n        public void ClearStage()\r\n        {\r\n            if (map != null)\r\n            {\r\n                map.CellChanged -= OnCellChanged;\r\n            }\r\n\r\n            DestroyObject(playerInstance);\r\n            playerInstance = null;\r\n\r\n            foreach (GameObject enemy in enemyInstances)\r\n            {\r\n                DestroyObject(enemy);\r\n            }\r\n\r\n            enemyInstances.Clear();\r\n\r\n            foreach (GameObject gem in gemInstances.Values)\r\n            {\r\n                DestroyObject(gem);\r\n            }\r\n\r\n            gemInstances.Clear();\r\n\r\n            foreach (GameObject item in itemInstances.Values)\r\n            {\r\n                DestroyObject(item);\r\n            }\r\n\r\n            itemInstances.Clear();\r\n\r\n            map = null;\r\n            coordinateConverter = null;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Spawn Methods\r\n\r\n        /// <summary>\r\n        /// 指定された座標にPrefabを生成する。\r\n        /// </summary>\r\n        /// <param name=\"prefab\">生成対象Prefab</param>\r\n        /// <param name=\"position\">グリッド座標</param>\r\n        /// <param name=\"zOffset\">Z座標補正値</param>\r\n        /// <param name=\"objectName\">生成後の名前</param>\r\n        /// <returns>生成されたGameObject</returns>\r\n        private GameObject SpawnObject(\r\n            GameObject prefab,\r\n            Vector2Int position,\r\n            float zOffset,\r\n            string objectName)\r\n        {\r\n            // Prefab未設定の場合は生成を省略する。\r\n            if (prefab == null)\r\n            {\r\n                return null;\r\n            }\r\n\r\n            Vector3 worldPosition =\r\n                coordinateConverter.GetCellCenterWorld(\r\n                    position);\r\n\r\n            worldPosition.z += zOffset;\r\n\r\n            Transform parent = spawnParent != null\r\n                ? spawnParent\r\n                : transform;\r\n\r\n            GameObject instance = Instantiate(\r\n                prefab,\r\n                worldPosition,\r\n                Quaternion.identity,\r\n                parent);\r\n\r\n            instance.name = objectName;\r\n\r\n            return instance;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定座標に宝石を生成する。\r\n        /// </summary>\r\n        /// <param name=\"position\">生成座標</param>\r\n        private void SpawnGem(Vector2Int position)\r\n        {\r\n            if (gemInstances.ContainsKey(position))\r\n            {\r\n                return;\r\n            }\r\n\r\n            GameObject instance = SpawnObject(\r\n                gemPrefab,\r\n                position,\r\n                collectibleZOffset,\r\n                $\"Gem_{position.x}_{position.y}\");\r\n\r\n            if (instance != null)\r\n            {\r\n                gemInstances.Add(position, instance);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定座標にアイテムを生成する。\r\n        /// </summary>\r\n        /// <param name=\"position\">生成座標</param>\r\n        private void SpawnItem(Vector2Int position)\r\n        {\r\n            if (itemInstances.ContainsKey(position))\r\n            {\r\n                return;\r\n            }\r\n\r\n            GameObject instance = SpawnObject(\r\n                itemPrefab,\r\n                position,\r\n                collectibleZOffset,\r\n                $\"Item_{position.x}_{position.y}\");\r\n\r\n            if (instance != null)\r\n            {\r\n                itemInstances.Add(position, instance);\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Remove Methods\r\n\r\n        /// <summary>\r\n        /// 指定座標の生成物を消去する。\r\n        /// </summary>\r\n        /// <param name=\"instances\">生成物の対応表</param>\r\n        /// <param name=\"position\">消去対象座標</param>\r\n        private void RemoveObject(\r\n            Dictionary<Vector2Int, GameObject> instances,\r\n            Vector2Int position)\r\n        {\r\n            if (!instances.TryGetValue(\r\n                position,\r\n                out GameObject instance))\r\n            {\r\n                return;\r\n            }\r\n\r\n            instances.Remove(position);\r\n\r\n            DestroyObject(instance);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたGameObjectを無効化して破棄する。\r\n        /// </summary>\r\n        /// <param name=\"instance\">破棄対象</param>\r\n        private void DestroyObject(GameObject instance)\r\n        {\r\n            if (instance == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            // Destroyはフレーム終了時に実行されるため、\r\n            // 先に無効化して表示や判定の重複を防ぐ。\r\n            instance.SetActive(false);\r\n\r\n            Destroy(instance);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Event Methods\r\n\r\n        /// <summary>\r\n        /// マップデータの変更に応じて\r\n        /// 宝石やアイテムのGameObjectを同期する。\r\n        /// </summary>\r\n        /// <param name=\"position\">変更された座標</param>\r\n        /// <param name=\"previousCell\">変更前のデータ</param>\r\n        /// <param name=\"newCell\">変更後のデータ</param>\r\n        private void OnCellChanged(\r\n            Vector2Int position,\r\n            MazeCell previousCell,\r\n            MazeCell newCell)\r\n        {\r\n            // 宝石の有無が変化した場合。\r\n            if (previousCell.HasGem != newCell.HasGem)\r\n            {\r\n                if (newCell.HasGem)\r\n                {\r\n                    SpawnGem(position);\r\n                }\r\n                else\r\n                {\r\n                    RemoveObject(\r\n                        gemInstances,\r\n                        position);\r\n                }\r\n            }\r\n\r\n            // アイテムの有無が変化した場合。\r\n            if (previousCell.HasItem != newCell.HasItem)\r\n            {\r\n                if (newCell.HasItem)\r\n                {\r\n                    SpawnItem(position);\r\n                }\r\n                else\r\n                {\r\n                    RemoveObject(\r\n                        itemInstances,\r\n                        position);\r\n                }\r\n            }\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-26T16:01:49.980Z"
+}

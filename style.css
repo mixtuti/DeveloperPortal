@@ -1,0 +1,1187 @@
+/* ========================================
+   共通設定
+======================================== */
+
+:root {
+    --primary: #2563eb;
+    --primary-light: #e8f0ff;
+
+    --background: #ffffff;
+    --surface: #f5f7fa;
+    --header: #202a38;
+
+    --text: #263238;
+    --text-sub: #64748b;
+    --border: #dce2e8;
+
+    --success: #16803c;
+    --warning: #b7791f;
+    --danger: #dc2626;
+
+    --header-height: 64px;
+    --sidebar-width: 260px;
+    --right-width: 240px;
+
+    --radius: 6px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 84px;
+}
+
+body {
+    margin: 0;
+    background: var(--background);
+    color: var(--text);
+    font-family: "Segoe UI", "Yu Gothic UI", sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+
+/* ========================================
+   ヘッダー
+======================================== */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+
+    height: var(--header-height);
+    padding: 0 24px;
+
+    background: var(--header);
+    color: #ffffff;
+}
+
+.brand {
+    color: #ffffff;
+    font-size: 19px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.brand:hover {
+    text-decoration: none;
+}
+
+#search {
+    flex: 1;
+    max-width: 480px;
+    min-width: 0;
+
+    padding: 9px 14px;
+
+    background: #ffffff;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+}
+
+.version {
+    color: #aab6c5;
+    font-size: 11px;
+    white-space: nowrap;
+    letter-spacing: 1px;
+}
+
+
+/* ========================================
+   メインレイアウト
+======================================== */
+
+.layout {
+    display: grid;
+    grid-template-columns:
+        var(--sidebar-width) minmax(0, 1fr) var(--right-width);
+
+    min-height: calc(100vh - var(--header-height));
+}
+
+#main {
+    min-width: 0;
+    padding: 32px 40px;
+    overflow-wrap: anywhere;
+}
+
+
+/* ========================================
+   サイドバー
+======================================== */
+
+.sidebar {
+    position: sticky;
+    top: var(--header-height);
+
+    height: calc(100vh - var(--header-height));
+    padding: 24px 16px;
+
+    overflow-y: auto;
+    background: var(--surface);
+}
+
+.sidebar.left {
+    border-right: 1px solid var(--border);
+}
+
+.sidebar.right {
+    border-left: 1px solid var(--border);
+}
+
+.sidebar-section {
+    margin-bottom: 28px;
+}
+
+.sidebar-title {
+    margin: 0 0 12px;
+    padding: 0 10px;
+
+    color: var(--text-sub);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+
+/* ========================================
+   ナビゲーション・ツリー
+======================================== */
+
+#nav a,
+#tree a,
+#outline a,
+#related a,
+.nav-item,
+.tree-item {
+    display: block;
+    padding: 7px 10px;
+
+    color: var(--text);
+    border-radius: var(--radius);
+    overflow-wrap: anywhere;
+    cursor: pointer;
+}
+
+#nav a:hover,
+#tree a:hover,
+#outline a:hover,
+#related a:hover,
+.nav-item:hover,
+.tree-item:hover {
+    background: #e6ebf2;
+    text-decoration: none;
+}
+
+#nav .active,
+#tree .active {
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.tree-group {
+    margin-left: 12px;
+    padding-left: 8px;
+    border-left: 1px solid var(--border);
+}
+
+.tree-folder {
+    padding: 6px 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+/* ========================================
+   ドキュメント
+======================================== */
+
+#main h1 {
+    margin: 0 0 16px;
+    font-size: 30px;
+    line-height: 1.3;
+}
+
+#main h2 {
+    margin: 32px 0 16px;
+    padding-bottom: 8px;
+
+    font-size: 21px;
+    border-bottom: 1px solid var(--border);
+}
+
+#main h3 {
+    margin: 20px 0 10px;
+    font-size: 17px;
+}
+
+#main p {
+    margin: 10px 0;
+}
+
+.namespace,
+.muted {
+    color: var(--text-sub);
+    font-size: 13px;
+}
+
+.api-item {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.signature {
+    color: var(--primary);
+    font-family: Consolas, monospace;
+}
+
+
+/* ========================================
+   カード
+======================================== */
+
+.card {
+    padding: 20px;
+    margin-bottom: 16px;
+
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(160px, 1fr));
+
+    gap: 16px;
+}
+
+.card-title {
+    color: var(--text-sub);
+    font-size: 13px;
+}
+
+.card-value {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+
+/* ========================================
+   テーブル
+======================================== */
+
+table {
+    width: 100%;
+    margin: 16px 0;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background: var(--surface);
+    font-weight: 600;
+}
+
+tr:hover td {
+    background: #f8fafc;
+}
+
+
+/* ========================================
+   ソースコード
+======================================== */
+
+code {
+    padding: 2px 5px;
+
+    background: var(--surface);
+    color: var(--primary);
+    border-radius: 4px;
+
+    font-family: Consolas, monospace;
+    font-size: 13px;
+}
+
+pre {
+    padding: 16px;
+    overflow-x: auto;
+
+    background: #f4f6f9;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+pre code {
+    padding: 0;
+    background: transparent;
+    color: var(--text);
+}
+
+
+/* ========================================
+   ボタン
+======================================== */
+
+button,
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 16px;
+
+    background: var(--background);
+    color: var(--text);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    cursor: pointer;
+}
+
+button:hover,
+.button:hover {
+    background: var(--surface);
+    text-decoration: none;
+}
+
+button.primary,
+.button.primary {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #ffffff;
+}
+
+button.primary:hover,
+.button.primary:hover {
+    background: #1d4ed8;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* ========================================
+   入力フォーム
+======================================== */
+
+input,
+select,
+textarea {
+    padding: 9px 12px;
+
+    color: var(--text);
+    background: var(--background);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid var(--primary-light);
+    border-color: var(--primary);
+}
+
+textarea {
+    width: 100%;
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+}
+
+
+/* ========================================
+   ファイルインポート
+======================================== */
+
+.drop-zone {
+    padding: 48px 24px;
+
+    background: var(--surface);
+    border: 2px dashed #aab6c5;
+    border-radius: var(--radius);
+
+    text-align: center;
+}
+
+.drop-zone:hover,
+.drop-zone.dragover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+
+    margin: 16px 0;
+}
+
+
+/* ========================================
+   ステータス表示
+======================================== */
+
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+
+    font-size: 11px;
+}
+
+.success {
+    color: var(--success);
+}
+
+.warning {
+    color: var(--warning);
+}
+
+.danger {
+    color: var(--danger);
+}
+
+#status {
+    color: var(--text-sub);
+    font-size: 13px;
+}
+
+#notification {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 200;
+
+    max-width: 400px;
+    padding: 14px 20px;
+
+    background: var(--header);
+    color: #ffffff;
+
+    border-radius: var(--radius);
+    box-shadow: 0 4px 16px #0002;
+}
+
+
+/* ========================================
+   フッター
+======================================== */
+
+.footer {
+    padding: 16px 24px;
+
+    background: var(--surface);
+    color: var(--text-sub);
+
+    border-top: 1px solid var(--border);
+
+    text-align: center;
+    font-size: 12px;
+}
+
+
+/* ========================================
+   レスポンシブ対応
+======================================== */
+
+@media (max-width: 1200px) {
+    .layout {
+        grid-template-columns:
+            var(--sidebar-width) minmax(0, 1fr);
+    }
+
+    .sidebar.right {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        gap: 12px;
+        padding: 0 16px;
+    }
+
+    .brand {
+        font-size: 15px;
+    }
+
+    .version {
+        display: none;
+    }
+
+    .layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .sidebar.left {
+        position: static;
+        height: auto;
+        max-height: 300px;
+
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    #main {
+        padding: 24px 16px;
+    }
+}
+
+/* ========================================
+   補完情報エディター
+======================================== */
+
+.editor-section {
+    margin-bottom: 28px;
+}
+
+.editor-heading,
+.editor-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+#main .editor-heading h2 {
+    margin: 16px 0;
+    padding: 0;
+    border: none;
+}
+
+.editor-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    padding: 16px;
+    margin-bottom: 12px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.editor-item input,
+.editor-item textarea {
+    width: 100%;
+}
+
+.editor-item textarea {
+    min-height: 100px;
+}
+
+.document-body {
+    white-space: pre-wrap;
+}
+
+/* ========================================
+   名前空間ツリー
+======================================== */
+
+.tree-node {
+    margin: 2px 0;
+}
+
+.tree-folder {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 5px 4px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    border-radius: var(--radius);
+    list-style: none;
+    cursor: pointer;
+}
+
+.tree-folder::-webkit-details-marker {
+    display: none;
+}
+
+.tree-folder::before {
+    content: "▸";
+    color: var(--text-sub);
+}
+
+.tree-node[open]>.tree-folder::before {
+    content: "▾";
+}
+
+.tree-folder:hover {
+    background: #e6ebf2;
+}
+
+.tree-folder-icon::before {
+    content: "📁";
+    font-size: 13px;
+}
+
+.tree-node[open]>.tree-folder .tree-folder-icon::before {
+    content: "📂";
+}
+
+.tree-group {
+    margin-left: 8px;
+    padding-left: 8px;
+    border-left: 1px solid var(--border);
+}
+
+#tree .tree-script a {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+
+    padding: 4px;
+    font-size: 12px;
+}
+
+.tree-script a::before {
+    content: "♯";
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* ========================================
+   APIリファレンス
+======================================== */
+
+.reference-header {
+    margin-bottom: 28px;
+}
+
+.reference-header h1 {
+    margin-bottom: 10px;
+}
+
+.reference-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+/* 継承・インターフェース */
+
+.reference-inheritance {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+
+    padding: 16px;
+
+    background: #f5f7fa;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.reference-inheritance strong {
+    padding: 10px 16px;
+    background: #e8f0ff;
+    color: #2563eb;
+    border-radius: 6px;
+}
+
+/* 依存関係 */
+
+.reference-dependencies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.reference-dependency {
+    padding: 6px 12px;
+    background: #eef2f7;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+
+    font-family: monospace;
+    font-size: 13px;
+}
+
+/* APIテーブル */
+
+.reference-table-wrap {
+    overflow-x: auto;
+}
+
+.reference-table {
+    width: 100%;
+    margin: 16px 0;
+
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.reference-table th,
+.reference-table td {
+    padding: 10px 12px;
+
+    border: 1px solid var(--border);
+
+    text-align: left;
+    vertical-align: top;
+}
+
+.reference-table th {
+    background: #f1f4f8;
+    font-weight: 600;
+}
+
+.reference-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.reference-table td:first-child {
+    overflow-wrap: anywhere;
+}
+
+/* 個別API */
+
+.reference-member {
+    margin: 16px 0 24px;
+    padding: 20px;
+
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.reference-member h3 {
+    margin: 0 0 12px;
+    color: #2563eb;
+}
+
+.reference-member h4 {
+    margin: 20px 0 8px;
+    font-size: 14px;
+}
+
+.reference-member .signature {
+    margin: 12px 0;
+    padding: 14px;
+
+    background: #f1f4f8;
+    border-radius: 6px;
+
+    overflow-x: auto;
+}
+
+.reference-supplement {
+    margin-bottom: 12px;
+}
+
+/* APIリンク・目次 */
+
+.reference-link,
+.outline-link {
+    padding: 0;
+
+    background: transparent;
+    border: none;
+
+    color: #2563eb;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+}
+
+.reference-link:hover,
+.outline-link:hover {
+    text-decoration: underline;
+}
+
+.reference-outline {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.outline-link {
+    font-size: 13px;
+}
+
+.outline-child {
+    padding-left: 14px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+/* 固定ヘッダーによる見出しの隠れを防止 */
+
+#main h2[id],
+.reference-member[id] {
+    scroll-margin-top: 90px;
+}
+
+/* ========================================
+   APIリファレンス Ver.2
+======================================== */
+
+.reference-member h3 {
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+}
+
+.reference-member .reference-badges {
+    margin: 8px 0 12px;
+}
+
+.reference-return {
+    padding: 12px 16px;
+
+    background: #f5f7fa;
+    border-left: 3px solid #5284cf;
+    border-radius: 4px;
+}
+
+.reference-return p {
+    margin: 8px 0 0;
+}
+
+.reference-source {
+    padding: 16px;
+
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.reference-source summary {
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.reference-source pre {
+    max-height: 600px;
+    margin-bottom: 0;
+    overflow: auto;
+    tab-size: 4;
+}
+
+.reference-table code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.reference-badges .badge {
+    font-family: monospace;
+}
+
+.reference-link,
+.outline-link {
+    overflow-wrap: anywhere;
+}
+
+/* ========================================
+   依存関係
+======================================== */
+
+.dependency-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    margin: 12px 0 24px;
+}
+
+.dependency-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 14px;
+
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    color: inherit;
+    text-decoration: none;
+
+    transition: background 0.15s,
+        border-color 0.15s;
+}
+
+.dependency-item:hover {
+    background: #f5f8ff;
+    border-color: #94b5ed;
+    text-decoration: none;
+}
+
+.dependency-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
+
+    background: #e8f0ff;
+    color: #2563eb;
+    border-radius: 6px;
+
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.dependency-content {
+    flex: 1;
+    min-width: 0;
+
+    overflow-wrap: anywhere;
+}
+
+.dependency-content strong {
+    color: #2563eb;
+}
+
+.dependency-content .muted {
+    margin-top: 4px;
+    font-size: 12px;
+}
+
+.dependency-kinds {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+
+    margin-top: 8px;
+}
+
+.dependency-kind {
+    padding: 3px 8px;
+
+    background: #eef2f7;
+    border-radius: 4px;
+
+    color: #475569;
+    font-size: 11px;
+}
+
+.dependency-arrow {
+    color: #94a3b8;
+    font-size: 24px;
+}
+
+/* ========================================
+   表示切り替えタブ
+======================================== */
+
+.view-tabs {
+    display: flex;
+    gap: 4px;
+
+    margin: 24px 0 16px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.view-tabs button {
+    padding: 12px 20px;
+
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+
+    color: #64748b;
+
+    border-radius: 0;
+
+    cursor: pointer;
+}
+
+.view-tabs button.active {
+    color: #2563eb;
+    border-bottom-color: #2563eb;
+    font-weight: 600;
+}
+
+/* ========================================
+   依存関係グラフ
+======================================== */
+
+.graph-panel {
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.graph-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    padding: 12px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.graph-toolbar select {
+    min-width: 0;
+    max-width: 100%;
+
+    padding: 8px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--border);
+    border-radius: 4px;
+}
+
+#graph-target {
+    flex: 1;
+}
+
+.graph-canvas {
+    position: relative;
+
+    width: 100%;
+    height: 600px;
+
+    background-color: #f8fafc;
+
+    background-image:
+        radial-gradient(
+            #cbd5e1 0.8px,
+            transparent 0.8px
+        );
+
+    background-size: 16px 16px;
+}
+
+.graph-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 12px;
+
+    border-top: 1px solid var(--border);
+}
+
+.graph-controls button {
+    min-width: 36px;
+}
+
+.graph-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    padding: 12px;
+
+    background: #f8fafc;
+
+    border-top: 1px solid var(--border);
+
+    font-size: 12px;
+    color: #64748b;
+}
+
+.graph-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-color {
+    display: inline-block;
+
+    width: 12px;
+    height: 12px;
+
+    border: 1px solid;
+    border-radius: 3px;
+}
+
+.legend-selected {
+    background: #dbeafe;
+    border-color: #2563eb;
+}
+
+.legend-dependency {
+    background: #ecfdf5;
+    border-color: #16a34a;
+}
+
+.legend-dependent {
+    background: #fff7ed;
+    border-color: #ea580c;
+}
+
+@media (max-width: 768px) {
+
+    .graph-canvas {
+        height: 450px;
+    }
+}

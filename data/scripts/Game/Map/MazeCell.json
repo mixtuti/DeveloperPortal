@@ -1,0 +1,823 @@
+{
+    "parserVersion": 2,
+    "id": "Game.Map.MazeCell",
+    "name": "MazeCell",
+    "fileName": "MazeCell.cs",
+    "namespace": "Game.Map",
+    "type": "struct",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public struct MazeCell : IEquatable<MazeCell>",
+    "typeParameters": [],
+    "summary": "迷路内の1マス分のゲームデータを管理する構造体。 地形情報と配置物・属性情報を独立して保持する。 GridMapの変更通知に対応するため、 値型として実装する。",
+    "remarks": "",
+    "inheritance": [
+        "IEquatable<MazeCell>"
+    ],
+    "dependencies": [
+        "System",
+        "UnityEngine",
+        "IEquatable<MazeCell>"
+    ],
+    "members": [
+        {
+            "name": "Terrain",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeTerrainType Terrain => terrain",
+            "returnType": "",
+            "valueType": "MazeTerrainType",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の地形情報を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Flags",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeCellFlags Flags => flags",
+            "returnType": "",
+            "valueType": "MazeCellFlags",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の属性情報を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsFloor",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsFloor =>\r\n            terrain == MazeTerrainType.Floor",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "通常の床であるかどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsWall",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsWall =>\r\n            terrain == MazeTerrainType.Wall ||\r\n            terrain == MazeTerrainType.BreakableWall",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "通常の壁または破壊可能な壁であるかどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsBreakable",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsBreakable =>\r\n            terrain == MazeTerrainType.BreakableWall",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "破壊可能な壁であるかどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsWalkable",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsWalkable =>\r\n            terrain == MazeTerrainType.Floor",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "通常のキャラクターが移動可能かどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasGem",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasGem =>\r\n            HasFlags(MazeCellFlags.Gem)",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "宝石が存在するかどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasItem",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasItem =>\r\n            HasFlags(MazeCellFlags.Item)",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "アイテムが存在するかどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsPlayerSpawn",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsPlayerSpawn =>\r\n            HasFlags(MazeCellFlags.PlayerSpawn)",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "プレイヤーの出現地点であるかどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsEnemySpawn",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsEnemySpawn =>\r\n            HasFlags(MazeCellFlags.EnemySpawn)",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "敵の出現地点であるかどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsItemSpawn",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsItemSpawn =>\r\n            HasFlags(MazeCellFlags.ItemSpawn)",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "アイテムの配置候補地点であるかどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasCollectible",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasCollectible =>\r\n            HasGem || HasItem",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "宝石またはアイテムが存在するかどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsEmptyFloor",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsEmptyFloor =>\r\n            IsFloor && !HasCollectible",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "宝石やアイテムが存在しない移動可能な床かどうか。 キャラクターの現在位置は考慮しない。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CanPlaceGem",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool CanPlaceGem =>\r\n            IsWalkable &&\r\n            !HasCollectible &&\r\n            !IsPlayerSpawn &&\r\n            !IsEnemySpawn",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "宝石を新しく配置できるかどうか。 出現地点や既存の配置物との重複を防止する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CanPlaceItem",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool CanPlaceItem =>\r\n            IsWalkable &&\r\n            !HasCollectible &&\r\n            !IsPlayerSpawn &&\r\n            !IsEnemySpawn",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "アイテムを新しく配置できるかどうか。 アイテム配置候補であるかどうかは考慮しない。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MazeCell",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeCell(\r\n            MazeTerrainType terrain,\r\n            MazeCellFlags flags = MazeCellFlags.None)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "terrain",
+                    "type": "MazeTerrainType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "地形情報"
+                },
+                {
+                    "name": "flags",
+                    "type": "MazeCellFlags",
+                    "modifier": "",
+                    "defaultValue": "MazeCellFlags.None",
+                    "description": "配置物および属性情報"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された地形と属性を持つマスを生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CreateFloor",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static MazeCell CreateFloor(\r\n            MazeCellFlags flags = MazeCellFlags.None)",
+            "returnType": "MazeCell",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "flags",
+                    "type": "MazeCellFlags",
+                    "modifier": "",
+                    "defaultValue": "MazeCellFlags.None",
+                    "description": "床に設定する属性"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "通常の床データを生成する。",
+            "returns": "生成された床データ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CreateWall",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static MazeCell CreateWall()",
+            "returnType": "MazeCell",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "通常の壁データを生成する。",
+            "returns": "生成された壁データ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CreateBreakableWall",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static MazeCell CreateBreakableWall()",
+            "returnType": "MazeCell",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "破壊可能な壁データを生成する。",
+            "returns": "生成された破壊可能な壁データ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "WithTerrain",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeCell WithTerrain(\r\n            MazeTerrainType newTerrain)",
+            "returnType": "MazeCell",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "newTerrain",
+                    "type": "MazeTerrainType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "変更後の地形"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "地形を変更した新しいマスデータを取得する。 元のマスデータは変更しない。 壁へ変更した場合は属性情報を消去する。",
+            "returns": "変更後のマスデータ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "BreakWall",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeCell BreakWall()",
+            "returnType": "MazeCell",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "破壊可能な壁を床へ変更する。 通常の壁や床の場合は変更しない。",
+            "returns": "壁破壊処理後のマスデータ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasFlags",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasFlags(\r\n            MazeCellFlags targetFlags)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "targetFlags",
+                    "type": "MazeCellFlags",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "確認対象の属性"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された属性をすべて持っているか判定する。",
+            "returns": "指定された属性をすべて持つ場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasAnyFlags",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasAnyFlags(\r\n            MazeCellFlags targetFlags)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "targetFlags",
+                    "type": "MazeCellFlags",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "確認対象の属性"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された属性のいずれかを持つか判定する。",
+            "returns": "指定された属性のいずれかを持つ場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "WithFlags",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeCell WithFlags(\r\n            MazeCellFlags newFlags)",
+            "returnType": "MazeCell",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "newFlags",
+                    "type": "MazeCellFlags",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "変更後の属性"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "属性を置き換えた新しいマスデータを取得する。",
+            "returns": "変更後のマスデータ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "AddFlags",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeCell AddFlags(\r\n            MazeCellFlags targetFlags)",
+            "returnType": "MazeCell",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "targetFlags",
+                    "type": "MazeCellFlags",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "追加する属性"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された属性を追加したマスデータを取得する。 既存の属性は維持する。",
+            "returns": "変更後のマスデータ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RemoveFlags",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeCell RemoveFlags(\r\n            MazeCellFlags targetFlags)",
+            "returnType": "MazeCell",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "targetFlags",
+                    "type": "MazeCellFlags",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "除去する属性"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された属性を除去したマスデータを取得する。 その他の属性は維持する。",
+            "returns": "変更後のマスデータ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SetFlags",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeCell SetFlags(\r\n            MazeCellFlags targetFlags,\r\n            bool enabled)",
+            "returnType": "MazeCell",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "targetFlags",
+                    "type": "MazeCellFlags",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "変更対象の属性"
+                },
+                {
+                    "name": "enabled",
+                    "type": "bool",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "有効にする場合はtrue"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された属性を有効または無効にする。",
+            "returns": "変更後のマスデータ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ClearFlags",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeCell ClearFlags()",
+            "returnType": "MazeCell",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべての属性を消去したマスデータを取得する。 地形情報は維持する。",
+            "returns": "属性消去後のマスデータ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "PlaceGem",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeCell PlaceGem()",
+            "returnType": "MazeCell",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "宝石を配置したマスデータを取得する。 配置できない場合は元のデータを返す。",
+            "returns": "宝石配置処理後のマスデータ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CollectGem",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeCell CollectGem()",
+            "returnType": "MazeCell",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "宝石を取得した後のマスデータを取得する。",
+            "returns": "宝石除去後のマスデータ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "PlaceItem",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeCell PlaceItem()",
+            "returnType": "MazeCell",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "アイテムを配置したマスデータを取得する。 配置できない場合は元のデータを返す。",
+            "returns": "アイテム配置処理後のマスデータ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CollectItem",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeCell CollectItem()",
+            "returnType": "MazeCell",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "アイテムを取得した後のマスデータを取得する。",
+            "returns": "アイテム除去後のマスデータ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ClearCollectibles",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeCell ClearCollectibles()",
+            "returnType": "MazeCell",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "宝石とアイテムをすべて除去する。 出現地点などの属性は維持する。",
+            "returns": "配置物除去後のマスデータ",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Equals",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Equals(MazeCell other)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "other",
+                    "type": "MazeCell",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "比較対象のマスデータ"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "他のマスデータと内容が一致するか確認する。",
+            "returns": "内容が一致する場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Equals",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "override"
+            ],
+            "signature": "public override bool Equals(object obj)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "obj",
+                    "type": "object",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "比較対象のオブジェクト"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたオブジェクトと内容が一致するか確認する。",
+            "returns": "内容が一致する場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetHashCode",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "override"
+            ],
+            "signature": "public override int GetHashCode()",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "マスデータのハッシュ値を取得する。",
+            "returns": "地形と属性から算出したハッシュ値",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "operator",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static bool operator ==(\r\n            MazeCell left,\r\n            MazeCell right)",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "=(\r\n            MazeCell left,\r\n            MazeCell right)",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "2つのマスデータが等しいか判定する。",
+            "returns": "等しい場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ToString",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "override"
+            ],
+            "signature": "public override string ToString()",
+            "returnType": "string",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "マスデータの内容を文字列として取得する。 デバッグログなどに使用する。",
+            "returns": "地形と属性を表す文字列",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing UnityEngine;\r\n\r\nnamespace Game.Map\r\n{\r\n    #region Terrain Type\r\n\r\n    /// <summary>\r\n    /// 迷路内のマスの地形を表す列挙型。\r\n    /// </summary>\r\n    public enum MazeTerrainType\r\n    {\r\n        /// <summary>\r\n        /// 移動可能な通常の床。\r\n        /// </summary>\r\n        Floor = 0,\r\n\r\n        /// <summary>\r\n        /// 移動および破壊が不可能な通常の壁。\r\n        /// </summary>\r\n        Wall = 1,\r\n\r\n        /// <summary>\r\n        /// 特定の能力などによって破壊可能な壁。\r\n        /// </summary>\r\n        BreakableWall = 2\r\n    }\r\n\r\n    #endregion\r\n\r\n    #region Cell Flags\r\n\r\n    /// <summary>\r\n    /// 迷路内のマスが持つ配置物や属性を表す列挙型。\r\n    ///\r\n    /// Flags属性によって複数の属性を\r\n    /// 同時に保持することができる。\r\n    /// </summary>\r\n    [Flags]\r\n    public enum MazeCellFlags\r\n    {\r\n        /// <summary>\r\n        /// 特別な属性を持たない状態。\r\n        /// </summary>\r\n        None = 0,\r\n\r\n        /// <summary>\r\n        /// 宝石が配置されている。\r\n        /// </summary>\r\n        Gem = 1 << 0,\r\n\r\n        /// <summary>\r\n        /// アイテムが配置されている。\r\n        /// </summary>\r\n        Item = 1 << 1,\r\n\r\n        /// <summary>\r\n        /// プレイヤーの初期出現地点。\r\n        /// </summary>\r\n        PlayerSpawn = 1 << 2,\r\n\r\n        /// <summary>\r\n        /// 敵キャラクターの出現地点。\r\n        /// </summary>\r\n        EnemySpawn = 1 << 3,\r\n\r\n        /// <summary>\r\n        /// アイテムの配置候補地点。\r\n        /// </summary>\r\n        ItemSpawn = 1 << 4\r\n    }\r\n\r\n    #endregion\r\n\r\n    #region Maze Cell\r\n\r\n    /// <summary>\r\n    /// 迷路内の1マス分のゲームデータを管理する構造体。\r\n    ///\r\n    /// 地形情報と配置物・属性情報を独立して保持する。\r\n    /// GridMapの変更通知に対応するため、\r\n    /// 値型として実装する。\r\n    /// </summary>\r\n    [Serializable]\r\n    public struct MazeCell : IEquatable<MazeCell>\r\n    {\r\n        #region Constants\r\n\r\n        /// <summary>\r\n        /// 使用可能なすべての属性フラグ。\r\n        /// 不正なフラグの混入を防止するために使用する。\r\n        /// </summary>\r\n        private const MazeCellFlags ValidFlags =\r\n            MazeCellFlags.Gem |\r\n            MazeCellFlags.Item |\r\n            MazeCellFlags.PlayerSpawn |\r\n            MazeCellFlags.EnemySpawn |\r\n            MazeCellFlags.ItemSpawn;\r\n\r\n        #endregion\r\n\r\n        #region Fields\r\n\r\n        /// <summary>\r\n        /// マスの地形情報。\r\n        /// </summary>\r\n        [SerializeField]\r\n        [Tooltip(\"マスの地形の種類\")]\r\n        private MazeTerrainType terrain;\r\n\r\n        /// <summary>\r\n        /// マスが持つ配置物および属性情報。\r\n        /// </summary>\r\n        [SerializeField]\r\n        [Tooltip(\"マスに設定されている属性フラグ\")]\r\n        private MazeCellFlags flags;\r\n\r\n        #endregion\r\n\r\n        #region Properties\r\n\r\n        /// <summary>\r\n        /// 現在の地形情報を取得する。\r\n        /// </summary>\r\n        public MazeTerrainType Terrain => terrain;\r\n\r\n        /// <summary>\r\n        /// 現在の属性情報を取得する。\r\n        /// </summary>\r\n        public MazeCellFlags Flags => flags;\r\n\r\n        /// <summary>\r\n        /// 通常の床であるかどうか。\r\n        /// </summary>\r\n        public bool IsFloor =>\r\n            terrain == MazeTerrainType.Floor;\r\n\r\n        /// <summary>\r\n        /// 通常の壁または破壊可能な壁であるかどうか。\r\n        /// </summary>\r\n        public bool IsWall =>\r\n            terrain == MazeTerrainType.Wall ||\r\n            terrain == MazeTerrainType.BreakableWall;\r\n\r\n        /// <summary>\r\n        /// 破壊可能な壁であるかどうか。\r\n        /// </summary>\r\n        public bool IsBreakable =>\r\n            terrain == MazeTerrainType.BreakableWall;\r\n\r\n        /// <summary>\r\n        /// 通常のキャラクターが移動可能かどうか。\r\n        /// </summary>\r\n        public bool IsWalkable =>\r\n            terrain == MazeTerrainType.Floor;\r\n\r\n        /// <summary>\r\n        /// 宝石が存在するかどうか。\r\n        /// </summary>\r\n        public bool HasGem =>\r\n            HasFlags(MazeCellFlags.Gem);\r\n\r\n        /// <summary>\r\n        /// アイテムが存在するかどうか。\r\n        /// </summary>\r\n        public bool HasItem =>\r\n            HasFlags(MazeCellFlags.Item);\r\n\r\n        /// <summary>\r\n        /// プレイヤーの出現地点であるかどうか。\r\n        /// </summary>\r\n        public bool IsPlayerSpawn =>\r\n            HasFlags(MazeCellFlags.PlayerSpawn);\r\n\r\n        /// <summary>\r\n        /// 敵の出現地点であるかどうか。\r\n        /// </summary>\r\n        public bool IsEnemySpawn =>\r\n            HasFlags(MazeCellFlags.EnemySpawn);\r\n\r\n        /// <summary>\r\n        /// アイテムの配置候補地点であるかどうか。\r\n        /// </summary>\r\n        public bool IsItemSpawn =>\r\n            HasFlags(MazeCellFlags.ItemSpawn);\r\n\r\n        /// <summary>\r\n        /// 宝石またはアイテムが存在するかどうか。\r\n        /// </summary>\r\n        public bool HasCollectible =>\r\n            HasGem || HasItem;\r\n\r\n        /// <summary>\r\n        /// 宝石やアイテムが存在しない移動可能な床かどうか。\r\n        ///\r\n        /// キャラクターの現在位置は考慮しない。\r\n        /// </summary>\r\n        public bool IsEmptyFloor =>\r\n            IsFloor && !HasCollectible;\r\n\r\n        /// <summary>\r\n        /// 宝石を新しく配置できるかどうか。\r\n        /// 出現地点や既存の配置物との重複を防止する。\r\n        /// </summary>\r\n        public bool CanPlaceGem =>\r\n            IsWalkable &&\r\n            !HasCollectible &&\r\n            !IsPlayerSpawn &&\r\n            !IsEnemySpawn;\r\n\r\n        /// <summary>\r\n        /// アイテムを新しく配置できるかどうか。\r\n        /// アイテム配置候補であるかどうかは考慮しない。\r\n        /// </summary>\r\n        public bool CanPlaceItem =>\r\n            IsWalkable &&\r\n            !HasCollectible &&\r\n            !IsPlayerSpawn &&\r\n            !IsEnemySpawn;\r\n\r\n        #endregion\r\n\r\n        #region Constructors\r\n\r\n        /// <summary>\r\n        /// 指定された地形と属性を持つマスを生成する。\r\n        /// </summary>\r\n        /// <param name=\"terrain\">地形情報</param>\r\n        /// <param name=\"flags\">配置物および属性情報</param>\r\n        public MazeCell(\r\n            MazeTerrainType terrain,\r\n            MazeCellFlags flags = MazeCellFlags.None)\r\n        {\r\n            ValidateTerrain(terrain);\r\n\r\n            this.terrain = terrain;\r\n\r\n            // 未定義の属性を除外する。\r\n            this.flags = flags & ValidFlags;\r\n\r\n            // 壁には配置物や出現地点を設定しない。\r\n            if (terrain != MazeTerrainType.Floor)\r\n            {\r\n                this.flags = MazeCellFlags.None;\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Factory Methods\r\n\r\n        /// <summary>\r\n        /// 通常の床データを生成する。\r\n        /// </summary>\r\n        /// <param name=\"flags\">床に設定する属性</param>\r\n        /// <returns>生成された床データ</returns>\r\n        public static MazeCell CreateFloor(\r\n            MazeCellFlags flags = MazeCellFlags.None)\r\n        {\r\n            return new MazeCell(\r\n                MazeTerrainType.Floor,\r\n                flags);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 通常の壁データを生成する。\r\n        /// </summary>\r\n        /// <returns>生成された壁データ</returns>\r\n        public static MazeCell CreateWall()\r\n        {\r\n            return new MazeCell(\r\n                MazeTerrainType.Wall);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 破壊可能な壁データを生成する。\r\n        /// </summary>\r\n        /// <returns>生成された破壊可能な壁データ</returns>\r\n        public static MazeCell CreateBreakableWall()\r\n        {\r\n            return new MazeCell(\r\n                MazeTerrainType.BreakableWall);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Terrain Methods\r\n\r\n        /// <summary>\r\n        /// 地形を変更した新しいマスデータを取得する。\r\n        /// 元のマスデータは変更しない。\r\n        ///\r\n        /// 壁へ変更した場合は属性情報を消去する。\r\n        /// </summary>\r\n        /// <param name=\"newTerrain\">変更後の地形</param>\r\n        /// <returns>変更後のマスデータ</returns>\r\n        public MazeCell WithTerrain(\r\n            MazeTerrainType newTerrain)\r\n        {\r\n            return new MazeCell(\r\n                newTerrain,\r\n                flags);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 破壊可能な壁を床へ変更する。\r\n        /// 通常の壁や床の場合は変更しない。\r\n        /// </summary>\r\n        /// <returns>壁破壊処理後のマスデータ</returns>\r\n        public MazeCell BreakWall()\r\n        {\r\n            if (!IsBreakable)\r\n            {\r\n                return this;\r\n            }\r\n\r\n            return CreateFloor();\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Flag Methods\r\n\r\n        /// <summary>\r\n        /// 指定された属性をすべて持っているか判定する。\r\n        /// </summary>\r\n        /// <param name=\"targetFlags\">確認対象の属性</param>\r\n        /// <returns>\r\n        /// 指定された属性をすべて持つ場合はtrue\r\n        /// </returns>\r\n        public bool HasFlags(\r\n            MazeCellFlags targetFlags)\r\n        {\r\n            if (targetFlags == MazeCellFlags.None)\r\n            {\r\n                return flags == MazeCellFlags.None;\r\n            }\r\n\r\n            return (flags & targetFlags) == targetFlags;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された属性のいずれかを持つか判定する。\r\n        /// </summary>\r\n        /// <param name=\"targetFlags\">確認対象の属性</param>\r\n        /// <returns>\r\n        /// 指定された属性のいずれかを持つ場合はtrue\r\n        /// </returns>\r\n        public bool HasAnyFlags(\r\n            MazeCellFlags targetFlags)\r\n        {\r\n            return (flags & targetFlags) != 0;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 属性を置き換えた新しいマスデータを取得する。\r\n        /// </summary>\r\n        /// <param name=\"newFlags\">変更後の属性</param>\r\n        /// <returns>変更後のマスデータ</returns>\r\n        public MazeCell WithFlags(\r\n            MazeCellFlags newFlags)\r\n        {\r\n            return new MazeCell(\r\n                terrain,\r\n                newFlags);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された属性を追加したマスデータを取得する。\r\n        /// 既存の属性は維持する。\r\n        /// </summary>\r\n        /// <param name=\"targetFlags\">追加する属性</param>\r\n        /// <returns>変更後のマスデータ</returns>\r\n        public MazeCell AddFlags(\r\n            MazeCellFlags targetFlags)\r\n        {\r\n            return WithFlags(flags | targetFlags);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された属性を除去したマスデータを取得する。\r\n        /// その他の属性は維持する。\r\n        /// </summary>\r\n        /// <param name=\"targetFlags\">除去する属性</param>\r\n        /// <returns>変更後のマスデータ</returns>\r\n        public MazeCell RemoveFlags(\r\n            MazeCellFlags targetFlags)\r\n        {\r\n            return WithFlags(flags & ~targetFlags);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された属性を有効または無効にする。\r\n        /// </summary>\r\n        /// <param name=\"targetFlags\">変更対象の属性</param>\r\n        /// <param name=\"enabled\">有効にする場合はtrue</param>\r\n        /// <returns>変更後のマスデータ</returns>\r\n        public MazeCell SetFlags(\r\n            MazeCellFlags targetFlags,\r\n            bool enabled)\r\n        {\r\n            return enabled\r\n                ? AddFlags(targetFlags)\r\n                : RemoveFlags(targetFlags);\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべての属性を消去したマスデータを取得する。\r\n        /// 地形情報は維持する。\r\n        /// </summary>\r\n        /// <returns>属性消去後のマスデータ</returns>\r\n        public MazeCell ClearFlags()\r\n        {\r\n            return WithFlags(MazeCellFlags.None);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Collectible Methods\r\n\r\n        /// <summary>\r\n        /// 宝石を配置したマスデータを取得する。\r\n        /// 配置できない場合は元のデータを返す。\r\n        /// </summary>\r\n        /// <returns>宝石配置処理後のマスデータ</returns>\r\n        public MazeCell PlaceGem()\r\n        {\r\n            if (!CanPlaceGem)\r\n            {\r\n                return this;\r\n            }\r\n\r\n            return AddFlags(MazeCellFlags.Gem);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 宝石を取得した後のマスデータを取得する。\r\n        /// </summary>\r\n        /// <returns>宝石除去後のマスデータ</returns>\r\n        public MazeCell CollectGem()\r\n        {\r\n            return RemoveFlags(MazeCellFlags.Gem);\r\n        }\r\n\r\n        /// <summary>\r\n        /// アイテムを配置したマスデータを取得する。\r\n        /// 配置できない場合は元のデータを返す。\r\n        /// </summary>\r\n        /// <returns>アイテム配置処理後のマスデータ</returns>\r\n        public MazeCell PlaceItem()\r\n        {\r\n            if (!CanPlaceItem)\r\n            {\r\n                return this;\r\n            }\r\n\r\n            return AddFlags(MazeCellFlags.Item);\r\n        }\r\n\r\n        /// <summary>\r\n        /// アイテムを取得した後のマスデータを取得する。\r\n        /// </summary>\r\n        /// <returns>アイテム除去後のマスデータ</returns>\r\n        public MazeCell CollectItem()\r\n        {\r\n            return RemoveFlags(MazeCellFlags.Item);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 宝石とアイテムをすべて除去する。\r\n        /// 出現地点などの属性は維持する。\r\n        /// </summary>\r\n        /// <returns>配置物除去後のマスデータ</returns>\r\n        public MazeCell ClearCollectibles()\r\n        {\r\n            return RemoveFlags(\r\n                MazeCellFlags.Gem |\r\n                MazeCellFlags.Item);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Validation Methods\r\n\r\n        /// <summary>\r\n        /// 指定された地形が有効な値か確認する。\r\n        /// 不正な値の場合は例外を発生させる。\r\n        /// </summary>\r\n        /// <param name=\"targetTerrain\">確認対象の地形</param>\r\n        private static void ValidateTerrain(\r\n            MazeTerrainType targetTerrain)\r\n        {\r\n            switch (targetTerrain)\r\n            {\r\n                case MazeTerrainType.Floor:\r\n                case MazeTerrainType.Wall:\r\n                case MazeTerrainType.BreakableWall:\r\n                    return;\r\n\r\n                default:\r\n                    throw new ArgumentOutOfRangeException(\r\n                        nameof(targetTerrain),\r\n                        targetTerrain,\r\n                        \"未定義の地形が指定されました。\");\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Equality Methods\r\n\r\n        /// <summary>\r\n        /// 他のマスデータと内容が一致するか確認する。\r\n        /// </summary>\r\n        /// <param name=\"other\">比較対象のマスデータ</param>\r\n        /// <returns>内容が一致する場合はtrue</returns>\r\n        public bool Equals(MazeCell other)\r\n        {\r\n            return terrain == other.terrain &&\r\n                   flags == other.flags;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたオブジェクトと内容が一致するか確認する。\r\n        /// </summary>\r\n        /// <param name=\"obj\">比較対象のオブジェクト</param>\r\n        /// <returns>内容が一致する場合はtrue</returns>\r\n        public override bool Equals(object obj)\r\n        {\r\n            return obj is MazeCell other &&\r\n                   Equals(other);\r\n        }\r\n\r\n        /// <summary>\r\n        /// マスデータのハッシュ値を取得する。\r\n        /// </summary>\r\n        /// <returns>地形と属性から算出したハッシュ値</returns>\r\n        public override int GetHashCode()\r\n        {\r\n            unchecked\r\n            {\r\n                return ((int)terrain * 397) ^\r\n                       (int)flags;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 2つのマスデータが等しいか判定する。\r\n        /// </summary>\r\n        /// <param name=\"left\">左辺のマスデータ</param>\r\n        /// <param name=\"right\">右辺のマスデータ</param>\r\n        /// <returns>等しい場合はtrue</returns>\r\n        public static bool operator ==(\r\n            MazeCell left,\r\n            MazeCell right)\r\n        {\r\n            return left.Equals(right);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 2つのマスデータが異なるか判定する。\r\n        /// </summary>\r\n        /// <param name=\"left\">左辺のマスデータ</param>\r\n        /// <param name=\"right\">右辺のマスデータ</param>\r\n        /// <returns>異なる場合はtrue</returns>\r\n        public static bool operator !=(\r\n            MazeCell left,\r\n            MazeCell right)\r\n        {\r\n            return !left.Equals(right);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Debug Methods\r\n\r\n        /// <summary>\r\n        /// マスデータの内容を文字列として取得する。\r\n        /// デバッグログなどに使用する。\r\n        /// </summary>\r\n        /// <returns>地形と属性を表す文字列</returns>\r\n        public override string ToString()\r\n        {\r\n            return $\"Terrain: {terrain}, Flags: {flags}\";\r\n        }\r\n\r\n        #endregion\r\n    }\r\n\r\n    #endregion\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-26T16:01:49.925Z"
+}

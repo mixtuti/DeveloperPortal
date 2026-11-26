@@ -1,0 +1,420 @@
+{
+    "parserVersion": 2,
+    "id": "Game.Character.MazePlayerController",
+    "name": "MazePlayerController",
+    "fileName": "MazePlayerController.cs",
+    "namespace": "Game.Character",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public class MazePlayerController : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "迷路内のプレイヤーを制御するクラス。 入力取得、移動方向の決定、宝石・アイテム取得、 ステージ状態に応じた移動制御を担当する。 実際の移動処理はGridMovementControllerへ委譲する。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "UnityEngine",
+        "Framework.Input",
+        "Framework.Movement",
+        "Game.Input",
+        "Game.Stage",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "IsInitialized",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsInitialized => isInitialized",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "初期化が完了しているか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Movement",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridMovementController Movement => movement",
+            "returnType": "",
+            "valueType": "GridMovementController",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "グリッド移動コンポーネント。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CurrentCell",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int CurrentCell =>\r\n            movement != null\r\n                ? movement.CurrentCell\r\n                : Vector2Int.zero",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在到達しているセル座標。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CurrentDirection",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int CurrentDirection =>\r\n            movement != null\r\n                ? movement.CurrentDirection\r\n                : Vector2Int.zero",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の移動方向。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "BaseMoveSpeed",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float BaseMoveSpeed => baseMoveSpeed",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の基本移動速度。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SpeedMultiplier",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float SpeedMultiplier => speedMultiplier",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の移動速度倍率。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CurrentMoveSpeed",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float CurrentMoveSpeed =>\r\n            baseMoveSpeed * speedMultiplier",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "倍率適用後の移動速度。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CanAct",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool CanAct =>\r\n            isInitialized &&\r\n            isActiveAndEnabled &&\r\n            stageManager != null &&\r\n            stageManager.IsPlaying &&\r\n            ReferenceEquals(\r\n                boundStage,\r\n                stageManager.StageResult)",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "プレイヤーが行動可能な状態か。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CellEntered",
+            "kind": "event",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public event Action<Vector2Int> CellEntered",
+            "returnType": "",
+            "valueType": "Action<Vector2Int>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "プレイヤーがセルの中心へ到達した際のイベント。 引数は到達したセル座標。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GemCollected",
+            "kind": "event",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public event Action<Vector2Int> GemCollected",
+            "returnType": "",
+            "valueType": "Action<Vector2Int>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "プレイヤーが宝石を取得した際のイベント。 引数は取得したセル座標。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ItemCollected",
+            "kind": "event",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public event Action<Vector2Int> ItemCollected",
+            "returnType": "",
+            "valueType": "Action<Vector2Int>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "プレイヤーがアイテムを取得した際のイベント。 引数は取得したセル座標。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ItemUseRequested",
+            "kind": "event",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public event Action ItemUseRequested",
+            "returnType": "",
+            "valueType": "Action",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "アイテム使用が要求された際のイベント。 実際のアイテム効果は外部クラスが処理する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SummonRequested",
+            "kind": "event",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public event Action SummonRequested",
+            "returnType": "",
+            "valueType": "Action",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "召喚が要求された際のイベント。 実際の召喚処理は外部クラスが担当する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Initialize",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Initialize(\r\n            MazeStageManager manager,\r\n            IInputProvider<GameInputAction> provider,\r\n            Vector2Int spawnPosition)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "manager",
+                    "type": "MazeStageManager",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "ステージ管理クラス"
+                },
+                {
+                    "name": "provider",
+                    "type": "IInputProvider<GameInputAction>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "入力取得先"
+                },
+                {
+                    "name": "spawnPosition",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "初期セル座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "プレイヤーを指定されたステージへ接続する。",
+            "returns": "初期化に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Shutdown",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Shutdown()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "プレイヤー制御を終了して参照を解除する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RequestDirection",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool RequestDirection(Vector2Int direction)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "direction",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "予約する移動方向"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された方向への移動を予約する。 キーボード以外の操作や自動テストからも利用できる。",
+            "returns": "予約に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SetBaseMoveSpeed",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void SetBaseMoveSpeed(float speed)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "speed",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "変更後の基本移動速度"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "プレイヤーの基本移動速度を変更する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SetSpeedMultiplier",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void SetSpeedMultiplier(float multiplier)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "multiplier",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "変更後の速度倍率"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "移動速度の倍率を変更する。 加速アイテムなどから利用する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ResetSpeedMultiplier",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void ResetSpeedMultiplier()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "移動速度倍率を通常状態へ戻す。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing UnityEngine;\r\nusing Framework.Input;\r\nusing Framework.Movement;\r\nusing Game.Input;\r\nusing Game.Stage;\r\n\r\nnamespace Game.Character\r\n{\r\n    /// <summary>\r\n    /// 迷路内のプレイヤーを制御するクラス。\r\n    ///\r\n    /// 入力取得、移動方向の決定、宝石・アイテム取得、\r\n    /// ステージ状態に応じた移動制御を担当する。\r\n    ///\r\n    /// 実際の移動処理はGridMovementControllerへ委譲する。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    [RequireComponent(typeof(GridMovementController))]\r\n    public class MazePlayerController : MonoBehaviour\r\n    {\r\n        #region Inspector Fields\r\n\r\n        [Header(\"移動設定\")]\r\n\r\n        /// <summary>プレイヤーの基本移動速度。</summary>\r\n        [SerializeField]\r\n        [Min(0.1f)]\r\n        [Tooltip(\"1秒間に移動するセル数\")]\r\n        private float baseMoveSpeed = 5f;\r\n\r\n        /// <summary>方向入力のデッドゾーン。</summary>\r\n        [SerializeField]\r\n        [Range(0f, 0.99f)]\r\n        [Tooltip(\"方向入力を無視する範囲\")]\r\n        private float deadZone = 0.3f;\r\n\r\n        /// <summary>斜め入力時の方向優先設定。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"斜め入力時に優先する方向\")]\r\n        private DirectionPriority directionPriority =\r\n            DirectionPriority.PreviousDirection;\r\n\r\n        [Header(\"取得設定\")]\r\n\r\n        /// <summary>宝石を自動取得するか。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"セル到達時に宝石を自動取得する\")]\r\n        private bool autoCollectGem = true;\r\n\r\n        /// <summary>アイテムを自動取得するか。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"セル到達時にアイテムを自動取得する\")]\r\n        private bool autoCollectItem = true;\r\n\r\n        #endregion\r\n\r\n        #region Runtime Fields\r\n\r\n        /// <summary>汎用グリッド移動コンポーネント。</summary>\r\n        private GridMovementController movement;\r\n\r\n        /// <summary>現在のステージ管理クラス。</summary>\r\n        private MazeStageManager stageManager;\r\n\r\n        /// <summary>プレイヤーの入力取得先。</summary>\r\n        private IInputProvider<GameInputAction> inputProvider;\r\n\r\n        /// <summary>初期化対象となったステージ情報。</summary>\r\n        private MazeStageGenerationResult boundStage;\r\n\r\n        /// <summary>最後に取得した有効な入力方向。</summary>\r\n        private Vector2Int previousInputDirection;\r\n\r\n        /// <summary>プレイヤーの初期化状態。</summary>\r\n        private bool isInitialized;\r\n\r\n        /// <summary>移動速度に適用する倍率。</summary>\r\n        private float speedMultiplier = 1f;\r\n\r\n        #endregion\r\n\r\n        #region Properties\r\n\r\n        /// <summary>初期化が完了しているか。</summary>\r\n        public bool IsInitialized => isInitialized;\r\n\r\n        /// <summary>グリッド移動コンポーネント。</summary>\r\n        public GridMovementController Movement => movement;\r\n\r\n        /// <summary>現在到達しているセル座標。</summary>\r\n        public Vector2Int CurrentCell =>\r\n            movement != null\r\n                ? movement.CurrentCell\r\n                : Vector2Int.zero;\r\n\r\n        /// <summary>現在の移動方向。</summary>\r\n        public Vector2Int CurrentDirection =>\r\n            movement != null\r\n                ? movement.CurrentDirection\r\n                : Vector2Int.zero;\r\n\r\n        /// <summary>現在の基本移動速度。</summary>\r\n        public float BaseMoveSpeed => baseMoveSpeed;\r\n\r\n        /// <summary>現在の移動速度倍率。</summary>\r\n        public float SpeedMultiplier => speedMultiplier;\r\n\r\n        /// <summary>倍率適用後の移動速度。</summary>\r\n        public float CurrentMoveSpeed =>\r\n            baseMoveSpeed * speedMultiplier;\r\n\r\n        /// <summary>プレイヤーが行動可能な状態か。</summary>\r\n        public bool CanAct =>\r\n            isInitialized &&\r\n            isActiveAndEnabled &&\r\n            stageManager != null &&\r\n            stageManager.IsPlaying &&\r\n            ReferenceEquals(\r\n                boundStage,\r\n                stageManager.StageResult);\r\n\r\n        #endregion\r\n\r\n        #region Events\r\n\r\n        /// <summary>\r\n        /// プレイヤーがセルの中心へ到達した際のイベント。\r\n        /// 引数は到達したセル座標。\r\n        /// </summary>\r\n        public event Action<Vector2Int> CellEntered;\r\n\r\n        /// <summary>\r\n        /// プレイヤーが宝石を取得した際のイベント。\r\n        /// 引数は取得したセル座標。\r\n        /// </summary>\r\n        public event Action<Vector2Int> GemCollected;\r\n\r\n        /// <summary>\r\n        /// プレイヤーがアイテムを取得した際のイベント。\r\n        /// 引数は取得したセル座標。\r\n        /// </summary>\r\n        public event Action<Vector2Int> ItemCollected;\r\n\r\n        /// <summary>\r\n        /// アイテム使用が要求された際のイベント。\r\n        /// 実際のアイテム効果は外部クラスが処理する。\r\n        /// </summary>\r\n        public event Action ItemUseRequested;\r\n\r\n        /// <summary>\r\n        /// 召喚が要求された際のイベント。\r\n        /// 実際の召喚処理は外部クラスが担当する。\r\n        /// </summary>\r\n        public event Action SummonRequested;\r\n\r\n        #endregion\r\n\r\n        #region Unity Methods\r\n\r\n        /// <summary>コンポーネント生成時の処理。</summary>\r\n        private void Awake()\r\n        {\r\n            movement =\r\n                GetComponent<GridMovementController>();\r\n\r\n            // 移動更新の順序をPlayer側で管理する。\r\n            movement.AutoUpdate = false;\r\n        }\r\n\r\n        /// <summary>コンポーネント有効化時の処理。</summary>\r\n        private void OnEnable()\r\n        {\r\n            if (isInitialized)\r\n            {\r\n                SynchronizeMovementState();\r\n            }\r\n        }\r\n\r\n        /// <summary>プレイヤーの毎フレーム更新処理。</summary>\r\n        private void Update()\r\n        {\r\n            if (!CanAct)\r\n            {\r\n                return;\r\n            }\r\n\r\n            ProcessDirectionInput();\r\n            ProcessActionInput();\r\n\r\n            // アイテム使用などによってステージ状態が\r\n            // 変化する可能性があるため再確認する。\r\n            if (!CanAct)\r\n            {\r\n                return;\r\n            }\r\n\r\n            // 入力取得後に移動処理を実行する。\r\n            movement.Tick(Time.deltaTime);\r\n        }\r\n\r\n        /// <summary>コンポーネント無効化時の処理。</summary>\r\n        private void OnDisable()\r\n        {\r\n            if (movement != null)\r\n            {\r\n                movement.Pause();\r\n            }\r\n        }\r\n\r\n        /// <summary>コンポーネント破棄時の処理。</summary>\r\n        private void OnDestroy()\r\n        {\r\n            Shutdown();\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Initialization Methods\r\n\r\n        /// <summary>\r\n        /// プレイヤーを指定されたステージへ接続する。\r\n        /// </summary>\r\n        /// <param name=\"manager\">ステージ管理クラス</param>\r\n        /// <param name=\"provider\">入力取得先</param>\r\n        /// <param name=\"spawnPosition\">初期セル座標</param>\r\n        /// <returns>初期化に成功した場合はtrue</returns>\r\n        public bool Initialize(\r\n            MazeStageManager manager,\r\n            IInputProvider<GameInputAction> provider,\r\n            Vector2Int spawnPosition)\r\n        {\r\n            if (manager == null ||\r\n                provider == null ||\r\n                !provider.IsInitialized ||\r\n                !manager.HasStage ||\r\n                manager.CoordinateConverter == null)\r\n            {\r\n                Debug.LogError(\r\n                    \"プレイヤーの初期化に必要な情報が不足しています。\",\r\n                    this);\r\n\r\n                return false;\r\n            }\r\n\r\n            if (!manager.IsWalkable(spawnPosition))\r\n            {\r\n                Debug.LogError(\r\n                    $\"初期位置が通行できません：{spawnPosition}\",\r\n                    this);\r\n\r\n                return false;\r\n            }\r\n\r\n            Shutdown();\r\n\r\n            if (movement == null)\r\n            {\r\n                movement =\r\n                    GetComponent<GridMovementController>();\r\n            }\r\n\r\n            try\r\n            {\r\n                stageManager = manager;\r\n                inputProvider = provider;\r\n                boundStage = manager.StageResult;\r\n\r\n                speedMultiplier = 1f;\r\n                previousInputDirection = Vector2Int.zero;\r\n\r\n                // Spawnerが設定したZ座標を維持する。\r\n                Vector3 cellCenter =\r\n                    manager.CoordinateConverter\r\n                        .GetCellCenterWorld(spawnPosition);\r\n\r\n                float zOffset =\r\n                    transform.position.z - cellCenter.z;\r\n\r\n                movement.AutoUpdate = false;\r\n\r\n                movement.MoveSpeed = CurrentMoveSpeed;\r\n\r\n                movement.Initialize(\r\n                    manager.CoordinateConverter,\r\n                    CanEnterCell,\r\n                    spawnPosition,\r\n                    zOffset);\r\n\r\n                movement.CellReached += OnCellReached;\r\n\r\n                stageManager.StateChanged +=\r\n                    OnStageStateChanged;\r\n\r\n                isInitialized = true;\r\n\r\n                SynchronizeMovementState();\r\n\r\n                return true;\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                Shutdown();\r\n\r\n                Debug.LogException(exception, this);\r\n\r\n                return false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// プレイヤー制御を終了して参照を解除する。\r\n        /// </summary>\r\n        public void Shutdown()\r\n        {\r\n            isInitialized = false;\r\n\r\n            if (movement != null)\r\n            {\r\n                movement.CellReached -= OnCellReached;\r\n\r\n                movement.Pause();\r\n                movement.ClearRequestedDirection();\r\n            }\r\n\r\n            if (stageManager != null)\r\n            {\r\n                stageManager.StateChanged -=\r\n                    OnStageStateChanged;\r\n            }\r\n\r\n            stageManager = null;\r\n            inputProvider = null;\r\n            boundStage = null;\r\n\r\n            previousInputDirection = Vector2Int.zero;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Input Methods\r\n\r\n        /// <summary>\r\n        /// 方向入力を取得して移動方向を予約する。\r\n        /// </summary>\r\n        private void ProcessDirectionInput()\r\n        {\r\n            if (inputProvider == null ||\r\n                !inputProvider.IsInputEnabled)\r\n            {\r\n                return;\r\n            }\r\n\r\n            Vector2 input =\r\n                inputProvider.GetVector2(\r\n                    GameInputAction.Move);\r\n\r\n            Vector2Int direction =\r\n                InputDirectionUtility.ToFourDirection(\r\n                    input,\r\n                    deadZone,\r\n                    directionPriority,\r\n                    previousInputDirection);\r\n\r\n            // 入力を離しても現在の方向へ進み続ける。\r\n            // 予約済みの方向も取り消さない。\r\n            if (direction == Vector2Int.zero)\r\n            {\r\n                return;\r\n            }\r\n\r\n            previousInputDirection = direction;\r\n\r\n            RequestDirection(direction);\r\n        }\r\n\r\n        /// <summary>\r\n        /// アイテム使用・召喚入力を処理する。\r\n        /// </summary>\r\n        private void ProcessActionInput()\r\n        {\r\n            if (inputProvider == null ||\r\n                !inputProvider.IsInputEnabled)\r\n            {\r\n                return;\r\n            }\r\n\r\n            if (inputProvider.GetButtonDown(\r\n                GameInputAction.UseItem))\r\n            {\r\n                ItemUseRequested?.Invoke();\r\n            }\r\n\r\n            if (!CanAct)\r\n            {\r\n                return;\r\n            }\r\n\r\n            if (inputProvider.GetButtonDown(\r\n                GameInputAction.Summon))\r\n            {\r\n                SummonRequested?.Invoke();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された方向への移動を予約する。\r\n        ///\r\n        /// キーボード以外の操作や自動テストからも利用できる。\r\n        /// </summary>\r\n        /// <param name=\"direction\">予約する移動方向</param>\r\n        /// <returns>予約に成功した場合はtrue</returns>\r\n        public bool RequestDirection(Vector2Int direction)\r\n        {\r\n            if (!CanAct)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return movement.RequestDirection(direction);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Movement Methods\r\n\r\n        /// <summary>\r\n        /// 指定されたセルへ移動可能か確認する。\r\n        /// </summary>\r\n        /// <param name=\"position\">確認するセル座標</param>\r\n        /// <returns>通行可能な場合はtrue</returns>\r\n        private bool CanEnterCell(Vector2Int position)\r\n        {\r\n            return stageManager != null &&\r\n                   ReferenceEquals(\r\n                       boundStage,\r\n                       stageManager.StageResult) &&\r\n                   stageManager.IsWalkable(position);\r\n        }\r\n\r\n        /// <summary>\r\n        /// プレイヤーの基本移動速度を変更する。\r\n        /// </summary>\r\n        /// <param name=\"speed\">変更後の基本移動速度</param>\r\n        public void SetBaseMoveSpeed(float speed)\r\n        {\r\n            ValidateSpeed(speed, nameof(speed));\r\n\r\n            baseMoveSpeed = speed;\r\n\r\n            ApplyMoveSpeed();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 移動速度の倍率を変更する。\r\n        /// 加速アイテムなどから利用する。\r\n        /// </summary>\r\n        /// <param name=\"multiplier\">変更後の速度倍率</param>\r\n        public void SetSpeedMultiplier(float multiplier)\r\n        {\r\n            ValidateSpeed(\r\n                multiplier,\r\n                nameof(multiplier));\r\n\r\n            speedMultiplier = multiplier;\r\n\r\n            ApplyMoveSpeed();\r\n        }\r\n\r\n        /// <summary>移動速度倍率を通常状態へ戻す。</summary>\r\n        public void ResetSpeedMultiplier()\r\n        {\r\n            speedMultiplier = 1f;\r\n\r\n            ApplyMoveSpeed();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在の速度設定を移動コンポーネントへ反映する。\r\n        /// </summary>\r\n        private void ApplyMoveSpeed()\r\n        {\r\n            if (movement != null)\r\n            {\r\n                movement.MoveSpeed = CurrentMoveSpeed;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 速度設定が有効な値か確認する。\r\n        /// </summary>\r\n        /// <param name=\"value\">検証する値</param>\r\n        /// <param name=\"parameterName\">引数名</param>\r\n        private static void ValidateSpeed(\r\n            float value,\r\n            string parameterName)\r\n        {\r\n            if (float.IsNaN(value) ||\r\n                float.IsInfinity(value) ||\r\n                value < 0f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    parameterName);\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Collection Methods\r\n\r\n        /// <summary>\r\n        /// プレイヤーがセルの中心へ到達した際の処理。\r\n        /// </summary>\r\n        /// <param name=\"position\">到達したセル座標</param>\r\n        private void OnCellReached(Vector2Int position)\r\n        {\r\n            if (!CanAct)\r\n            {\r\n                return;\r\n            }\r\n\r\n            CellEntered?.Invoke(position);\r\n\r\n            if (!CanAct)\r\n            {\r\n                return;\r\n            }\r\n\r\n            // 宝石の取得はステージ管理側へ委譲する。\r\n            if (autoCollectGem &&\r\n                stageManager.TryCollectGem(position))\r\n            {\r\n                GemCollected?.Invoke(position);\r\n            }\r\n\r\n            // 最後の宝石を取得した場合、\r\n            // この時点でステージクリアになっている。\r\n            if (!CanAct)\r\n            {\r\n                return;\r\n            }\r\n\r\n            // アイテム取得もステージ管理側へ委譲する。\r\n            if (autoCollectItem &&\r\n                stageManager.TryCollectItem(position))\r\n            {\r\n                ItemCollected?.Invoke(position);\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Stage State Methods\r\n\r\n        /// <summary>\r\n        /// ステージ状態変更時の処理。\r\n        /// </summary>\r\n        /// <param name=\"previousState\">変更前の状態</param>\r\n        /// <param name=\"newState\">変更後の状態</param>\r\n        private void OnStageStateChanged(\r\n            MazeStageState previousState,\r\n            MazeStageState newState)\r\n        {\r\n            SynchronizeMovementState();\r\n        }\r\n\r\n        /// <summary>\r\n        /// ステージ状態とプレイヤーの移動状態を同期する。\r\n        /// </summary>\r\n        private void SynchronizeMovementState()\r\n        {\r\n            if (movement == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            if (CanAct)\r\n            {\r\n                movement.Resume();\r\n            }\r\n            else\r\n            {\r\n                // 状態変更と同時に移動を停止する。\r\n                // ポーズ時はセル間の移動進捗を維持する。\r\n                movement.Pause();\r\n            }\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-26T16:01:49.940Z"
+}

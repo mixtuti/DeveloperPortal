@@ -1,0 +1,70 @@
+{
+    "parserVersion": 2,
+    "id": "Game.Stage.MazePlayerStageBinder",
+    "name": "MazePlayerStageBinder",
+    "fileName": "MazePlayerStageBinder.cs",
+    "namespace": "Game.Stage",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public class MazePlayerStageBinder : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "ステージ生成時にプレイヤーと各Managerを接続する。 動的に生成されたPlayer Prefabへ必要な参照を渡す。 ステージ状態に応じた入力モード変更と ポーズ・再開操作も担当する。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "UnityEngine",
+        "Game.Character",
+        "Game.Input",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "CurrentPlayer",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazePlayerController CurrentPlayer =>\r\n            currentPlayer",
+            "returnType": "",
+            "valueType": "MazePlayerController",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在のプレイヤーを取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasPlayer",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasPlayer =>\r\n            currentPlayer != null &&\r\n            currentPlayer.IsInitialized",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "プレイヤーとの接続が完了しているか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "source": "\r\nusing UnityEngine;\r\nusing Game.Character;\r\nusing Game.Input;\r\n\r\nnamespace Game.Stage\r\n{\r\n    /// <summary>\r\n    /// ステージ生成時にプレイヤーと各Managerを接続する。\r\n    ///\r\n    /// 動的に生成されたPlayer Prefabへ必要な参照を渡す。\r\n    /// ステージ状態に応じた入力モード変更と\r\n    /// ポーズ・再開操作も担当する。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    public class MazePlayerStageBinder : MonoBehaviour\r\n    {\r\n        #region Inspector Fields\r\n\r\n        [Header(\"参照設定\")]\r\n\r\n        /// <summary>ステージ管理クラス。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"接続対象のMazeStageManager\")]\r\n        private MazeStageManager stageManager;\r\n\r\n        /// <summary>ステージオブジェクト生成クラス。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"プレイヤーを生成するMazeStageSpawner\")]\r\n        private MazeStageSpawner stageSpawner;\r\n\r\n        /// <summary>ゲーム入力管理クラス。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"プレイヤー操作に使用するGameInputManager\")]\r\n        private GameInputManager inputManager;\r\n\r\n        [Header(\"入力連携設定\")]\r\n\r\n        /// <summary>ステージ状態と入力モードを連携するか。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"ステージ状態に応じて入力モードを変更する\")]\r\n        private bool synchronizeInputMode = true;\r\n\r\n        /// <summary>ポーズ・再開入力を処理するか。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"ポーズボタンとキャンセルボタンを処理する\")]\r\n        private bool handlePauseInput = true;\r\n\r\n        #endregion\r\n\r\n        #region Runtime Fields\r\n\r\n        /// <summary>現在接続されているプレイヤー。</summary>\r\n        private MazePlayerController currentPlayer;\r\n\r\n        /// <summary>イベント登録が完了しているか。</summary>\r\n        private bool isSubscribed;\r\n\r\n        #endregion\r\n\r\n        #region Properties\r\n\r\n        /// <summary>現在のプレイヤーを取得する。</summary>\r\n        public MazePlayerController CurrentPlayer =>\r\n            currentPlayer;\r\n\r\n        /// <summary>プレイヤーとの接続が完了しているか。</summary>\r\n        public bool HasPlayer =>\r\n            currentPlayer != null &&\r\n            currentPlayer.IsInitialized;\r\n\r\n        #endregion\r\n\r\n        #region Unity Methods\r\n\r\n        /// <summary>コンポーネント有効化時の処理。</summary>\r\n        private void OnEnable()\r\n        {\r\n            if (!ValidateReferences())\r\n            {\r\n                return;\r\n            }\r\n\r\n            // StageManagerのStartより前にイベントを登録する。\r\n            stageManager.StageGenerated += OnStageGenerated;\r\n\r\n            stageManager.StateChanged += OnStageStateChanged;\r\n\r\n            isSubscribed = true;\r\n\r\n            // 既に生成済みの場合にも対応する。\r\n            if (stageManager.HasStage)\r\n            {\r\n                BindPlayer(stageManager.StageResult);\r\n            }\r\n\r\n            SynchronizeInputMode();\r\n        }\r\n\r\n        /// <summary>シーン開始時の処理。</summary>\r\n        private void Start()\r\n        {\r\n            if (!isSubscribed)\r\n            {\r\n                return;\r\n            }\r\n\r\n            // Awakeの実行順序による初期化漏れを防止する。\r\n            if (!inputManager.IsInitialized)\r\n            {\r\n                inputManager.Initialize();\r\n            }\r\n\r\n            if (stageManager.HasStage && !HasPlayer)\r\n            {\r\n                BindPlayer(stageManager.StageResult);\r\n            }\r\n\r\n            SynchronizeInputMode();\r\n        }\r\n\r\n        /// <summary>ポーズ・再開入力を毎フレーム確認する。</summary>\r\n        private void Update()\r\n        {\r\n            if (!isSubscribed ||\r\n                !handlePauseInput ||\r\n                !inputManager.IsInitialized)\r\n            {\r\n                return;\r\n            }\r\n\r\n            if (stageManager.State == MazeStageState.Playing)\r\n            {\r\n                if (inputManager.GetButtonDown(\r\n                    GameInputAction.Pause))\r\n                {\r\n                    stageManager.PauseStage();\r\n                }\r\n            }\r\n            else if (\r\n                stageManager.State == MazeStageState.Paused)\r\n            {\r\n                if (inputManager.GetButtonDown(\r\n                    GameInputAction.Cancel))\r\n                {\r\n                    stageManager.ResumeStage();\r\n                }\r\n            }\r\n        }\r\n\r\n        /// <summary>コンポーネント無効化時の処理。</summary>\r\n        private void OnDisable()\r\n        {\r\n            if (isSubscribed && stageManager != null)\r\n            {\r\n                stageManager.StageGenerated -=\r\n                    OnStageGenerated;\r\n\r\n                stageManager.StateChanged -=\r\n                    OnStageStateChanged;\r\n            }\r\n\r\n            isSubscribed = false;\r\n\r\n            ReleasePlayer();\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Player Binding Methods\r\n\r\n        /// <summary>\r\n        /// ステージ生成完了時のイベント処理。\r\n        /// </summary>\r\n        /// <param name=\"result\">生成されたステージ情報</param>\r\n        private void OnStageGenerated(\r\n            MazeStageGenerationResult result)\r\n        {\r\n            BindPlayer(result);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 生成されたプレイヤーを各Managerへ接続する。\r\n        /// </summary>\r\n        /// <param name=\"result\">生成されたステージ情報</param>\r\n        /// <returns>接続に成功した場合はtrue</returns>\r\n        private bool BindPlayer(\r\n            MazeStageGenerationResult result)\r\n        {\r\n            ReleasePlayer();\r\n\r\n            if (result == null)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (!inputManager.IsInitialized &&\r\n                !inputManager.Initialize())\r\n            {\r\n                Debug.LogError(\r\n                    \"入力システムの初期化に失敗しました。\",\r\n                    this);\r\n\r\n                return false;\r\n            }\r\n\r\n            GameObject playerObject =\r\n                stageSpawner.PlayerInstance;\r\n\r\n            if (playerObject == null)\r\n            {\r\n                Debug.LogError(\r\n                    \"プレイヤーが生成されていません。\",\r\n                    this);\r\n\r\n                return false;\r\n            }\r\n\r\n            MazePlayerController player =\r\n                playerObject.GetComponent<MazePlayerController>();\r\n\r\n            if (player == null)\r\n            {\r\n                Debug.LogError(\r\n                    \"Player PrefabにMazePlayerControllerが\" +\r\n                    \"設定されていません。\",\r\n                    playerObject);\r\n\r\n                return false;\r\n            }\r\n\r\n            if (!player.Initialize(\r\n                stageManager,\r\n                inputManager,\r\n                result.PlayerSpawnPosition))\r\n            {\r\n                Debug.LogError(\r\n                    \"プレイヤーの初期化に失敗しました。\",\r\n                    playerObject);\r\n\r\n                return false;\r\n            }\r\n\r\n            currentPlayer = player;\r\n\r\n            Debug.Log(\r\n                $\"プレイヤー接続完了：\" +\r\n                $\"{result.PlayerSpawnPosition}\",\r\n                this);\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>現在のプレイヤーとの接続を解除する。</summary>\r\n        private void ReleasePlayer()\r\n        {\r\n            if (currentPlayer != null)\r\n            {\r\n                currentPlayer.Shutdown();\r\n            }\r\n\r\n            currentPlayer = null;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Stage State Methods\r\n\r\n        /// <summary>ステージ状態変更時のイベント処理。</summary>\r\n        /// <param name=\"previousState\">変更前の状態</param>\r\n        /// <param name=\"newState\">変更後の状態</param>\r\n        private void OnStageStateChanged(\r\n            MazeStageState previousState,\r\n            MazeStageState newState)\r\n        {\r\n            // ステージ再生成時には古いプレイヤーを解除する。\r\n            if (newState == MazeStageState.Generating ||\r\n                newState == MazeStageState.None)\r\n            {\r\n                ReleasePlayer();\r\n            }\r\n\r\n            SynchronizeInputMode();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在のステージ状態を入力モードへ反映する。\r\n        /// </summary>\r\n        private void SynchronizeInputMode()\r\n        {\r\n            if (!synchronizeInputMode ||\r\n                inputManager == null ||\r\n                !inputManager.IsInitialized)\r\n            {\r\n                return;\r\n            }\r\n\r\n            GameInputMode mode;\r\n\r\n            switch (stageManager.State)\r\n            {\r\n                case MazeStageState.Playing:\r\n\r\n                    mode = GameInputMode.Gameplay;\r\n                    break;\r\n\r\n                case MazeStageState.Paused:\r\n                case MazeStageState.Cleared:\r\n                case MazeStageState.Failed:\r\n                case MazeStageState.Ready:\r\n\r\n                    mode = GameInputMode.UI;\r\n                    break;\r\n\r\n                default:\r\n\r\n                    mode = GameInputMode.Disabled;\r\n                    break;\r\n            }\r\n\r\n            inputManager.SetInputMode(mode);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Validation Methods\r\n\r\n        /// <summary>\r\n        /// 必要な参照が設定されているか確認する。\r\n        /// </summary>\r\n        /// <returns>参照が正常な場合はtrue</returns>\r\n        private bool ValidateReferences()\r\n        {\r\n            if (stageManager == null ||\r\n                stageSpawner == null ||\r\n                inputManager == null)\r\n            {\r\n                Debug.LogError(\r\n                    \"MazePlayerStageBinderに必要な参照が\" +\r\n                    \"設定されていません。\",\r\n                    this);\r\n\r\n                return false;\r\n            }\r\n\r\n            return true;\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-26T16:01:49.948Z"
+}

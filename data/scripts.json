@@ -1,0 +1,39 @@
+{
+    "schemaVersion": 1,
+    "scripts": [
+        {
+            "id": "Framework.Save.Integrations.EasySave.EasySaveProvider",
+            "name": "EasySaveProvider",
+            "namespace": "Framework.Save.Integrations.EasySave",
+            "type": "class",
+            "summary": "Easy Save 3を利用した汎用データ保存クラス。",
+            "dependencies": [
+                "ISaveProvider",
+                "Easy Save 3",
+                "UnityEngine"
+            ],
+            "members": [
+                {
+                    "name": "FilePath",
+                    "signature": "public string FilePath",
+                    "summary": "管理対象の保存ファイルパス。"
+                },
+                {
+                    "name": "Save",
+                    "signature": "public void Save<T>(string key, T value)",
+                    "summary": "指定されたキーにデータを保存する。"
+                },
+                {
+                    "name": "Load",
+                    "signature": "public T Load<T>(string key, T defaultValue)",
+                    "summary": "指定されたキーのデータを読み込む。"
+                },
+                {
+                    "name": "DeleteAll",
+                    "signature": "public void DeleteAll()",
+                    "summary": "管理対象の保存ファイルを削除する。"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "parserVersion": 2,
+    "id": "Game.Tests.GridMapTest",
+    "name": "GridMapTest",
+    "fileName": "GridMapTest.cs",
+    "namespace": "Game.Tests",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public class GridMapTest : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "汎用グリッド管理システムの動作確認用クラス。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System.Text",
+        "UnityEngine",
+        "Framework.Grid",
+        "MonoBehaviour"
+    ],
+    "members": [],
+    "source": "\r\nusing System.Text;\r\nusing UnityEngine;\r\nusing Framework.Grid;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// 汎用グリッド管理システムの動作確認用クラス。\r\n    /// </summary>\r\n    public class GridMapTest : MonoBehaviour\r\n    {\r\n        #region Fields\r\n\r\n        [Header(\"マップ設定\")]\r\n\r\n        /// <summary>マップの横方向のマス数。</summary>\r\n        [SerializeField]\r\n        [Min(3)]\r\n        [Tooltip(\"マップの横方向のマス数\")]\r\n        private int width = 15;\r\n\r\n        /// <summary>マップの縦方向のマス数。</summary>\r\n        [SerializeField]\r\n        [Min(3)]\r\n        [Tooltip(\"マップの縦方向のマス数\")]\r\n        private int height = 11;\r\n\r\n        /// <summary>床を表すデータ値。</summary>\r\n        private const int Floor = 0;\r\n\r\n        /// <summary>壁を表すデータ値。</summary>\r\n        private const int Wall = 1;\r\n\r\n        /// <summary>動作確認用のマップデータ。</summary>\r\n        private GridMap<int> map;\r\n\r\n        #endregion\r\n\r\n        #region Unity Methods\r\n\r\n        private void Start()\r\n        {\r\n            CreateMap();\r\n            PrintMap();\r\n            TestGridMap();\r\n        }\r\n\r\n        private void OnDestroy()\r\n        {\r\n            // イベントの登録を解除する。\r\n            if (map != null)\r\n            {\r\n                map.CellChanged -= OnCellChanged;\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Private Methods\r\n\r\n        /// <summary>\r\n        /// 外周が壁、内部が床となるマップを生成する。\r\n        /// </summary>\r\n        private void CreateMap()\r\n        {\r\n            map = new GridMap<int>(\r\n                width,\r\n                height,\r\n                position =>\r\n                {\r\n                    // 外周に位置するマスか判定する。\r\n                    bool isBorder =\r\n                        position.x == 0 ||\r\n                        position.y == 0 ||\r\n                        position.x == width - 1 ||\r\n                        position.y == height - 1;\r\n\r\n                    return isBorder ? Wall : Floor;\r\n                });\r\n\r\n            // マス変更イベントを登録する。\r\n            map.CellChanged += OnCellChanged;\r\n        }\r\n\r\n        /// <summary>\r\n        /// マップの内容をUnity Consoleに出力する。\r\n        /// </summary>\r\n        private void PrintMap()\r\n        {\r\n            // 出力する文字列を構築するための変数。\r\n            StringBuilder builder = new StringBuilder();\r\n\r\n            builder.AppendLine(\r\n                $\"マップサイズ：{map.Width} × {map.Height}\");\r\n\r\n            // Y座標の大きい行から順に出力する。\r\n            for (int y = map.Height - 1; y >= 0; y--)\r\n            {\r\n                for (int x = 0; x < map.Width; x++)\r\n                {\r\n                    builder.Append(\r\n                        map[x, y] == Wall ? '#' : '.');\r\n                }\r\n\r\n                builder.AppendLine();\r\n            }\r\n\r\n            Debug.Log(builder.ToString());\r\n        }\r\n\r\n        /// <summary>\r\n        /// グリッドの基本機能を検証する。\r\n        /// </summary>\r\n        private void TestGridMap()\r\n        {\r\n            // 床と壁のマス数を取得する。\r\n            int floorCount =\r\n                map.CountCells(value => value == Floor);\r\n\r\n            int wallCount =\r\n                map.CountCells(value => value == Wall);\r\n\r\n            Debug.Log($\"全マス数：{map.Count}\");\r\n            Debug.Log($\"床の数：{floorCount}\");\r\n            Debug.Log($\"壁の数：{wallCount}\");\r\n\r\n            // 範囲外判定を確認する。\r\n            Debug.Assert(\r\n                !map.IsInside(-1, 0),\r\n                \"範囲外判定に失敗しました。\");\r\n\r\n            // 座標(1, 1)を床から壁に変更する。\r\n            map.SetCell(1, 1, Wall);\r\n\r\n            Debug.Assert(\r\n                map.GetCell(1, 1) == Wall,\r\n                \"マスの変更に失敗しました。\");\r\n\r\n            // 範囲外の安全な取得を確認する。\r\n            bool result = map.TryGetCell(\r\n                new Vector2Int(-1, 0),\r\n                out int value);\r\n\r\n            Debug.Assert(\r\n                !result,\r\n                \"範囲外の取得判定に失敗しました。\");\r\n\r\n            // 変更後のマップを出力する。\r\n            PrintMap();\r\n        }\r\n\r\n        /// <summary>\r\n        /// マスの変更内容をConsoleに出力する。\r\n        /// </summary>\r\n        /// <param name=\"position\">変更された座標</param>\r\n        /// <param name=\"oldValue\">変更前のデータ</param>\r\n        /// <param name=\"newValue\">変更後のデータ</param>\r\n        private void OnCellChanged(\r\n            Vector2Int position,\r\n            int oldValue,\r\n            int newValue)\r\n        {\r\n            Debug.Log(\r\n                $\"マス変更：{position} \" +\r\n                $\"{oldValue} → {newValue}\");\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-26T16:01:49.884Z"
+}

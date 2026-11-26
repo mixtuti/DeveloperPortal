@@ -1,0 +1,246 @@
+{
+    "parserVersion": 2,
+    "id": "Framework.Input.IInputProvider",
+    "name": "IInputProvider",
+    "fileName": "IInputProvider.cs",
+    "namespace": "Framework.Input",
+    "type": "interface",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public interface IInputProvider<TAction>\r\n        where TAction : struct, Enum",
+    "typeParameters": [
+        {
+            "name": "TAction",
+            "description": "ゲーム内の操作を識別する列挙型。"
+        }
+    ],
+    "summary": "入力システムの共通インターフェース。 キーボード、ゲームパッドなどの物理入力を ゲーム内の操作として取得するための仕組みを定義する。 特定の入力アセットには依存せず、 様々な入力システムへの差し替えに対応する。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "UnityEngine"
+    ],
+    "members": [
+        {
+            "name": "IsInitialized",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "bool IsInitialized",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "入力システムが初期化され、 入力を取得できる状態か。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsInputEnabled",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "bool IsInputEnabled",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "入力の取得が有効になっているか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasAction",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "bool HasAction(TAction action)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "action",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "確認する操作"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された操作が登録されているか確認する。",
+            "returns": "操作が登録されている場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetButton",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "bool GetButton(TAction action)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "action",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得する操作"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された操作が押されているか取得する。 ボタンが押されている間はtrueを返す。",
+            "returns": "ボタンが押されている場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetButtonDown",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "bool GetButtonDown(TAction action)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "action",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得する操作"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された操作が押された瞬間を取得する。 入力が開始されたフレームのみtrueを返す。",
+            "returns": "ボタンが押されたフレームの場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetButtonUp",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "bool GetButtonUp(TAction action)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "action",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得する操作"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された操作が離された瞬間を取得する。 入力が終了したフレームのみtrueを返す。",
+            "returns": "ボタンが離されたフレームの場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetAxis",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "float GetAxis(TAction action)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "action",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得する操作"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された操作の1軸入力値を取得する。 アナログスティックやトリガーなどの 入力値取得に使用する。",
+            "returns": "-1から1までの入力値。 入力がない場合は0。",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetVector2",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "Vector2 GetVector2(TAction action)",
+            "returnType": "Vector2",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "action",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得する操作"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された操作の2軸入力値を取得する。 キャラクター移動やカーソル移動などの 方向入力取得に使用する。",
+            "returns": "各成分が-1から1までの入力ベクトル。 入力がない場合はVector2.zero。",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SetInputEnabled",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "void SetInputEnabled(bool enabled)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "enabled",
+                    "type": "bool",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "入力を有効にする場合はtrue"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "入力の有効状態を設定する。 無効状態では入力取得メソッドが false、0、Vector2.zeroを返す。 操作の登録情報やキー割り当ては維持する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing UnityEngine;\r\n\r\nnamespace Framework.Input\r\n{\r\n    /// <summary>\r\n    /// 入力システムの共通インターフェース。\r\n    ///\r\n    /// キーボード、ゲームパッドなどの物理入力を\r\n    /// ゲーム内の操作として取得するための仕組みを定義する。\r\n    ///\r\n    /// 特定の入力アセットには依存せず、\r\n    /// 様々な入力システムへの差し替えに対応する。\r\n    /// </summary>\r\n    /// <typeparam name=\"TAction\">\r\n    /// ゲーム内の操作を識別する列挙型。\r\n    /// </typeparam>\r\n    public interface IInputProvider<TAction>\r\n        where TAction : struct, Enum\r\n    {\r\n        #region Properties\r\n\r\n        /// <summary>\r\n        /// 入力システムが初期化され、\r\n        /// 入力を取得できる状態か。\r\n        /// </summary>\r\n        bool IsInitialized { get; }\r\n\r\n        /// <summary>\r\n        /// 入力の取得が有効になっているか。\r\n        /// </summary>\r\n        bool IsInputEnabled { get; }\r\n\r\n        #endregion\r\n\r\n        #region Action Methods\r\n\r\n        /// <summary>\r\n        /// 指定された操作が登録されているか確認する。\r\n        /// </summary>\r\n        /// <param name=\"action\">\r\n        /// 確認する操作\r\n        /// </param>\r\n        /// <returns>\r\n        /// 操作が登録されている場合はtrue\r\n        /// </returns>\r\n        bool HasAction(TAction action);\r\n\r\n        #endregion\r\n\r\n        #region Button Methods\r\n\r\n        /// <summary>\r\n        /// 指定された操作が押されているか取得する。\r\n        ///\r\n        /// ボタンが押されている間はtrueを返す。\r\n        /// </summary>\r\n        /// <param name=\"action\">\r\n        /// 取得する操作\r\n        /// </param>\r\n        /// <returns>\r\n        /// ボタンが押されている場合はtrue\r\n        /// </returns>\r\n        bool GetButton(TAction action);\r\n\r\n        /// <summary>\r\n        /// 指定された操作が押された瞬間を取得する。\r\n        ///\r\n        /// 入力が開始されたフレームのみtrueを返す。\r\n        /// </summary>\r\n        /// <param name=\"action\">\r\n        /// 取得する操作\r\n        /// </param>\r\n        /// <returns>\r\n        /// ボタンが押されたフレームの場合はtrue\r\n        /// </returns>\r\n        bool GetButtonDown(TAction action);\r\n\r\n        /// <summary>\r\n        /// 指定された操作が離された瞬間を取得する。\r\n        ///\r\n        /// 入力が終了したフレームのみtrueを返す。\r\n        /// </summary>\r\n        /// <param name=\"action\">\r\n        /// 取得する操作\r\n        /// </param>\r\n        /// <returns>\r\n        /// ボタンが離されたフレームの場合はtrue\r\n        /// </returns>\r\n        bool GetButtonUp(TAction action);\r\n\r\n        #endregion\r\n\r\n        #region Axis Methods\r\n\r\n        /// <summary>\r\n        /// 指定された操作の1軸入力値を取得する。\r\n        ///\r\n        /// アナログスティックやトリガーなどの\r\n        /// 入力値取得に使用する。\r\n        /// </summary>\r\n        /// <param name=\"action\">\r\n        /// 取得する操作\r\n        /// </param>\r\n        /// <returns>\r\n        /// -1から1までの入力値。\r\n        /// 入力がない場合は0。\r\n        /// </returns>\r\n        float GetAxis(TAction action);\r\n\r\n        /// <summary>\r\n        /// 指定された操作の2軸入力値を取得する。\r\n        ///\r\n        /// キャラクター移動やカーソル移動などの\r\n        /// 方向入力取得に使用する。\r\n        /// </summary>\r\n        /// <param name=\"action\">\r\n        /// 取得する操作\r\n        /// </param>\r\n        /// <returns>\r\n        /// 各成分が-1から1までの入力ベクトル。\r\n        /// 入力がない場合はVector2.zero。\r\n        /// </returns>\r\n        Vector2 GetVector2(TAction action);\r\n\r\n        #endregion\r\n\r\n        #region Control Methods\r\n\r\n        /// <summary>\r\n        /// 入力の有効状態を設定する。\r\n        ///\r\n        /// 無効状態では入力取得メソッドが\r\n        /// false、0、Vector2.zeroを返す。\r\n        ///\r\n        /// 操作の登録情報やキー割り当ては維持する。\r\n        /// </summary>\r\n        /// <param name=\"enabled\">\r\n        /// 入力を有効にする場合はtrue\r\n        /// </param>\r\n        void SetInputEnabled(bool enabled);\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-26T16:01:49.899Z"
+}

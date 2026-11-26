@@ -1,0 +1,30 @@
+{
+    "parserVersion": 2,
+    "id": "Game.Tests.GridCoordinateConverterTest",
+    "name": "GridCoordinateConverterTest",
+    "fileName": "GridCoordinateConverterTest.cs",
+    "namespace": "Game.Tests",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public class GridCoordinateConverterTest : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "グリッド座標変換機能の動作確認用クラス。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "UnityEngine",
+        "Framework.Grid",
+        "MonoBehaviour"
+    ],
+    "members": [],
+    "source": "\r\nusing UnityEngine;\r\nusing Framework.Grid;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// グリッド座標変換機能の動作確認用クラス。\r\n    /// </summary>\r\n    public class GridCoordinateConverterTest : MonoBehaviour\r\n    {\r\n        #region Fields\r\n\r\n        [Header(\"参照設定\")]\r\n\r\n        /// <summary>テスト対象の座標変換コンポーネント。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"テスト対象の座標変換コンポーネント\")]\r\n        private GridCoordinateConverter converter;\r\n\r\n        [Header(\"テスト設定\")]\r\n\r\n        /// <summary>変換テストに使用するグリッド座標。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"変換テストに使用するグリッド座標\")]\r\n        private Vector2Int testCellPosition =\r\n            new Vector2Int(3, 2);\r\n\r\n        /// <summary>変換テストに使用するワールド座標。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"変換テストに使用するワールド座標\")]\r\n        private Vector3 testWorldPosition =\r\n            new Vector3(3.2f, 2.8f, 0f);\r\n\r\n        /// <summary>Sceneビューに表示するマーカーの半径。</summary>\r\n        [SerializeField]\r\n        [Min(0.01f)]\r\n        [Tooltip(\"Sceneビューに表示するマーカーの半径\")]\r\n        private float gizmoRadius = 0.1f;\r\n\r\n        #endregion\r\n\r\n        #region Unity Methods\r\n\r\n        /// <summary>\r\n        /// 座標変換の動作確認を実行する。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            // コンポーネントの設定漏れを確認する。\r\n            if (converter == null)\r\n            {\r\n                Debug.LogError(\r\n                    \"座標変換コンポーネントが未設定です。\",\r\n                    this);\r\n\r\n                return;\r\n            }\r\n\r\n            TestCellToWorld();\r\n            TestWorldToCell();\r\n            TestSnap();\r\n        }\r\n\r\n        /// <summary>\r\n        /// Sceneビューにテスト座標を可視化する。\r\n        /// </summary>\r\n        private void OnDrawGizmos()\r\n        {\r\n            if (converter == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            // テスト対象のマスの原点座標。\r\n            Vector3 origin =\r\n                converter.CellToWorld(testCellPosition);\r\n\r\n            // テスト対象のマスの中心座標。\r\n            Vector3 center =\r\n                converter.GetCellCenterWorld(testCellPosition);\r\n\r\n            // ワールド座標を補正した位置。\r\n            Vector3 snappedPosition =\r\n                converter.SnapToCellCenter(testWorldPosition);\r\n\r\n            // 赤色：マスの原点。\r\n            Gizmos.color = Color.red;\r\n            Gizmos.DrawSphere(origin, gizmoRadius);\r\n\r\n            // 緑色：マスの中心。\r\n            Gizmos.color = Color.green;\r\n            Gizmos.DrawSphere(center, gizmoRadius);\r\n\r\n            // 黄色：補正前のワールド座標。\r\n            Gizmos.color = Color.yellow;\r\n            Gizmos.DrawSphere(testWorldPosition, gizmoRadius);\r\n\r\n            // 水色：補正前後の座標を結ぶ線。\r\n            Gizmos.color = Color.cyan;\r\n            Gizmos.DrawLine(\r\n                testWorldPosition,\r\n                snappedPosition);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Test Methods\r\n\r\n        /// <summary>\r\n        /// グリッド座標からワールド座標への変換を確認する。\r\n        /// </summary>\r\n        private void TestCellToWorld()\r\n        {\r\n            // 指定マスの原点座標。\r\n            Vector3 origin =\r\n                converter.CellToWorld(testCellPosition);\r\n\r\n            // 指定マスの中心座標。\r\n            Vector3 center =\r\n                converter.GetCellCenterWorld(testCellPosition);\r\n\r\n            Debug.Log(\r\n                $\"グリッド座標：{testCellPosition}\\n\" +\r\n                $\"マスの原点：{origin}\\n\" +\r\n                $\"マスの中心：{center}\");\r\n\r\n            // 中心座標をグリッド座標に戻す。\r\n            Vector2Int restoredPosition =\r\n                converter.WorldToCell2D(center);\r\n\r\n            Debug.Assert(\r\n                restoredPosition == testCellPosition,\r\n                \"座標の往復変換に失敗しました。\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// ワールド座標からグリッド座標への変換を確認する。\r\n        /// </summary>\r\n        private void TestWorldToCell()\r\n        {\r\n            // ワールド座標が所属するマス。\r\n            Vector2Int cellPosition =\r\n                converter.WorldToCell2D(testWorldPosition);\r\n\r\n            Debug.Log(\r\n                $\"ワールド座標：{testWorldPosition}\\n\" +\r\n                $\"変換後のグリッド座標：{cellPosition}\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// マスの中心座標への補正処理を確認する。\r\n        /// </summary>\r\n        private void TestSnap()\r\n        {\r\n            // マスの中心に補正した座標。\r\n            Vector3 snappedPosition =\r\n                converter.SnapToCellCenter(testWorldPosition);\r\n\r\n            Debug.Log(\r\n                $\"補正前：{testWorldPosition}\\n\" +\r\n                $\"補正後：{snappedPosition}\");\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-26T16:01:49.880Z"
+}

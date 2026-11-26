@@ -1,0 +1,289 @@
+{
+    "parserVersion": 2,
+    "id": "Framework.Save.Integrations.EasySave.EasySaveProvider",
+    "name": "EasySaveProvider",
+    "fileName": "EasySaveProvider.cs",
+    "namespace": "Framework.Save.Integrations.EasySave",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class EasySaveProvider : ISaveProvider",
+    "typeParameters": [],
+    "summary": "Easy Save 3を利用した汎用データ保存クラス。 ISaveProviderを実装し、ゲーム側がES3のAPIに 直接依存せずに保存処理を行えるようにする。 インスタンスごとに専用の保存ファイルを管理する。 通常のファイル保存方式を使用する。",
+    "remarks": "",
+    "inheritance": [
+        "ISaveProvider"
+    ],
+    "dependencies": [
+        "System",
+        "UnityEngine",
+        "ISaveProvider"
+    ],
+    "members": [
+        {
+            "name": "FilePath",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public string FilePath => filePath",
+            "returnType": "",
+            "valueType": "string",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "管理対象の保存ファイルパス。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "EasySaveProvider",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public EasySaveProvider(string filePath)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "filePath",
+                    "type": "string",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "管理対象となる保存ファイルのパス"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "保存ファイルを指定してProviderを生成する。 保存先には通常のファイル保存方式を使用する。 相対パスの場合はES3の保存先設定を基準とする。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Save",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Save<T>(string key, T value)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "key",
+                    "type": "string",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "保存データの識別キー"
+                },
+                {
+                    "name": "value",
+                    "type": "T",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "保存するデータ"
+                }
+            ],
+            "typeParameters": [
+                {
+                    "name": "T",
+                    "description": "保存するデータ型"
+                }
+            ],
+            "accessors": [],
+            "summary": "指定されたキーにデータを保存する。 同じキーが存在する場合は上書きする。 保存失敗時は例外を呼び出し元へ通知する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Load",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public T Load<T>(string key, T defaultValue)",
+            "returnType": "T",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "key",
+                    "type": "string",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "読み込むデータの識別キー"
+                },
+                {
+                    "name": "defaultValue",
+                    "type": "T",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "データが存在しない場合の初期値"
+                }
+            ],
+            "typeParameters": [
+                {
+                    "name": "T",
+                    "description": "読み込むデータ型"
+                }
+            ],
+            "accessors": [],
+            "summary": "指定されたキーのデータを読み込む。 データが存在しない場合は初期値を返す。 読み込み失敗時は例外を呼び出し元へ通知する。",
+            "returns": "読み込んだデータ、または初期値",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryLoad",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryLoad<T>(string key, out T value)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "key",
+                    "type": "string",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "読み込むデータの識別キー"
+                },
+                {
+                    "name": "value",
+                    "type": "T",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "読み込んだデータ"
+                }
+            ],
+            "typeParameters": [
+                {
+                    "name": "T",
+                    "description": "読み込むデータ型"
+                }
+            ],
+            "accessors": [],
+            "summary": "指定されたデータの読み込みを試みる。 データが存在しない場合や読み込みに失敗した場合は falseを返す。 不正なキーの指定はプログラム上の問題として 例外を発生させる。",
+            "returns": "読み込みに成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Exists",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Exists(string key)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "key",
+                    "type": "string",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "確認するデータの識別キー"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたキーの保存データが存在するか確認する。",
+            "returns": "データが存在する場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "FileExists",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool FileExists()",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "管理対象の保存ファイルが存在するか確認する。",
+            "returns": "ファイルが存在する場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Delete",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Delete(string key)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "key",
+                    "type": "string",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "削除するデータの識別キー"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたキーの保存データを削除する。 データが存在しない場合は何も行わない。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "DeleteAll",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void DeleteAll()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "管理対象の保存ファイルを削除する。 ファイル内のすべてのキーが削除される。 異なる保存ファイルには影響を与えない。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Flush",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Flush()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "保留中の保存処理を確定する。 現在は即時保存方式を使用しているため、 追加の処理は必要ない。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing UnityEngine;\r\n\r\nnamespace Framework.Save.Integrations.EasySave\r\n{\r\n    /// <summary>\r\n    /// Easy Save 3を利用した汎用データ保存クラス。\r\n    ///\r\n    /// ISaveProviderを実装し、ゲーム側がES3のAPIに\r\n    /// 直接依存せずに保存処理を行えるようにする。\r\n    ///\r\n    /// インスタンスごとに専用の保存ファイルを管理する。\r\n    /// 通常のファイル保存方式を使用する。\r\n    /// </summary>\r\n    public sealed class EasySaveProvider : ISaveProvider\r\n    {\r\n        #region Runtime Fields\r\n\r\n        /// <summary>\r\n        /// 管理対象となる保存ファイルのパス。\r\n        /// </summary>\r\n        private readonly string filePath;\r\n\r\n        /// <summary>\r\n        /// Easy Save 3の保存設定。\r\n        /// </summary>\r\n        private readonly ES3Settings settings;\r\n\r\n        #endregion\r\n\r\n        #region Properties\r\n\r\n        /// <summary>\r\n        /// 管理対象の保存ファイルパス。\r\n        /// </summary>\r\n        public string FilePath => filePath;\r\n\r\n        #endregion\r\n\r\n        #region Constructor\r\n\r\n        /// <summary>\r\n        /// 保存ファイルを指定してProviderを生成する。\r\n        ///\r\n        /// 保存先には通常のファイル保存方式を使用する。\r\n        /// 相対パスの場合はES3の保存先設定を基準とする。\r\n        /// </summary>\r\n        /// <param name=\"filePath\">\r\n        /// 管理対象となる保存ファイルのパス\r\n        /// </param>\r\n        public EasySaveProvider(string filePath)\r\n        {\r\n            if (string.IsNullOrWhiteSpace(filePath))\r\n            {\r\n                throw new ArgumentException(\r\n                    \"保存ファイルのパスを指定してください。\",\r\n                    nameof(filePath));\r\n            }\r\n\r\n            this.filePath = filePath;\r\n\r\n            // ES3の保存設定を生成する。\r\n            settings = new ES3Settings(filePath);\r\n\r\n            // キャッシュではなくファイルへ直接保存する。\r\n            settings.location = ES3.Location.File;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Save Methods\r\n\r\n        /// <summary>\r\n        /// 指定されたキーにデータを保存する。\r\n        ///\r\n        /// 同じキーが存在する場合は上書きする。\r\n        /// 保存失敗時は例外を呼び出し元へ通知する。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">保存するデータ型</typeparam>\r\n        /// <param name=\"key\">保存データの識別キー</param>\r\n        /// <param name=\"value\">保存するデータ</param>\r\n        public void Save<T>(string key, T value)\r\n        {\r\n            ValidateKey(key);\r\n\r\n            ES3.Save<T>(\r\n                key,\r\n                value,\r\n                settings);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Load Methods\r\n\r\n        /// <summary>\r\n        /// 指定されたキーのデータを読み込む。\r\n        ///\r\n        /// データが存在しない場合は初期値を返す。\r\n        /// 読み込み失敗時は例外を呼び出し元へ通知する。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">読み込むデータ型</typeparam>\r\n        /// <param name=\"key\">読み込むデータの識別キー</param>\r\n        /// <param name=\"defaultValue\">\r\n        /// データが存在しない場合の初期値\r\n        /// </param>\r\n        /// <returns>読み込んだデータ、または初期値</returns>\r\n        public T Load<T>(string key, T defaultValue)\r\n        {\r\n            ValidateKey(key);\r\n\r\n            return ES3.Load<T>(\r\n                key,\r\n                defaultValue,\r\n                settings);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたデータの読み込みを試みる。\r\n        ///\r\n        /// データが存在しない場合や読み込みに失敗した場合は\r\n        /// falseを返す。\r\n        ///\r\n        /// 不正なキーの指定はプログラム上の問題として\r\n        /// 例外を発生させる。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">読み込むデータ型</typeparam>\r\n        /// <param name=\"key\">読み込むデータの識別キー</param>\r\n        /// <param name=\"value\">読み込んだデータ</param>\r\n        /// <returns>読み込みに成功した場合はtrue</returns>\r\n        public bool TryLoad<T>(string key, out T value)\r\n        {\r\n            ValidateKey(key);\r\n\r\n            value = default(T);\r\n\r\n            try\r\n            {\r\n                // データが存在しない場合は読み込まない。\r\n                if (!Exists(key))\r\n                {\r\n                    return false;\r\n                }\r\n\r\n                value = ES3.Load<T>(\r\n                    key,\r\n                    settings);\r\n\r\n                return true;\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                // 読み込み失敗時は型の既定値を返す。\r\n                value = default(T);\r\n\r\n                Debug.LogWarning(\r\n                    $\"保存データの読み込みに失敗しました。\\n\" +\r\n                    $\"ファイル：{filePath}\\n\" +\r\n                    $\"キー：{key}\\n\" +\r\n                    $\"原因：{exception.Message}\");\r\n\r\n                return false;\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Data Management Methods\r\n\r\n        /// <summary>\r\n        /// 指定されたキーの保存データが存在するか確認する。\r\n        /// </summary>\r\n        /// <param name=\"key\">確認するデータの識別キー</param>\r\n        /// <returns>データが存在する場合はtrue</returns>\r\n        public bool Exists(string key)\r\n        {\r\n            ValidateKey(key);\r\n\r\n            return ES3.KeyExists(\r\n                key,\r\n                settings);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 管理対象の保存ファイルが存在するか確認する。\r\n        /// </summary>\r\n        /// <returns>ファイルが存在する場合はtrue</returns>\r\n        public bool FileExists()\r\n        {\r\n            return ES3.FileExists(settings);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたキーの保存データを削除する。\r\n        ///\r\n        /// データが存在しない場合は何も行わない。\r\n        /// </summary>\r\n        /// <param name=\"key\">削除するデータの識別キー</param>\r\n        public void Delete(string key)\r\n        {\r\n            ValidateKey(key);\r\n\r\n            if (!Exists(key))\r\n            {\r\n                return;\r\n            }\r\n\r\n            ES3.DeleteKey(\r\n                key,\r\n                settings);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 管理対象の保存ファイルを削除する。\r\n        ///\r\n        /// ファイル内のすべてのキーが削除される。\r\n        /// 異なる保存ファイルには影響を与えない。\r\n        /// </summary>\r\n        public void DeleteAll()\r\n        {\r\n            if (!FileExists())\r\n            {\r\n                return;\r\n            }\r\n\r\n            ES3.DeleteFile(settings);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 保留中の保存処理を確定する。\r\n        ///\r\n        /// 現在は即時保存方式を使用しているため、\r\n        /// 追加の処理は必要ない。\r\n        /// </summary>\r\n        public void Flush()\r\n        {\r\n            // 即時保存方式のため処理なし。\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Validation Methods\r\n\r\n        /// <summary>\r\n        /// 保存データの識別キーが有効か検証する。\r\n        /// </summary>\r\n        /// <param name=\"key\">検証する識別キー</param>\r\n        private static void ValidateKey(string key)\r\n        {\r\n            if (string.IsNullOrWhiteSpace(key))\r\n            {\r\n                throw new ArgumentException(\r\n                    \"保存データのキーを指定してください。\",\r\n                    nameof(key));\r\n            }\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-26T16:01:49.863Z"
+}

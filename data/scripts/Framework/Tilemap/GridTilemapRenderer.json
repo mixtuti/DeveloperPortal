@@ -1,0 +1,345 @@
+{
+    "parserVersion": 2,
+    "id": "Framework.Tilemap.GridTilemapRenderer",
+    "name": "GridTilemapRenderer",
+    "fileName": "GridTilemapRenderer.cs",
+    "namespace": "Framework.Tilemap",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public class GridTilemapRenderer<T> : IDisposable",
+    "typeParameters": [
+        {
+            "name": "T",
+            "description": "グリッドの各マスに格納されるデータ型"
+        }
+    ],
+    "summary": "グリッドマップのデータをUnityのTilemapへ描画する 汎用レンダラークラス。 複数レイヤーへの描画、部分更新、 マップデータ変更時の自動更新に対応する。",
+    "remarks": "",
+    "inheritance": [
+        "IDisposable"
+    ],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "UnityEngine",
+        "UnityEngine.Tilemaps",
+        "Framework.Grid",
+        "IDisposable"
+    ],
+    "members": [
+        {
+            "name": "Map",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridMap<T> Map => map",
+            "returnType": "",
+            "valueType": "GridMap<T>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の描画対象マップ。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "LayerCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int LayerCount => layers.Count",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "登録されている描画レイヤーの数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasMap",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasMap => map != null",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "描画対象のマップが設定されているかどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "AutoUpdate",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool AutoUpdate",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "set"
+            ],
+            "summary": "マップ変更時の自動描画を有効・無効にする。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GridTilemapRenderer",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridTilemapRenderer(\r\n            GridMap<T> map,\r\n            bool autoUpdate = true)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "map",
+                    "type": "GridMap<T>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "描画対象のマップ"
+                },
+                {
+                    "name": "autoUpdate",
+                    "type": "bool",
+                    "modifier": "",
+                    "defaultValue": "true",
+                    "description": "マップ変更時に自動描画する場合はtrue"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "汎用Tilemapレンダラーを生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SetMap",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void SetMap(GridMap<T> newMap)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "newMap",
+                    "type": "GridMap<T>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "新しい描画対象マップ"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "描画対象のマップを変更する。 変更前のマップの描画範囲は消去される。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "AddLayer",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void AddLayer(\r\n            UnityEngine.Tilemaps.Tilemap target,\r\n            Func<Vector2Int, T, TileBase> tileSelector,\r\n            Vector3Int offset = default(Vector3Int))",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "target",
+                    "type": "UnityEngine.Tilemaps.Tilemap",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "描画先のTilemap"
+                },
+                {
+                    "name": "tileSelector",
+                    "type": "Func<Vector2Int, T, TileBase>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "タイル選択処理"
+                },
+                {
+                    "name": "offset",
+                    "type": "Vector3Int",
+                    "modifier": "",
+                    "defaultValue": "default(Vector3Int)",
+                    "description": "描画位置のオフセット"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "描画先となるTilemapをレイヤーとして登録する。 同じTilemapを重複して登録することはできない。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RemoveLayer",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool RemoveLayer(\r\n            UnityEngine.Tilemaps.Tilemap target,\r\n            bool clearTiles = true)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "target",
+                    "type": "UnityEngine.Tilemaps.Tilemap",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "登録解除対象のTilemap"
+                },
+                {
+                    "name": "clearTiles",
+                    "type": "bool",
+                    "modifier": "",
+                    "defaultValue": "true",
+                    "description": "登録解除時にタイルを消去する場合はtrue"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された描画レイヤーの登録を解除する。",
+            "returns": "登録解除に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RenderAll",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void RenderAll()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "登録されている全レイヤーにマップ全体を描画する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RenderCell",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void RenderCell(Vector2Int position)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "描画対象のマス座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたマスを全レイヤーに描画する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RenderArea",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void RenderArea(RectInt area)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "area",
+                    "type": "RectInt",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "描画対象の矩形範囲"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された範囲内のマスを描画する。 マップ範囲外の座標は除外される。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Clear",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Clear()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "登録された全レイヤーのマップ描画範囲を消去する。 マップ範囲外にあるタイルは消去しない。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Dispose",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Dispose()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "イベント登録と内部参照を解除する。 描画済みのタイルは消去しない。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing UnityEngine;\r\nusing UnityEngine.Tilemaps;\r\nusing Framework.Grid;\r\n\r\nnamespace Framework.Tilemap\r\n{\r\n    /// <summary>\r\n    /// グリッドマップのデータをUnityのTilemapへ描画する\r\n    /// 汎用レンダラークラス。\r\n    ///\r\n    /// 複数レイヤーへの描画、部分更新、\r\n    /// マップデータ変更時の自動更新に対応する。\r\n    /// </summary>\r\n    /// <typeparam name=\"T\">\r\n    /// グリッドの各マスに格納されるデータ型\r\n    /// </typeparam>\r\n    public class GridTilemapRenderer<T> : IDisposable\r\n    {\r\n        #region Nested Classes\r\n\r\n        /// <summary>\r\n        /// Tilemapとタイル選択処理を管理するレイヤー情報。\r\n        /// </summary>\r\n        private sealed class TilemapLayer\r\n        {\r\n            /// <summary>\r\n            /// 描画先となるTilemap。\r\n            /// </summary>\r\n            public UnityEngine.Tilemaps.Tilemap Target { get; }\r\n\r\n            /// <summary>\r\n            /// 座標とマスデータから描画するタイルを選択する処理。\r\n            /// nullを返した場合はタイルを消去する。\r\n            /// </summary>\r\n            public Func<Vector2Int, T, TileBase> TileSelector { get; }\r\n\r\n            /// <summary>\r\n            /// Tilemap上の描画開始位置。\r\n            /// </summary>\r\n            public Vector3Int Offset { get; }\r\n\r\n            /// <summary>\r\n            /// 描画レイヤーを生成する。\r\n            /// </summary>\r\n            /// <param name=\"target\">描画先のTilemap</param>\r\n            /// <param name=\"tileSelector\">タイル選択処理</param>\r\n            /// <param name=\"offset\">描画位置のオフセット</param>\r\n            public TilemapLayer(\r\n                UnityEngine.Tilemaps.Tilemap target,\r\n                Func<Vector2Int, T, TileBase> tileSelector,\r\n                Vector3Int offset)\r\n            {\r\n                Target = target;\r\n                TileSelector = tileSelector;\r\n                Offset = offset;\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Fields\r\n\r\n        /// <summary>\r\n        /// 描画対象となるグリッドマップ。\r\n        /// </summary>\r\n        private GridMap<T> map;\r\n\r\n        /// <summary>\r\n        /// 登録されている描画レイヤーの一覧。\r\n        /// </summary>\r\n        private readonly List<TilemapLayer> layers =\r\n            new List<TilemapLayer>();\r\n\r\n        /// <summary>\r\n        /// マップ変更時に自動描画するかどうか。\r\n        /// </summary>\r\n        private bool autoUpdate;\r\n\r\n        /// <summary>\r\n        /// インスタンスが破棄済みかどうか。\r\n        /// </summary>\r\n        private bool disposed;\r\n\r\n        #endregion\r\n\r\n        #region Properties\r\n\r\n        /// <summary>\r\n        /// 現在の描画対象マップ。\r\n        /// </summary>\r\n        public GridMap<T> Map => map;\r\n\r\n        /// <summary>\r\n        /// 登録されている描画レイヤーの数。\r\n        /// </summary>\r\n        public int LayerCount => layers.Count;\r\n\r\n        /// <summary>\r\n        /// 描画対象のマップが設定されているかどうか。\r\n        /// </summary>\r\n        public bool HasMap => map != null;\r\n\r\n        /// <summary>\r\n        /// マップ変更時の自動描画を有効・無効にする。\r\n        /// </summary>\r\n        public bool AutoUpdate\r\n        {\r\n            get => autoUpdate;\r\n\r\n            set\r\n            {\r\n                ThrowIfDisposed();\r\n\r\n                // 設定値が同じ場合は処理しない。\r\n                if (autoUpdate == value)\r\n                {\r\n                    return;\r\n                }\r\n\r\n                UnsubscribeMapEvent();\r\n\r\n                autoUpdate = value;\r\n\r\n                SubscribeMapEvent();\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Constructors\r\n\r\n        /// <summary>\r\n        /// 汎用Tilemapレンダラーを生成する。\r\n        /// </summary>\r\n        /// <param name=\"map\">描画対象のマップ</param>\r\n        /// <param name=\"autoUpdate\">\r\n        /// マップ変更時に自動描画する場合はtrue\r\n        /// </param>\r\n        public GridTilemapRenderer(\r\n            GridMap<T> map,\r\n            bool autoUpdate = true)\r\n        {\r\n            this.autoUpdate = autoUpdate;\r\n\r\n            SetMap(map);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Map Management\r\n\r\n        /// <summary>\r\n        /// 描画対象のマップを変更する。\r\n        /// 変更前のマップの描画範囲は消去される。\r\n        /// </summary>\r\n        /// <param name=\"newMap\">新しい描画対象マップ</param>\r\n        public void SetMap(GridMap<T> newMap)\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            if (newMap == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(newMap));\r\n            }\r\n\r\n            if (ReferenceEquals(map, newMap))\r\n            {\r\n                return;\r\n            }\r\n\r\n            // 古いマップのイベント登録を解除する。\r\n            UnsubscribeMapEvent();\r\n\r\n            // 古いマップの描画内容を消去する。\r\n            Clear();\r\n\r\n            // 新しいマップを設定する。\r\n            map = newMap;\r\n\r\n            // 新しいマップのイベントを登録する。\r\n            SubscribeMapEvent();\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Layer Management\r\n\r\n        /// <summary>\r\n        /// 描画先となるTilemapをレイヤーとして登録する。\r\n        /// 同じTilemapを重複して登録することはできない。\r\n        /// </summary>\r\n        /// <param name=\"target\">描画先のTilemap</param>\r\n        /// <param name=\"tileSelector\">タイル選択処理</param>\r\n        /// <param name=\"offset\">描画位置のオフセット</param>\r\n        public void AddLayer(\r\n            UnityEngine.Tilemaps.Tilemap target,\r\n            Func<Vector2Int, T, TileBase> tileSelector,\r\n            Vector3Int offset = default(Vector3Int))\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            if (target == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(target));\r\n            }\r\n\r\n            if (tileSelector == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(tileSelector));\r\n            }\r\n\r\n            // 同じTilemapの重複登録を防止する。\r\n            foreach (TilemapLayer layer in layers)\r\n            {\r\n                if (layer.Target == target)\r\n                {\r\n                    throw new InvalidOperationException(\r\n                        \"同じTilemapが既に登録されています。\");\r\n                }\r\n            }\r\n\r\n            // 新しい描画レイヤーを登録する。\r\n            layers.Add(\r\n                new TilemapLayer(\r\n                    target,\r\n                    tileSelector,\r\n                    offset));\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された描画レイヤーの登録を解除する。\r\n        /// </summary>\r\n        /// <param name=\"target\">登録解除対象のTilemap</param>\r\n        /// <param name=\"clearTiles\">\r\n        /// 登録解除時にタイルを消去する場合はtrue\r\n        /// </param>\r\n        /// <returns>登録解除に成功した場合はtrue</returns>\r\n        public bool RemoveLayer(\r\n            UnityEngine.Tilemaps.Tilemap target,\r\n            bool clearTiles = true)\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            for (int i = 0; i < layers.Count; i++)\r\n            {\r\n                // 登録解除対象のレイヤーを取得する。\r\n                TilemapLayer layer = layers[i];\r\n\r\n                if (layer.Target != target)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                if (clearTiles)\r\n                {\r\n                    ClearLayer(layer);\r\n                }\r\n\r\n                layers.RemoveAt(i);\r\n\r\n                return true;\r\n            }\r\n\r\n            return false;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Rendering\r\n\r\n        /// <summary>\r\n        /// 登録されている全レイヤーにマップ全体を描画する。\r\n        /// </summary>\r\n        public void RenderAll()\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            if (map == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            foreach (TilemapLayer layer in layers)\r\n            {\r\n                RenderLayer(layer);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたマスを全レイヤーに描画する。\r\n        /// </summary>\r\n        /// <param name=\"position\">描画対象のマス座標</param>\r\n        public void RenderCell(Vector2Int position)\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            if (map == null || !map.IsInside(position))\r\n            {\r\n                return;\r\n            }\r\n\r\n            // 描画対象のマスデータを取得する。\r\n            T cellData = map.GetCell(position);\r\n\r\n            foreach (TilemapLayer layer in layers)\r\n            {\r\n                RenderCellToLayer(\r\n                    layer,\r\n                    position,\r\n                    cellData);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された範囲内のマスを描画する。\r\n        /// マップ範囲外の座標は除外される。\r\n        /// </summary>\r\n        /// <param name=\"area\">描画対象の矩形範囲</param>\r\n        public void RenderArea(RectInt area)\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            if (map == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            // 描画範囲をマップ内に制限する。\r\n            int minX = Mathf.Max(0, area.xMin);\r\n            int minY = Mathf.Max(0, area.yMin);\r\n\r\n            int maxX = Mathf.Min(map.Width, area.xMax);\r\n            int maxY = Mathf.Min(map.Height, area.yMax);\r\n\r\n            for (int y = minY; y < maxY; y++)\r\n            {\r\n                for (int x = minX; x < maxX; x++)\r\n                {\r\n                    RenderCell(new Vector2Int(x, y));\r\n                }\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたレイヤーにマップ全体を描画する。\r\n        /// </summary>\r\n        /// <param name=\"layer\">描画対象のレイヤー</param>\r\n        private void RenderLayer(TilemapLayer layer)\r\n        {\r\n            if (layer.Target == null || map == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            // 一括描画に使用するタイル配列。\r\n            TileBase[] tiles = new TileBase[map.Count];\r\n\r\n            foreach (Vector2Int position in map.GetPositions())\r\n            {\r\n                // 二次元座標を一次元配列の番号に変換する。\r\n                int index =\r\n                    position.x + position.y * map.Width;\r\n\r\n                // マスデータを取得する。\r\n                T cellData = map.GetCell(position);\r\n\r\n                // 描画ルールに従ってタイルを選択する。\r\n                tiles[index] =\r\n                    layer.TileSelector(position, cellData);\r\n            }\r\n\r\n            // Tilemap上の描画範囲を生成する。\r\n            BoundsInt bounds = GetLayerBounds(layer);\r\n\r\n            // 全タイルをまとめて描画する。\r\n            layer.Target.SetTilesBlock(bounds, tiles);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたマスを指定レイヤーに描画する。\r\n        /// </summary>\r\n        /// <param name=\"layer\">描画対象のレイヤー</param>\r\n        /// <param name=\"position\">描画対象の座標</param>\r\n        /// <param name=\"cellData\">描画対象のマスデータ</param>\r\n        private void RenderCellToLayer(\r\n            TilemapLayer layer,\r\n            Vector2Int position,\r\n            T cellData)\r\n        {\r\n            if (layer.Target == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            // Tilemap上の描画座標を算出する。\r\n            Vector3Int tilePosition =\r\n                new Vector3Int(position.x, position.y, 0)\r\n                + layer.Offset;\r\n\r\n            // 描画するタイルを選択する。\r\n            TileBase tile =\r\n                layer.TileSelector(position, cellData);\r\n\r\n            // nullの場合は指定位置のタイルが消去される。\r\n            layer.Target.SetTile(tilePosition, tile);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Clear Methods\r\n\r\n        /// <summary>\r\n        /// 登録された全レイヤーのマップ描画範囲を消去する。\r\n        /// マップ範囲外にあるタイルは消去しない。\r\n        /// </summary>\r\n        public void Clear()\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            foreach (TilemapLayer layer in layers)\r\n            {\r\n                ClearLayer(layer);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定レイヤーのマップ描画範囲を消去する。\r\n        /// </summary>\r\n        /// <param name=\"layer\">消去対象のレイヤー</param>\r\n        private void ClearLayer(TilemapLayer layer)\r\n        {\r\n            if (layer.Target == null || map == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            // 全要素がnullのタイル配列を生成する。\r\n            TileBase[] emptyTiles =\r\n                new TileBase[map.Count];\r\n\r\n            // マップの描画範囲のみ消去する。\r\n            layer.Target.SetTilesBlock(\r\n                GetLayerBounds(layer),\r\n                emptyTiles);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Event Methods\r\n\r\n        /// <summary>\r\n        /// マップの変更イベントを登録する。\r\n        /// </summary>\r\n        private void SubscribeMapEvent()\r\n        {\r\n            if (map != null && autoUpdate)\r\n            {\r\n                map.CellChanged += OnCellChanged;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// マップの変更イベントを解除する。\r\n        /// </summary>\r\n        private void UnsubscribeMapEvent()\r\n        {\r\n            if (map != null)\r\n            {\r\n                map.CellChanged -= OnCellChanged;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// マップのデータが変更された際の処理。\r\n        /// 変更されたマスのみ再描画する。\r\n        /// </summary>\r\n        /// <param name=\"position\">変更されたマスの座標</param>\r\n        /// <param name=\"previousValue\">変更前のデータ</param>\r\n        /// <param name=\"newValue\">変更後のデータ</param>\r\n        private void OnCellChanged(\r\n            Vector2Int position,\r\n            T previousValue,\r\n            T newValue)\r\n        {\r\n            RenderCell(position);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Utility Methods\r\n\r\n        /// <summary>\r\n        /// 指定レイヤーのTilemap上の描画範囲を取得する。\r\n        /// </summary>\r\n        /// <param name=\"layer\">対象の描画レイヤー</param>\r\n        /// <returns>Tilemap上の描画範囲</returns>\r\n        private BoundsInt GetLayerBounds(TilemapLayer layer)\r\n        {\r\n            return new BoundsInt(\r\n                layer.Offset,\r\n                new Vector3Int(\r\n                    map.Width,\r\n                    map.Height,\r\n                    1));\r\n        }\r\n\r\n        /// <summary>\r\n        /// 破棄済みのインスタンスが使用された場合に\r\n        /// 例外を発生させる。\r\n        /// </summary>\r\n        private void ThrowIfDisposed()\r\n        {\r\n            if (disposed)\r\n            {\r\n                throw new ObjectDisposedException(\r\n                    GetType().Name);\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region IDisposable\r\n\r\n        /// <summary>\r\n        /// イベント登録と内部参照を解除する。\r\n        /// 描画済みのタイルは消去しない。\r\n        /// </summary>\r\n        public void Dispose()\r\n        {\r\n            if (disposed)\r\n            {\r\n                return;\r\n            }\r\n\r\n            // マップからの変更通知を解除する。\r\n            UnsubscribeMapEvent();\r\n\r\n            // 登録されているレイヤー情報を破棄する。\r\n            layers.Clear();\r\n\r\n            // マップへの参照を解除する。\r\n            map = null;\r\n\r\n            disposed = true;\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-26T16:01:49.894Z"
+}

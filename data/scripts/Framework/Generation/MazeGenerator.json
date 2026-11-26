@@ -1,0 +1,181 @@
+{
+    "parserVersion": 2,
+    "id": "Framework.Generation.MazeGenerator",
+    "name": "MazeGenerator",
+    "fileName": "MazeGenerator.cs",
+    "namespace": "Framework.Generation",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "static"
+    ],
+    "declaration": "public static class MazeGenerator",
+    "typeParameters": [],
+    "summary": "穴掘り法を利用して迷路を自動生成する汎用クラス。 深さ優先探索による基本迷路の生成、 周回経路の追加、行き止まりの削減に対応する。 MonoBehaviourには依存しない。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "UnityEngine",
+        "Framework.Grid"
+    ],
+    "members": [
+        {
+            "name": "Generate",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static MazeGenerationResult Generate(\r\n            MazeGenerationSettings settings)",
+            "returnType": "MazeGenerationResult",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "settings",
+                    "type": "MazeGenerationSettings",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "迷路生成設定"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された設定に従って迷路を生成する。",
+            "returns": "迷路の生成結果",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Generate",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static MazeGenerationResult Generate(\r\n            int width,\r\n            int height)",
+            "returnType": "MazeGenerationResult",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "width",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "迷路の横幅"
+                },
+                {
+                    "name": "height",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "迷路の縦幅"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "横幅と縦幅を指定して迷路を生成する。 その他の設定には初期値を使用する。",
+            "returns": "迷路の生成結果",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsDeadEnd",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static bool IsDeadEnd(\r\n            GridMap<MazeCellType> map,\r\n            Vector2Int position)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "map",
+                    "type": "GridMap<MazeCellType>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "判定対象の迷路"
+                },
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "判定対象の座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたマスが行き止まりかどうか判定する。",
+            "returns": "行き止まりの場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CountDeadEnds",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static int CountDeadEnds(\r\n            GridMap<MazeCellType> map)",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "map",
+                    "type": "GridMap<MazeCellType>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "判定対象の迷路"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "迷路内に存在する行き止まりの数を取得する。",
+            "returns": "行き止まりの数",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsFullyConnected",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static bool IsFullyConnected(\r\n            GridMap<MazeCellType> map)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "map",
+                    "type": "GridMap<MazeCellType>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "確認対象の迷路"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべての通路が互いに接続されているか確認する。 幅優先探索を使用して到達可能なマスを調べる。",
+            "returns": "すべての通路が接続されている場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing UnityEngine;\r\nusing Framework.Grid;\r\n\r\nnamespace Framework.Generation\r\n{\r\n    #region Maze Cell Type\r\n\r\n    /// <summary>\r\n    /// 迷路生成に使用する基本的なマスの種類。\r\n    /// ゲーム固有のマスデータとは独立して管理する。\r\n    /// </summary>\r\n    public enum MazeCellType\r\n    {\r\n        /// <summary>移動可能な通路。</summary>\r\n        Passage = 0,\r\n\r\n        /// <summary>移動不可能な壁。</summary>\r\n        Wall = 1\r\n    }\r\n\r\n    #endregion\r\n\r\n    #region Generation Settings\r\n\r\n    /// <summary>\r\n    /// 迷路の生成条件を管理する設定クラス。\r\n    /// UnityのInspectorから設定することも可能。\r\n    /// </summary>\r\n    [Serializable]\r\n    public sealed class MazeGenerationSettings\r\n    {\r\n        [Header(\"マップサイズ\")]\r\n\r\n        /// <summary>迷路の横方向のマス数。</summary>\r\n        [Min(5)]\r\n        [Tooltip(\"迷路の横幅。偶数の場合は1を加えて奇数に補正します。\")]\r\n        public int Width = 15;\r\n\r\n        /// <summary>迷路の縦方向のマス数。</summary>\r\n        [Min(5)]\r\n        [Tooltip(\"迷路の縦幅。偶数の場合は1を加えて奇数に補正します。\")]\r\n        public int Height = 11;\r\n\r\n        [Header(\"乱数設定\")]\r\n\r\n        /// <summary>固定シード値を使用するかどうか。</summary>\r\n        [Tooltip(\"有効にすると同じ設定から同じ迷路を生成します。\")]\r\n        public bool UseFixedSeed = false;\r\n\r\n        /// <summary>迷路生成に使用する固定シード値。</summary>\r\n        [Tooltip(\"固定シードを使用する場合の乱数シード値\")]\r\n        public int Seed = 12345;\r\n\r\n        [Header(\"通路生成設定\")]\r\n\r\n        /// <summary>\r\n        /// 追加通路の生成割合。\r\n        /// 0の場合は追加通路を生成しない。\r\n        /// </summary>\r\n        [Range(0f, 1f)]\r\n        [Tooltip(\"周回経路を増やすために追加で取り除く壁の割合\")]\r\n        public float LoopRate = 0.2f;\r\n\r\n        /// <summary>\r\n        /// 行き止まりを解消する際の処理割合。\r\n        /// </summary>\r\n        [Range(0f, 1f)]\r\n        [Tooltip(\"行き止まりを別の通路へ接続する割合\")]\r\n        public float DeadEndRemovalRate = 0.8f;\r\n    }\r\n\r\n    #endregion\r\n\r\n    #region Generation Result\r\n\r\n    /// <summary>\r\n    /// 迷路の生成結果と統計情報を保持するクラス。\r\n    /// 統計情報は生成完了時点の値を保持する。\r\n    /// </summary>\r\n    public sealed class MazeGenerationResult\r\n    {\r\n        /// <summary>生成された迷路のマップデータ。</summary>\r\n        public GridMap<MazeCellType> Map { get; }\r\n\r\n        /// <summary>実際に使用された乱数シード値。</summary>\r\n        public int Seed { get; }\r\n\r\n        /// <summary>生成された迷路の横幅。</summary>\r\n        public int Width => Map.Width;\r\n\r\n        /// <summary>生成された迷路の縦幅。</summary>\r\n        public int Height => Map.Height;\r\n\r\n        /// <summary>生成完了時点の通路の数。</summary>\r\n        public int PassageCount { get; }\r\n\r\n        /// <summary>生成完了時点の壁の数。</summary>\r\n        public int WallCount { get; }\r\n\r\n        /// <summary>生成完了時点の行き止まりの数。</summary>\r\n        public int DeadEndCount { get; }\r\n\r\n        /// <summary>追加で開通させた壁の数。</summary>\r\n        public int AddedPassageCount { get; }\r\n\r\n        /// <summary>マップ全体に占める通路の割合。</summary>\r\n        public float PassageRate =>\r\n            (float)PassageCount / Map.Count;\r\n\r\n        /// <summary>\r\n        /// 迷路の生成結果を作成する。\r\n        /// </summary>\r\n        /// <param name=\"map\">生成された迷路</param>\r\n        /// <param name=\"seed\">使用したシード値</param>\r\n        /// <param name=\"passageCount\">通路数</param>\r\n        /// <param name=\"wallCount\">壁数</param>\r\n        /// <param name=\"deadEndCount\">行き止まり数</param>\r\n        /// <param name=\"addedPassageCount\">追加通路数</param>\r\n        internal MazeGenerationResult(\r\n            GridMap<MazeCellType> map,\r\n            int seed,\r\n            int passageCount,\r\n            int wallCount,\r\n            int deadEndCount,\r\n            int addedPassageCount)\r\n        {\r\n            Map = map;\r\n            Seed = seed;\r\n            PassageCount = passageCount;\r\n            WallCount = wallCount;\r\n            DeadEndCount = deadEndCount;\r\n            AddedPassageCount = addedPassageCount;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 迷路を任意のマスデータ型に変換する。\r\n        /// 元の迷路データは変更しない。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">変換先のマスデータ型</typeparam>\r\n        /// <param name=\"converter\">マスデータの変換処理</param>\r\n        /// <returns>変換後のグリッドマップ</returns>\r\n        public GridMap<T> ConvertTo<T>(\r\n            Func<Vector2Int, MazeCellType, T> converter)\r\n        {\r\n            if (converter == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(converter));\r\n            }\r\n\r\n            return new GridMap<T>(\r\n                Width,\r\n                Height,\r\n                position =>\r\n                    converter(position, Map.GetCell(position)));\r\n        }\r\n    }\r\n\r\n    #endregion\r\n\r\n    #region Maze Generator\r\n\r\n    /// <summary>\r\n    /// 穴掘り法を利用して迷路を自動生成する汎用クラス。\r\n    ///\r\n    /// 深さ優先探索による基本迷路の生成、\r\n    /// 周回経路の追加、行き止まりの削減に対応する。\r\n    ///\r\n    /// MonoBehaviourには依存しない。\r\n    /// </summary>\r\n    public static class MazeGenerator\r\n    {\r\n        #region Fields\r\n\r\n        /// <summary>\r\n        /// 上下左右の4方向を表す移動ベクトル。\r\n        /// </summary>\r\n        private static readonly Vector2Int[] Directions =\r\n        {\r\n            Vector2Int.up,\r\n            Vector2Int.down,\r\n            Vector2Int.left,\r\n            Vector2Int.right\r\n        };\r\n\r\n        #endregion\r\n\r\n        #region Public Methods\r\n\r\n        /// <summary>\r\n        /// 指定された設定に従って迷路を生成する。\r\n        /// </summary>\r\n        /// <param name=\"settings\">迷路生成設定</param>\r\n        /// <returns>迷路の生成結果</returns>\r\n        public static MazeGenerationResult Generate(\r\n            MazeGenerationSettings settings)\r\n        {\r\n            if (settings == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(settings));\r\n            }\r\n\r\n            // 穴掘り法に適した奇数サイズへ補正する。\r\n            int width = NormalizeSize(settings.Width);\r\n            int height = NormalizeSize(settings.Height);\r\n\r\n            // 使用するシード値を決定する。\r\n            int seed = settings.UseFixedSeed\r\n                ? settings.Seed\r\n                : Guid.NewGuid().GetHashCode();\r\n\r\n            // Unity全体の乱数状態に影響を与えないよう、\r\n            // 専用の乱数生成器を使用する。\r\n            System.Random random =\r\n                new System.Random(seed);\r\n\r\n            // 全マスを壁で初期化する。\r\n            GridMap<MazeCellType> map =\r\n                new GridMap<MazeCellType>(\r\n                    width,\r\n                    height,\r\n                    position => MazeCellType.Wall);\r\n\r\n            // STEP 1：基本となる迷路を生成する。\r\n            GenerateBaseMaze(map, random);\r\n\r\n            // STEP 2：行き止まりを削減する。\r\n            int removedDeadEnds = RemoveDeadEnds(\r\n                map,\r\n                random,\r\n                Mathf.Clamp01(settings.DeadEndRemovalRate));\r\n\r\n            // STEP 3：周回可能な通路を追加する。\r\n            int addedLoops = AddLoops(\r\n                map,\r\n                random,\r\n                Mathf.Clamp01(settings.LoopRate));\r\n\r\n            // 生成完了後の統計情報を取得する。\r\n            int passageCount = map.CountCells(\r\n                cell => cell == MazeCellType.Passage);\r\n\r\n            int wallCount = map.Count - passageCount;\r\n\r\n            int deadEndCount = CountDeadEnds(map);\r\n\r\n            // 生成結果を返す。\r\n            return new MazeGenerationResult(\r\n                map,\r\n                seed,\r\n                passageCount,\r\n                wallCount,\r\n                deadEndCount,\r\n                removedDeadEnds + addedLoops);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 横幅と縦幅を指定して迷路を生成する。\r\n        /// その他の設定には初期値を使用する。\r\n        /// </summary>\r\n        /// <param name=\"width\">迷路の横幅</param>\r\n        /// <param name=\"height\">迷路の縦幅</param>\r\n        /// <returns>迷路の生成結果</returns>\r\n        public static MazeGenerationResult Generate(\r\n            int width,\r\n            int height)\r\n        {\r\n            MazeGenerationSettings settings =\r\n                new MazeGenerationSettings\r\n                {\r\n                    Width = width,\r\n                    Height = height\r\n                };\r\n\r\n            return Generate(settings);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたマスが行き止まりかどうか判定する。\r\n        /// </summary>\r\n        /// <param name=\"map\">判定対象の迷路</param>\r\n        /// <param name=\"position\">判定対象の座標</param>\r\n        /// <returns>行き止まりの場合はtrue</returns>\r\n        public static bool IsDeadEnd(\r\n            GridMap<MazeCellType> map,\r\n            Vector2Int position)\r\n        {\r\n            if (map == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(map));\r\n            }\r\n\r\n            if (!IsPassage(map, position))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 接続されている通路が1つの場合は行き止まり。\r\n            return CountPassageNeighbors(map, position) == 1;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 迷路内に存在する行き止まりの数を取得する。\r\n        /// </summary>\r\n        /// <param name=\"map\">判定対象の迷路</param>\r\n        /// <returns>行き止まりの数</returns>\r\n        public static int CountDeadEnds(\r\n            GridMap<MazeCellType> map)\r\n        {\r\n            if (map == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(map));\r\n            }\r\n\r\n            int count = 0;\r\n\r\n            foreach (Vector2Int position in map.GetPositions())\r\n            {\r\n                if (IsDeadEnd(map, position))\r\n                {\r\n                    count++;\r\n                }\r\n            }\r\n\r\n            return count;\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべての通路が互いに接続されているか確認する。\r\n        /// 幅優先探索を使用して到達可能なマスを調べる。\r\n        /// </summary>\r\n        /// <param name=\"map\">確認対象の迷路</param>\r\n        /// <returns>すべての通路が接続されている場合はtrue</returns>\r\n        public static bool IsFullyConnected(\r\n            GridMap<MazeCellType> map)\r\n        {\r\n            if (map == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(map));\r\n            }\r\n\r\n            // 探索開始位置と通路の総数を取得する。\r\n            Vector2Int start = Vector2Int.zero;\r\n            int passageCount = 0;\r\n\r\n            foreach (Vector2Int position in map.GetPositions())\r\n            {\r\n                if (!IsPassage(map, position))\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                if (passageCount == 0)\r\n                {\r\n                    start = position;\r\n                }\r\n\r\n                passageCount++;\r\n            }\r\n\r\n            // 通路が存在しない場合は無効な迷路とする。\r\n            if (passageCount == 0)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 探索済みのマスを管理する。\r\n            HashSet<Vector2Int> visited =\r\n                new HashSet<Vector2Int>();\r\n\r\n            // 探索待ちのマスを管理する。\r\n            Queue<Vector2Int> queue =\r\n                new Queue<Vector2Int>();\r\n\r\n            visited.Add(start);\r\n            queue.Enqueue(start);\r\n\r\n            // 幅優先探索によって通路を順番に調べる。\r\n            while (queue.Count > 0)\r\n            {\r\n                Vector2Int current = queue.Dequeue();\r\n\r\n                foreach (Vector2Int direction in Directions)\r\n                {\r\n                    Vector2Int next = current + direction;\r\n\r\n                    if (!IsPassage(map, next))\r\n                    {\r\n                        continue;\r\n                    }\r\n\r\n                    if (!visited.Add(next))\r\n                    {\r\n                        continue;\r\n                    }\r\n\r\n                    queue.Enqueue(next);\r\n                }\r\n            }\r\n\r\n            // 到達した通路数と全通路数を比較する。\r\n            return visited.Count == passageCount;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Base Maze Generation\r\n\r\n        /// <summary>\r\n        /// 深さ優先探索を利用して基本迷路を生成する。\r\n        /// 2マス先へ移動しながら間の壁を取り除く。\r\n        /// </summary>\r\n        /// <param name=\"map\">生成対象の迷路</param>\r\n        /// <param name=\"random\">乱数生成器</param>\r\n        private static void GenerateBaseMaze(\r\n            GridMap<MazeCellType> map,\r\n            System.Random random)\r\n        {\r\n            // 奇数座標に位置するマスから探索を開始する。\r\n            Vector2Int start = new Vector2Int(\r\n                random.Next(map.Width / 2) * 2 + 1,\r\n                random.Next(map.Height / 2) * 2 + 1);\r\n\r\n            // 探索経路を保持するスタック。\r\n            Stack<Vector2Int> stack =\r\n                new Stack<Vector2Int>();\r\n\r\n            // 次の移動先候補を格納するリスト。\r\n            List<Vector2Int> candidates =\r\n                new List<Vector2Int>(4);\r\n\r\n            map.SetCell(start, MazeCellType.Passage);\r\n\r\n            stack.Push(start);\r\n\r\n            while (stack.Count > 0)\r\n            {\r\n                // 現在の探索位置を取得する。\r\n                Vector2Int current = stack.Peek();\r\n\r\n                candidates.Clear();\r\n\r\n                // 2マス先にある未探索のマスを調べる。\r\n                foreach (Vector2Int direction in Directions)\r\n                {\r\n                    Vector2Int next =\r\n                        current + direction * 2;\r\n\r\n                    if (!IsInnerCell(map, next))\r\n                    {\r\n                        continue;\r\n                    }\r\n\r\n                    if (map.GetCell(next) != MazeCellType.Wall)\r\n                    {\r\n                        continue;\r\n                    }\r\n\r\n                    candidates.Add(next);\r\n                }\r\n\r\n                // 移動可能な場所がない場合は、\r\n                // 直前の探索位置まで戻る。\r\n                if (candidates.Count == 0)\r\n                {\r\n                    stack.Pop();\r\n                    continue;\r\n                }\r\n\r\n                // 候補からランダムに移動先を選択する。\r\n                Vector2Int destination =\r\n                    candidates[random.Next(candidates.Count)];\r\n\r\n                // 現在位置と移動先の間にある壁の座標。\r\n                Vector2Int between =\r\n                    current + (destination - current) / 2;\r\n\r\n                // 間の壁と移動先を通路へ変更する。\r\n                map.SetCell(between, MazeCellType.Passage);\r\n\r\n                map.SetCell(\r\n                    destination,\r\n                    MazeCellType.Passage);\r\n\r\n                // 次の探索位置を登録する。\r\n                stack.Push(destination);\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Dead End Removal\r\n\r\n        /// <summary>\r\n        /// 行き止まりから別の通路へ接続する。\r\n        /// 外周の壁は取り除かない。\r\n        /// </summary>\r\n        /// <param name=\"map\">処理対象の迷路</param>\r\n        /// <param name=\"random\">乱数生成器</param>\r\n        /// <param name=\"rate\">行き止まりの処理割合</param>\r\n        /// <returns>追加で開通させた壁の数</returns>\r\n        private static int RemoveDeadEnds(\r\n            GridMap<MazeCellType> map,\r\n            System.Random random,\r\n            float rate)\r\n        {\r\n            if (rate <= 0f)\r\n            {\r\n                return 0;\r\n            }\r\n\r\n            // 現在存在する行き止まりを取得する。\r\n            List<Vector2Int> deadEnds =\r\n                new List<Vector2Int>();\r\n\r\n            foreach (Vector2Int position in map.GetPositions())\r\n            {\r\n                if (IsDeadEnd(map, position))\r\n                {\r\n                    deadEnds.Add(position);\r\n                }\r\n            }\r\n\r\n            // 特定の方向に処理が偏らないように並べ替える。\r\n            Shuffle(deadEnds, random);\r\n\r\n            // 接続可能な壁を格納するリスト。\r\n            List<Vector2Int> candidates =\r\n                new List<Vector2Int>(4);\r\n\r\n            int removedCount = 0;\r\n\r\n            foreach (Vector2Int position in deadEnds)\r\n            {\r\n                // 他の壁の除去によって既に行き止まりが\r\n                // 解消されている場合は処理しない。\r\n                if (!IsDeadEnd(map, position))\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                // 指定された割合に従って処理する。\r\n                if (random.NextDouble() >= rate)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                candidates.Clear();\r\n\r\n                foreach (Vector2Int direction in Directions)\r\n                {\r\n                    // 隣接する壁と、その先のマスを取得する。\r\n                    Vector2Int wallPosition =\r\n                        position + direction;\r\n\r\n                    Vector2Int destination =\r\n                        position + direction * 2;\r\n\r\n                    if (!IsInnerCell(map, wallPosition))\r\n                    {\r\n                        continue;\r\n                    }\r\n\r\n                    if (map.GetCell(wallPosition)\r\n                        != MazeCellType.Wall)\r\n                    {\r\n                        continue;\r\n                    }\r\n\r\n                    // 壁の先が既存の通路である場合のみ\r\n                    // 接続候補として登録する。\r\n                    if (IsPassage(map, destination))\r\n                    {\r\n                        candidates.Add(wallPosition);\r\n                    }\r\n                }\r\n\r\n                if (candidates.Count == 0)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                // 接続候補からランダムに壁を選択する。\r\n                Vector2Int selectedWall =\r\n                    candidates[random.Next(candidates.Count)];\r\n\r\n                map.SetCell(\r\n                    selectedWall,\r\n                    MazeCellType.Passage);\r\n\r\n                removedCount++;\r\n            }\r\n\r\n            return removedCount;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Loop Generation\r\n\r\n        /// <summary>\r\n        /// 既存の通路間にある壁を取り除き、\r\n        /// 周回可能な経路を追加する。\r\n        /// </summary>\r\n        /// <param name=\"map\">処理対象の迷路</param>\r\n        /// <param name=\"random\">乱数生成器</param>\r\n        /// <param name=\"rate\">追加通路の生成割合</param>\r\n        /// <returns>追加で開通させた壁の数</returns>\r\n        private static int AddLoops(\r\n            GridMap<MazeCellType> map,\r\n            System.Random random,\r\n            float rate)\r\n        {\r\n            if (rate <= 0f)\r\n            {\r\n                return 0;\r\n            }\r\n\r\n            // 取り除くことのできる壁の候補。\r\n            List<Vector2Int> candidates =\r\n                new List<Vector2Int>();\r\n\r\n            foreach (Vector2Int position in map.GetPositions())\r\n            {\r\n                if (!IsInnerCell(map, position))\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                if (map.GetCell(position) != MazeCellType.Wall)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                // 偶数・偶数座標の壁は柱として維持する。\r\n                // 広い空間ができすぎることを防止する。\r\n                if (position.x % 2 == 0 &&\r\n                    position.y % 2 == 0)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                // 左右の通路が壁を挟んで存在するか確認する。\r\n                bool horizontal =\r\n                    IsPassage(\r\n                        map, position + Vector2Int.left) &&\r\n                    IsPassage(\r\n                        map, position + Vector2Int.right);\r\n\r\n                // 上下の通路が壁を挟んで存在するか確認する。\r\n                bool vertical =\r\n                    IsPassage(\r\n                        map, position + Vector2Int.up) &&\r\n                    IsPassage(\r\n                        map, position + Vector2Int.down);\r\n\r\n                if (horizontal || vertical)\r\n                {\r\n                    candidates.Add(position);\r\n                }\r\n            }\r\n\r\n            // ランダムな順番で壁を取り除く。\r\n            Shuffle(candidates, random);\r\n\r\n            // 候補数と生成割合から開通数を決定する。\r\n            int targetCount = Mathf.Clamp(\r\n                Mathf.RoundToInt(candidates.Count * rate),\r\n                0,\r\n                candidates.Count);\r\n\r\n            for (int i = 0; i < targetCount; i++)\r\n            {\r\n                map.SetCell(\r\n                    candidates[i],\r\n                    MazeCellType.Passage);\r\n            }\r\n\r\n            return targetCount;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Utility Methods\r\n\r\n        /// <summary>\r\n        /// マップサイズを迷路生成に適した奇数へ補正する。\r\n        /// 最小サイズは5とする。\r\n        /// </summary>\r\n        /// <param name=\"size\">補正前のサイズ</param>\r\n        /// <returns>補正後のサイズ</returns>\r\n        private static int NormalizeSize(int size)\r\n        {\r\n            size = Mathf.Max(5, size);\r\n\r\n            if (size % 2 == 0)\r\n            {\r\n                size++;\r\n            }\r\n\r\n            return size;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定座標が外周を除いたマップ内部か確認する。\r\n        /// </summary>\r\n        /// <param name=\"map\">判定対象の迷路</param>\r\n        /// <param name=\"position\">判定対象の座標</param>\r\n        /// <returns>マップ内部の場合はtrue</returns>\r\n        private static bool IsInnerCell(\r\n            GridMap<MazeCellType> map,\r\n            Vector2Int position)\r\n        {\r\n            return position.x > 0 &&\r\n                   position.y > 0 &&\r\n                   position.x < map.Width - 1 &&\r\n                   position.y < map.Height - 1;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定座標が通路かどうか判定する。\r\n        /// マップ範囲外の場合はfalseを返す。\r\n        /// </summary>\r\n        /// <param name=\"map\">判定対象の迷路</param>\r\n        /// <param name=\"position\">判定対象の座標</param>\r\n        /// <returns>通路の場合はtrue</returns>\r\n        private static bool IsPassage(\r\n            GridMap<MazeCellType> map,\r\n            Vector2Int position)\r\n        {\r\n            return map.TryGetCell(\r\n                       position,\r\n                       out MazeCellType cell) &&\r\n                   cell == MazeCellType.Passage;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定座標の上下左右に存在する通路数を取得する。\r\n        /// </summary>\r\n        /// <param name=\"map\">判定対象の迷路</param>\r\n        /// <param name=\"position\">基準となる座標</param>\r\n        /// <returns>隣接する通路の数</returns>\r\n        private static int CountPassageNeighbors(\r\n            GridMap<MazeCellType> map,\r\n            Vector2Int position)\r\n        {\r\n            int count = 0;\r\n\r\n            foreach (Vector2Int direction in Directions)\r\n            {\r\n                if (IsPassage(map, position + direction))\r\n                {\r\n                    count++;\r\n                }\r\n            }\r\n\r\n            return count;\r\n        }\r\n\r\n        /// <summary>\r\n        /// Fisher-Yatesアルゴリズムを使用して\r\n        /// リストの要素をランダムに並べ替える。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">リストの要素型</typeparam>\r\n        /// <param name=\"list\">並べ替え対象のリスト</param>\r\n        /// <param name=\"random\">乱数生成器</param>\r\n        private static void Shuffle<T>(\r\n            List<T> list,\r\n            System.Random random)\r\n        {\r\n            for (int i = list.Count - 1; i > 0; i--)\r\n            {\r\n                int j = random.Next(i + 1);\r\n\r\n                T temporary = list[i];\r\n\r\n                list[i] = list[j];\r\n\r\n                list[j] = temporary;\r\n            }\r\n        }\r\n\r\n        #endregion\r\n    }\r\n\r\n    #endregion\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-26T16:01:49.932Z"
+}
