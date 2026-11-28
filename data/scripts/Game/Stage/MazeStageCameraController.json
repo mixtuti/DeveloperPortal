@@ -1,5 +1,5 @@
 {
-    "parserVersion": 2,
+    "parserVersion": 3,
     "id": "Game.Stage.MazeStageCameraController",
     "name": "MazeStageCameraController",
     "fileName": "MazeStageCameraController.cs",
@@ -128,11 +128,707 @@
             "exceptions": []
         }
     ],
+    "types": [
+        {
+            "name": "MazeStageCameraController",
+            "fullName": "MazeStageCameraController",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "迷路ステージの生成に合わせて カメラの表示範囲を自動調整するクラス。 実際のカメラ調整処理は GridCameraFitterへ委譲する。",
+            "remarks": "",
+            "attributes": [
+                {
+                    "name": "DisallowMultipleComponent",
+                    "arguments": [],
+                    "raw": "DisallowMultipleComponent"
+                },
+                {
+                    "name": "RequireComponent",
+                    "arguments": [
+                        "typeof(Camera)"
+                    ],
+                    "raw": "RequireComponent(typeof(Camera))"
+                }
+            ],
+            "declaration": "public class MazeStageCameraController : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "stageManager",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeStageManager stageManager",
+                    "returnType": "",
+                    "valueType": "MazeStageManager",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "監視対象のステージ管理クラス。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "参照設定"
+                            ],
+                            "raw": "Header(\"参照設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "カメラ調整対象のステージ管理クラス"
+                            ],
+                            "raw": "Tooltip(\"カメラ調整対象のステージ管理クラス\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Stage Manager",
+                        "type": "MazeStageManager",
+                        "header": "参照設定",
+                        "tooltip": "カメラ調整対象のステージ管理クラス",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "targetCamera",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private Camera targetCamera",
+                    "returnType": "",
+                    "valueType": "Camera",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "調整対象のカメラ。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "未設定の場合は同じGameObjectのCameraを使用"
+                            ],
+                            "raw": "Tooltip(\"未設定の場合は同じGameObjectのCameraを使用\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Target Camera",
+                        "type": "Camera",
+                        "header": null,
+                        "tooltip": "未設定の場合は同じGameObjectのCameraを使用",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "padding",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float padding = 1f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "1f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "迷路周囲に確保する余白。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "カメラ設定"
+                            ],
+                            "raw": "Header(\"カメラ設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Min",
+                            "arguments": [
+                                0
+                            ],
+                            "raw": "Min(0f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "迷路の各辺に確保するワールド座標上の余白"
+                            ],
+                            "raw": "Tooltip(\"迷路の各辺に確保するワールド座標上の余白\")"
+                        }
+                    ],
+                    "initialValue": "1f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Padding",
+                        "type": "float",
+                        "header": "カメラ設定",
+                        "tooltip": "迷路の各辺に確保するワールド座標上の余白",
+                        "range": null,
+                        "min": 0,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "1f"
+                    }
+                },
+                {
+                    "name": "fitOnStageGenerated",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool fitOnStageGenerated = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ生成時に自動調整するか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "ステージ生成完了時にカメラを調整する"
+                            ],
+                            "raw": "Tooltip(\"ステージ生成完了時にカメラを調整する\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Fit On Stage Generated",
+                        "type": "bool",
+                        "header": null,
+                        "tooltip": "ステージ生成完了時にカメラを調整する",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "fitOnAspectChanged",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool fitOnAspectChanged = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "画面比率変更時に再調整するか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "画面のアスペクト比が変化した際に再調整する"
+                            ],
+                            "raw": "Tooltip(\"画面のアスペクト比が変化した際に再調整する\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Fit On Aspect Changed",
+                        "type": "bool",
+                        "header": null,
+                        "tooltip": "画面のアスペクト比が変化した際に再調整する",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "printDebugLog",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool printDebugLog = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "カメラ調整結果をログへ出力するか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "デバッグ設定"
+                            ],
+                            "raw": "Header(\"デバッグ設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "カメラ調整時に位置と表示サイズを出力する"
+                            ],
+                            "raw": "Tooltip(\"カメラ調整時に位置と表示サイズを出力する\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Print Debug Log",
+                        "type": "bool",
+                        "header": "デバッグ設定",
+                        "tooltip": "カメラ調整時に位置と表示サイズを出力する",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "lastAspect",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float lastAspect = -1f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "-1f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "前回調整時のアスペクト比。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "-1f",
+                    "inspector": null
+                },
+                {
+                    "name": "subscribedManager",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeStageManager subscribedManager",
+                    "returnType": "",
+                    "valueType": "MazeStageManager",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "イベント登録先のステージ管理クラス。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TargetCamera",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Camera TargetCamera => targetCamera",
+                    "returnType": "",
+                    "valueType": "Camera",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の調整対象カメラ。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Padding",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Padding => padding",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の余白設定。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "LastAspect",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float LastAspect => lastAspect",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "前回調整時のアスペクト比。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Awake",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Awake()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "コンポーネント生成時の処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnEnable",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnEnable()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "コンポーネント有効化時の処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "LateUpdate",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void LateUpdate()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "画面比率の変化を監視する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnDisable",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnDisable()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "コンポーネント無効化時の処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnValidate",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnValidate()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "Inspector設定値を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SubscribeStageEvents",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void SubscribeStageEvents()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ生成イベントを登録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "UnsubscribeStageEvents",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void UnsubscribeStageEvents()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ生成イベントの登録を解除する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnStageGenerated",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnStageGenerated(\r\n            MazeStageGenerationResult result)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "result",
+                            "type": "MazeStageGenerationResult",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "生成されたステージ情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ生成完了時のイベント処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "FitCurrentStage",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool FitCurrentStage()",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の迷路ステージにカメラを合わせる。",
+                    "returns": "調整に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SetPadding",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void SetPadding(\r\n            float newPadding,\r\n            bool refit = true)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "newPadding",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更後の余白"
+                        },
+                        {
+                            "name": "refit",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": "true",
+                            "description": "変更後に再調整するか"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "カメラ周囲の余白を変更する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "FitFromContextMenu",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void FitFromContextMenu()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "Inspectorから手動でカメラを再調整する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "カメラ/現在のステージに合わせる"
+                            ],
+                            "raw": "ContextMenu(\"カメラ/現在のステージに合わせる\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 17
+        }
+    ],
     "source": "\r\nusing System;\r\nusing UnityEngine;\r\nusing Framework.CameraSystem;\r\n\r\nnamespace Game.Stage\r\n{\r\n    /// <summary>\r\n    /// 迷路ステージの生成に合わせて\r\n    /// カメラの表示範囲を自動調整するクラス。\r\n    ///\r\n    /// 実際のカメラ調整処理は\r\n    /// GridCameraFitterへ委譲する。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    [RequireComponent(typeof(Camera))]\r\n    public class MazeStageCameraController : MonoBehaviour\r\n    {\r\n        #region Inspector Fields\r\n\r\n        [Header(\"参照設定\")]\r\n\r\n        /// <summary>監視対象のステージ管理クラス。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"カメラ調整対象のステージ管理クラス\")]\r\n        private MazeStageManager stageManager;\r\n\r\n        /// <summary>調整対象のカメラ。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"未設定の場合は同じGameObjectのCameraを使用\")]\r\n        private Camera targetCamera;\r\n\r\n        [Header(\"カメラ設定\")]\r\n\r\n        /// <summary>迷路周囲に確保する余白。</summary>\r\n        [SerializeField]\r\n        [Min(0f)]\r\n        [Tooltip(\"迷路の各辺に確保するワールド座標上の余白\")]\r\n        private float padding = 1f;\r\n\r\n        /// <summary>ステージ生成時に自動調整するか。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"ステージ生成完了時にカメラを調整する\")]\r\n        private bool fitOnStageGenerated = true;\r\n\r\n        /// <summary>画面比率変更時に再調整するか。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"画面のアスペクト比が変化した際に再調整する\")]\r\n        private bool fitOnAspectChanged = true;\r\n\r\n        [Header(\"デバッグ設定\")]\r\n\r\n        /// <summary>カメラ調整結果をログへ出力するか。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"カメラ調整時に位置と表示サイズを出力する\")]\r\n        private bool printDebugLog = true;\r\n\r\n        #endregion\r\n\r\n        #region Runtime Fields\r\n\r\n        /// <summary>前回調整時のアスペクト比。</summary>\r\n        private float lastAspect = -1f;\r\n\r\n        /// <summary>イベント登録先のステージ管理クラス。</summary>\r\n        private MazeStageManager subscribedManager;\r\n\r\n        #endregion\r\n\r\n        #region Properties\r\n\r\n        /// <summary>現在の調整対象カメラ。</summary>\r\n        public Camera TargetCamera => targetCamera;\r\n\r\n        /// <summary>現在の余白設定。</summary>\r\n        public float Padding => padding;\r\n\r\n        /// <summary>前回調整時のアスペクト比。</summary>\r\n        public float LastAspect => lastAspect;\r\n\r\n        #endregion\r\n\r\n        #region Unity Methods\r\n\r\n        /// <summary>コンポーネント生成時の処理。</summary>\r\n        private void Awake()\r\n        {\r\n            // カメラが未設定の場合は自動取得する。\r\n            if (targetCamera == null)\r\n            {\r\n                targetCamera = GetComponent<Camera>();\r\n            }\r\n        }\r\n\r\n        /// <summary>コンポーネント有効化時の処理。</summary>\r\n        private void OnEnable()\r\n        {\r\n            SubscribeStageEvents();\r\n\r\n            // 既にステージが生成されている場合にも対応する。\r\n            if (fitOnStageGenerated &&\r\n                stageManager != null &&\r\n                stageManager.HasStage)\r\n            {\r\n                FitCurrentStage();\r\n            }\r\n        }\r\n\r\n        /// <summary>画面比率の変化を監視する。</summary>\r\n        private void LateUpdate()\r\n        {\r\n            if (!fitOnAspectChanged ||\r\n                targetCamera == null ||\r\n                stageManager == null ||\r\n                !stageManager.HasStage)\r\n            {\r\n                return;\r\n            }\r\n\r\n            float currentAspect = targetCamera.aspect;\r\n\r\n            // アスペクト比が変化した場合のみ再計算する。\r\n            if (!Mathf.Approximately(\r\n                    lastAspect,\r\n                    currentAspect))\r\n            {\r\n                FitCurrentStage();\r\n            }\r\n        }\r\n\r\n        /// <summary>コンポーネント無効化時の処理。</summary>\r\n        private void OnDisable()\r\n        {\r\n            UnsubscribeStageEvents();\r\n        }\r\n\r\n        /// <summary>Inspector設定値を検証する。</summary>\r\n        private void OnValidate()\r\n        {\r\n            if (float.IsNaN(padding) ||\r\n                float.IsInfinity(padding))\r\n            {\r\n                padding = 1f;\r\n            }\r\n\r\n            padding = Mathf.Max(0f, padding);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Event Methods\r\n\r\n        /// <summary>\r\n        /// ステージ生成イベントを登録する。\r\n        /// </summary>\r\n        private void SubscribeStageEvents()\r\n        {\r\n            UnsubscribeStageEvents();\r\n\r\n            if (stageManager == null)\r\n            {\r\n                Debug.LogWarning(\r\n                    \"カメラ調整対象のStageManagerが未設定です。\",\r\n                    this);\r\n\r\n                return;\r\n            }\r\n\r\n            subscribedManager = stageManager;\r\n\r\n            subscribedManager.StageGenerated +=\r\n                OnStageGenerated;\r\n        }\r\n\r\n        /// <summary>\r\n        /// ステージ生成イベントの登録を解除する。\r\n        /// </summary>\r\n        private void UnsubscribeStageEvents()\r\n        {\r\n            if (subscribedManager != null)\r\n            {\r\n                subscribedManager.StageGenerated -=\r\n                    OnStageGenerated;\r\n            }\r\n\r\n            subscribedManager = null;\r\n        }\r\n\r\n        /// <summary>\r\n        /// ステージ生成完了時のイベント処理。\r\n        /// </summary>\r\n        /// <param name=\"result\">生成されたステージ情報</param>\r\n        private void OnStageGenerated(\r\n            MazeStageGenerationResult result)\r\n        {\r\n            if (!fitOnStageGenerated)\r\n            {\r\n                return;\r\n            }\r\n\r\n            FitCurrentStage();\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Camera Methods\r\n\r\n        /// <summary>\r\n        /// 現在の迷路ステージにカメラを合わせる。\r\n        /// </summary>\r\n        /// <returns>調整に成功した場合はtrue</returns>\r\n        public bool FitCurrentStage()\r\n        {\r\n            if (targetCamera == null ||\r\n                stageManager == null ||\r\n                !stageManager.HasStage ||\r\n                stageManager.CoordinateConverter == null)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 同一の画面比率でエラーが発生した場合に\r\n            // 毎フレーム再試行することを防止する。\r\n            lastAspect = targetCamera.aspect;\r\n\r\n            try\r\n            {\r\n                GridCameraFitter.Fit(\r\n                    targetCamera,\r\n                    stageManager.CoordinateConverter,\r\n                    stageManager.Map,\r\n                    padding);\r\n\r\n                if (printDebugLog)\r\n                {\r\n                    Debug.Log(\r\n                        \"【カメラ調整完了】\\n\" +\r\n                        $\"迷路サイズ：\" +\r\n                        $\"{stageManager.Map.Width} × \" +\r\n                        $\"{stageManager.Map.Height}\\n\" +\r\n                        $\"カメラ位置：\" +\r\n                        $\"{targetCamera.transform.position}\\n\" +\r\n                        $\"Orthographic Size：\" +\r\n                        $\"{targetCamera.orthographicSize:F3}\\n\" +\r\n                        $\"Aspect：{lastAspect:F3}\",\r\n                        this);\r\n                }\r\n\r\n                return true;\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                Debug.LogException(exception, this);\r\n\r\n                return false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// カメラ周囲の余白を変更する。\r\n        /// </summary>\r\n        /// <param name=\"newPadding\">変更後の余白</param>\r\n        /// <param name=\"refit\">変更後に再調整するか</param>\r\n        public void SetPadding(\r\n            float newPadding,\r\n            bool refit = true)\r\n        {\r\n            if (float.IsNaN(newPadding) ||\r\n                float.IsInfinity(newPadding) ||\r\n                newPadding < 0f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(newPadding));\r\n            }\r\n\r\n            padding = newPadding;\r\n\r\n            if (refit)\r\n            {\r\n                FitCurrentStage();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// Inspectorから手動でカメラを再調整する。\r\n        /// </summary>\r\n        [ContextMenu(\"カメラ/現在のステージに合わせる\")]\r\n        private void FitFromContextMenu()\r\n        {\r\n            if (!Application.isPlaying)\r\n            {\r\n                return;\r\n            }\r\n\r\n            FitCurrentStage();\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
     "tips": [],
     "examples": [],
     "notes": [],
     "related": [],
     "tests": [],
-    "generatedAt": "2026-11-26T16:10:18.007Z"
+    "generatedAt": "2026-11-28T15:50:00.867Z"
 }

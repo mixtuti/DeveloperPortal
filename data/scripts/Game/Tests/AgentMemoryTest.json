@@ -1,0 +1,581 @@
+{
+    "parserVersion": 3,
+    "id": "Game.Tests.AgentMemoryTest",
+    "name": "AgentMemoryTest",
+    "fileName": "AgentMemoryTest.cs",
+    "namespace": "Game.Tests",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class AgentMemoryTest : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "認識記憶と空間記憶の基本機能を検証する。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "Framework.AI.Memory",
+        "Framework.AI.Perception",
+        "UnityEngine",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "RunAllTests",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void RunAllTests()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべての記憶システムのテストを実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "AgentMemoryTest",
+            "fullName": "AgentMemoryTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "認識記憶と空間記憶の基本機能を検証する。",
+            "remarks": "",
+            "attributes": [
+                {
+                    "name": "DisallowMultipleComponent",
+                    "arguments": [],
+                    "raw": "DisallowMultipleComponent"
+                }
+            ],
+            "declaration": "public sealed class AgentMemoryTest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "runTestsOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runTestsOnStart = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "開始時にすべてのテストを実行する。"
+                            ],
+                            "raw": "Tooltip(\"開始時にすべてのテストを実行する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Tests On Start",
+                        "type": "bool",
+                        "header": "テスト設定",
+                        "tooltip": "開始時にすべてのテストを実行する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト結果"
+                            ],
+                            "raw": "Header(\"テスト結果\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "成功したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"成功したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Passed Count",
+                        "type": "int",
+                        "header": "テスト結果",
+                        "tooltip": "成功したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "失敗したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"失敗したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Failed Count",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "失敗したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "ExpectedTestCount",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const int ExpectedTestCount = 40",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "40",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "予定されているテスト件数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "40",
+                    "inspector": null
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "開始時のテスト実行を制御する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunAllTests",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void RunAllTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべての記憶システムのテストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "すべてのテストを実行"
+                            ],
+                            "raw": "ContextMenu(\"すべてのテストを実行\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateStimulus",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private PerceptionStimulus<Vector2Int> CreateStimulus(\r\n            Guid sourceId,\r\n            Vector2Int position,\r\n            double timestamp,\r\n            float confidence = 1f)",
+                    "returnType": "PerceptionStimulus<Vector2Int>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "sourceId",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識対象の識別子"
+                        },
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識位置"
+                        },
+                        {
+                            "name": "timestamp",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識時刻。単位は秒"
+                        },
+                        {
+                            "name": "confidence",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "1f",
+                            "description": "認識時の信頼度"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用の認識情報を生成する。",
+                    "returns": "生成した認識情報",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestRemember",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestRemember()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識情報の保存を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestUpdateMemory",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestUpdateMemory()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識情報の更新と時刻の優先順位を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestConfidence",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestConfidence()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "時間経過による記憶信頼度の減衰を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestForgetting",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestForgetting()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "記憶の期限切れと削除処理を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestSpatialMemory",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestSpatialMemory()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "空間記憶の訪問記録を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestUnvisitedScore",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestUnvisitedScore()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "未訪問度と経過時間の評価を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestIndependence",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestIndependence()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個体ごとの記憶の独立性を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestInvalidInput",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestInvalidInput()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "不正な設定値や入力値の拒否を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Throws",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool Throws<TException>(Action action)\r\n            where TException : Exception",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証対象の処理"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "TException",
+                            "description": "期待する例外型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定された処理が期待する例外を発生させるか検証する。",
+                    "returns": "期待する例外が発生した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(bool passed, string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "passed",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テストの成功判定"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個別のテスト結果を出力し、結果を集計する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 13
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing Framework.AI.Memory;\r\nusing Framework.AI.Perception;\r\nusing UnityEngine;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// 認識記憶と空間記憶の基本機能を検証する。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    public sealed class AgentMemoryTest : MonoBehaviour\r\n    {\r\n        [Header(\"テスト設定\")]\r\n        [SerializeField]\r\n        [Tooltip(\"開始時にすべてのテストを実行する。\")]\r\n        private bool runTestsOnStart = true;\r\n\r\n        [Header(\"テスト結果\")]\r\n        [SerializeField]\r\n        [Tooltip(\"成功したテスト件数。\")]\r\n        private int passedCount;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"失敗したテスト件数。\")]\r\n        private int failedCount;\r\n\r\n        /// <summary>\r\n        /// 予定されているテスト件数。\r\n        /// </summary>\r\n        private const int ExpectedTestCount = 40;\r\n\r\n        /// <summary>\r\n        /// 開始時のテスト実行を制御する。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            if (runTestsOnStart)\r\n            {\r\n                RunAllTests();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべての記憶システムのテストを実行する。\r\n        /// </summary>\r\n        [ContextMenu(\"すべてのテストを実行\")]\r\n        public void RunAllTests()\r\n        {\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n            try\r\n            {\r\n                TestRemember();\r\n                TestUpdateMemory();\r\n                TestConfidence();\r\n                TestForgetting();\r\n                TestSpatialMemory();\r\n                TestUnvisitedScore();\r\n                TestIndependence();\r\n                TestInvalidInput();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogException(exception, this);\r\n            }\r\n\r\n            Debug.Log(\r\n                $\"【AgentMemory テスト結果】\\n\" +\r\n                $\"成功：{passedCount}\\n\" +\r\n                $\"失敗：{failedCount}\\n\" +\r\n                (failedCount == 0 &&\r\n                 passedCount == ExpectedTestCount\r\n                    ? \"すべてのテストに成功しました。\"\r\n                    : \"失敗または未実行のテストを確認してください。\"),\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト用の認識情報を生成する。\r\n        /// </summary>\r\n        /// <param name=\"sourceId\">認識対象の識別子</param>\r\n        /// <param name=\"position\">認識位置</param>\r\n        /// <param name=\"timestamp\">認識時刻。単位は秒</param>\r\n        /// <param name=\"confidence\">認識時の信頼度</param>\r\n        /// <returns>生成した認識情報</returns>\r\n        private PerceptionStimulus<Vector2Int> CreateStimulus(\r\n            Guid sourceId,\r\n            Vector2Int position,\r\n            double timestamp,\r\n            float confidence = 1f)\r\n        {\r\n            return new PerceptionStimulus<Vector2Int>(\r\n                sourceId,\r\n                PerceptionType.Sight,\r\n                position,\r\n                confidence,\r\n                timestamp);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 認識情報の保存を検証する。\r\n        /// </summary>\r\n        private void TestRemember()\r\n        {\r\n            var memory =\r\n                new PerceptionMemory<Vector2Int>(10d);\r\n\r\n            Guid sourceId = Guid.NewGuid();\r\n\r\n            var position = new Vector2Int(3, 4);\r\n\r\n            bool initialPassed =\r\n                memory.Count == 0 &&\r\n                memory.RetentionDuration == 10d;\r\n            Debug.Assert(initialPassed, \"認識記憶の初期状態\", this);\r\n            Check(initialPassed, \"認識記憶の初期状態\");\r\n\r\n            bool rememberPassed =\r\n                memory.Remember(\r\n                    CreateStimulus(sourceId, position, 5d)) &&\r\n                memory.Count == 1;\r\n            Debug.Assert(rememberPassed, \"認識情報の保存\", this);\r\n            Check(rememberPassed, \"認識情報の保存\");\r\n\r\n            bool retrievePassed =\r\n                memory.TryGetLastObservation(\r\n                    sourceId,\r\n                    out var stored) &&\r\n                stored.Position == position &&\r\n                stored.Timestamp == 5d;\r\n            Debug.Assert(retrievePassed, \"保存された認識情報の取得\", this);\r\n            Check(retrievePassed, \"保存された認識情報の取得\");\r\n\r\n            bool invalidPassed =\r\n                !memory.Remember(\r\n                    default(PerceptionStimulus<Vector2Int>));\r\n            Debug.Assert(invalidPassed, \"無効な認識情報の拒否\", this);\r\n            Check(invalidPassed, \"無効な認識情報の拒否\");\r\n\r\n            bool unknownPassed =\r\n                !memory.Remember(\r\n                    CreateStimulus(\r\n                        Guid.Empty, position, 5d));\r\n            Debug.Assert(unknownPassed, \"対象不明の認識情報の拒否\", this);\r\n            Check(unknownPassed, \"対象不明の認識情報の拒否\");\r\n\r\n            bool zeroPassed =\r\n                !memory.Remember(\r\n                    CreateStimulus(\r\n                        Guid.NewGuid(), position, 5d, 0f)) &&\r\n                memory.Count == 1;\r\n            Debug.Assert(zeroPassed, \"信頼度0の認識情報の拒否\", this);\r\n            Check(zeroPassed, \"信頼度0の認識情報の拒否\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 認識情報の更新と時刻の優先順位を検証する。\r\n        /// </summary>\r\n        private void TestUpdateMemory()\r\n        {\r\n            var memory =\r\n                new PerceptionMemory<Vector2Int>();\r\n\r\n            Guid sourceId = Guid.NewGuid();\r\n\r\n            var first = new Vector2Int(1, 1);\r\n            var second = new Vector2Int(3, 3);\r\n            var third = new Vector2Int(5, 5);\r\n\r\n            memory.Remember(\r\n                CreateStimulus(sourceId, first, 5d));\r\n\r\n            bool newerPassed =\r\n                memory.Remember(\r\n                    CreateStimulus(\r\n                        sourceId, second, 6d, 0.5f)) &&\r\n                memory.TryGetLastObservation(\r\n                    sourceId, out var updated) &&\r\n                updated.Position == second &&\r\n                memory.Count == 1;\r\n            Debug.Assert(newerPassed, \"新しい認識情報による更新\", this);\r\n            Check(newerPassed, \"新しい認識情報による更新\");\r\n\r\n            bool olderPassed =\r\n                !memory.Remember(\r\n                    CreateStimulus(sourceId, first, 4d));\r\n            Debug.Assert(olderPassed, \"古い認識情報の拒否\", this);\r\n            Check(olderPassed, \"古い認識情報の拒否\");\r\n\r\n            bool weakerPassed =\r\n                !memory.Remember(\r\n                    CreateStimulus(\r\n                        sourceId, third, 6d, 0.2f));\r\n            Debug.Assert(weakerPassed, \"同時刻の低信頼度情報の拒否\", this);\r\n            Check(weakerPassed, \"同時刻の低信頼度情報の拒否\");\r\n\r\n            bool strongerPassed =\r\n                memory.Remember(\r\n                    CreateStimulus(\r\n                        sourceId, third, 6d, 0.9f)) &&\r\n                memory.TryGetLastObservation(\r\n                    sourceId, out var stronger) &&\r\n                stronger.Position == third;\r\n            Debug.Assert(strongerPassed, \"同時刻の高信頼度情報の優先\", this);\r\n            Check(strongerPassed, \"同時刻の高信頼度情報の優先\");\r\n\r\n            Guid otherId = Guid.NewGuid();\r\n\r\n            bool multiplePassed =\r\n                memory.Remember(\r\n                    CreateStimulus(otherId, first, 7d)) &&\r\n                memory.Count == 2;\r\n            Debug.Assert(multiplePassed, \"複数対象の記憶\", this);\r\n            Check(multiplePassed, \"複数対象の記憶\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 時間経過による記憶信頼度の減衰を検証する。\r\n        /// </summary>\r\n        private void TestConfidence()\r\n        {\r\n            var memory =\r\n                new PerceptionMemory<Vector2Int>(10d);\r\n\r\n            Guid sourceId = Guid.NewGuid();\r\n\r\n            var position = new Vector2Int(2, 3);\r\n\r\n            memory.Remember(\r\n                CreateStimulus(\r\n                    sourceId, position, 5d, 0.8f));\r\n\r\n            bool initialPassed =\r\n                Mathf.Approximately(\r\n                    memory.GetConfidence(sourceId, 5d),\r\n                    0.8f);\r\n            Debug.Assert(initialPassed, \"認識直後の記憶信頼度\", this);\r\n            Check(initialPassed, \"認識直後の記憶信頼度\");\r\n\r\n            bool halfPassed =\r\n                Mathf.Approximately(\r\n                    memory.GetConfidence(sourceId, 10d),\r\n                    0.4f);\r\n            Debug.Assert(halfPassed, \"経過時間による信頼度減衰\", this);\r\n            Check(halfPassed, \"経過時間による信頼度減衰\");\r\n\r\n            bool recallPassed =\r\n                memory.TryRecall(\r\n                    sourceId,\r\n                    10d,\r\n                    out var recalled,\r\n                    out float confidence) &&\r\n                recalled.Position == position &&\r\n                recalled.Confidence == 0.8f &&\r\n                Mathf.Approximately(confidence, 0.4f);\r\n            Debug.Assert(recallPassed, \"元の認識情報と減衰値の分離\", this);\r\n            Check(recallPassed, \"元の認識情報と減衰値の分離\");\r\n\r\n            bool expiredPassed =\r\n                !memory.TryRecall(\r\n                    sourceId,\r\n                    15d,\r\n                    out var expired,\r\n                    out float expiredConfidence) &&\r\n                !expired.IsValid &&\r\n                expiredConfidence == 0f;\r\n            Debug.Assert(expiredPassed, \"記憶保持期限の境界\", this);\r\n            Check(expiredPassed, \"記憶保持期限の境界\");\r\n\r\n            bool futurePassed =\r\n                !memory.TryRecall(\r\n                    sourceId, 4d, out _, out _) &&\r\n                memory.GetConfidence(sourceId, 4d) == 0f;\r\n            Debug.Assert(futurePassed, \"未来の認識情報の取得抑止\", this);\r\n            Check(futurePassed, \"未来の認識情報の取得抑止\");\r\n\r\n            memory.SetRetentionDuration(20d);\r\n\r\n            bool durationPassed =\r\n                memory.RetentionDuration == 20d &&\r\n                Mathf.Approximately(\r\n                    memory.GetConfidence(sourceId, 15d),\r\n                    0.4f);\r\n            Debug.Assert(durationPassed, \"記憶保持時間の変更反映\", this);\r\n            Check(durationPassed, \"記憶保持時間の変更反映\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 記憶の期限切れと削除処理を検証する。\r\n        /// </summary>\r\n        private void TestForgetting()\r\n        {\r\n            var memory =\r\n                new PerceptionMemory<Vector2Int>(10d);\r\n\r\n            Guid firstId = Guid.NewGuid();\r\n            Guid secondId = Guid.NewGuid();\r\n\r\n            memory.Remember(\r\n                CreateStimulus(\r\n                    firstId, Vector2Int.zero, 0d));\r\n\r\n            memory.Remember(\r\n                CreateStimulus(\r\n                    secondId, Vector2Int.one, 8d));\r\n\r\n            bool storedPassed =\r\n                memory.GetConfidence(firstId, 10d) == 0f &&\r\n                memory.TryGetLastObservation(\r\n                    firstId, out _) &&\r\n                memory.Count == 2;\r\n            Debug.Assert(storedPassed, \"期限切れ記憶の物理的保持\", this);\r\n            Check(storedPassed, \"期限切れ記憶の物理的保持\");\r\n\r\n            bool removePassed =\r\n                memory.RemoveExpired(10d) == 1 &&\r\n                memory.Count == 1 &&\r\n                !memory.TryGetLastObservation(\r\n                    firstId, out _);\r\n            Debug.Assert(removePassed, \"期限切れ記憶の削除\", this);\r\n            Check(removePassed, \"期限切れ記憶の削除\");\r\n\r\n            bool remainingPassed =\r\n                memory.TryRecall(\r\n                    secondId, 10d, out _, out _);\r\n            Debug.Assert(remainingPassed, \"有効な記憶の維持\", this);\r\n            Check(remainingPassed, \"有効な記憶の維持\");\r\n\r\n            bool forgetPassed =\r\n                memory.Forget(secondId) &&\r\n                !memory.Forget(secondId) &&\r\n                memory.Count == 0;\r\n            Debug.Assert(forgetPassed, \"指定対象の記憶削除\", this);\r\n            Check(forgetPassed, \"指定対象の記憶削除\");\r\n\r\n            memory.Remember(\r\n                CreateStimulus(\r\n                    firstId, Vector2Int.zero, 20d));\r\n\r\n            memory.Clear();\r\n\r\n            bool clearPassed = memory.Count == 0;\r\n            Debug.Assert(clearPassed, \"すべての認識記憶の削除\", this);\r\n            Check(clearPassed, \"すべての認識記憶の削除\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 空間記憶の訪問記録を検証する。\r\n        /// </summary>\r\n        private void TestSpatialMemory()\r\n        {\r\n            var memory =\r\n                new SpatialMemory<Vector2Int>();\r\n\r\n            var first = new Vector2Int(1, 1);\r\n            var second = new Vector2Int(2, 1);\r\n\r\n            bool initialPassed =\r\n                memory.VisitedPositionCount == 0 &&\r\n                !memory.HasVisited(first) &&\r\n                memory.GetVisitCount(first) == 0;\r\n            Debug.Assert(initialPassed, \"空間記憶の初期状態\", this);\r\n            Check(initialPassed, \"空間記憶の初期状態\");\r\n\r\n            bool visitPassed =\r\n                memory.RecordVisit(first, 5d) &&\r\n                memory.TryGetEntry(first, out var entry) &&\r\n                entry.IsVisited &&\r\n                entry.VisitCount == 1 &&\r\n                entry.FirstVisitedTime == 5d &&\r\n                entry.LastVisitedTime == 5d;\r\n            Debug.Assert(visitPassed, \"初回訪問の記録\", this);\r\n            Check(visitPassed, \"初回訪問の記録\");\r\n\r\n            bool revisitPassed =\r\n                memory.RecordVisit(first, 10d) &&\r\n                memory.TryGetEntry(first, out var updated) &&\r\n                updated.VisitCount == 2 &&\r\n                updated.FirstVisitedTime == 5d &&\r\n                updated.LastVisitedTime == 10d;\r\n            Debug.Assert(revisitPassed, \"再訪問の記録\", this);\r\n            Check(revisitPassed, \"再訪問の記録\");\r\n\r\n            bool duplicatePassed =\r\n                !memory.RecordVisit(first, 10d) &&\r\n                !memory.RecordVisit(first, 8d) &&\r\n                memory.GetVisitCount(first) == 2;\r\n            Debug.Assert(duplicatePassed, \"重複訪問と古い訪問の拒否\", this);\r\n            Check(duplicatePassed, \"重複訪問と古い訪問の拒否\");\r\n\r\n            bool multiplePassed =\r\n                memory.RecordVisit(second, 12d) &&\r\n                memory.VisitedPositionCount == 2 &&\r\n                memory.GetVisitCount(second) == 1;\r\n            Debug.Assert(multiplePassed, \"複数地点の訪問記録\", this);\r\n            Check(multiplePassed, \"複数地点の訪問記録\");\r\n\r\n            bool forgotten =\r\n                memory.Forget(first) &&\r\n                !memory.HasVisited(first) &&\r\n                !memory.Forget(first);\r\n\r\n            memory.Clear();\r\n\r\n            bool clearPassed =\r\n                forgotten &&\r\n                memory.VisitedPositionCount == 0;\r\n            Debug.Assert(clearPassed, \"訪問記録の個別削除と全削除\", this);\r\n            Check(clearPassed, \"訪問記録の個別削除と全削除\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 未訪問度と経過時間の評価を検証する。\r\n        /// </summary>\r\n        private void TestUnvisitedScore()\r\n        {\r\n            var memory =\r\n                new SpatialMemory<Vector2Int>();\r\n\r\n            var position = new Vector2Int(1, 1);\r\n\r\n            bool unvisitedPassed =\r\n                double.IsPositiveInfinity(\r\n                    memory.GetTimeSinceLastVisit(\r\n                        position, 5d)) &&\r\n                memory.GetUnvisitedScore(\r\n                    position, 5d, 10d) == 1f;\r\n            Debug.Assert(unvisitedPassed, \"未訪問地点の最大評価\", this);\r\n            Check(unvisitedPassed, \"未訪問地点の最大評価\");\r\n\r\n            memory.RecordVisit(position, 5d);\r\n\r\n            bool recentPassed =\r\n                memory.GetUnvisitedScore(\r\n                    position, 5d, 10d) == 0f;\r\n            Debug.Assert(recentPassed, \"訪問直後の最小評価\", this);\r\n            Check(recentPassed, \"訪問直後の最小評価\");\r\n\r\n            bool elapsedPassed =\r\n                memory.GetTimeSinceLastVisit(\r\n                    position, 10d) == 5d &&\r\n                Mathf.Approximately(\r\n                    memory.GetUnvisitedScore(\r\n                        position, 10d, 10d),\r\n                    0.5f);\r\n            Debug.Assert(elapsedPassed, \"経過時間による未訪問度上昇\", this);\r\n            Check(elapsedPassed, \"経過時間による未訪問度上昇\");\r\n\r\n            bool maximumPassed =\r\n                memory.GetUnvisitedScore(\r\n                    position, 15d, 10d) == 1f &&\r\n                memory.GetUnvisitedScore(\r\n                    position, 100d, 10d) == 1f;\r\n            Debug.Assert(maximumPassed, \"未訪問度の上限\", this);\r\n            Check(maximumPassed, \"未訪問度の上限\");\r\n\r\n            bool earlierPassed =\r\n                memory.GetTimeSinceLastVisit(\r\n                    position, 4d) == 0d &&\r\n                memory.GetUnvisitedScore(\r\n                    position, 4d, 10d) == 0f;\r\n            Debug.Assert(earlierPassed, \"負の経過時間の防止\", this);\r\n            Check(earlierPassed, \"負の経過時間の防止\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個体ごとの記憶の独立性を検証する。\r\n        /// </summary>\r\n        private void TestIndependence()\r\n        {\r\n            var first =\r\n                new PerceptionMemory<Vector2Int>();\r\n\r\n            var second =\r\n                new PerceptionMemory<Vector2Int>();\r\n\r\n            Guid sourceId = Guid.NewGuid();\r\n\r\n            first.Remember(\r\n                CreateStimulus(\r\n                    sourceId, Vector2Int.zero, 0d));\r\n\r\n            bool perceptionPassed =\r\n                first.Count == 1 &&\r\n                second.Count == 0 &&\r\n                !second.TryRecall(\r\n                    sourceId, 0d, out _, out _);\r\n            Debug.Assert(perceptionPassed, \"認識記憶の個体別独立性\", this);\r\n            Check(perceptionPassed, \"認識記憶の個体別独立性\");\r\n\r\n            var firstSpatial =\r\n                new SpatialMemory<Vector2Int>();\r\n\r\n            var secondSpatial =\r\n                new SpatialMemory<Vector2Int>();\r\n\r\n            firstSpatial.RecordVisit(\r\n                Vector2Int.zero, 0d);\r\n\r\n            bool spatialPassed =\r\n                firstSpatial.HasVisited(Vector2Int.zero) &&\r\n                !secondSpatial.HasVisited(Vector2Int.zero);\r\n            Debug.Assert(spatialPassed, \"空間記憶の個体別独立性\", this);\r\n            Check(spatialPassed, \"空間記憶の個体別独立性\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 不正な設定値や入力値の拒否を検証する。\r\n        /// </summary>\r\n        private void TestInvalidInput()\r\n        {\r\n            bool durationPassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    new PerceptionMemory<Vector2Int>(0d);\r\n                });\r\n            Debug.Assert(durationPassed, \"不正記憶保持時間の拒否\", this);\r\n            Check(durationPassed, \"不正記憶保持時間の拒否\");\r\n\r\n            var perception =\r\n                new PerceptionMemory<Vector2Int>();\r\n\r\n            bool timePassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    perception.GetConfidence(\r\n                        Guid.NewGuid(), double.NaN);\r\n                });\r\n            Debug.Assert(timePassed, \"不正認識時刻の拒否\", this);\r\n            Check(timePassed, \"不正認識時刻の拒否\");\r\n\r\n            var spatial =\r\n                new SpatialMemory<Vector2Int>();\r\n\r\n            bool visitTimePassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    spatial.RecordVisit(\r\n                        Vector2Int.zero, -1d);\r\n                });\r\n            Debug.Assert(visitTimePassed, \"不正訪問時刻の拒否\", this);\r\n            Check(visitTimePassed, \"不正訪問時刻の拒否\");\r\n\r\n            bool scorePassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    spatial.GetUnvisitedScore(\r\n                        Vector2Int.zero, 0d, 0d);\r\n                });\r\n            Debug.Assert(scorePassed, \"不正未訪問度設定の拒否\", this);\r\n            Check(scorePassed, \"不正未訪問度設定の拒否\");\r\n\r\n            bool entryPassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    new SpatialMemoryEntry(5d, 3d, 1);\r\n                });\r\n            Debug.Assert(entryPassed, \"不正訪問記録の拒否\", this);\r\n            Check(entryPassed, \"不正訪問記録の拒否\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された処理が期待する例外を発生させるか検証する。\r\n        /// </summary>\r\n        /// <typeparam name=\"TException\">期待する例外型</typeparam>\r\n        /// <param name=\"action\">検証対象の処理</param>\r\n        /// <returns>期待する例外が発生した場合はtrue</returns>\r\n        private bool Throws<TException>(Action action)\r\n            where TException : Exception\r\n        {\r\n            try\r\n            {\r\n                action();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                if (exception.GetType() == typeof(TException))\r\n                {\r\n                    return true;\r\n                }\r\n\r\n                throw;\r\n            }\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個別のテスト結果を出力し、結果を集計する。\r\n        /// </summary>\r\n        /// <param name=\"passed\">テストの成功判定</param>\r\n        /// <param name=\"testName\">テスト名</param>\r\n        private void Check(bool passed, string testName)\r\n        {\r\n            if (passed)\r\n            {\r\n                passedCount++;\r\n\r\n                Debug.Log(\r\n                    $\"<color=#00CC66>【成功】</color> {testName}\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogError(\r\n                    $\"【失敗】{testName}\",\r\n                    this);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.113Z"
+}

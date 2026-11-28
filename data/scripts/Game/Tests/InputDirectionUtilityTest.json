@@ -1,5 +1,5 @@
 {
-    "parserVersion": 2,
+    "parserVersion": 3,
     "id": "Game.Tests.InputDirectionUtilityTest",
     "name": "InputDirectionUtilityTest",
     "fileName": "InputDirectionUtilityTest.cs",
@@ -39,11 +39,444 @@
             "exceptions": []
         }
     ],
+    "types": [
+        {
+            "name": "InputDirectionUtilityTest",
+            "fullName": "InputDirectionUtilityTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "入力方向変換ユーティリティの動作確認用クラス。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public class InputDirectionUtilityTest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "runTestsOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runTestsOnStart = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "シーン開始時にテストを実行するか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "開始時に全自動テストを実行する"
+                            ],
+                            "raw": "Tooltip(\"開始時に全自動テストを実行する\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Tests On Start",
+                        "type": "bool",
+                        "header": "テスト設定",
+                        "tooltip": "開始時に全自動テストを実行する",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "成功したテスト項目数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "失敗したテスト項目数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "シーン開始時の処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunAllTests",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void RunAllTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべてのテストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/全自動テストを実行する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/全自動テストを実行する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestDeadZone",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestDeadZone()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "通常のデッドゾーン処理を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestScaledDeadZone",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestScaledDeadZone()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "スケーリング付きデッドゾーンを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestFourDirection",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestFourDirection()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "4方向への変換を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestDirectionPriority",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestDirectionPriority()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "斜め入力時の優先方向を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestEightDirection",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestEightDirection()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "8方向への変換を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestDirectionValidation",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestDirectionValidation()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "方向判定処理を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestInvalidInput",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestInvalidInput()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "不正な入力値と設定値を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Approximately",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool Approximately(\r\n            Vector2 first,\r\n            Vector2 second)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "first",
+                            "type": "Vector2",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "比較元のベクトル"
+                        },
+                        {
+                            "name": "second",
+                            "type": "Vector2",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "比較先のベクトル"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "2つのベクトルが許容誤差内で一致するか確認する。",
+                    "returns": "一致する場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CheckThrows",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void CheckThrows<TException>(\r\n            Action action,\r\n            string testName)\r\n            where TException : Exception",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "実行する処理"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト項目名"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "TException",
+                            "description": "期待する例外型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定された例外が発生するか確認する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(\r\n            bool condition,\r\n            string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "condition",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "成功条件"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト項目名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト結果を記録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PrintTestResult",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void PrintTestResult()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "自動テストの集計結果を出力する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 11
+        }
+    ],
     "source": "\r\nusing System;\r\nusing UnityEngine;\r\nusing Framework.Input;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// 入力方向変換ユーティリティの動作確認用クラス。\r\n    /// </summary>\r\n    public class InputDirectionUtilityTest : MonoBehaviour\r\n    {\r\n        #region Inspector Fields\r\n\r\n        [Header(\"テスト設定\")]\r\n\r\n        /// <summary>\r\n        /// シーン開始時にテストを実行するか。\r\n        /// </summary>\r\n        [SerializeField]\r\n        [Tooltip(\"開始時に全自動テストを実行する\")]\r\n        private bool runTestsOnStart = true;\r\n\r\n        #endregion\r\n\r\n        #region Runtime Fields\r\n\r\n        /// <summary>\r\n        /// 成功したテスト項目数。\r\n        /// </summary>\r\n        private int passedCount;\r\n\r\n        /// <summary>\r\n        /// 失敗したテスト項目数。\r\n        /// </summary>\r\n        private int failedCount;\r\n\r\n        #endregion\r\n\r\n        #region Unity Methods\r\n\r\n        /// <summary>\r\n        /// シーン開始時の処理。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            if (runTestsOnStart)\r\n            {\r\n                RunAllTests();\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Test Methods\r\n\r\n        /// <summary>\r\n        /// すべてのテストを実行する。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/全自動テストを実行する\")]\r\n        public void RunAllTests()\r\n        {\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n            TestDeadZone();\r\n            TestScaledDeadZone();\r\n            TestFourDirection();\r\n            TestDirectionPriority();\r\n            TestEightDirection();\r\n            TestDirectionValidation();\r\n            TestInvalidInput();\r\n\r\n            PrintTestResult();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 通常のデッドゾーン処理を検証する。\r\n        /// </summary>\r\n        private void TestDeadZone()\r\n        {\r\n            Check(\r\n                InputDirectionUtility.IsInDeadZone(\r\n                    Vector2.zero),\r\n                \"無入力の判定\");\r\n\r\n            Check(\r\n                InputDirectionUtility.IsInDeadZone(\r\n                    new Vector2(0.1f, 0.1f)),\r\n                \"微小入力の判定\");\r\n\r\n            Check(\r\n                !InputDirectionUtility.IsInDeadZone(\r\n                    new Vector2(0.5f, 0f)),\r\n                \"有効入力の判定\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ApplyDeadZone(\r\n                    new Vector2(0.1f, 0f)) ==\r\n                    Vector2.zero,\r\n                \"デッドゾーン内の入力除去\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ApplyDeadZone(\r\n                    new Vector2(0.5f, 0.2f)) ==\r\n                    new Vector2(0.5f, 0.2f),\r\n                \"デッドゾーン外の入力維持\");\r\n\r\n            Check(\r\n                InputDirectionUtility.IsInDeadZone(\r\n                    new Vector2(0.3f, 0f), 0.3f),\r\n                \"デッドゾーン境界の判定\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// スケーリング付きデッドゾーンを検証する。\r\n        /// </summary>\r\n        private void TestScaledDeadZone()\r\n        {\r\n            Check(\r\n                InputDirectionUtility.ApplyScaledDeadZone(\r\n                    new Vector2(0.1f, 0f)) ==\r\n                    Vector2.zero,\r\n                \"補正時の微小入力除去\");\r\n\r\n            Check(\r\n                Approximately(\r\n                    InputDirectionUtility.ApplyScaledDeadZone(\r\n                        new Vector2(0.65f, 0f), 0.3f),\r\n                    new Vector2(0.5f, 0f)),\r\n                \"デッドゾーン外の入力再割り当て\");\r\n\r\n            Check(\r\n                Approximately(\r\n                    InputDirectionUtility.ApplyScaledDeadZone(\r\n                        Vector2.right),\r\n                    Vector2.right),\r\n                \"最大入力値の維持\");\r\n\r\n            Check(\r\n                Approximately(\r\n                    InputDirectionUtility.ApplyScaledDeadZone(\r\n                        new Vector2(2f, 0f)),\r\n                    Vector2.right),\r\n                \"最大入力値の制限\");\r\n\r\n            // 斜め入力の方向が維持されるか確認する。\r\n            Vector2 input = new Vector2(0.6f, 0.6f);\r\n\r\n            Vector2 result =\r\n                InputDirectionUtility.ApplyScaledDeadZone(\r\n                    input);\r\n\r\n            Check(\r\n                Approximately(\r\n                    result.normalized,\r\n                    input.normalized),\r\n                \"入力方向の維持\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 4方向への変換を検証する。\r\n        /// </summary>\r\n        private void TestFourDirection()\r\n        {\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    Vector2.up) == Vector2Int.up,\r\n                \"上方向変換\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    Vector2.down) == Vector2Int.down,\r\n                \"下方向変換\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    Vector2.left) == Vector2Int.left,\r\n                \"左方向変換\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    Vector2.right) == Vector2Int.right,\r\n                \"右方向変換\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    new Vector2(0.8f, 0.2f)) ==\r\n                    Vector2Int.right,\r\n                \"強い水平入力の採用\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    new Vector2(0.2f, 0.8f)) ==\r\n                    Vector2Int.up,\r\n                \"強い垂直入力の採用\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    new Vector2(-0.8f, -0.2f)) ==\r\n                    Vector2Int.left,\r\n                \"負の水平入力の採用\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    new Vector2(-0.2f, -0.8f)) ==\r\n                    Vector2Int.down,\r\n                \"負の垂直入力の採用\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    Vector2.zero) == Vector2Int.zero,\r\n                \"無入力時の方向変換\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    new Vector2(0.1f, 0.1f)) ==\r\n                    Vector2Int.zero,\r\n                \"微小入力時の方向変換\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 斜め入力時の優先方向を検証する。\r\n        /// </summary>\r\n        private void TestDirectionPriority()\r\n        {\r\n            Vector2 input = new Vector2(0.7f, 0.7f);\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    input,\r\n                    priority: DirectionPriority.Horizontal) ==\r\n                    Vector2Int.right,\r\n                \"水平方向優先\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    input,\r\n                    priority: DirectionPriority.Vertical) ==\r\n                    Vector2Int.up,\r\n                \"垂直方向優先\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    input,\r\n                    priority:\r\n                        DirectionPriority.PreviousDirection,\r\n                    previousDirection: Vector2Int.up) ==\r\n                    Vector2Int.up,\r\n                \"前回の上方向を維持\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    input,\r\n                    priority:\r\n                        DirectionPriority.PreviousDirection,\r\n                    previousDirection: Vector2Int.right) ==\r\n                    Vector2Int.right,\r\n                \"前回の右方向を維持\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    input,\r\n                    priority:\r\n                        DirectionPriority.PreviousDirection,\r\n                    previousDirection: Vector2Int.left) ==\r\n                    Vector2Int.right,\r\n                \"候補外の前回方向を無視\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    new Vector2(0.7f, 0.72f),\r\n                    priority:\r\n                        DirectionPriority.PreviousDirection,\r\n                    previousDirection: Vector2Int.right) ==\r\n                    Vector2Int.right,\r\n                \"許容差内での前回方向維持\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    new Vector2(0.2f, 0.9f),\r\n                    priority:\r\n                        DirectionPriority.PreviousDirection,\r\n                    previousDirection: Vector2Int.right) ==\r\n                    Vector2Int.up,\r\n                \"明確に強い入力方向の採用\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 8方向への変換を検証する。\r\n        /// </summary>\r\n        private void TestEightDirection()\r\n        {\r\n            Check(\r\n                InputDirectionUtility.ToEightDirection(\r\n                    Vector2.right) == Vector2Int.right,\r\n                \"8方向変換：右\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToEightDirection(\r\n                    new Vector2(1f, 1f)) ==\r\n                    new Vector2Int(1, 1),\r\n                \"8方向変換：右上\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToEightDirection(\r\n                    Vector2.up) == Vector2Int.up,\r\n                \"8方向変換：上\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToEightDirection(\r\n                    new Vector2(-1f, 1f)) ==\r\n                    new Vector2Int(-1, 1),\r\n                \"8方向変換：左上\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToEightDirection(\r\n                    Vector2.left) == Vector2Int.left,\r\n                \"8方向変換：左\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToEightDirection(\r\n                    new Vector2(-1f, -1f)) ==\r\n                    new Vector2Int(-1, -1),\r\n                \"8方向変換：左下\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToEightDirection(\r\n                    Vector2.down) == Vector2Int.down,\r\n                \"8方向変換：下\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToEightDirection(\r\n                    new Vector2(1f, -1f)) ==\r\n                    new Vector2Int(1, -1),\r\n                \"8方向変換：右下\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToEightDirection(\r\n                    Vector2.zero) == Vector2Int.zero,\r\n                \"8方向変換：無入力\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 方向判定処理を検証する。\r\n        /// </summary>\r\n        private void TestDirectionValidation()\r\n        {\r\n            Check(\r\n                InputDirectionUtility.IsFourDirection(\r\n                    Vector2Int.up),\r\n                \"有効な4方向の判定\");\r\n\r\n            Check(\r\n                !InputDirectionUtility.IsFourDirection(\r\n                    new Vector2Int(1, 1)),\r\n                \"4方向での斜め入力拒否\");\r\n\r\n            Check(\r\n                InputDirectionUtility.IsEightDirection(\r\n                    new Vector2Int(1, 1)),\r\n                \"有効な8方向の判定\");\r\n\r\n            Check(\r\n                !InputDirectionUtility.IsEightDirection(\r\n                    new Vector2Int(2, 1)),\r\n                \"単位方向以外の拒否\");\r\n\r\n            Check(\r\n                !InputDirectionUtility.IsEightDirection(\r\n                    Vector2Int.zero),\r\n                \"無方向の拒否\");\r\n\r\n            Check(\r\n                InputDirectionUtility.IsDiagonalDirection(\r\n                    new Vector2Int(-1, 1)),\r\n                \"斜め方向の判定\");\r\n\r\n            Check(\r\n                !InputDirectionUtility.IsDiagonalDirection(\r\n                    Vector2Int.up),\r\n                \"直線方向の斜め判定拒否\");\r\n\r\n            Check(\r\n                InputDirectionUtility.IsOppositeDirection(\r\n                    Vector2Int.left,\r\n                    Vector2Int.right),\r\n                \"逆方向の判定\");\r\n\r\n            Check(\r\n                !InputDirectionUtility.IsOppositeDirection(\r\n                    Vector2Int.up,\r\n                    Vector2Int.right),\r\n                \"直交方向の逆方向判定拒否\");\r\n\r\n            Check(\r\n                !InputDirectionUtility.IsOppositeDirection(\r\n                    Vector2Int.zero,\r\n                    Vector2Int.zero),\r\n                \"無方向の逆方向判定拒否\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 不正な入力値と設定値を検証する。\r\n        /// </summary>\r\n        private void TestInvalidInput()\r\n        {\r\n            Check(\r\n                InputDirectionUtility.ToFourDirection(\r\n                    new Vector2(float.NaN, 0f)) ==\r\n                    Vector2Int.zero,\r\n                \"NaN入力の除去\");\r\n\r\n            Check(\r\n                InputDirectionUtility.ToEightDirection(\r\n                    new Vector2(\r\n                        float.PositiveInfinity, 0f)) ==\r\n                    Vector2Int.zero,\r\n                \"無限大入力の除去\");\r\n\r\n            CheckThrows<ArgumentOutOfRangeException>(\r\n                () => InputDirectionUtility.ApplyDeadZone(\r\n                    Vector2.right, -0.1f),\r\n                \"負のデッドゾーンの拒否\");\r\n\r\n            CheckThrows<ArgumentOutOfRangeException>(\r\n                () => InputDirectionUtility.ApplyDeadZone(\r\n                    Vector2.right, 1f),\r\n                \"範囲外デッドゾーンの拒否\");\r\n\r\n            CheckThrows<ArgumentOutOfRangeException>(\r\n                () => InputDirectionUtility.ToFourDirection(\r\n                    Vector2.right,\r\n                    tieTolerance: -0.1f),\r\n                \"不正な許容差の拒否\");\r\n\r\n            CheckThrows<ArgumentOutOfRangeException>(\r\n                () => InputDirectionUtility.ToFourDirection(\r\n                    Vector2.right,\r\n                    priority: (DirectionPriority)999),\r\n                \"不正な優先方向の拒否\");\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Utility Methods\r\n\r\n        /// <summary>\r\n        /// 2つのベクトルが許容誤差内で一致するか確認する。\r\n        /// </summary>\r\n        /// <param name=\"first\">比較元のベクトル</param>\r\n        /// <param name=\"second\">比較先のベクトル</param>\r\n        /// <returns>一致する場合はtrue</returns>\r\n        private bool Approximately(\r\n            Vector2 first,\r\n            Vector2 second)\r\n        {\r\n            return Vector2.Distance(first, second) < 0.001f;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された例外が発生するか確認する。\r\n        /// </summary>\r\n        /// <typeparam name=\"TException\">期待する例外型</typeparam>\r\n        /// <param name=\"action\">実行する処理</param>\r\n        /// <param name=\"testName\">テスト項目名</param>\r\n        private void CheckThrows<TException>(\r\n            Action action,\r\n            string testName)\r\n            where TException : Exception\r\n        {\r\n            try\r\n            {\r\n                action();\r\n\r\n                Check(false, testName);\r\n            }\r\n            catch (TException)\r\n            {\r\n                Check(true, testName);\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                Check(\r\n                    false,\r\n                    testName + \"：\" +\r\n                    exception.GetType().Name);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト結果を記録する。\r\n        /// </summary>\r\n        /// <param name=\"condition\">成功条件</param>\r\n        /// <param name=\"testName\">テスト項目名</param>\r\n        private void Check(\r\n            bool condition,\r\n            string testName)\r\n        {\r\n            if (condition)\r\n            {\r\n                passedCount++;\r\n\r\n                Debug.Log(\r\n                    $\"[成功] {testName}\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogError(\r\n                    $\"[失敗] {testName}\",\r\n                    this);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 自動テストの集計結果を出力する。\r\n        /// </summary>\r\n        private void PrintTestResult()\r\n        {\r\n            string message =\r\n                \"【InputDirectionUtility テスト結果】\\n\" +\r\n                $\"成功：{passedCount}\\n\" +\r\n                $\"失敗：{failedCount}\";\r\n\r\n            if (failedCount == 0)\r\n            {\r\n                Debug.Log(\r\n                    message +\r\n                    \"\\nすべてのテストに成功しました。\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                Debug.LogError(message, this);\r\n            }\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
     "tips": [],
     "examples": [],
     "notes": [],
     "related": [],
     "tests": [],
-    "generatedAt": "2026-11-26T16:10:17.972Z"
+    "generatedAt": "2026-11-28T15:50:00.433Z"
 }

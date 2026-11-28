@@ -1,0 +1,1325 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Perception.MazeEnemyPerceptionController",
+    "name": "MazeEnemyPerceptionController",
+    "fileName": "MazeEnemyPerceptionController.cs",
+    "namespace": "Game.AI.Perception",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class MazeEnemyPerceptionController\r\n        : IDisposable",
+    "typeParameters": [],
+    "summary": "敵AIによる対象の視認と記憶を管理する。",
+    "remarks": "対象の現在情報は外部から供給する。 認識判定に成功した情報のみを観測情報へ反映する。 コンテキストの認識記憶は本クラスが管理する。 Unityのメインスレッドで使用することを想定する。",
+    "inheritance": [
+        "IDisposable"
+    ],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "Framework.AI.Perception",
+        "Game.AI.Core",
+        "UnityEngine",
+        "IDisposable"
+    ],
+    "members": [
+        {
+            "name": "Context",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyContext Context => context",
+            "returnType": "",
+            "valueType": "MazeEnemyContext",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "認識処理に使用するコンテキスト。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Count",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int Count => observations.Count",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在保持している観測情報の件数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "VisibleCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int VisibleCount",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "private set"
+            ],
+            "summary": "視認中の対象数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RememberedCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int RememberedCount =>\r\n            Count - VisibleCount",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "記憶中の対象数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsValid",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsValid =>\r\n            !isDisposed && context.IsValid",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "認識制御システムが利用可能であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsDisposed",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsDisposed => isDisposed",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "破棄済みであるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TargetDetected",
+            "kind": "event",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public event Action<MazeEnemyTargetObservation>\r\n            TargetDetected",
+            "returnType": "",
+            "valueType": "Action<MazeEnemyTargetObservation>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "対象を発見または再発見した際のイベント。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TargetLost",
+            "kind": "event",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public event Action<MazeEnemyTargetObservation>\r\n            TargetLost",
+            "returnType": "",
+            "valueType": "Action<MazeEnemyTargetObservation>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "視認対象を見失った際のイベント。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TargetForgotten",
+            "kind": "event",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public event Action<Guid> TargetForgotten",
+            "returnType": "",
+            "valueType": "Action<Guid>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "対象の記憶を失った際のイベント。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TargetStateChanged",
+            "kind": "event",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public event Action<\r\n            Guid,\r\n            MazeEnemyTargetState,\r\n            MazeEnemyTargetState> TargetStateChanged",
+            "returnType": "",
+            "valueType": "Action<\r\n            Guid,\r\n            MazeEnemyTargetState,\r\n            MazeEnemyTargetState>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "対象の認識状態が変化した際のイベント。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MazeEnemyPerceptionController",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyPerceptionController(\r\n            MazeEnemyContext context)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "MazeEnemyContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "敵AIコンテキスト"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "認識制御システムを生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "コンテキストが指定されていない場合。"
+                },
+                {
+                    "name": "ArgumentException",
+                    "description": "コンテキストが無効な場合。"
+                }
+            ]
+        },
+        {
+            "name": "UpdatePerception",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool UpdatePerception(\r\n            IReadOnlyList<MazeEnemyTargetSnapshot> targets)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "targets",
+                    "type": "IReadOnlyList<MazeEnemyTargetSnapshot>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "今回の認識判定対象となる全対象の一覧"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "認識対象の一覧を使用して認識情報を更新する。",
+            "returns": "更新を実行できた場合はtrue",
+            "remarks": "一覧に含まれない対象は視認できないものとして扱う。 同一識別子が複数ある場合は最初の有効な情報を使用する。 ステージの停止中は更新しない。",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetObservation",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryGetObservation(\r\n            Guid id,\r\n            out MazeEnemyTargetObservation observation)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "対象識別子"
+                },
+                {
+                    "name": "observation",
+                    "type": "MazeEnemyTargetObservation",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "取得した観測情報"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定対象の観測情報を取得する。",
+            "returns": "観測情報が存在する場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetState",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyTargetState GetState(Guid id)",
+            "returnType": "MazeEnemyTargetState",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "対象識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定対象の認識状態を取得する。",
+            "returns": "対象の認識状態",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetBestObservation",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryGetBestObservation(\r\n            MazeEnemyTargetType type,\r\n            out MazeEnemyTargetObservation observation)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "type",
+                    "type": "MazeEnemyTargetType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "対象の種類"
+                },
+                {
+                    "name": "observation",
+                    "type": "MazeEnemyTargetObservation",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "優先対象の観測情報"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定種類の優先認識対象を取得する。",
+            "returns": "対象を取得できた場合はtrue",
+            "remarks": "視認中、信頼度、観測位置までの直線距離の順に 優先順位を決定する。",
+            "exceptions": []
+        },
+        {
+            "name": "GetObservations",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int GetObservations(\r\n            List<MazeEnemyTargetObservation> results)",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "results",
+                    "type": "List<MazeEnemyTargetObservation>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "観測情報の格納先"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在保持している観測情報一覧を取得する。",
+            "returns": "取得した観測情報の件数",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "格納先が指定されていない場合。"
+                }
+            ]
+        },
+        {
+            "name": "Forget",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Forget(Guid id)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "対象識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定対象の認識情報を明示的に削除する。",
+            "returns": "削除できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Clear",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Clear()",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべての対象の認識情報を削除する。",
+            "returns": "削除処理を実行できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Dispose",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Dispose()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "認識制御システムを破棄する。",
+            "returns": "",
+            "remarks": "本クラスが管理している対象の記憶のみを削除する。 コンテキストやパラメーターは破棄しない。 破棄時に認識イベントは通知しない。",
+            "exceptions": [
+                {
+                    "name": "InvalidOperationException",
+                    "description": "認識処理やイベント通知の実行中に呼び出された場合。"
+                }
+            ]
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyPerceptionController",
+            "fullName": "MazeEnemyPerceptionController",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "敵AIによる対象の視認と記憶を管理する。",
+            "remarks": "対象の現在情報は外部から供給する。 認識判定に成功した情報のみを観測情報へ反映する。 コンテキストの認識記憶は本クラスが管理する。 Unityのメインスレッドで使用することを想定する。",
+            "attributes": [],
+            "declaration": "public sealed class MazeEnemyPerceptionController\r\n        : IDisposable",
+            "inheritance": [
+                "IDisposable"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "context",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly MazeEnemyContext context",
+                    "returnType": "",
+                    "valueType": "MazeEnemyContext",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識処理に使用する敵AIコンテキスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "observations",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Dictionary<\r\n            Guid,\r\n            MazeEnemyTargetObservation> observations =\r\n            new Dictionary<Guid, MazeEnemyTargetObservation>()",
+                    "returnType": "",
+                    "valueType": "Dictionary<\r\n            Guid,\r\n            MazeEnemyTargetObservation>",
+                    "value": "new Dictionary<Guid, MazeEnemyTargetObservation>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在保持している対象の観測情報。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new Dictionary<Guid, MazeEnemyTargetObservation>()",
+                    "inspector": null
+                },
+                {
+                    "name": "processedIds",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly HashSet<Guid> processedIds =\r\n            new HashSet<Guid>()",
+                    "returnType": "",
+                    "valueType": "HashSet<Guid>",
+                    "value": "new HashSet<Guid>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "今回の更新で処理した対象識別子。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new HashSet<Guid>()",
+                    "inspector": null
+                },
+                {
+                    "name": "visibleIds",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly HashSet<Guid> visibleIds =\r\n            new HashSet<Guid>()",
+                    "returnType": "",
+                    "valueType": "HashSet<Guid>",
+                    "value": "new HashSet<Guid>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "今回の更新で視認できた対象識別子。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new HashSet<Guid>()",
+                    "inspector": null
+                },
+                {
+                    "name": "observationIds",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly List<Guid> observationIds =\r\n            new List<Guid>()",
+                    "returnType": "",
+                    "valueType": "List<Guid>",
+                    "value": "new List<Guid>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "観測情報の安全な列挙に使用する識別子一覧。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new List<Guid>()",
+                    "inspector": null
+                },
+                {
+                    "name": "isProcessing",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isProcessing",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識更新やイベント通知を実行しているか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "isDisposed",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isDisposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "破棄済みであるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Context",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyContext Context => context",
+                    "returnType": "",
+                    "valueType": "MazeEnemyContext",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "認識処理に使用するコンテキスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Count",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int Count => observations.Count",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在保持している観測情報の件数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "VisibleCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int VisibleCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get",
+                        "private set"
+                    ],
+                    "summary": "視認中の対象数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RememberedCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int RememberedCount =>\r\n            Count - VisibleCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "記憶中の対象数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsValid",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsValid =>\r\n            !isDisposed && context.IsValid",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "認識制御システムが利用可能であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsDisposed",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsDisposed => isDisposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "破棄済みであるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TargetDetected",
+                    "kind": "event",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public event Action<MazeEnemyTargetObservation>\r\n            TargetDetected",
+                    "returnType": "",
+                    "valueType": "Action<MazeEnemyTargetObservation>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "対象を発見または再発見した際のイベント。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TargetLost",
+                    "kind": "event",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public event Action<MazeEnemyTargetObservation>\r\n            TargetLost",
+                    "returnType": "",
+                    "valueType": "Action<MazeEnemyTargetObservation>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "視認対象を見失った際のイベント。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TargetForgotten",
+                    "kind": "event",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public event Action<Guid> TargetForgotten",
+                    "returnType": "",
+                    "valueType": "Action<Guid>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "対象の記憶を失った際のイベント。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TargetStateChanged",
+                    "kind": "event",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public event Action<\r\n            Guid,\r\n            MazeEnemyTargetState,\r\n            MazeEnemyTargetState> TargetStateChanged",
+                    "returnType": "",
+                    "valueType": "Action<\r\n            Guid,\r\n            MazeEnemyTargetState,\r\n            MazeEnemyTargetState>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "対象の認識状態が変化した際のイベント。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MazeEnemyPerceptionController",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyPerceptionController(\r\n            MazeEnemyContext context)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "MazeEnemyContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "敵AIコンテキスト"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識制御システムを生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "コンテキストが指定されていない場合。"
+                        },
+                        {
+                            "name": "ArgumentException",
+                            "description": "コンテキストが無効な場合。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "UpdatePerception",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool UpdatePerception(\r\n            IReadOnlyList<MazeEnemyTargetSnapshot> targets)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "targets",
+                            "type": "IReadOnlyList<MazeEnemyTargetSnapshot>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "今回の認識判定対象となる全対象の一覧"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識対象の一覧を使用して認識情報を更新する。",
+                    "returns": "更新を実行できた場合はtrue",
+                    "remarks": "一覧に含まれない対象は視認できないものとして扱う。 同一識別子が複数ある場合は最初の有効な情報を使用する。 ステージの停止中は更新しない。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetObservation",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetObservation(\r\n            Guid id,\r\n            out MazeEnemyTargetObservation observation)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象識別子"
+                        },
+                        {
+                            "name": "observation",
+                            "type": "MazeEnemyTargetObservation",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得した観測情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定対象の観測情報を取得する。",
+                    "returns": "観測情報が存在する場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetState",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyTargetState GetState(Guid id)",
+                    "returnType": "MazeEnemyTargetState",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定対象の認識状態を取得する。",
+                    "returns": "対象の認識状態",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetBestObservation",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetBestObservation(\r\n            MazeEnemyTargetType type,\r\n            out MazeEnemyTargetObservation observation)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "type",
+                            "type": "MazeEnemyTargetType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象の種類"
+                        },
+                        {
+                            "name": "observation",
+                            "type": "MazeEnemyTargetObservation",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "優先対象の観測情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定種類の優先認識対象を取得する。",
+                    "returns": "対象を取得できた場合はtrue",
+                    "remarks": "視認中、信頼度、観測位置までの直線距離の順に 優先順位を決定する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetObservations",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int GetObservations(\r\n            List<MazeEnemyTargetObservation> results)",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "results",
+                            "type": "List<MazeEnemyTargetObservation>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "観測情報の格納先"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在保持している観測情報一覧を取得する。",
+                    "returns": "取得した観測情報の件数",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "格納先が指定されていない場合。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Forget",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool Forget(Guid id)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定対象の認識情報を明示的に削除する。",
+                    "returns": "削除できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Clear",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool Clear()",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべての対象の認識情報を削除する。",
+                    "returns": "削除処理を実行できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryObserve",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool TryObserve(\r\n            MazeEnemyTargetSnapshot target,\r\n            out PerceptionStimulus<Vector2Int> stimulus)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "target",
+                            "type": "MazeEnemyTargetSnapshot",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識対象の現在情報"
+                        },
+                        {
+                            "name": "stimulus",
+                            "type": "PerceptionStimulus<Vector2Int>",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得した視覚刺激"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "対象の視認判定を行う。",
+                    "returns": "視認できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ApplyVisibleObservation",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void ApplyVisibleObservation(\r\n            MazeEnemyTargetSnapshot target,\r\n            PerceptionStimulus<Vector2Int> stimulus)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "target",
+                            "type": "MazeEnemyTargetSnapshot",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象の現在情報"
+                        },
+                        {
+                            "name": "stimulus",
+                            "type": "PerceptionStimulus<Vector2Int>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "視覚刺激"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "視認できた対象の観測情報を更新する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "UpdateHiddenObservation",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void UpdateHiddenObservation(Guid id)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "視認できなかった対象の記憶状態を更新する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RemoveObservation",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool RemoveObservation(\r\n            Guid id,\r\n            bool notifyLost = false)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象識別子"
+                        },
+                        {
+                            "name": "notifyLost",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": "false",
+                            "description": "視認喪失イベントも通知するか"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "観測情報と対応する認識記憶を削除する。",
+                    "returns": "削除できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsBetterObservation",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool IsBetterObservation(\r\n            MazeEnemyTargetObservation candidate,\r\n            MazeEnemyTargetObservation currentBest)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "candidate",
+                            "type": "MazeEnemyTargetObservation",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "比較対象"
+                        },
+                        {
+                            "name": "currentBest",
+                            "type": "MazeEnemyTargetObservation",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在の優先対象"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "候補が現在の優先対象より適切か確認する。",
+                    "returns": "比較対象を優先する場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CopyObservationIds",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void CopyObservationIds()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在保持している対象識別子を作業一覧へ複製する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CanModify",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool CanModify()",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識情報を変更できる状態か確認する。",
+                    "returns": "変更可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Dispose",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Dispose()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識制御システムを破棄する。",
+                    "returns": "",
+                    "remarks": "本クラスが管理している対象の記憶のみを削除する。 コンテキストやパラメーターは破棄しない。 破棄時に認識イベントは通知しない。",
+                    "exceptions": [
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "認識処理やイベント通知の実行中に呼び出された場合。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 19
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing Framework.AI.Perception;\r\nusing Game.AI.Core;\r\nusing UnityEngine;\r\n\r\nnamespace Game.AI.Perception\r\n{\r\n    /// <summary>\r\n    /// 敵AIによる対象の視認と記憶を管理する。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// 対象の現在情報は外部から供給する。\r\n    /// 認識判定に成功した情報のみを観測情報へ反映する。\r\n    /// コンテキストの認識記憶は本クラスが管理する。\r\n    /// Unityのメインスレッドで使用することを想定する。\r\n    /// </remarks>\r\n    public sealed class MazeEnemyPerceptionController\r\n        : IDisposable\r\n    {\r\n        /// <summary>\r\n        /// 認識処理に使用する敵AIコンテキスト。\r\n        /// </summary>\r\n        private readonly MazeEnemyContext context;\r\n\r\n        /// <summary>\r\n        /// 現在保持している対象の観測情報。\r\n        /// </summary>\r\n        private readonly Dictionary<\r\n            Guid,\r\n            MazeEnemyTargetObservation> observations =\r\n            new Dictionary<Guid, MazeEnemyTargetObservation>();\r\n\r\n        /// <summary>\r\n        /// 今回の更新で処理した対象識別子。\r\n        /// </summary>\r\n        private readonly HashSet<Guid> processedIds =\r\n            new HashSet<Guid>();\r\n\r\n        /// <summary>\r\n        /// 今回の更新で視認できた対象識別子。\r\n        /// </summary>\r\n        private readonly HashSet<Guid> visibleIds =\r\n            new HashSet<Guid>();\r\n\r\n        /// <summary>\r\n        /// 観測情報の安全な列挙に使用する識別子一覧。\r\n        /// </summary>\r\n        private readonly List<Guid> observationIds =\r\n            new List<Guid>();\r\n\r\n        /// <summary>\r\n        /// 認識更新やイベント通知を実行しているか。\r\n        /// </summary>\r\n        private bool isProcessing;\r\n\r\n        /// <summary>\r\n        /// 破棄済みであるか。\r\n        /// </summary>\r\n        private bool isDisposed;\r\n\r\n        /// <summary>\r\n        /// 認識処理に使用するコンテキスト。\r\n        /// </summary>\r\n        public MazeEnemyContext Context => context;\r\n\r\n        /// <summary>\r\n        /// 現在保持している観測情報の件数。\r\n        /// </summary>\r\n        public int Count => observations.Count;\r\n\r\n        /// <summary>\r\n        /// 視認中の対象数。\r\n        /// </summary>\r\n        public int VisibleCount { get; private set; }\r\n\r\n        /// <summary>\r\n        /// 記憶中の対象数。\r\n        /// </summary>\r\n        public int RememberedCount =>\r\n            Count - VisibleCount;\r\n\r\n        /// <summary>\r\n        /// 認識制御システムが利用可能であるか。\r\n        /// </summary>\r\n        public bool IsValid =>\r\n            !isDisposed && context.IsValid;\r\n\r\n        /// <summary>\r\n        /// 破棄済みであるか。\r\n        /// </summary>\r\n        public bool IsDisposed => isDisposed;\r\n\r\n        /// <summary>\r\n        /// 対象を発見または再発見した際のイベント。\r\n        /// </summary>\r\n        public event Action<MazeEnemyTargetObservation>\r\n            TargetDetected;\r\n\r\n        /// <summary>\r\n        /// 視認対象を見失った際のイベント。\r\n        /// </summary>\r\n        public event Action<MazeEnemyTargetObservation>\r\n            TargetLost;\r\n\r\n        /// <summary>\r\n        /// 対象の記憶を失った際のイベント。\r\n        /// </summary>\r\n        public event Action<Guid> TargetForgotten;\r\n\r\n        /// <summary>\r\n        /// 対象の認識状態が変化した際のイベント。\r\n        /// </summary>\r\n        public event Action<\r\n            Guid,\r\n            MazeEnemyTargetState,\r\n            MazeEnemyTargetState> TargetStateChanged;\r\n\r\n        /// <summary>\r\n        /// 認識制御システムを生成する。\r\n        /// </summary>\r\n        /// <param name=\"context\">敵AIコンテキスト</param>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// コンテキストが指定されていない場合。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentException\">\r\n        /// コンテキストが無効な場合。\r\n        /// </exception>\r\n        public MazeEnemyPerceptionController(\r\n            MazeEnemyContext context)\r\n        {\r\n            if (context == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(context));\r\n            }\r\n\r\n            if (!context.IsValid)\r\n            {\r\n                throw new ArgumentException(\r\n                    \"敵AIコンテキストが無効です。\",\r\n                    nameof(context));\r\n            }\r\n\r\n            this.context = context;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 認識対象の一覧を使用して認識情報を更新する。\r\n        /// </summary>\r\n        /// <param name=\"targets\">\r\n        /// 今回の認識判定対象となる全対象の一覧\r\n        /// </param>\r\n        /// <returns>\r\n        /// 更新を実行できた場合はtrue\r\n        /// </returns>\r\n        /// <remarks>\r\n        /// 一覧に含まれない対象は視認できないものとして扱う。\r\n        /// 同一識別子が複数ある場合は最初の有効な情報を使用する。\r\n        /// ステージの停止中は更新しない。\r\n        /// </remarks>\r\n        public bool UpdatePerception(\r\n            IReadOnlyList<MazeEnemyTargetSnapshot> targets)\r\n        {\r\n            if (!CanModify() ||\r\n                !context.CanAct ||\r\n                targets == null)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            isProcessing = true;\r\n\r\n            try\r\n            {\r\n                processedIds.Clear();\r\n                visibleIds.Clear();\r\n\r\n                // 現在視認できる対象を更新する。\r\n                for (int i = 0; i < targets.Count; i++)\r\n                {\r\n                    MazeEnemyTargetSnapshot target =\r\n                        targets[i];\r\n\r\n                    if (!target.IsValid ||\r\n                        !processedIds.Add(target.Id))\r\n                    {\r\n                        continue;\r\n                    }\r\n\r\n                    if (!target.IsActive ||\r\n                        target.Id == context.Id)\r\n                    {\r\n                        continue;\r\n                    }\r\n\r\n                    // 同じ識別子の対象種類は変更しない。\r\n                    if (observations.TryGetValue(\r\n                        target.Id,\r\n                        out var previous) &&\r\n                        previous.Type != target.Type)\r\n                    {\r\n                        continue;\r\n                    }\r\n\r\n                    if (TryObserve(\r\n                        target,\r\n                        out var stimulus))\r\n                    {\r\n                        visibleIds.Add(target.Id);\r\n\r\n                        ApplyVisibleObservation(\r\n                            target,\r\n                            stimulus);\r\n                    }\r\n                }\r\n\r\n                // 視認できなかった既存対象を処理する。\r\n                CopyObservationIds();\r\n\r\n                for (int i = 0;\r\n                    i < observationIds.Count;\r\n                    i++)\r\n                {\r\n                    Guid id = observationIds[i];\r\n\r\n                    if (visibleIds.Contains(id))\r\n                    {\r\n                        continue;\r\n                    }\r\n\r\n                    UpdateHiddenObservation(id);\r\n                }\r\n\r\n                // 不要な認識記憶を整理する。\r\n                context.RemoveExpiredObservations();\r\n\r\n                return true;\r\n            }\r\n            finally\r\n            {\r\n                processedIds.Clear();\r\n                visibleIds.Clear();\r\n                observationIds.Clear();\r\n\r\n                isProcessing = false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定対象の観測情報を取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">対象識別子</param>\r\n        /// <param name=\"observation\">取得した観測情報</param>\r\n        /// <returns>観測情報が存在する場合はtrue</returns>\r\n        public bool TryGetObservation(\r\n            Guid id,\r\n            out MazeEnemyTargetObservation observation)\r\n        {\r\n            observation = default;\r\n\r\n            return IsValid &&\r\n                observations.TryGetValue(\r\n                    id,\r\n                    out observation);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定対象の認識状態を取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">対象識別子</param>\r\n        /// <returns>対象の認識状態</returns>\r\n        public MazeEnemyTargetState GetState(Guid id)\r\n        {\r\n            return TryGetObservation(\r\n                id,\r\n                out var observation)\r\n                    ? observation.State\r\n                    : MazeEnemyTargetState.Unknown;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定種類の優先認識対象を取得する。\r\n        /// </summary>\r\n        /// <param name=\"type\">対象の種類</param>\r\n        /// <param name=\"observation\">優先対象の観測情報</param>\r\n        /// <returns>対象を取得できた場合はtrue</returns>\r\n        /// <remarks>\r\n        /// 視認中、信頼度、観測位置までの直線距離の順に\r\n        /// 優先順位を決定する。\r\n        /// </remarks>\r\n        public bool TryGetBestObservation(\r\n            MazeEnemyTargetType type,\r\n            out MazeEnemyTargetObservation observation)\r\n        {\r\n            observation = default;\r\n\r\n            if (!IsValid)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            bool found = false;\r\n\r\n            foreach (var pair in observations)\r\n            {\r\n                MazeEnemyTargetObservation candidate =\r\n                    pair.Value;\r\n\r\n                if (candidate.Type != type)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                if (!found ||\r\n                    IsBetterObservation(\r\n                        candidate,\r\n                        observation))\r\n                {\r\n                    observation = candidate;\r\n                    found = true;\r\n                }\r\n            }\r\n\r\n            return found;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在保持している観測情報一覧を取得する。\r\n        /// </summary>\r\n        /// <param name=\"results\">観測情報の格納先</param>\r\n        /// <returns>取得した観測情報の件数</returns>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 格納先が指定されていない場合。\r\n        /// </exception>\r\n        public int GetObservations(\r\n            List<MazeEnemyTargetObservation> results)\r\n        {\r\n            if (results == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(results));\r\n            }\r\n\r\n            results.Clear();\r\n\r\n            if (!IsValid)\r\n            {\r\n                return 0;\r\n            }\r\n\r\n            foreach (var pair in observations)\r\n            {\r\n                results.Add(pair.Value);\r\n            }\r\n\r\n            return results.Count;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定対象の認識情報を明示的に削除する。\r\n        /// </summary>\r\n        /// <param name=\"id\">対象識別子</param>\r\n        /// <returns>削除できた場合はtrue</returns>\r\n        public bool Forget(Guid id)\r\n        {\r\n            if (!CanModify())\r\n            {\r\n                return false;\r\n            }\r\n\r\n            isProcessing = true;\r\n\r\n            try\r\n            {\r\n                return RemoveObservation(id);\r\n            }\r\n            finally\r\n            {\r\n                isProcessing = false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべての対象の認識情報を削除する。\r\n        /// </summary>\r\n        /// <returns>削除処理を実行できた場合はtrue</returns>\r\n        public bool Clear()\r\n        {\r\n            if (!CanModify())\r\n            {\r\n                return false;\r\n            }\r\n\r\n            isProcessing = true;\r\n\r\n            try\r\n            {\r\n                CopyObservationIds();\r\n\r\n                for (int i = 0;\r\n                    i < observationIds.Count;\r\n                    i++)\r\n                {\r\n                    RemoveObservation(\r\n                        observationIds[i]);\r\n                }\r\n\r\n                return true;\r\n            }\r\n            finally\r\n            {\r\n                observationIds.Clear();\r\n                isProcessing = false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 対象の視認判定を行う。\r\n        /// </summary>\r\n        /// <param name=\"target\">認識対象の現在情報</param>\r\n        /// <param name=\"stimulus\">取得した視覚刺激</param>\r\n        /// <returns>視認できた場合はtrue</returns>\r\n        private bool TryObserve(\r\n            MazeEnemyTargetSnapshot target,\r\n            out PerceptionStimulus<Vector2Int> stimulus)\r\n        {\r\n            stimulus = default;\r\n\r\n            if (!context.IsWalkable(target.Position))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            var sensor =\r\n                target.Type == MazeEnemyTargetType.Threat\r\n                    ? context.ThreatVisionSensor\r\n                    : context.VisionSensor;\r\n\r\n            return sensor.TryObserve(\r\n                target.Id,\r\n                context.CurrentCell,\r\n                context.CurrentDirection,\r\n                target.Position,\r\n                context.CurrentTime,\r\n                out stimulus);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 視認できた対象の観測情報を更新する。\r\n        /// </summary>\r\n        /// <param name=\"target\">対象の現在情報</param>\r\n        /// <param name=\"stimulus\">視覚刺激</param>\r\n        private void ApplyVisibleObservation(\r\n            MazeEnemyTargetSnapshot target,\r\n            PerceptionStimulus<Vector2Int> stimulus)\r\n        {\r\n            bool existed = observations.TryGetValue(\r\n                target.Id,\r\n                out var previous);\r\n\r\n            MazeEnemyTargetState previousState =\r\n                existed\r\n                    ? previous.State\r\n                    : MazeEnemyTargetState.Unknown;\r\n\r\n            // 記憶機能が無効でも現在の視認情報は保持する。\r\n            context.RememberObservation(stimulus);\r\n\r\n            var observation =\r\n                new MazeEnemyTargetObservation(\r\n                    target.Id,\r\n                    target.Type,\r\n                    MazeEnemyTargetState.Visible,\r\n                    stimulus.Position,\r\n                    target.Direction,\r\n                    target.MoveSpeed,\r\n                    stimulus.Timestamp,\r\n                    stimulus.Confidence);\r\n\r\n            observations[target.Id] = observation;\r\n\r\n            if (previousState !=\r\n                MazeEnemyTargetState.Visible)\r\n            {\r\n                VisibleCount++;\r\n\r\n                TargetDetected?.Invoke(observation);\r\n\r\n                TargetStateChanged?.Invoke(\r\n                    target.Id,\r\n                    previousState,\r\n                    MazeEnemyTargetState.Visible);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 視認できなかった対象の記憶状態を更新する。\r\n        /// </summary>\r\n        /// <param name=\"id\">対象識別子</param>\r\n        private void UpdateHiddenObservation(Guid id)\r\n        {\r\n            if (!observations.TryGetValue(\r\n                id,\r\n                out var previous))\r\n            {\r\n                return;\r\n            }\r\n\r\n            bool wasVisible = previous.IsVisible;\r\n\r\n            bool hasMemory =\r\n                context.TryRecallObservation(\r\n                    id,\r\n                    out var stimulus,\r\n                    out float confidence);\r\n\r\n            if (!hasMemory || confidence <= 0f)\r\n            {\r\n                // 見失った状態を通知した後、記憶を削除する。\r\n                RemoveObservation(\r\n                    id,\r\n                    notifyLost: wasVisible);\r\n\r\n                return;\r\n            }\r\n\r\n            // 現在の対象情報は使用せず、\r\n            // 最後に視認した情報のみを保持する。\r\n            var remembered =\r\n                new MazeEnemyTargetObservation(\r\n                    id,\r\n                    previous.Type,\r\n                    MazeEnemyTargetState.Remembered,\r\n                    stimulus.Position,\r\n                    previous.LastKnownDirection,\r\n                    previous.LastKnownMoveSpeed,\r\n                    stimulus.Timestamp,\r\n                    confidence);\r\n\r\n            observations[id] = remembered;\r\n\r\n            if (wasVisible)\r\n            {\r\n                VisibleCount--;\r\n\r\n                TargetLost?.Invoke(remembered);\r\n\r\n                TargetStateChanged?.Invoke(\r\n                    id,\r\n                    MazeEnemyTargetState.Visible,\r\n                    MazeEnemyTargetState.Remembered);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 観測情報と対応する認識記憶を削除する。\r\n        /// </summary>\r\n        /// <param name=\"id\">対象識別子</param>\r\n        /// <param name=\"notifyLost\">\r\n        /// 視認喪失イベントも通知するか\r\n        /// </param>\r\n        /// <returns>削除できた場合はtrue</returns>\r\n        private bool RemoveObservation(\r\n            Guid id,\r\n            bool notifyLost = false)\r\n        {\r\n            if (!observations.TryGetValue(\r\n                id,\r\n                out var previous))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            observations.Remove(id);\r\n\r\n            context.PerceptionMemory.Forget(id);\r\n\r\n            if (previous.IsVisible)\r\n            {\r\n                VisibleCount--;\r\n            }\r\n\r\n            if (notifyLost)\r\n            {\r\n                var lost =\r\n                    new MazeEnemyTargetObservation(\r\n                        id,\r\n                        previous.Type,\r\n                        MazeEnemyTargetState.Unknown,\r\n                        previous.LastKnownPosition,\r\n                        previous.LastKnownDirection,\r\n                        previous.LastKnownMoveSpeed,\r\n                        previous.LastSeenTime,\r\n                        0f);\r\n\r\n                TargetLost?.Invoke(lost);\r\n            }\r\n\r\n            TargetForgotten?.Invoke(id);\r\n\r\n            TargetStateChanged?.Invoke(\r\n                id,\r\n                previous.State,\r\n                MazeEnemyTargetState.Unknown);\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 候補が現在の優先対象より適切か確認する。\r\n        /// </summary>\r\n        /// <param name=\"candidate\">比較対象</param>\r\n        /// <param name=\"currentBest\">現在の優先対象</param>\r\n        /// <returns>比較対象を優先する場合はtrue</returns>\r\n        private bool IsBetterObservation(\r\n            MazeEnemyTargetObservation candidate,\r\n            MazeEnemyTargetObservation currentBest)\r\n        {\r\n            if (candidate.IsVisible !=\r\n                currentBest.IsVisible)\r\n            {\r\n                return candidate.IsVisible;\r\n            }\r\n\r\n            if (candidate.Confidence !=\r\n                currentBest.Confidence)\r\n            {\r\n                return candidate.Confidence >\r\n                    currentBest.Confidence;\r\n            }\r\n\r\n            Vector2 candidateOffset =\r\n                candidate.LastKnownPosition -\r\n                context.CurrentCell;\r\n\r\n            Vector2 currentOffset =\r\n                currentBest.LastKnownPosition -\r\n                context.CurrentCell;\r\n\r\n            float candidateDistance =\r\n                candidateOffset.sqrMagnitude;\r\n\r\n            float currentDistance =\r\n                currentOffset.sqrMagnitude;\r\n\r\n            if (candidateDistance != currentDistance)\r\n            {\r\n                return candidateDistance <\r\n                    currentDistance;\r\n            }\r\n\r\n            // 完全な同点時は識別子で安定した順序を決定する。\r\n            return candidate.Id.CompareTo(\r\n                currentBest.Id) < 0;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在保持している対象識別子を作業一覧へ複製する。\r\n        /// </summary>\r\n        private void CopyObservationIds()\r\n        {\r\n            observationIds.Clear();\r\n\r\n            foreach (var pair in observations)\r\n            {\r\n                observationIds.Add(pair.Key);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 認識情報を変更できる状態か確認する。\r\n        /// </summary>\r\n        /// <returns>変更可能な場合はtrue</returns>\r\n        private bool CanModify()\r\n        {\r\n            return IsValid && !isProcessing;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 認識制御システムを破棄する。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// 本クラスが管理している対象の記憶のみを削除する。\r\n        /// コンテキストやパラメーターは破棄しない。\r\n        /// 破棄時に認識イベントは通知しない。\r\n        /// </remarks>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 認識処理やイベント通知の実行中に呼び出された場合。\r\n        /// </exception>\r\n        public void Dispose()\r\n        {\r\n            if (isDisposed)\r\n            {\r\n                return;\r\n            }\r\n\r\n            if (isProcessing)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"認識処理中は破棄できません。\");\r\n            }\r\n\r\n            isDisposed = true;\r\n\r\n            if (!context.IsDisposed)\r\n            {\r\n                foreach (var pair in observations)\r\n                {\r\n                    context.PerceptionMemory.Forget(\r\n                        pair.Key);\r\n                }\r\n            }\r\n\r\n            observations.Clear();\r\n            observationIds.Clear();\r\n            processedIds.Clear();\r\n            visibleIds.Clear();\r\n\r\n            VisibleCount = 0;\r\n\r\n            TargetDetected = null;\r\n            TargetLost = null;\r\n            TargetForgotten = null;\r\n            TargetStateChanged = null;\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.593Z"
+}

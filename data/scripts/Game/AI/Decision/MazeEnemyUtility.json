@@ -1,0 +1,1073 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Decision.MazeEnemyUtility",
+    "name": "MazeEnemyUtility",
+    "fileName": "MazeEnemyUtility.cs",
+    "namespace": "Game.AI.Decision",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class MazeEnemyUtility",
+    "typeParameters": [],
+    "summary": "敵AIの性格と状況に応じて行動を評価する。",
+    "remarks": "行動候補の生成とUtility評価を担当する。 実際の行動開始や移動処理は行わない。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "Framework.AI.Decision",
+        "Game.AI.Actions",
+        "Game.AI.Core",
+        "Game.AI.Parameters",
+        "Game.AI.Perception",
+        "Game.AI.Spatial",
+        "Game.AI.Tactics",
+        "UnityEngine"
+    ],
+    "members": [
+        {
+            "name": "CandidateCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int CandidateCount =>\r\n            candidates.Count",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の行動候補数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "LastEvaluations",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public IReadOnlyList<\r\n            UtilityEvaluation<MazeEnemyActionType>>\r\n            LastEvaluations =>\r\n                selector.LastEvaluations",
+            "returnType": "",
+            "valueType": "IReadOnlyList<\r\n            UtilityEvaluation<MazeEnemyActionType>>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "最後に実行したUtility評価の結果。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsValid",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsValid =>\r\n            enemy.IsValid &&\r\n            actions.IsValid &&\r\n            perception.IsValid &&\r\n            territory.IsValid &&\r\n            spatial.IsValid &&\r\n            tactical.IsValid",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "利用可能な状態であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MazeEnemyUtility",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyUtility(\r\n            MazeEnemyContext enemy,\r\n            MazeEnemyActionContext actions,\r\n            MazeEnemyPerceptionController perception,\r\n            MazeEnemyTerritory territory,\r\n            MazeEnemySpatialEvaluator spatial,\r\n            MazeEnemyTacticalEvaluator tactical)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "enemy",
+                    "type": "MazeEnemyContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "敵AIコンテキスト"
+                },
+                {
+                    "name": "actions",
+                    "type": "MazeEnemyActionContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動コンテキスト"
+                },
+                {
+                    "name": "perception",
+                    "type": "MazeEnemyPerceptionController",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識システム"
+                },
+                {
+                    "name": "territory",
+                    "type": "MazeEnemyTerritory",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "縄張り評価"
+                },
+                {
+                    "name": "spatial",
+                    "type": "MazeEnemySpatialEvaluator",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "空間評価"
+                },
+                {
+                    "name": "tactical",
+                    "type": "MazeEnemyTacticalEvaluator",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "戦術評価"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "敵AIの行動評価システムを生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetScore",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float GetScore(\r\n            MazeEnemyActionType action)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "action",
+                    "type": "MazeEnemyActionType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動の種類"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された行動の評価値を取得する。",
+            "returns": "行動の評価値",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetCandidate",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryGetCandidate(\r\n            MazeEnemyActionType action,\r\n            out MazeEnemyUtilityCandidate candidate)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "action",
+                    "type": "MazeEnemyActionType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動の種類"
+                },
+                {
+                    "name": "candidate",
+                    "type": "MazeEnemyUtilityCandidate",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "行動候補"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された行動候補を取得する。",
+            "returns": "取得できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Evaluate",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Evaluate(\r\n            MazeEnemyActionType currentAction)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "currentAction",
+                    "type": "MazeEnemyActionType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "現在の行動"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在の状況から行動候補を生成する。",
+            "returns": "評価できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TrySelect",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TrySelect(\r\n            MazeEnemyActionType currentAction,\r\n            out MazeEnemyUtilityCandidate candidate)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "currentAction",
+                    "type": "MazeEnemyActionType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "現在の行動"
+                },
+                {
+                    "name": "candidate",
+                    "type": "MazeEnemyUtilityCandidate",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "選択された行動候補"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "最も適切な行動候補を選択する。",
+            "returns": "選択できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Clear",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Clear()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在の行動候補を削除する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyUtility",
+            "fullName": "MazeEnemyUtility",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "敵AIの性格と状況に応じて行動を評価する。",
+            "remarks": "行動候補の生成とUtility評価を担当する。 実際の行動開始や移動処理は行わない。",
+            "attributes": [],
+            "declaration": "public sealed class MazeEnemyUtility",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "enemy",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly MazeEnemyContext enemy",
+                    "returnType": "",
+                    "valueType": "MazeEnemyContext",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵AIの基本コンテキスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "actions",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly MazeEnemyActionContext actions",
+                    "returnType": "",
+                    "valueType": "MazeEnemyActionContext",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動実行用コンテキスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "perception",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly MazeEnemyPerceptionController perception",
+                    "returnType": "",
+                    "valueType": "MazeEnemyPerceptionController",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "対象の認識情報を管理するシステム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "territory",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly MazeEnemyTerritory territory",
+                    "returnType": "",
+                    "valueType": "MazeEnemyTerritory",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "縄張りの評価システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "spatial",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly MazeEnemySpatialEvaluator spatial",
+                    "returnType": "",
+                    "valueType": "MazeEnemySpatialEvaluator",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "巡回と探索の評価システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "tactical",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly MazeEnemyTacticalEvaluator tactical",
+                    "returnType": "",
+                    "valueType": "MazeEnemyTacticalEvaluator",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "追跡と逃走などの戦術評価システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "candidates",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Dictionary<\r\n            MazeEnemyActionType,\r\n            MazeEnemyUtilityCandidate> candidates =\r\n                new Dictionary<\r\n                    MazeEnemyActionType,\r\n                    MazeEnemyUtilityCandidate>()",
+                    "returnType": "",
+                    "valueType": "Dictionary<\r\n            MazeEnemyActionType,\r\n            MazeEnemyUtilityCandidate>",
+                    "value": "new Dictionary<\r\n                    MazeEnemyActionType,\r\n                    MazeEnemyUtilityCandidate>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動候補の評価結果。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new Dictionary<\r\n                    MazeEnemyActionType,\r\n                    MazeEnemyUtilityCandidate>()",
+                    "inspector": null
+                },
+                {
+                    "name": "selector",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly UtilitySelector<\r\n            MazeEnemyActionType,\r\n            MazeEnemyUtility> selector",
+                    "returnType": "",
+                    "valueType": "UtilitySelector<\r\n            MazeEnemyActionType,\r\n            MazeEnemyUtility>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "汎用Utility AIによる行動選択システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TrackingGraceDuration",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const float TrackingGraceDuration = 1.5f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "1.5f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "視界喪失直後の追跡猶予時間。単位は秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "1.5f",
+                    "inspector": null
+                },
+                {
+                    "name": "MaxTrackingPredictionDistance",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const int MaxTrackingPredictionDistance = 4",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "4",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "視界喪失後の最大予測距離。単位はセル。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "4",
+                    "inspector": null
+                },
+                {
+                    "name": "CandidateCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int CandidateCount =>\r\n            candidates.Count",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の行動候補数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "LastEvaluations",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public IReadOnlyList<\r\n            UtilityEvaluation<MazeEnemyActionType>>\r\n            LastEvaluations =>\r\n                selector.LastEvaluations",
+                    "returnType": "",
+                    "valueType": "IReadOnlyList<\r\n            UtilityEvaluation<MazeEnemyActionType>>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "最後に実行したUtility評価の結果。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsValid",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsValid =>\r\n            enemy.IsValid &&\r\n            actions.IsValid &&\r\n            perception.IsValid &&\r\n            territory.IsValid &&\r\n            spatial.IsValid &&\r\n            tactical.IsValid",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "利用可能な状態であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MazeEnemyUtility",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyUtility(\r\n            MazeEnemyContext enemy,\r\n            MazeEnemyActionContext actions,\r\n            MazeEnemyPerceptionController perception,\r\n            MazeEnemyTerritory territory,\r\n            MazeEnemySpatialEvaluator spatial,\r\n            MazeEnemyTacticalEvaluator tactical)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "enemy",
+                            "type": "MazeEnemyContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "敵AIコンテキスト"
+                        },
+                        {
+                            "name": "actions",
+                            "type": "MazeEnemyActionContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動コンテキスト"
+                        },
+                        {
+                            "name": "perception",
+                            "type": "MazeEnemyPerceptionController",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識システム"
+                        },
+                        {
+                            "name": "territory",
+                            "type": "MazeEnemyTerritory",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "縄張り評価"
+                        },
+                        {
+                            "name": "spatial",
+                            "type": "MazeEnemySpatialEvaluator",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "空間評価"
+                        },
+                        {
+                            "name": "tactical",
+                            "type": "MazeEnemyTacticalEvaluator",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "戦術評価"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵AIの行動評価システムを生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RegisterOption",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void RegisterOption(\r\n            MazeEnemyActionType action)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "登録する行動"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "Utility AIへ行動の評価定義を登録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetScore",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float GetScore(\r\n            MazeEnemyActionType action)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動の種類"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された行動の評価値を取得する。",
+                    "returns": "行動の評価値",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetCandidate",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetCandidate(\r\n            MazeEnemyActionType action,\r\n            out MazeEnemyUtilityCandidate candidate)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動の種類"
+                        },
+                        {
+                            "name": "candidate",
+                            "type": "MazeEnemyUtilityCandidate",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "行動候補"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された行動候補を取得する。",
+                    "returns": "取得できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Evaluate",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool Evaluate(\r\n            MazeEnemyActionType currentAction)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "currentAction",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在の行動"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の状況から行動候補を生成する。",
+                    "returns": "評価できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TrySelect",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TrySelect(\r\n            MazeEnemyActionType currentAction,\r\n            out MazeEnemyUtilityCandidate candidate)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "currentAction",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在の行動"
+                        },
+                        {
+                            "name": "candidate",
+                            "type": "MazeEnemyUtilityCandidate",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "選択された行動候補"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "最も適切な行動候補を選択する。",
+                    "returns": "選択できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "EvaluateRoutine",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void EvaluateRoutine(\r\n            MazeEnemyActionType action,\r\n            MazeEnemySpatialMode mode,\r\n            MazeEnemyActionType currentAction)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動の種類"
+                        },
+                        {
+                            "name": "mode",
+                            "type": "MazeEnemySpatialMode",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "空間評価モード"
+                        },
+                        {
+                            "name": "currentAction",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在の行動"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "巡回または探索行動を評価する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "EvaluatePlayer",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void EvaluatePlayer()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "プレイヤーへの追跡と迎撃を評価する。",
+                    "returns": "",
+                    "remarks": "視界喪失直後は最終認識情報を利用して追跡を継続する。 対象の実際の現在位置は参照しない。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "EvaluateRememberedPlayer",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void EvaluateRememberedPlayer(\r\n            MazeEnemyTargetObservation target,\r\n            float aggressionWeight,\r\n            float persistence)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "target",
+                            "type": "MazeEnemyTargetObservation",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象の最終認識情報"
+                        },
+                        {
+                            "name": "aggressionWeight",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "攻撃性による評価補正"
+                        },
+                        {
+                            "name": "persistence",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "執着性"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "記憶しているプレイヤーへの追跡を評価する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetTrackingDestination",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private Vector2Int GetTrackingDestination(\r\n            MazeEnemyTargetObservation target)",
+                    "returnType": "Vector2Int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "target",
+                            "type": "MazeEnemyTargetObservation",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象の最終認識情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "対象の最終認識情報から追跡先を推測する。",
+                    "returns": "推測した追跡先のセル座標",
+                    "remarks": "最終認識方向へ直線的に予測する。 壁や通行不能セルを越えて予測することはない。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "EvaluateThreat",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void EvaluateThreat()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "脅威からの逃走行動を評価する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "EvaluateTerritoryReturn",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void EvaluateTerritoryReturn()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "縄張りへの帰還行動を評価する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "AddMoveCandidate",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void AddMoveCandidate(\r\n            MazeEnemyActionType action,\r\n            Vector2Int destination,\r\n            float score)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動の種類"
+                        },
+                        {
+                            "name": "destination",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "目的地"
+                        },
+                        {
+                            "name": "score",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "移動行動の候補を登録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetParameter",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float GetParameter(\r\n            MazeEnemyParameter parameter)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "parameter",
+                            "type": "MazeEnemyParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "パラメーター識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "性格パラメーターの値を取得する。",
+                    "returns": "パラメーター値",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Clear",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Clear()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の行動候補を削除する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 21
+        }
+    ],
+    "source": "using System;\r\nusing System.Collections.Generic;\r\nusing Framework.AI.Decision;\r\nusing Game.AI.Actions;\r\nusing Game.AI.Core;\r\nusing Game.AI.Parameters;\r\nusing Game.AI.Perception;\r\nusing Game.AI.Spatial;\r\nusing Game.AI.Tactics;\r\nusing UnityEngine;\r\n\r\nnamespace Game.AI.Decision\r\n{\r\n    /// <summary>\r\n    /// 敵AIの性格と状況に応じて行動を評価する。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// 行動候補の生成とUtility評価を担当する。\r\n    /// 実際の行動開始や移動処理は行わない。\r\n    /// </remarks>\r\n    public sealed class MazeEnemyUtility\r\n    {\r\n        /// <summary>\r\n        /// 敵AIの基本コンテキスト。\r\n        /// </summary>\r\n        private readonly MazeEnemyContext enemy;\r\n\r\n        /// <summary>\r\n        /// 行動実行用コンテキスト。\r\n        /// </summary>\r\n        private readonly MazeEnemyActionContext actions;\r\n\r\n        /// <summary>\r\n        /// 対象の認識情報を管理するシステム。\r\n        /// </summary>\r\n        private readonly MazeEnemyPerceptionController perception;\r\n\r\n        /// <summary>\r\n        /// 縄張りの評価システム。\r\n        /// </summary>\r\n        private readonly MazeEnemyTerritory territory;\r\n\r\n        /// <summary>\r\n        /// 巡回と探索の評価システム。\r\n        /// </summary>\r\n        private readonly MazeEnemySpatialEvaluator spatial;\r\n\r\n        /// <summary>\r\n        /// 追跡と逃走などの戦術評価システム。\r\n        /// </summary>\r\n        private readonly MazeEnemyTacticalEvaluator tactical;\r\n\r\n        /// <summary>\r\n        /// 行動候補の評価結果。\r\n        /// </summary>\r\n        private readonly Dictionary<\r\n            MazeEnemyActionType,\r\n            MazeEnemyUtilityCandidate> candidates =\r\n                new Dictionary<\r\n                    MazeEnemyActionType,\r\n                    MazeEnemyUtilityCandidate>();\r\n\r\n        /// <summary>\r\n        /// 汎用Utility AIによる行動選択システム。\r\n        /// </summary>\r\n        private readonly UtilitySelector<\r\n            MazeEnemyActionType,\r\n            MazeEnemyUtility> selector;\r\n\r\n\r\n        /// <summary>\r\n        /// 視界喪失直後の追跡猶予時間。単位は秒。\r\n        /// </summary>\r\n        private const float TrackingGraceDuration = 1.5f;\r\n\r\n        /// <summary>\r\n        /// 視界喪失後の最大予測距離。単位はセル。\r\n        /// </summary>\r\n        private const int MaxTrackingPredictionDistance = 4;\r\n\r\n        /// <summary>\r\n        /// 現在の行動候補数。\r\n        /// </summary>\r\n        public int CandidateCount =>\r\n            candidates.Count;\r\n\r\n        /// <summary>\r\n        /// 最後に実行したUtility評価の結果。\r\n        /// </summary>\r\n        public IReadOnlyList<\r\n            UtilityEvaluation<MazeEnemyActionType>>\r\n            LastEvaluations =>\r\n                selector.LastEvaluations;\r\n\r\n        /// <summary>\r\n        /// 利用可能な状態であるか。\r\n        /// </summary>\r\n        public bool IsValid =>\r\n            enemy.IsValid &&\r\n            actions.IsValid &&\r\n            perception.IsValid &&\r\n            territory.IsValid &&\r\n            spatial.IsValid &&\r\n            tactical.IsValid;\r\n\r\n        /// <summary>\r\n        /// 敵AIの行動評価システムを生成する。\r\n        /// </summary>\r\n        /// <param name=\"enemy\">敵AIコンテキスト</param>\r\n        /// <param name=\"actions\">行動コンテキスト</param>\r\n        /// <param name=\"perception\">認識システム</param>\r\n        /// <param name=\"territory\">縄張り評価</param>\r\n        /// <param name=\"spatial\">空間評価</param>\r\n        /// <param name=\"tactical\">戦術評価</param>\r\n        public MazeEnemyUtility(\r\n            MazeEnemyContext enemy,\r\n            MazeEnemyActionContext actions,\r\n            MazeEnemyPerceptionController perception,\r\n            MazeEnemyTerritory territory,\r\n            MazeEnemySpatialEvaluator spatial,\r\n            MazeEnemyTacticalEvaluator tactical)\r\n        {\r\n            this.enemy = enemy ??\r\n                throw new ArgumentNullException(nameof(enemy));\r\n\r\n            this.actions = actions ??\r\n                throw new ArgumentNullException(nameof(actions));\r\n\r\n            this.perception = perception ??\r\n                throw new ArgumentNullException(nameof(perception));\r\n\r\n            this.territory = territory ??\r\n                throw new ArgumentNullException(nameof(territory));\r\n\r\n            this.spatial = spatial ??\r\n                throw new ArgumentNullException(nameof(spatial));\r\n\r\n            this.tactical = tactical ??\r\n                throw new ArgumentNullException(nameof(tactical));\r\n\r\n            // 異なる敵の評価システムを混在させない。\r\n            if (!ReferenceEquals(actions.Enemy, enemy) ||\r\n                !ReferenceEquals(perception.Context, enemy) ||\r\n                !ReferenceEquals(territory.Context, enemy) ||\r\n                !ReferenceEquals(spatial.Context, enemy) ||\r\n                !ReferenceEquals(spatial.Territory, territory) ||\r\n                !ReferenceEquals(tactical.Context, enemy))\r\n            {\r\n                throw new ArgumentException(\r\n                    \"敵AIコンテキストが一致していません。\");\r\n            }\r\n\r\n            if (!IsValid)\r\n            {\r\n                throw new ArgumentException(\r\n                    \"行動評価の依存関係が無効です。\");\r\n            }\r\n\r\n            selector =\r\n                new UtilitySelector<\r\n                    MazeEnemyActionType,\r\n                    MazeEnemyUtility>(0.08f);\r\n\r\n            RegisterOption(MazeEnemyActionType.Idle);\r\n            RegisterOption(MazeEnemyActionType.Patrol);\r\n            RegisterOption(MazeEnemyActionType.Explore);\r\n            RegisterOption(MazeEnemyActionType.Chase);\r\n            RegisterOption(MazeEnemyActionType.Intercept);\r\n            RegisterOption(MazeEnemyActionType.Escape);\r\n            RegisterOption(\r\n                MazeEnemyActionType.ReturnToTerritory);\r\n        }\r\n\r\n        /// <summary>\r\n        /// Utility AIへ行動の評価定義を登録する。\r\n        /// </summary>\r\n        /// <param name=\"action\">登録する行動</param>\r\n        private void RegisterOption(\r\n            MazeEnemyActionType action)\r\n        {\r\n            var consideration =\r\n                new UtilityConsideration<MazeEnemyUtility>(\r\n                    action.ToString(),\r\n                    utility => utility.GetScore(action));\r\n\r\n            var option =\r\n                new UtilityOption<\r\n                    MazeEnemyActionType,\r\n                    MazeEnemyUtility>(\r\n                        action,\r\n                        new[] { consideration },\r\n                        weight: 1f,\r\n                        useCompensation: false,\r\n                        availability: utility =>\r\n                            utility.candidates.ContainsKey(\r\n                                action));\r\n\r\n            selector.TryAddOption(option);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された行動の評価値を取得する。\r\n        /// </summary>\r\n        /// <param name=\"action\">行動の種類</param>\r\n        /// <returns>行動の評価値</returns>\r\n        public float GetScore(\r\n            MazeEnemyActionType action)\r\n        {\r\n            return candidates.TryGetValue(\r\n                action, out var candidate)\r\n                    ? candidate.Score\r\n                    : 0f;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された行動候補を取得する。\r\n        /// </summary>\r\n        /// <param name=\"action\">行動の種類</param>\r\n        /// <param name=\"candidate\">行動候補</param>\r\n        /// <returns>取得できた場合はtrue</returns>\r\n        public bool TryGetCandidate(\r\n            MazeEnemyActionType action,\r\n            out MazeEnemyUtilityCandidate candidate)\r\n        {\r\n            return candidates.TryGetValue(\r\n                action, out candidate);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在の状況から行動候補を生成する。\r\n        /// </summary>\r\n        /// <param name=\"currentAction\">現在の行動</param>\r\n        /// <returns>評価できた場合はtrue</returns>\r\n        public bool Evaluate(\r\n            MazeEnemyActionType currentAction)\r\n        {\r\n            candidates.Clear();\r\n\r\n            if (!IsValid || !enemy.CanAct)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 他の行動が存在しない場合の待機候補。\r\n            candidates[MazeEnemyActionType.Idle] =\r\n                new MazeEnemyUtilityCandidate(\r\n                    MazeEnemyActionType.Idle,\r\n                    default,\r\n                    false,\r\n                    0.02f);\r\n\r\n            EvaluateRoutine(\r\n                MazeEnemyActionType.Patrol,\r\n                MazeEnemySpatialMode.Patrol,\r\n                currentAction);\r\n\r\n            EvaluateRoutine(\r\n                MazeEnemyActionType.Explore,\r\n                MazeEnemySpatialMode.Exploration,\r\n                currentAction);\r\n\r\n            EvaluatePlayer();\r\n            EvaluateThreat();\r\n            EvaluateTerritoryReturn();\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 最も適切な行動候補を選択する。\r\n        /// </summary>\r\n        /// <param name=\"currentAction\">現在の行動</param>\r\n        /// <param name=\"candidate\">選択された行動候補</param>\r\n        /// <returns>選択できた場合はtrue</returns>\r\n        public bool TrySelect(\r\n            MazeEnemyActionType currentAction,\r\n            out MazeEnemyUtilityCandidate candidate)\r\n        {\r\n            candidate = default;\r\n\r\n            if (!IsValid || !enemy.CanAct)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 待機に継続ボーナスを付与しない。\r\n            MazeEnemyActionType continuationAction =\r\n                currentAction == MazeEnemyActionType.Idle\r\n                    ? MazeEnemyActionType.None\r\n                    : currentAction;\r\n\r\n            if (!selector.TrySelect(\r\n                    this,\r\n                    continuationAction,\r\n                    out var evaluation))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return candidates.TryGetValue(\r\n                evaluation.ActionId,\r\n                out candidate);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 巡回または探索行動を評価する。\r\n        /// </summary>\r\n        /// <param name=\"action\">行動の種類</param>\r\n        /// <param name=\"mode\">空間評価モード</param>\r\n        /// <param name=\"currentAction\">現在の行動</param>\r\n        private void EvaluateRoutine(\r\n            MazeEnemyActionType action,\r\n            MazeEnemySpatialMode mode,\r\n            MazeEnemyActionType currentAction)\r\n        {\r\n            if (actions.GetMoveSpeed(action) <= 0f)\r\n            {\r\n                return;\r\n            }\r\n\r\n            float preference = GetParameter(\r\n                action == MazeEnemyActionType.Patrol\r\n                    ? MazeEnemyParameter.PatrolPreference\r\n                    : MazeEnemyParameter.Exploration);\r\n\r\n            // 嗜好が0でも基本的な移動行動は許可する。\r\n            float weight = 0.2f + preference * 0.6f;\r\n\r\n            // 実行中の巡回先・探索先を維持する。\r\n            if (currentAction == action &&\r\n                actions.PathFollower.IsFollowing &&\r\n                actions.TryGetDestination(\r\n                    action, out Vector2Int currentDestination) &&\r\n                enemy.IsWalkable(currentDestination))\r\n            {\r\n                float score;\r\n\r\n                if (spatial.TryEvaluate(\r\n                    currentDestination,\r\n                    mode,\r\n                    out var currentEvaluation))\r\n                {\r\n                    score = currentEvaluation.Score * weight;\r\n                }\r\n                else\r\n                {\r\n                    // 最後の移動区間では探索起点と\r\n                    // 目的地が一致するため評価を維持する。\r\n                    score = 0.2f * weight;\r\n                }\r\n\r\n                AddMoveCandidate(\r\n                    action,\r\n                    currentDestination,\r\n                    score);\r\n\r\n                return;\r\n            }\r\n\r\n            if (spatial.TrySelectBestPosition(\r\n                    mode,\r\n                    out var evaluation,\r\n                    minDistance: 2,\r\n                    maxDistance: 8))\r\n            {\r\n                AddMoveCandidate(\r\n                    action,\r\n                    evaluation.Position,\r\n                    evaluation.Score * weight);\r\n\r\n                return;\r\n            }\r\n\r\n            // 狭い領域でも隣接セルへの移動を許可する。\r\n            if (spatial.TrySelectBestPosition(\r\n                    mode,\r\n                    out evaluation,\r\n                    minDistance: 1,\r\n                    maxDistance: 8))\r\n            {\r\n                AddMoveCandidate(\r\n                    action,\r\n                    evaluation.Position,\r\n                    evaluation.Score * weight);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// プレイヤーへの追跡と迎撃を評価する。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// 視界喪失直後は最終認識情報を利用して追跡を継続する。\r\n        /// 対象の実際の現在位置は参照しない。\r\n        /// </remarks>\r\n        private void EvaluatePlayer()\r\n        {\r\n            if (!perception.TryGetBestObservation(\r\n                    MazeEnemyTargetType.Player,\r\n                    out var target))\r\n            {\r\n                return;\r\n            }\r\n\r\n            float aggression = GetParameter(\r\n                MazeEnemyParameter.Aggression);\r\n\r\n            float persistence = GetParameter(\r\n                MazeEnemyParameter.Persistence);\r\n\r\n            float aggressionWeight =\r\n                0.25f + aggression * 0.75f;\r\n\r\n            // 視界から外れた対象は記憶に基づいて追跡する。\r\n            if (target.IsRemembered)\r\n            {\r\n                EvaluateRememberedPlayer(\r\n                    target,\r\n                    aggressionWeight,\r\n                    persistence);\r\n\r\n                return;\r\n            }\r\n\r\n            // 視認中の対象への通常追跡を評価する。\r\n            if (tactical.TryEvaluateChase(\r\n                    target, out var chase) &&\r\n                chase.Distance > 0)\r\n            {\r\n                float territoryWeight =\r\n                    territory.GetPreferenceMultiplier(\r\n                        chase.Destination);\r\n\r\n                float score =\r\n                    chase.Score *\r\n                    aggressionWeight *\r\n                    territoryWeight;\r\n\r\n                AddMoveCandidate(\r\n                    MazeEnemyActionType.Chase,\r\n                    chase.Destination,\r\n                    score);\r\n            }\r\n\r\n            // 視認中の対象への迎撃を評価する。\r\n            if (tactical.TryEvaluateIntercept(\r\n                    target, out var intercept))\r\n            {\r\n                float territoryWeight =\r\n                    territory.GetPreferenceMultiplier(\r\n                        intercept.Destination);\r\n\r\n                float score =\r\n                    intercept.Score *\r\n                    aggressionWeight *\r\n                    territoryWeight;\r\n\r\n                AddMoveCandidate(\r\n                    MazeEnemyActionType.Intercept,\r\n                    intercept.Destination,\r\n                    score);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 記憶しているプレイヤーへの追跡を評価する。\r\n        /// </summary>\r\n        /// <param name=\"target\">対象の最終認識情報</param>\r\n        /// <param name=\"aggressionWeight\">攻撃性による評価補正</param>\r\n        /// <param name=\"persistence\">執着性</param>\r\n        private void EvaluateRememberedPlayer(\r\n            MazeEnemyTargetObservation target,\r\n            float aggressionWeight,\r\n            float persistence)\r\n        {\r\n            // 最後に対象を視認してからの経過時間。\r\n            float elapsedTime = (float)Math.Max(\r\n                0d,\r\n                enemy.CurrentTime - target.LastSeenTime);\r\n\r\n            // 執着性に応じて追跡猶予時間を変化させる。\r\n            float graceDuration =\r\n                TrackingGraceDuration *\r\n                (0.5f + persistence);\r\n\r\n            bool isTrackingGrace =\r\n                elapsedTime <= graceDuration;\r\n\r\n            // 最終認識情報から追跡先を決定する。\r\n            Vector2Int destination =\r\n                GetTrackingDestination(target);\r\n\r\n            // 移動中は次に到達するセルを探索起点とする。\r\n            Vector2Int origin = tactical.Origin;\r\n\r\n            if (destination == origin)\r\n            {\r\n                // 最後の移動区間では目的地を維持する。\r\n                if (!enemy.IsTraversing ||\r\n                    !actions.PathFollower.IsFollowing ||\r\n                    !actions.TryGetDestination(\r\n                        MazeEnemyActionType.Chase,\r\n                        out var currentDestination) ||\r\n                    currentDestination != destination)\r\n                {\r\n                    return;\r\n                }\r\n            }\r\n\r\n            // 猶予時間中は記憶の信頼度低下を評価に反映しない。\r\n            float confidence = isTrackingGrace\r\n                ? 1f\r\n                : target.Confidence;\r\n\r\n            // 猶予時間終了後は執着性によって追跡を補正する。\r\n            float persistenceWeight = isTrackingGrace\r\n                ? 1f\r\n                : 0.25f + persistence * 0.75f;\r\n\r\n            float territoryWeight =\r\n                territory.GetPreferenceMultiplier(\r\n                    destination);\r\n\r\n            // 記憶追跡中は距離による過度な評価低下を抑える。\r\n            float score =\r\n                confidence *\r\n                aggressionWeight *\r\n                persistenceWeight *\r\n                territoryWeight *\r\n                (0.7f + persistence * 0.3f);\r\n\r\n            AddMoveCandidate(\r\n                MazeEnemyActionType.Chase,\r\n                destination,\r\n                score);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 対象の最終認識情報から追跡先を推測する。\r\n        /// </summary>\r\n        /// <param name=\"target\">対象の最終認識情報</param>\r\n        /// <returns>推測した追跡先のセル座標</returns>\r\n        /// <remarks>\r\n        /// 最終認識方向へ直線的に予測する。\r\n        /// 壁や通行不能セルを越えて予測することはない。\r\n        /// </remarks>\r\n        private Vector2Int GetTrackingDestination(\r\n            MazeEnemyTargetObservation target)\r\n        {\r\n            Vector2Int position =\r\n                target.LastKnownPosition;\r\n\r\n            Vector2Int direction =\r\n                target.LastKnownDirection;\r\n\r\n            // 有効な上下左右方向が不明な場合は予測しない。\r\n            if (Mathf.Abs(direction.x) +\r\n                Mathf.Abs(direction.y) != 1)\r\n            {\r\n                return position;\r\n            }\r\n\r\n            float intelligence = GetParameter(\r\n                MazeEnemyParameter.TacticalIntelligence);\r\n\r\n            float predictionTime = GetParameter(\r\n                MazeEnemyParameter.PredictionTime);\r\n\r\n            // 戦術知能が高いほど先の位置まで予測する。\r\n            float predictionDistance =\r\n                target.LastKnownMoveSpeed *\r\n                predictionTime *\r\n                (0.5f + intelligence * 0.5f);\r\n\r\n            int predictionSteps = Mathf.Clamp(\r\n                Mathf.CeilToInt(predictionDistance),\r\n                0,\r\n                MaxTrackingPredictionDistance);\r\n\r\n            for (int i = 0; i < predictionSteps; i++)\r\n            {\r\n                Vector2Int nextPosition =\r\n                    position + direction;\r\n\r\n                // 壁に到達した場合は予測を終了する。\r\n                if (!enemy.IsWalkable(nextPosition))\r\n                {\r\n                    break;\r\n                }\r\n\r\n                position = nextPosition;\r\n            }\r\n\r\n            return position;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 脅威からの逃走行動を評価する。\r\n        /// </summary>\r\n        private void EvaluateThreat()\r\n        {\r\n            if (!perception.TryGetBestObservation(\r\n                    MazeEnemyTargetType.Threat,\r\n                    out var threat))\r\n            {\r\n                return;\r\n            }\r\n\r\n            if (!tactical.TryEvaluateEscape(\r\n                    threat,\r\n                    maxTravelDistance: 6,\r\n                    out var escape))\r\n            {\r\n                return;\r\n            }\r\n\r\n            float caution = GetParameter(\r\n                MazeEnemyParameter.Caution);\r\n\r\n            float cautionWeight =\r\n                0.4f + caution * 0.6f;\r\n\r\n            float distance = Vector2Int.Distance(\r\n                enemy.CurrentCell,\r\n                threat.LastKnownPosition);\r\n\r\n            // 脅威が近いほど逃走の優先度を上げる。\r\n            float urgency =\r\n                1f / (1f + distance * 0.15f);\r\n\r\n            float score =\r\n                escape.Score *\r\n                cautionWeight *\r\n                (0.5f + urgency * 0.5f);\r\n\r\n            // 逃走時は縄張りによる移動制限を適用しない。\r\n            AddMoveCandidate(\r\n                MazeEnemyActionType.Escape,\r\n                escape.Destination,\r\n                score);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 縄張りへの帰還行動を評価する。\r\n        /// </summary>\r\n        private void EvaluateTerritoryReturn()\r\n        {\r\n            if (tactical.TryEvaluateReturn(\r\n                out var evaluation))\r\n            {\r\n                AddMoveCandidate(\r\n                    MazeEnemyActionType.ReturnToTerritory,\r\n                    evaluation.Destination,\r\n                    evaluation.Score);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 移動行動の候補を登録する。\r\n        /// </summary>\r\n        /// <param name=\"action\">行動の種類</param>\r\n        /// <param name=\"destination\">目的地</param>\r\n        /// <param name=\"score\">評価値</param>\r\n        private void AddMoveCandidate(\r\n            MazeEnemyActionType action,\r\n            Vector2Int destination,\r\n            float score)\r\n        {\r\n            if (!enemy.IsWalkable(destination) ||\r\n                actions.GetMoveSpeed(action) <= 0f)\r\n            {\r\n                return;\r\n            }\r\n\r\n            var candidate =\r\n                new MazeEnemyUtilityCandidate(\r\n                    action,\r\n                    destination,\r\n                    true,\r\n                    score);\r\n\r\n            if (candidate.IsValid)\r\n            {\r\n                candidates[action] = candidate;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 性格パラメーターの値を取得する。\r\n        /// </summary>\r\n        /// <param name=\"parameter\">パラメーター識別子</param>\r\n        /// <returns>パラメーター値</returns>\r\n        private float GetParameter(\r\n            MazeEnemyParameter parameter)\r\n        {\r\n            return enemy.GetParameterValue(parameter);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在の行動候補を削除する。\r\n        /// </summary>\r\n        public void Clear()\r\n        {\r\n            candidates.Clear();\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.789Z"
+}

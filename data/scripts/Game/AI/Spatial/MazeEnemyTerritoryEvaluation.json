@@ -1,0 +1,668 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Spatial.MazeEnemyTerritoryEvaluation",
+    "name": "MazeEnemyTerritoryEvaluation",
+    "fileName": "MazeEnemyTerritoryEvaluation.cs",
+    "namespace": "Game.AI.Spatial",
+    "type": "struct",
+    "accessibility": "public",
+    "modifiers": [
+        "readonly"
+    ],
+    "declaration": "public readonly struct MazeEnemyTerritoryEvaluation",
+    "typeParameters": [],
+    "summary": "指定されたセルに対する縄張り評価結果を保持する。",
+    "remarks": "評価時点の情報を保持する読み取り専用構造体。 パラメーターやグリッドの変更によって 既存の評価結果が自動更新されることはない。",
+    "inheritance": [],
+    "dependencies": [
+        "UnityEngine"
+    ],
+    "members": [
+        {
+            "name": "Position",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int Position",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "評価対象のセル座標。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Center",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int Center",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "評価時点の縄張り中心座標。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Distance",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int Distance",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "縄張り中心からの最短移動距離。 単位はセル数。 到達不可能な場合は-1。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Radius",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Radius",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "評価時点の縄張り半径。 単位はセル数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Territoriality",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Territoriality",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "評価時点の縄張り意識。 値の範囲は0から1。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "OutsideDistance",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float OutsideDistance",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "縄張り半径を超過した移動距離。 単位はセル数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "OutsideRatio",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float OutsideRatio",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "正規化された縄張りからの逸脱度。 値の範囲は0から1。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "PreferenceMultiplier",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float PreferenceMultiplier",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "移動先に対する縄張り評価倍率。 到達可能なセルでは0.1から1。 無効な評価では0。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ReturnScore",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float ReturnScore",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "縄張りへ帰還する欲求の評価値。 値の範囲は0から1。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsValid",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsValid",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "有効な評価結果であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsReachable",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsReachable =>\r\n            IsValid && Distance >= 0",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "縄張り中心から到達可能なセルであるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsInsideTerritory",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsInsideTerritory =>\r\n            IsReachable && Distance <= Radius",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "縄張り内に存在するか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsOutsideTerritory",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsOutsideTerritory =>\r\n            IsReachable && Distance > Radius",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "縄張り外に存在する到達可能なセルであるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyTerritoryEvaluation",
+            "fullName": "MazeEnemyTerritoryEvaluation",
+            "kind": "struct",
+            "accessibility": "public",
+            "modifiers": [
+                "readonly"
+            ],
+            "summary": "指定されたセルに対する縄張り評価結果を保持する。",
+            "remarks": "評価時点の情報を保持する読み取り専用構造体。 パラメーターやグリッドの変更によって 既存の評価結果が自動更新されることはない。",
+            "attributes": [],
+            "declaration": "public readonly struct MazeEnemyTerritoryEvaluation",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "Position",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int Position",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "評価対象のセル座標。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Center",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int Center",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "評価時点の縄張り中心座標。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Distance",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int Distance",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "縄張り中心からの最短移動距離。 単位はセル数。 到達不可能な場合は-1。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Radius",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Radius",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "評価時点の縄張り半径。 単位はセル数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Territoriality",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Territoriality",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "評価時点の縄張り意識。 値の範囲は0から1。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OutsideDistance",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float OutsideDistance",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "縄張り半径を超過した移動距離。 単位はセル数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OutsideRatio",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float OutsideRatio",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "正規化された縄張りからの逸脱度。 値の範囲は0から1。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PreferenceMultiplier",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float PreferenceMultiplier",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "移動先に対する縄張り評価倍率。 到達可能なセルでは0.1から1。 無効な評価では0。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ReturnScore",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float ReturnScore",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "縄張りへ帰還する欲求の評価値。 値の範囲は0から1。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsValid",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsValid",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "有効な評価結果であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsReachable",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsReachable =>\r\n            IsValid && Distance >= 0",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "縄張り中心から到達可能なセルであるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsInsideTerritory",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsInsideTerritory =>\r\n            IsReachable && Distance <= Radius",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "縄張り内に存在するか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsOutsideTerritory",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsOutsideTerritory =>\r\n            IsReachable && Distance > Radius",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "縄張り外に存在する到達可能なセルであるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MazeEnemyTerritoryEvaluation",
+                    "kind": "constructor",
+                    "accessibility": "internal",
+                    "modifiers": [],
+                    "signature": "internal MazeEnemyTerritoryEvaluation(\r\n            Vector2Int position,\r\n            Vector2Int center,\r\n            int distance,\r\n            float radius,\r\n            float territoriality,\r\n            float outsideDistance,\r\n            float outsideRatio,\r\n            float preferenceMultiplier,\r\n            float returnScore)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価対象のセル座標"
+                        },
+                        {
+                            "name": "center",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "縄張り中心座標"
+                        },
+                        {
+                            "name": "distance",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "中心からの最短移動距離"
+                        },
+                        {
+                            "name": "radius",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "縄張り半径"
+                        },
+                        {
+                            "name": "territoriality",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "縄張り意識"
+                        },
+                        {
+                            "name": "outsideDistance",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "縄張りからの逸脱距離"
+                        },
+                        {
+                            "name": "outsideRatio",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "正規化された逸脱度"
+                        },
+                        {
+                            "name": "preferenceMultiplier",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "移動先評価倍率"
+                        },
+                        {
+                            "name": "returnScore",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "帰還欲求"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "縄張り評価結果を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 13
+        }
+    ],
+    "source": "using UnityEngine;\r\n\r\nnamespace Game.AI.Spatial\r\n{\r\n    /// <summary>\r\n    /// 指定されたセルに対する縄張り評価結果を保持する。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// 評価時点の情報を保持する読み取り専用構造体。\r\n    /// パラメーターやグリッドの変更によって\r\n    /// 既存の評価結果が自動更新されることはない。\r\n    /// </remarks>\r\n    public readonly struct MazeEnemyTerritoryEvaluation\r\n    {\r\n        /// <summary>\r\n        /// 評価対象のセル座標。\r\n        /// </summary>\r\n        public Vector2Int Position { get; }\r\n\r\n        /// <summary>\r\n        /// 評価時点の縄張り中心座標。\r\n        /// </summary>\r\n        public Vector2Int Center { get; }\r\n\r\n        /// <summary>\r\n        /// 縄張り中心からの最短移動距離。\r\n        /// 単位はセル数。\r\n        /// 到達不可能な場合は-1。\r\n        /// </summary>\r\n        public int Distance { get; }\r\n\r\n        /// <summary>\r\n        /// 評価時点の縄張り半径。\r\n        /// 単位はセル数。\r\n        /// </summary>\r\n        public float Radius { get; }\r\n\r\n        /// <summary>\r\n        /// 評価時点の縄張り意識。\r\n        /// 値の範囲は0から1。\r\n        /// </summary>\r\n        public float Territoriality { get; }\r\n\r\n        /// <summary>\r\n        /// 縄張り半径を超過した移動距離。\r\n        /// 単位はセル数。\r\n        /// </summary>\r\n        public float OutsideDistance { get; }\r\n\r\n        /// <summary>\r\n        /// 正規化された縄張りからの逸脱度。\r\n        /// 値の範囲は0から1。\r\n        /// </summary>\r\n        public float OutsideRatio { get; }\r\n\r\n        /// <summary>\r\n        /// 移動先に対する縄張り評価倍率。\r\n        /// 到達可能なセルでは0.1から1。\r\n        /// 無効な評価では0。\r\n        /// </summary>\r\n        public float PreferenceMultiplier { get; }\r\n\r\n        /// <summary>\r\n        /// 縄張りへ帰還する欲求の評価値。\r\n        /// 値の範囲は0から1。\r\n        /// </summary>\r\n        public float ReturnScore { get; }\r\n\r\n        /// <summary>\r\n        /// 有効な評価結果であるか。\r\n        /// </summary>\r\n        public bool IsValid { get; }\r\n\r\n        /// <summary>\r\n        /// 縄張り中心から到達可能なセルであるか。\r\n        /// </summary>\r\n        public bool IsReachable =>\r\n            IsValid && Distance >= 0;\r\n\r\n        /// <summary>\r\n        /// 縄張り内に存在するか。\r\n        /// </summary>\r\n        public bool IsInsideTerritory =>\r\n            IsReachable && Distance <= Radius;\r\n\r\n        /// <summary>\r\n        /// 縄張り外に存在する到達可能なセルであるか。\r\n        /// </summary>\r\n        public bool IsOutsideTerritory =>\r\n            IsReachable && Distance > Radius;\r\n\r\n        /// <summary>\r\n        /// 縄張り評価結果を生成する。\r\n        /// </summary>\r\n        /// <param name=\"position\">評価対象のセル座標</param>\r\n        /// <param name=\"center\">縄張り中心座標</param>\r\n        /// <param name=\"distance\">中心からの最短移動距離</param>\r\n        /// <param name=\"radius\">縄張り半径</param>\r\n        /// <param name=\"territoriality\">縄張り意識</param>\r\n        /// <param name=\"outsideDistance\">縄張りからの逸脱距離</param>\r\n        /// <param name=\"outsideRatio\">正規化された逸脱度</param>\r\n        /// <param name=\"preferenceMultiplier\">移動先評価倍率</param>\r\n        /// <param name=\"returnScore\">帰還欲求</param>\r\n        internal MazeEnemyTerritoryEvaluation(\r\n            Vector2Int position,\r\n            Vector2Int center,\r\n            int distance,\r\n            float radius,\r\n            float territoriality,\r\n            float outsideDistance,\r\n            float outsideRatio,\r\n            float preferenceMultiplier,\r\n            float returnScore)\r\n        {\r\n            Position = position;\r\n            Center = center;\r\n            Distance = distance;\r\n            Radius = radius;\r\n            Territoriality = territoriality;\r\n            OutsideDistance = outsideDistance;\r\n            OutsideRatio = outsideRatio;\r\n            PreferenceMultiplier = preferenceMultiplier;\r\n            ReturnScore = returnScore;\r\n\r\n            IsValid = true;\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.767Z"
+}

@@ -1,0 +1,64 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Tactics.MazeEnemyTacticalType",
+    "name": "MazeEnemyTacticalType",
+    "fileName": "MazeEnemyTacticalType.cs",
+    "namespace": "Game.AI.Tactics",
+    "type": "enum",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public enum MazeEnemyTacticalType",
+    "typeParameters": [],
+    "summary": "敵AIが評価する戦術の種類。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [],
+    "members": [],
+    "types": [
+        {
+            "name": "MazeEnemyTacticalType",
+            "fullName": "MazeEnemyTacticalType",
+            "kind": "enum",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "敵AIが評価する戦術の種類。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public enum MazeEnemyTacticalType",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [],
+            "nestedTypes": [],
+            "enumValues": [
+                {
+                    "name": "None",
+                    "value": "0"
+                },
+                {
+                    "name": "Chase",
+                    "value": "1"
+                },
+                {
+                    "name": "Intercept",
+                    "value": "2"
+                },
+                {
+                    "name": "Escape",
+                    "value": "3"
+                },
+                {
+                    "name": "ReturnToTerritory",
+                    "value": "4"
+                }
+            ],
+            "line": 6
+        }
+    ],
+    "source": "namespace Game.AI.Tactics\r\n{\r\n    /// <summary>\r\n    /// 敵AIが評価する戦術の種類。\r\n    /// </summary>\r\n    public enum MazeEnemyTacticalType\r\n    {\r\n        /// <summary>\r\n        /// 戦術未指定。\r\n        /// </summary>\r\n        None = 0,\r\n\r\n        /// <summary>\r\n        /// 対象への直接追跡。\r\n        /// </summary>\r\n        Chase = 1,\r\n\r\n        /// <summary>\r\n        /// 対象の進行先への先回り。\r\n        /// </summary>\r\n        Intercept = 2,\r\n\r\n        /// <summary>\r\n        /// 脅威からの逃走。\r\n        /// </summary>\r\n        Escape = 3,\r\n\r\n        /// <summary>\r\n        /// 縄張りへの帰還。\r\n        /// </summary>\r\n        ReturnToTerritory = 4\r\n    }\r\n}",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.706Z"
+}

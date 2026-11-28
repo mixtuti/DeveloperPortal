@@ -1,0 +1,470 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Parameters.MazeEnemyParameterCatalog",
+    "name": "MazeEnemyParameterCatalog",
+    "fileName": "MazeEnemyParameterCatalog.cs",
+    "namespace": "Game.AI.Parameters",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "static"
+    ],
+    "declaration": "public static class MazeEnemyParameterCatalog",
+    "typeParameters": [],
+    "summary": "迷路内の敵が使用する共通パラメーター定義を管理する。",
+    "remarks": "定義は全エージェントで共有する。 実行時のパラメーターはエージェントごとに生成する。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "Framework.Parameters"
+    ],
+    "members": [
+        {
+            "name": "Count",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static int Count => definitions.Length",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "登録されているパラメーター定義数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Definitions",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static IReadOnlyList<ParameterDefinition<MazeEnemyParameter>>\r\n            Definitions => readOnlyDefinitions",
+            "returnType": "",
+            "valueType": "IReadOnlyList<ParameterDefinition<MazeEnemyParameter>>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "すべてのパラメーター定義を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Contains",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static bool Contains(MazeEnemyParameter id)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "MazeEnemyParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "パラメーター識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターが定義されているか確認する。",
+            "returns": "定義されている場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetDefinition",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static bool TryGetDefinition(\r\n            MazeEnemyParameter id,\r\n            out ParameterDefinition<MazeEnemyParameter> definition)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "MazeEnemyParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "パラメーター識別子"
+                },
+                {
+                    "name": "definition",
+                    "type": "ParameterDefinition<MazeEnemyParameter>",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "取得した定義"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーター定義を取得する。",
+            "returns": "取得に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetDefinition",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static ParameterDefinition<MazeEnemyParameter>\r\n            GetDefinition(MazeEnemyParameter id)",
+            "returnType": "ParameterDefinition<MazeEnemyParameter>",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "MazeEnemyParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "パラメーター識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーター定義を取得する。",
+            "returns": "対応するパラメーター定義",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "KeyNotFoundException",
+                    "description": "指定された識別子が存在しない場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "CreateParameterSet",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static ParameterSet<MazeEnemyParameter>\r\n            CreateParameterSet()",
+            "returnType": "ParameterSet<MazeEnemyParameter>",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "標準値を使用した実行時パラメーターセットを生成する。",
+            "returns": "独立した実行時パラメーターセット",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyParameterCatalog",
+            "fullName": "MazeEnemyParameterCatalog",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "summary": "迷路内の敵が使用する共通パラメーター定義を管理する。",
+            "remarks": "定義は全エージェントで共有する。 実行時のパラメーターはエージェントごとに生成する。",
+            "attributes": [],
+            "declaration": "public static class MazeEnemyParameterCatalog",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "definitions",
+                    "kind": "property",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static",
+                        "readonly"
+                    ],
+                    "signature": "private static readonly\r\n            ParameterDefinition<MazeEnemyParameter>[] definitions =",
+                    "returnType": "",
+                    "valueType": "ParameterDefinition<MazeEnemyParameter>[]",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべての共通パラメーター定義。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "readOnlyDefinitions",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static",
+                        "readonly"
+                    ],
+                    "signature": "private static readonly\r\n            IReadOnlyList<ParameterDefinition<MazeEnemyParameter>>\r\n            readOnlyDefinitions =\r\n                Array.AsReadOnly(definitions)",
+                    "returnType": "",
+                    "valueType": "IReadOnlyList<ParameterDefinition<MazeEnemyParameter>>",
+                    "value": "Array.AsReadOnly(definitions)",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "外部から変更できないパラメーター定義一覧。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "Array.AsReadOnly(definitions)",
+                    "inspector": null
+                },
+                {
+                    "name": "definitionMap",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static",
+                        "readonly"
+                    ],
+                    "signature": "private static readonly Dictionary<\r\n            MazeEnemyParameter,\r\n            ParameterDefinition<MazeEnemyParameter>>\r\n            definitionMap = CreateDefinitionMap()",
+                    "returnType": "",
+                    "valueType": "Dictionary<\r\n            MazeEnemyParameter,\r\n            ParameterDefinition<MazeEnemyParameter>>",
+                    "value": "CreateDefinitionMap()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "識別子による定義検索用の辞書。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "CreateDefinitionMap()",
+                    "inspector": null
+                },
+                {
+                    "name": "Count",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static int Count => definitions.Length",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "登録されているパラメーター定義数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Definitions",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static IReadOnlyList<ParameterDefinition<MazeEnemyParameter>>\r\n            Definitions => readOnlyDefinitions",
+                    "returnType": "",
+                    "valueType": "IReadOnlyList<ParameterDefinition<MazeEnemyParameter>>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "すべてのパラメーター定義を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Contains",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static bool Contains(MazeEnemyParameter id)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "MazeEnemyParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "パラメーター識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターが定義されているか確認する。",
+                    "returns": "定義されている場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetDefinition",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static bool TryGetDefinition(\r\n            MazeEnemyParameter id,\r\n            out ParameterDefinition<MazeEnemyParameter> definition)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "MazeEnemyParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "パラメーター識別子"
+                        },
+                        {
+                            "name": "definition",
+                            "type": "ParameterDefinition<MazeEnemyParameter>",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得した定義"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーター定義を取得する。",
+                    "returns": "取得に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetDefinition",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static ParameterDefinition<MazeEnemyParameter>\r\n            GetDefinition(MazeEnemyParameter id)",
+                    "returnType": "ParameterDefinition<MazeEnemyParameter>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "MazeEnemyParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "パラメーター識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーター定義を取得する。",
+                    "returns": "対応するパラメーター定義",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "KeyNotFoundException",
+                            "description": "指定された識別子が存在しない場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateParameterSet",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static ParameterSet<MazeEnemyParameter>\r\n            CreateParameterSet()",
+                    "returnType": "ParameterSet<MazeEnemyParameter>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "標準値を使用した実行時パラメーターセットを生成する。",
+                    "returns": "独立した実行時パラメーターセット",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateDefinitionMap",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static Dictionary<\r\n            MazeEnemyParameter,\r\n            ParameterDefinition<MazeEnemyParameter>>\r\n            CreateDefinitionMap()",
+                    "returnType": "Dictionary<\r\n            MazeEnemyParameter,\r\n            ParameterDefinition<MazeEnemyParameter>>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "識別子による検索用辞書を生成する。",
+                    "returns": "パラメーター定義の辞書",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 15
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing Framework.Parameters;\r\n\r\nnamespace Game.AI.Parameters\r\n{\r\n    /// <summary>\r\n    /// 迷路内の敵が使用する共通パラメーター定義を管理する。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// 定義は全エージェントで共有する。\r\n    /// 実行時のパラメーターはエージェントごとに生成する。\r\n    /// </remarks>\r\n    public static class MazeEnemyParameterCatalog\r\n    {\r\n        /// <summary>\r\n        /// すべての共通パラメーター定義。\r\n        /// </summary>\r\n        private static readonly\r\n            ParameterDefinition<MazeEnemyParameter>[] definitions =\r\n        {\r\n            // 基本能力\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.MoveSpeed,\r\n                3.5f, 0f, 12f),\r\n\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.ChaseSpeedMultiplier,\r\n                1.15f, 0f, 3f),\r\n\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.EscapeSpeedMultiplier,\r\n                1.3f, 0f, 3f),\r\n\r\n            // 認識能力\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.DetectionRange,\r\n                6f, 0f, 64f),\r\n\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.ThreatDetectionRange,\r\n                8f, 0f, 64f),\r\n\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.MemoryDuration,\r\n                5f, 0f, 60f),\r\n       \r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.HearingRange,\r\n                8f, 0f, 64f),\r\n\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.HearingSensitivity,\r\n                0.5f, 0f, 1f),\r\n\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.HearingAccuracy,\r\n                0.5f, 0f, 1f),\r\n\r\n            // 性格\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.Aggression,\r\n                0.5f, 0f, 1f),\r\n\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.Caution,\r\n                0.5f, 0f, 1f),\r\n\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.Persistence,\r\n                0.5f, 0f, 1f),\r\n\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.TacticalIntelligence,\r\n                0.3f, 0f, 1f),\r\n\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.Territoriality,\r\n                0.3f, 0f, 1f),\r\n\r\n            // 行動傾向\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.Exploration,\r\n                0.5f, 0f, 1f),\r\n\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.PatrolPreference,\r\n                0.5f, 0f, 1f),\r\n\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.TerritoryRadius,\r\n                5f, 0f, 64f),\r\n\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.VisitMemoryDuration,\r\n                30f, 0f, 300f),\r\n\r\n            new ParameterDefinition<MazeEnemyParameter>(\r\n                MazeEnemyParameter.PredictionTime,\r\n                1f, 0f, 5f)\r\n        };\r\n\r\n        /// <summary>\r\n        /// 外部から変更できないパラメーター定義一覧。\r\n        /// </summary>\r\n        private static readonly\r\n            IReadOnlyList<ParameterDefinition<MazeEnemyParameter>>\r\n            readOnlyDefinitions =\r\n                Array.AsReadOnly(definitions);\r\n\r\n        /// <summary>\r\n        /// 識別子による定義検索用の辞書。\r\n        /// </summary>\r\n        private static readonly Dictionary<\r\n            MazeEnemyParameter,\r\n            ParameterDefinition<MazeEnemyParameter>>\r\n            definitionMap = CreateDefinitionMap();\r\n\r\n        /// <summary>\r\n        /// 登録されているパラメーター定義数。\r\n        /// </summary>\r\n        public static int Count => definitions.Length;\r\n\r\n        /// <summary>\r\n        /// すべてのパラメーター定義を取得する。\r\n        /// </summary>\r\n        public static IReadOnlyList<ParameterDefinition<MazeEnemyParameter>>\r\n            Definitions => readOnlyDefinitions;\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターが定義されているか確認する。\r\n        /// </summary>\r\n        /// <param name=\"id\">パラメーター識別子</param>\r\n        /// <returns>定義されている場合はtrue</returns>\r\n        public static bool Contains(MazeEnemyParameter id)\r\n        {\r\n            return definitionMap.ContainsKey(id);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーター定義を取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">パラメーター識別子</param>\r\n        /// <param name=\"definition\">取得した定義</param>\r\n        /// <returns>取得に成功した場合はtrue</returns>\r\n        public static bool TryGetDefinition(\r\n            MazeEnemyParameter id,\r\n            out ParameterDefinition<MazeEnemyParameter> definition)\r\n        {\r\n            return definitionMap.TryGetValue(\r\n                id, out definition);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーター定義を取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">パラメーター識別子</param>\r\n        /// <returns>対応するパラメーター定義</returns>\r\n        /// <exception cref=\"KeyNotFoundException\">\r\n        /// 指定された識別子が存在しない場合に発生する。\r\n        /// </exception>\r\n        public static ParameterDefinition<MazeEnemyParameter>\r\n            GetDefinition(MazeEnemyParameter id)\r\n        {\r\n            if (!TryGetDefinition(id, out var definition))\r\n            {\r\n                throw new KeyNotFoundException(\r\n                    $\"敵パラメーターが定義されていません：{id}\");\r\n            }\r\n\r\n            return definition;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 標準値を使用した実行時パラメーターセットを生成する。\r\n        /// </summary>\r\n        /// <returns>独立した実行時パラメーターセット</returns>\r\n        public static ParameterSet<MazeEnemyParameter>\r\n            CreateParameterSet()\r\n        {\r\n            return new ParameterSet<MazeEnemyParameter>(\r\n                definitions);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 識別子による検索用辞書を生成する。\r\n        /// </summary>\r\n        /// <returns>パラメーター定義の辞書</returns>\r\n        private static Dictionary<\r\n            MazeEnemyParameter,\r\n            ParameterDefinition<MazeEnemyParameter>>\r\n            CreateDefinitionMap()\r\n        {\r\n            var map = new Dictionary<\r\n                MazeEnemyParameter,\r\n                ParameterDefinition<MazeEnemyParameter>>();\r\n\r\n            foreach (var definition in definitions)\r\n            {\r\n                map.Add(definition.Id, definition);\r\n            }\r\n\r\n            return map;\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.574Z"
+}

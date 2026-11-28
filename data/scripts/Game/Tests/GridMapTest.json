@@ -1,5 +1,5 @@
 {
-    "parserVersion": 2,
+    "parserVersion": 3,
     "id": "Game.Tests.GridMapTest",
     "name": "GridMapTest",
     "fileName": "GridMapTest.cs",
@@ -21,11 +21,352 @@
         "MonoBehaviour"
     ],
     "members": [],
+    "types": [
+        {
+            "name": "GridMapTest",
+            "fullName": "GridMapTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "汎用グリッド管理システムの動作確認用クラス。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public class GridMapTest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "width",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int width = 15",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "15",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "マップの横方向のマス数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "マップ設定"
+                            ],
+                            "raw": "Header(\"マップ設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Min",
+                            "arguments": [
+                                3
+                            ],
+                            "raw": "Min(3)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "マップの横方向のマス数"
+                            ],
+                            "raw": "Tooltip(\"マップの横方向のマス数\")"
+                        }
+                    ],
+                    "initialValue": "15",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Width",
+                        "type": "int",
+                        "header": "マップ設定",
+                        "tooltip": "マップの横方向のマス数",
+                        "range": null,
+                        "min": 3,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "15"
+                    }
+                },
+                {
+                    "name": "height",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int height = 11",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "11",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "マップの縦方向のマス数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Min",
+                            "arguments": [
+                                3
+                            ],
+                            "raw": "Min(3)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "マップの縦方向のマス数"
+                            ],
+                            "raw": "Tooltip(\"マップの縦方向のマス数\")"
+                        }
+                    ],
+                    "initialValue": "11",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Height",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "マップの縦方向のマス数",
+                        "range": null,
+                        "min": 3,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "11"
+                    }
+                },
+                {
+                    "name": "Floor",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const int Floor = 0",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "0",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "床を表すデータ値。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "0",
+                    "inspector": null
+                },
+                {
+                    "name": "Wall",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const int Wall = 1",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "1",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "壁を表すデータ値。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "1",
+                    "inspector": null
+                },
+                {
+                    "name": "map",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private GridMap<int> map",
+                    "returnType": "",
+                    "valueType": "GridMap<int>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "動作確認用のマップデータ。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnDestroy",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnDestroy()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateMap",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void CreateMap()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "外周が壁、内部が床となるマップを生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PrintMap",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void PrintMap()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "マップの内容をUnity Consoleに出力する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestGridMap",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestGridMap()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "グリッドの基本機能を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnCellChanged",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnCellChanged(\r\n            Vector2Int position,\r\n            int oldValue,\r\n            int newValue)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更された座標"
+                        },
+                        {
+                            "name": "oldValue",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更前のデータ"
+                        },
+                        {
+                            "name": "newValue",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更後のデータ"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "マスの変更内容をConsoleに出力する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 11
+        }
+    ],
     "source": "\r\nusing System.Text;\r\nusing UnityEngine;\r\nusing Framework.Grid;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// 汎用グリッド管理システムの動作確認用クラス。\r\n    /// </summary>\r\n    public class GridMapTest : MonoBehaviour\r\n    {\r\n        #region Fields\r\n\r\n        [Header(\"マップ設定\")]\r\n\r\n        /// <summary>マップの横方向のマス数。</summary>\r\n        [SerializeField]\r\n        [Min(3)]\r\n        [Tooltip(\"マップの横方向のマス数\")]\r\n        private int width = 15;\r\n\r\n        /// <summary>マップの縦方向のマス数。</summary>\r\n        [SerializeField]\r\n        [Min(3)]\r\n        [Tooltip(\"マップの縦方向のマス数\")]\r\n        private int height = 11;\r\n\r\n        /// <summary>床を表すデータ値。</summary>\r\n        private const int Floor = 0;\r\n\r\n        /// <summary>壁を表すデータ値。</summary>\r\n        private const int Wall = 1;\r\n\r\n        /// <summary>動作確認用のマップデータ。</summary>\r\n        private GridMap<int> map;\r\n\r\n        #endregion\r\n\r\n        #region Unity Methods\r\n\r\n        private void Start()\r\n        {\r\n            CreateMap();\r\n            PrintMap();\r\n            TestGridMap();\r\n        }\r\n\r\n        private void OnDestroy()\r\n        {\r\n            // イベントの登録を解除する。\r\n            if (map != null)\r\n            {\r\n                map.CellChanged -= OnCellChanged;\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Private Methods\r\n\r\n        /// <summary>\r\n        /// 外周が壁、内部が床となるマップを生成する。\r\n        /// </summary>\r\n        private void CreateMap()\r\n        {\r\n            map = new GridMap<int>(\r\n                width,\r\n                height,\r\n                position =>\r\n                {\r\n                    // 外周に位置するマスか判定する。\r\n                    bool isBorder =\r\n                        position.x == 0 ||\r\n                        position.y == 0 ||\r\n                        position.x == width - 1 ||\r\n                        position.y == height - 1;\r\n\r\n                    return isBorder ? Wall : Floor;\r\n                });\r\n\r\n            // マス変更イベントを登録する。\r\n            map.CellChanged += OnCellChanged;\r\n        }\r\n\r\n        /// <summary>\r\n        /// マップの内容をUnity Consoleに出力する。\r\n        /// </summary>\r\n        private void PrintMap()\r\n        {\r\n            // 出力する文字列を構築するための変数。\r\n            StringBuilder builder = new StringBuilder();\r\n\r\n            builder.AppendLine(\r\n                $\"マップサイズ：{map.Width} × {map.Height}\");\r\n\r\n            // Y座標の大きい行から順に出力する。\r\n            for (int y = map.Height - 1; y >= 0; y--)\r\n            {\r\n                for (int x = 0; x < map.Width; x++)\r\n                {\r\n                    builder.Append(\r\n                        map[x, y] == Wall ? '#' : '.');\r\n                }\r\n\r\n                builder.AppendLine();\r\n            }\r\n\r\n            Debug.Log(builder.ToString());\r\n        }\r\n\r\n        /// <summary>\r\n        /// グリッドの基本機能を検証する。\r\n        /// </summary>\r\n        private void TestGridMap()\r\n        {\r\n            // 床と壁のマス数を取得する。\r\n            int floorCount =\r\n                map.CountCells(value => value == Floor);\r\n\r\n            int wallCount =\r\n                map.CountCells(value => value == Wall);\r\n\r\n            Debug.Log($\"全マス数：{map.Count}\");\r\n            Debug.Log($\"床の数：{floorCount}\");\r\n            Debug.Log($\"壁の数：{wallCount}\");\r\n\r\n            // 範囲外判定を確認する。\r\n            Debug.Assert(\r\n                !map.IsInside(-1, 0),\r\n                \"範囲外判定に失敗しました。\");\r\n\r\n            // 座標(1, 1)を床から壁に変更する。\r\n            map.SetCell(1, 1, Wall);\r\n\r\n            Debug.Assert(\r\n                map.GetCell(1, 1) == Wall,\r\n                \"マスの変更に失敗しました。\");\r\n\r\n            // 範囲外の安全な取得を確認する。\r\n            bool result = map.TryGetCell(\r\n                new Vector2Int(-1, 0),\r\n                out int value);\r\n\r\n            Debug.Assert(\r\n                !result,\r\n                \"範囲外の取得判定に失敗しました。\");\r\n\r\n            // 変更後のマップを出力する。\r\n            PrintMap();\r\n        }\r\n\r\n        /// <summary>\r\n        /// マスの変更内容をConsoleに出力する。\r\n        /// </summary>\r\n        /// <param name=\"position\">変更された座標</param>\r\n        /// <param name=\"oldValue\">変更前のデータ</param>\r\n        /// <param name=\"newValue\">変更後のデータ</param>\r\n        private void OnCellChanged(\r\n            Vector2Int position,\r\n            int oldValue,\r\n            int newValue)\r\n        {\r\n            Debug.Log(\r\n                $\"マス変更：{position} \" +\r\n                $\"{oldValue} → {newValue}\");\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
     "tips": [],
     "examples": [],
     "notes": [],
     "related": [],
     "tests": [],
-    "generatedAt": "2026-11-26T16:10:17.939Z"
+    "generatedAt": "2026-11-28T15:50:00.273Z"
 }

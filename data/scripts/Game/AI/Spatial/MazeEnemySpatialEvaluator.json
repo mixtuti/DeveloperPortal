@@ -1,0 +1,1372 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Spatial.MazeEnemySpatialEvaluator",
+    "name": "MazeEnemySpatialEvaluator",
+    "fileName": "MazeEnemySpatialEvaluator.cs",
+    "namespace": "Game.AI.Spatial",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class MazeEnemySpatialEvaluator : IDisposable",
+    "typeParameters": [],
+    "summary": "敵AIの探索地点や巡回地点に対する 空間評価と移動先の選定を行う。",
+    "remarks": "移動距離、訪問記憶、縄張り、行動傾向を使用する。 実際の経路探索や移動制御は行わない。 Unityのメインスレッドで使用することを想定する。",
+    "inheritance": [
+        "IDisposable"
+    ],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "Framework.Grid",
+        "Framework.Pathfinding",
+        "Game.AI.Core",
+        "Game.AI.Parameters",
+        "Game.Map",
+        "UnityEngine",
+        "IDisposable"
+    ],
+    "members": [
+        {
+            "name": "ReferenceDistance",
+            "kind": "constant",
+            "accessibility": "public",
+            "modifiers": [
+                "const"
+            ],
+            "signature": "public const float ReferenceDistance = 5f",
+            "returnType": "",
+            "valueType": "float",
+            "value": "5f",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "距離評価に使用する基準距離。 単位はセル数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Context",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyContext Context => context",
+            "returnType": "",
+            "valueType": "MazeEnemyContext",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "評価対象の敵AIコンテキスト。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Territory",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyTerritory Territory => territory",
+            "returnType": "",
+            "valueType": "MazeEnemyTerritory",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "使用する縄張り評価システム。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Origin",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int Origin =>\r\n            IsValid\r\n                ? context.IsTraversing\r\n                    ? context.TargetCell\r\n                    : context.CurrentCell\r\n                : default",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の距離計算起点。",
+            "returns": "",
+            "remarks": "移動途中の場合は次の到達予定セルを使用する。 無効な状態では既定値を返す。",
+            "exceptions": []
+        },
+        {
+            "name": "IsValid",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsValid =>\r\n            !isDisposed &&\r\n            context.IsValid &&\r\n            territory.IsValid",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "空間評価を利用可能な状態であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsDirty",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsDirty =>\r\n            IsValid &&\r\n            (isDirty || cachedOrigin != Origin)",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "距離マップの再計算が必要であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsDisposed",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsDisposed => isDisposed",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "破棄済みであるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RecalculationCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public long RecalculationCount =>\r\n            recalculationCount",
+            "returnType": "",
+            "valueType": "long",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "距離マップの再計算回数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "LastCandidateCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int LastCandidateCount =>\r\n            lastCandidateCount",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "最後の候補選定で評価したセル数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MazeEnemySpatialEvaluator",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemySpatialEvaluator(\r\n            MazeEnemyContext context,\r\n            MazeEnemyTerritory territory)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "MazeEnemyContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "敵AIコンテキスト"
+                },
+                {
+                    "name": "territory",
+                    "type": "MazeEnemyTerritory",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "縄張り評価システム"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "空間評価システムを生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "必須の引数が指定されていない場合。"
+                },
+                {
+                    "name": "ArgumentException",
+                    "description": "引数が無効、または異なる敵の情報である場合。"
+                }
+            ]
+        },
+        {
+            "name": "Refresh",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Refresh()",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "必要に応じて距離マップを更新する。",
+            "returns": "有効な距離マップを利用できる場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Invalidate",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Invalidate()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "距離マップを無効化する。 次回の評価要求時に再計算する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetDistance",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int GetDistance(Vector2Int position)",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "対象のセル座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "起点から指定セルへの最短移動距離を取得する。",
+            "returns": "最短移動距離。 到達不可能または無効な場合は-1",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryEvaluate",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryEvaluate(\r\n            Vector2Int position,\r\n            MazeEnemySpatialMode mode,\r\n            out MazeEnemySpatialEvaluation evaluation)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "評価対象のセル座標"
+                },
+                {
+                    "name": "mode",
+                    "type": "MazeEnemySpatialMode",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "空間評価方式"
+                },
+                {
+                    "name": "evaluation",
+                    "type": "MazeEnemySpatialEvaluation",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "空間評価結果"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたセルに対する空間評価を行う。",
+            "returns": "有効な評価結果を取得できた場合はtrue",
+            "remarks": "起点自身は移動先候補として評価しない。",
+            "exceptions": []
+        },
+        {
+            "name": "TrySelectBestPosition",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TrySelectBestPosition(\r\n            MazeEnemySpatialMode mode,\r\n            out MazeEnemySpatialEvaluation evaluation,\r\n            int minDistance = 1,\r\n            int maxDistance = int.MaxValue)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "mode",
+                    "type": "MazeEnemySpatialMode",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "空間評価方式"
+                },
+                {
+                    "name": "evaluation",
+                    "type": "MazeEnemySpatialEvaluation",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "最適な候補の評価結果"
+                },
+                {
+                    "name": "minDistance",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": "1",
+                    "description": "最小移動距離"
+                },
+                {
+                    "name": "maxDistance",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": "int.MaxValue",
+                    "description": "最大移動距離"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された距離範囲から最適な移動先を選定する。",
+            "returns": "有効な移動先を選定できた場合はtrue",
+            "remarks": "同点の場合は移動距離が短い候補を優先する。 距離も同じ場合はグリッドの列挙順を使用する。",
+            "exceptions": []
+        },
+        {
+            "name": "GetEvaluations",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int GetEvaluations(\r\n            MazeEnemySpatialMode mode,\r\n            List<MazeEnemySpatialEvaluation> results,\r\n            int minDistance = 1,\r\n            int maxDistance = int.MaxValue)",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "mode",
+                    "type": "MazeEnemySpatialMode",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "空間評価方式"
+                },
+                {
+                    "name": "results",
+                    "type": "List<MazeEnemySpatialEvaluation>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "評価結果の格納先"
+                },
+                {
+                    "name": "minDistance",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": "1",
+                    "description": "最小移動距離"
+                },
+                {
+                    "name": "maxDistance",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": "int.MaxValue",
+                    "description": "最大移動距離"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された距離範囲の評価結果を取得する。",
+            "returns": "取得した評価結果の件数",
+            "remarks": "格納先の一覧は最初に初期化する。 評価結果はグリッドの列挙順で格納する。 評価値による並べ替えは行わない。",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "格納先が指定されていない場合。"
+                }
+            ]
+        },
+        {
+            "name": "Dispose",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Dispose()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "空間評価システムを破棄する。",
+            "returns": "",
+            "remarks": "コンテキストや縄張り評価システムは破棄しない。 複数回呼び出しても安全に処理する。",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemySpatialEvaluator",
+            "fullName": "MazeEnemySpatialEvaluator",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "敵AIの探索地点や巡回地点に対する 空間評価と移動先の選定を行う。",
+            "remarks": "移動距離、訪問記憶、縄張り、行動傾向を使用する。 実際の経路探索や移動制御は行わない。 Unityのメインスレッドで使用することを想定する。",
+            "attributes": [],
+            "declaration": "public sealed class MazeEnemySpatialEvaluator : IDisposable",
+            "inheritance": [
+                "IDisposable"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "ReferenceDistance",
+                    "kind": "constant",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "public const float ReferenceDistance = 5f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "5f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "距離評価に使用する基準距離。 単位はセル数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "5f",
+                    "inspector": null
+                },
+                {
+                    "name": "ScoreTolerance",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const float ScoreTolerance = 0.000001f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.000001f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "評価値の同点判定に使用する許容誤差。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "0.000001f",
+                    "inspector": null
+                },
+                {
+                    "name": "context",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly MazeEnemyContext context",
+                    "returnType": "",
+                    "valueType": "MazeEnemyContext",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "評価対象の敵AIコンテキスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "territory",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly MazeEnemyTerritory territory",
+                    "returnType": "",
+                    "valueType": "MazeEnemyTerritory",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "縄張り評価システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "map",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly GridMap<MazeCell> map",
+                    "returnType": "",
+                    "valueType": "GridMap<MazeCell>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "評価対象のステージグリッド。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "distanceMap",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly GridDistanceMap<MazeCell> distanceMap",
+                    "returnType": "",
+                    "valueType": "GridDistanceMap<MazeCell>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "自身から各セルへの最短移動距離マップ。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "cachedOrigin",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private Vector2Int cachedOrigin",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "最後に距離計算を試みた起点。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "isDirty",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isDirty = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "距離マップの再計算が必要であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "true",
+                    "inspector": null
+                },
+                {
+                    "name": "isDisposed",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isDisposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "破棄済みであるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "recalculationCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private long recalculationCount",
+                    "returnType": "",
+                    "valueType": "long",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "距離マップの再計算回数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "lastCandidateCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int lastCandidateCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "最後の候補選定で評価したセル数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Context",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyContext Context => context",
+                    "returnType": "",
+                    "valueType": "MazeEnemyContext",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "評価対象の敵AIコンテキスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Territory",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyTerritory Territory => territory",
+                    "returnType": "",
+                    "valueType": "MazeEnemyTerritory",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "使用する縄張り評価システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Origin",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int Origin =>\r\n            IsValid\r\n                ? context.IsTraversing\r\n                    ? context.TargetCell\r\n                    : context.CurrentCell\r\n                : default",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の距離計算起点。",
+                    "returns": "",
+                    "remarks": "移動途中の場合は次の到達予定セルを使用する。 無効な状態では既定値を返す。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsValid",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsValid =>\r\n            !isDisposed &&\r\n            context.IsValid &&\r\n            territory.IsValid",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "空間評価を利用可能な状態であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsDirty",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsDirty =>\r\n            IsValid &&\r\n            (isDirty || cachedOrigin != Origin)",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "距離マップの再計算が必要であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsDisposed",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsDisposed => isDisposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "破棄済みであるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RecalculationCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public long RecalculationCount =>\r\n            recalculationCount",
+                    "returnType": "",
+                    "valueType": "long",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "距離マップの再計算回数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "LastCandidateCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int LastCandidateCount =>\r\n            lastCandidateCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "最後の候補選定で評価したセル数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MazeEnemySpatialEvaluator",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemySpatialEvaluator(\r\n            MazeEnemyContext context,\r\n            MazeEnemyTerritory territory)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "MazeEnemyContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "敵AIコンテキスト"
+                        },
+                        {
+                            "name": "territory",
+                            "type": "MazeEnemyTerritory",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "縄張り評価システム"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "空間評価システムを生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "必須の引数が指定されていない場合。"
+                        },
+                        {
+                            "name": "ArgumentException",
+                            "description": "引数が無効、または異なる敵の情報である場合。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Refresh",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool Refresh()",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "必要に応じて距離マップを更新する。",
+                    "returns": "有効な距離マップを利用できる場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Invalidate",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Invalidate()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "距離マップを無効化する。 次回の評価要求時に再計算する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetDistance",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int GetDistance(Vector2Int position)",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象のセル座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "起点から指定セルへの最短移動距離を取得する。",
+                    "returns": "最短移動距離。 到達不可能または無効な場合は-1",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryEvaluate",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryEvaluate(\r\n            Vector2Int position,\r\n            MazeEnemySpatialMode mode,\r\n            out MazeEnemySpatialEvaluation evaluation)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価対象のセル座標"
+                        },
+                        {
+                            "name": "mode",
+                            "type": "MazeEnemySpatialMode",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "空間評価方式"
+                        },
+                        {
+                            "name": "evaluation",
+                            "type": "MazeEnemySpatialEvaluation",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "空間評価結果"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたセルに対する空間評価を行う。",
+                    "returns": "有効な評価結果を取得できた場合はtrue",
+                    "remarks": "起点自身は移動先候補として評価しない。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TrySelectBestPosition",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TrySelectBestPosition(\r\n            MazeEnemySpatialMode mode,\r\n            out MazeEnemySpatialEvaluation evaluation,\r\n            int minDistance = 1,\r\n            int maxDistance = int.MaxValue)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "mode",
+                            "type": "MazeEnemySpatialMode",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "空間評価方式"
+                        },
+                        {
+                            "name": "evaluation",
+                            "type": "MazeEnemySpatialEvaluation",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "最適な候補の評価結果"
+                        },
+                        {
+                            "name": "minDistance",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": "1",
+                            "description": "最小移動距離"
+                        },
+                        {
+                            "name": "maxDistance",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": "int.MaxValue",
+                            "description": "最大移動距離"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された距離範囲から最適な移動先を選定する。",
+                    "returns": "有効な移動先を選定できた場合はtrue",
+                    "remarks": "同点の場合は移動距離が短い候補を優先する。 距離も同じ場合はグリッドの列挙順を使用する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetEvaluations",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int GetEvaluations(\r\n            MazeEnemySpatialMode mode,\r\n            List<MazeEnemySpatialEvaluation> results,\r\n            int minDistance = 1,\r\n            int maxDistance = int.MaxValue)",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "mode",
+                            "type": "MazeEnemySpatialMode",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "空間評価方式"
+                        },
+                        {
+                            "name": "results",
+                            "type": "List<MazeEnemySpatialEvaluation>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価結果の格納先"
+                        },
+                        {
+                            "name": "minDistance",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": "1",
+                            "description": "最小移動距離"
+                        },
+                        {
+                            "name": "maxDistance",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": "int.MaxValue",
+                            "description": "最大移動距離"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された距離範囲の評価結果を取得する。",
+                    "returns": "取得した評価結果の件数",
+                    "remarks": "格納先の一覧は最初に初期化する。 評価結果はグリッドの列挙順で格納する。 評価値による並べ替えは行わない。",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "格納先が指定されていない場合。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryEvaluateInternal",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool TryEvaluateInternal(\r\n            Vector2Int position,\r\n            int distance,\r\n            MazeEnemySpatialMode mode,\r\n            out MazeEnemySpatialEvaluation evaluation)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価対象の座標"
+                        },
+                        {
+                            "name": "distance",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "起点からの最短移動距離"
+                        },
+                        {
+                            "name": "mode",
+                            "type": "MazeEnemySpatialMode",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "空間評価方式"
+                        },
+                        {
+                            "name": "evaluation",
+                            "type": "MazeEnemySpatialEvaluation",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "空間評価結果"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "計算済みの距離を使用して空間評価を行う。",
+                    "returns": "評価に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CanEvaluateRange",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool CanEvaluateRange(\r\n            MazeEnemySpatialMode mode,\r\n            int minDistance,\r\n            int maxDistance)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "mode",
+                            "type": "MazeEnemySpatialMode",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "空間評価方式"
+                        },
+                        {
+                            "name": "minDistance",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "最小移動距離"
+                        },
+                        {
+                            "name": "maxDistance",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "最大移動距離"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された評価方式と距離範囲が利用可能か確認する。",
+                    "returns": "評価可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsSupportedMode",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static bool IsSupportedMode(\r\n            MazeEnemySpatialMode mode)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "mode",
+                            "type": "MazeEnemySpatialMode",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "空間評価方式"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "対応する空間評価方式であるか確認する。",
+                    "returns": "対応する評価方式の場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsBetterCandidate",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static bool IsBetterCandidate(\r\n            MazeEnemySpatialEvaluation candidate,\r\n            MazeEnemySpatialEvaluation currentBest)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "candidate",
+                            "type": "MazeEnemySpatialEvaluation",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "比較対象の候補"
+                        },
+                        {
+                            "name": "currentBest",
+                            "type": "MazeEnemySpatialEvaluation",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在の最良候補"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "候補が現在の最良候補より適切であるか確認する。",
+                    "returns": "比較対象の方が適切な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HandleCellChanged",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void HandleCellChanged(\r\n            Vector2Int position,\r\n            MazeCell previousCell,\r\n            MazeCell newCell)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更されたセル座標"
+                        },
+                        {
+                            "name": "previousCell",
+                            "type": "MazeCell",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更前のセル情報"
+                        },
+                        {
+                            "name": "newCell",
+                            "type": "MazeCell",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更後のセル情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "グリッドのセル変更を処理する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Dispose",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Dispose()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "空間評価システムを破棄する。",
+                    "returns": "",
+                    "remarks": "コンテキストや縄張り評価システムは破棄しない。 複数回呼び出しても安全に処理する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 22
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing Framework.Grid;\r\nusing Framework.Pathfinding;\r\nusing Game.AI.Core;\r\nusing Game.AI.Parameters;\r\nusing Game.Map;\r\nusing UnityEngine;\r\n\r\nnamespace Game.AI.Spatial\r\n{\r\n    /// <summary>\r\n    /// 敵AIの探索地点や巡回地点に対する\r\n    /// 空間評価と移動先の選定を行う。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// 移動距離、訪問記憶、縄張り、行動傾向を使用する。\r\n    /// 実際の経路探索や移動制御は行わない。\r\n    /// Unityのメインスレッドで使用することを想定する。\r\n    /// </remarks>\r\n    public sealed class MazeEnemySpatialEvaluator : IDisposable\r\n    {\r\n        /// <summary>\r\n        /// 距離評価に使用する基準距離。\r\n        /// 単位はセル数。\r\n        /// </summary>\r\n        public const float ReferenceDistance = 5f;\r\n\r\n        /// <summary>\r\n        /// 評価値の同点判定に使用する許容誤差。\r\n        /// </summary>\r\n        private const float ScoreTolerance = 0.000001f;\r\n\r\n        /// <summary>\r\n        /// 評価対象の敵AIコンテキスト。\r\n        /// </summary>\r\n        private readonly MazeEnemyContext context;\r\n\r\n        /// <summary>\r\n        /// 縄張り評価システム。\r\n        /// </summary>\r\n        private readonly MazeEnemyTerritory territory;\r\n\r\n        /// <summary>\r\n        /// 評価対象のステージグリッド。\r\n        /// </summary>\r\n        private readonly GridMap<MazeCell> map;\r\n\r\n        /// <summary>\r\n        /// 自身から各セルへの最短移動距離マップ。\r\n        /// </summary>\r\n        private readonly GridDistanceMap<MazeCell> distanceMap;\r\n\r\n        /// <summary>\r\n        /// 最後に距離計算を試みた起点。\r\n        /// </summary>\r\n        private Vector2Int cachedOrigin;\r\n\r\n        /// <summary>\r\n        /// 距離マップの再計算が必要であるか。\r\n        /// </summary>\r\n        private bool isDirty = true;\r\n\r\n        /// <summary>\r\n        /// 破棄済みであるか。\r\n        /// </summary>\r\n        private bool isDisposed;\r\n\r\n        /// <summary>\r\n        /// 距離マップの再計算回数。\r\n        /// </summary>\r\n        private long recalculationCount;\r\n\r\n        /// <summary>\r\n        /// 最後の候補選定で評価したセル数。\r\n        /// </summary>\r\n        private int lastCandidateCount;\r\n\r\n        /// <summary>\r\n        /// 評価対象の敵AIコンテキスト。\r\n        /// </summary>\r\n        public MazeEnemyContext Context => context;\r\n\r\n        /// <summary>\r\n        /// 使用する縄張り評価システム。\r\n        /// </summary>\r\n        public MazeEnemyTerritory Territory => territory;\r\n\r\n        /// <summary>\r\n        /// 現在の距離計算起点。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// 移動途中の場合は次の到達予定セルを使用する。\r\n        /// 無効な状態では既定値を返す。\r\n        /// </remarks>\r\n        public Vector2Int Origin =>\r\n            IsValid\r\n                ? context.IsTraversing\r\n                    ? context.TargetCell\r\n                    : context.CurrentCell\r\n                : default;\r\n\r\n        /// <summary>\r\n        /// 空間評価を利用可能な状態であるか。\r\n        /// </summary>\r\n        public bool IsValid =>\r\n            !isDisposed &&\r\n            context.IsValid &&\r\n            territory.IsValid;\r\n\r\n        /// <summary>\r\n        /// 距離マップの再計算が必要であるか。\r\n        /// </summary>\r\n        public bool IsDirty =>\r\n            IsValid &&\r\n            (isDirty || cachedOrigin != Origin);\r\n\r\n        /// <summary>\r\n        /// 破棄済みであるか。\r\n        /// </summary>\r\n        public bool IsDisposed => isDisposed;\r\n\r\n        /// <summary>\r\n        /// 距離マップの再計算回数。\r\n        /// </summary>\r\n        public long RecalculationCount =>\r\n            recalculationCount;\r\n\r\n        /// <summary>\r\n        /// 最後の候補選定で評価したセル数。\r\n        /// </summary>\r\n        public int LastCandidateCount =>\r\n            lastCandidateCount;\r\n\r\n        /// <summary>\r\n        /// 空間評価システムを生成する。\r\n        /// </summary>\r\n        /// <param name=\"context\">敵AIコンテキスト</param>\r\n        /// <param name=\"territory\">縄張り評価システム</param>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 必須の引数が指定されていない場合。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentException\">\r\n        /// 引数が無効、または異なる敵の情報である場合。\r\n        /// </exception>\r\n        public MazeEnemySpatialEvaluator(\r\n            MazeEnemyContext context,\r\n            MazeEnemyTerritory territory)\r\n        {\r\n            if (context == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(context));\r\n            }\r\n\r\n            if (territory == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(territory));\r\n            }\r\n\r\n            if (!context.IsValid)\r\n            {\r\n                throw new ArgumentException(\r\n                    \"無効な敵AIコンテキストです。\",\r\n                    nameof(context));\r\n            }\r\n\r\n            if (!territory.IsValid ||\r\n                !ReferenceEquals(\r\n                    territory.Context,\r\n                    context))\r\n            {\r\n                throw new ArgumentException(\r\n                    \"縄張り評価システムが無効、\" +\r\n                    \"またはコンテキストが一致していません。\",\r\n                    nameof(territory));\r\n            }\r\n\r\n            this.context = context;\r\n            this.territory = territory;\r\n\r\n            map = context.Map;\r\n\r\n            distanceMap = new GridDistanceMap<MazeCell>(\r\n                map,\r\n                context.IsWalkable);\r\n\r\n            map.CellChanged += HandleCellChanged;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 必要に応じて距離マップを更新する。\r\n        /// </summary>\r\n        /// <returns>\r\n        /// 有効な距離マップを利用できる場合はtrue\r\n        /// </returns>\r\n        public bool Refresh()\r\n        {\r\n            if (!IsValid)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (!IsDirty)\r\n            {\r\n                return distanceMap.IsCalculated;\r\n            }\r\n\r\n            Vector2Int origin = Origin;\r\n\r\n            if (recalculationCount < long.MaxValue)\r\n            {\r\n                recalculationCount++;\r\n            }\r\n\r\n            // 計算例外が発生した場合は無効状態を維持する。\r\n            isDirty = true;\r\n\r\n            bool calculated =\r\n                distanceMap.Calculate(origin);\r\n\r\n            cachedOrigin = origin;\r\n\r\n            isDirty = false;\r\n\r\n            return calculated;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 距離マップを無効化する。\r\n        /// 次回の評価要求時に再計算する。\r\n        /// </summary>\r\n        public void Invalidate()\r\n        {\r\n            if (IsValid)\r\n            {\r\n                isDirty = true;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 起点から指定セルへの最短移動距離を取得する。\r\n        /// </summary>\r\n        /// <param name=\"position\">対象のセル座標</param>\r\n        /// <returns>\r\n        /// 最短移動距離。\r\n        /// 到達不可能または無効な場合は-1\r\n        /// </returns>\r\n        public int GetDistance(Vector2Int position)\r\n        {\r\n            if (!IsValid ||\r\n                !map.IsInside(position) ||\r\n                !Refresh())\r\n            {\r\n                return -1;\r\n            }\r\n\r\n            return distanceMap.GetDistance(position);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたセルに対する空間評価を行う。\r\n        /// </summary>\r\n        /// <param name=\"position\">評価対象のセル座標</param>\r\n        /// <param name=\"mode\">空間評価方式</param>\r\n        /// <param name=\"evaluation\">空間評価結果</param>\r\n        /// <returns>\r\n        /// 有効な評価結果を取得できた場合はtrue\r\n        /// </returns>\r\n        /// <remarks>\r\n        /// 起点自身は移動先候補として評価しない。\r\n        /// </remarks>\r\n        public bool TryEvaluate(\r\n            Vector2Int position,\r\n            MazeEnemySpatialMode mode,\r\n            out MazeEnemySpatialEvaluation evaluation)\r\n        {\r\n            evaluation = default;\r\n\r\n            if (!IsSupportedMode(mode) ||\r\n                !IsValid ||\r\n                !map.IsInside(position) ||\r\n                !Refresh())\r\n            {\r\n                return false;\r\n            }\r\n\r\n            int distance =\r\n                distanceMap.GetDistance(position);\r\n\r\n            return TryEvaluateInternal(\r\n                position,\r\n                distance,\r\n                mode,\r\n                out evaluation);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された距離範囲から最適な移動先を選定する。\r\n        /// </summary>\r\n        /// <param name=\"mode\">空間評価方式</param>\r\n        /// <param name=\"evaluation\">最適な候補の評価結果</param>\r\n        /// <param name=\"minDistance\">最小移動距離</param>\r\n        /// <param name=\"maxDistance\">最大移動距離</param>\r\n        /// <returns>\r\n        /// 有効な移動先を選定できた場合はtrue\r\n        /// </returns>\r\n        /// <remarks>\r\n        /// 同点の場合は移動距離が短い候補を優先する。\r\n        /// 距離も同じ場合はグリッドの列挙順を使用する。\r\n        /// </remarks>\r\n        public bool TrySelectBestPosition(\r\n            MazeEnemySpatialMode mode,\r\n            out MazeEnemySpatialEvaluation evaluation,\r\n            int minDistance = 1,\r\n            int maxDistance = int.MaxValue)\r\n        {\r\n            evaluation = default;\r\n\r\n            lastCandidateCount = 0;\r\n\r\n            if (!CanEvaluateRange(\r\n                mode,\r\n                minDistance,\r\n                maxDistance))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            bool found = false;\r\n\r\n            // 一覧を生成せず、最良候補のみを保持する。\r\n            foreach (Vector2Int position in\r\n                distanceMap.GetPositionsWithinDistance(\r\n                    maxDistance))\r\n            {\r\n                int distance =\r\n                    distanceMap.GetDistance(position);\r\n\r\n                if (distance < minDistance)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                if (!TryEvaluateInternal(\r\n                    position,\r\n                    distance,\r\n                    mode,\r\n                    out var candidate))\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                lastCandidateCount++;\r\n\r\n                if (!found ||\r\n                    IsBetterCandidate(\r\n                        candidate,\r\n                        evaluation))\r\n                {\r\n                    evaluation = candidate;\r\n\r\n                    found = true;\r\n                }\r\n            }\r\n\r\n            return found;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された距離範囲の評価結果を取得する。\r\n        /// </summary>\r\n        /// <param name=\"mode\">空間評価方式</param>\r\n        /// <param name=\"results\">評価結果の格納先</param>\r\n        /// <param name=\"minDistance\">最小移動距離</param>\r\n        /// <param name=\"maxDistance\">最大移動距離</param>\r\n        /// <returns>取得した評価結果の件数</returns>\r\n        /// <remarks>\r\n        /// 格納先の一覧は最初に初期化する。\r\n        /// 評価結果はグリッドの列挙順で格納する。\r\n        /// 評価値による並べ替えは行わない。\r\n        /// </remarks>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 格納先が指定されていない場合。\r\n        /// </exception>\r\n        public int GetEvaluations(\r\n            MazeEnemySpatialMode mode,\r\n            List<MazeEnemySpatialEvaluation> results,\r\n            int minDistance = 1,\r\n            int maxDistance = int.MaxValue)\r\n        {\r\n            if (results == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(results));\r\n            }\r\n\r\n            results.Clear();\r\n\r\n            lastCandidateCount = 0;\r\n\r\n            if (!CanEvaluateRange(\r\n                mode,\r\n                minDistance,\r\n                maxDistance))\r\n            {\r\n                return 0;\r\n            }\r\n\r\n            foreach (Vector2Int position in\r\n                distanceMap.GetPositionsWithinDistance(\r\n                    maxDistance))\r\n            {\r\n                int distance =\r\n                    distanceMap.GetDistance(position);\r\n\r\n                if (distance < minDistance)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                if (TryEvaluateInternal(\r\n                    position,\r\n                    distance,\r\n                    mode,\r\n                    out var evaluation))\r\n                {\r\n                    results.Add(evaluation);\r\n                }\r\n            }\r\n\r\n            lastCandidateCount = results.Count;\r\n\r\n            return results.Count;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 計算済みの距離を使用して空間評価を行う。\r\n        /// </summary>\r\n        /// <param name=\"position\">評価対象の座標</param>\r\n        /// <param name=\"distance\">起点からの最短移動距離</param>\r\n        /// <param name=\"mode\">空間評価方式</param>\r\n        /// <param name=\"evaluation\">空間評価結果</param>\r\n        /// <returns>評価に成功した場合はtrue</returns>\r\n        private bool TryEvaluateInternal(\r\n            Vector2Int position,\r\n            int distance,\r\n            MazeEnemySpatialMode mode,\r\n            out MazeEnemySpatialEvaluation evaluation)\r\n        {\r\n            evaluation = default;\r\n\r\n            // 到達不可能なセルと起点自身を除外する。\r\n            if (distance <= 0)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 自身の距離マップから到達可能性は確認済み。\r\n            // 縄張り中心が無効な場合は縄張り評価を適用しない。\r\n            bool hasTerritoryEvaluation =\r\n                territory.TryEvaluate(\r\n                    position,\r\n                    out var territoryEvaluation);\r\n\r\n            float territoryMultiplier =\r\n                hasTerritoryEvaluation\r\n                    ? territoryEvaluation.PreferenceMultiplier\r\n                    : 1f;\r\n\r\n            float unvisitedScore = Mathf.Clamp01(\r\n                context.GetUnvisitedScore(position));\r\n\r\n            float distanceScore =\r\n                1f / (1f + distance / ReferenceDistance);\r\n\r\n            float preference;\r\n            float score;\r\n\r\n            switch (mode)\r\n            {\r\n                case MazeEnemySpatialMode.Exploration:\r\n\r\n                    preference = context.GetParameterValue(\r\n                        MazeEnemyParameter.Exploration);\r\n\r\n                    // 探索傾向に応じて未訪問度を重視する。\r\n                    float explorationScore =\r\n                        Mathf.Lerp(\r\n                            1f,\r\n                            unvisitedScore,\r\n                            preference);\r\n\r\n                    // 遠い地点への探索も許容する。\r\n                    float explorationDistanceScore =\r\n                        Mathf.Lerp(\r\n                            0.5f,\r\n                            1f,\r\n                            distanceScore);\r\n\r\n                    score =\r\n                        explorationScore *\r\n                        explorationDistanceScore *\r\n                        territoryMultiplier;\r\n\r\n                    break;\r\n\r\n                case MazeEnemySpatialMode.Patrol:\r\n\r\n                    preference = context.GetParameterValue(\r\n                        MazeEnemyParameter.PatrolPreference);\r\n\r\n                    // 訪問済みの地点にも一定の評価を残す。\r\n                    float patrolMemoryScore =\r\n                        Mathf.Lerp(\r\n                            0.25f,\r\n                            1f,\r\n                            unvisitedScore);\r\n\r\n                    // 巡回傾向に応じて近い地点を重視する。\r\n                    float patrolDistanceScore =\r\n                        Mathf.Lerp(\r\n                            1f,\r\n                            distanceScore,\r\n                            preference);\r\n\r\n                    score =\r\n                        patrolMemoryScore *\r\n                        patrolDistanceScore *\r\n                        territoryMultiplier;\r\n\r\n                    break;\r\n\r\n                default:\r\n\r\n                    return false;\r\n            }\r\n\r\n            evaluation = new MazeEnemySpatialEvaluation(\r\n                position,\r\n                cachedOrigin,\r\n                mode,\r\n                distance,\r\n                distanceScore,\r\n                unvisitedScore,\r\n                preference,\r\n                territoryEvaluation,\r\n                territoryMultiplier,\r\n                Mathf.Clamp01(score));\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された評価方式と距離範囲が利用可能か確認する。\r\n        /// </summary>\r\n        /// <param name=\"mode\">空間評価方式</param>\r\n        /// <param name=\"minDistance\">最小移動距離</param>\r\n        /// <param name=\"maxDistance\">最大移動距離</param>\r\n        /// <returns>評価可能な場合はtrue</returns>\r\n        private bool CanEvaluateRange(\r\n            MazeEnemySpatialMode mode,\r\n            int minDistance,\r\n            int maxDistance)\r\n        {\r\n            if (!IsSupportedMode(mode) ||\r\n                minDistance < 1 ||\r\n                maxDistance < minDistance)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return Refresh();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 対応する空間評価方式であるか確認する。\r\n        /// </summary>\r\n        /// <param name=\"mode\">空間評価方式</param>\r\n        /// <returns>対応する評価方式の場合はtrue</returns>\r\n        private static bool IsSupportedMode(\r\n            MazeEnemySpatialMode mode)\r\n        {\r\n            return mode == MazeEnemySpatialMode.Exploration ||\r\n                mode == MazeEnemySpatialMode.Patrol;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 候補が現在の最良候補より適切であるか確認する。\r\n        /// </summary>\r\n        /// <param name=\"candidate\">比較対象の候補</param>\r\n        /// <param name=\"currentBest\">現在の最良候補</param>\r\n        /// <returns>比較対象の方が適切な場合はtrue</returns>\r\n        private static bool IsBetterCandidate(\r\n            MazeEnemySpatialEvaluation candidate,\r\n            MazeEnemySpatialEvaluation currentBest)\r\n        {\r\n            float difference =\r\n                candidate.Score - currentBest.Score;\r\n\r\n            if (difference > ScoreTolerance)\r\n            {\r\n                return true;\r\n            }\r\n\r\n            if (Mathf.Abs(difference) <= ScoreTolerance)\r\n            {\r\n                return candidate.Distance <\r\n                    currentBest.Distance;\r\n            }\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// グリッドのセル変更を処理する。\r\n        /// </summary>\r\n        /// <param name=\"position\">変更されたセル座標</param>\r\n        /// <param name=\"previousCell\">変更前のセル情報</param>\r\n        /// <param name=\"newCell\">変更後のセル情報</param>\r\n        private void HandleCellChanged(\r\n            Vector2Int position,\r\n            MazeCell previousCell,\r\n            MazeCell newCell)\r\n        {\r\n            if (isDisposed)\r\n            {\r\n                return;\r\n            }\r\n\r\n            // 通行可能性が変化した場合のみ無効化する。\r\n            if (previousCell.IsWalkable !=\r\n                newCell.IsWalkable)\r\n            {\r\n                isDirty = true;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 空間評価システムを破棄する。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// コンテキストや縄張り評価システムは破棄しない。\r\n        /// 複数回呼び出しても安全に処理する。\r\n        /// </remarks>\r\n        public void Dispose()\r\n        {\r\n            if (isDisposed)\r\n            {\r\n                return;\r\n            }\r\n\r\n            isDisposed = true;\r\n\r\n            map.CellChanged -= HandleCellChanged;\r\n\r\n            distanceMap.Clear();\r\n\r\n            isDirty = false;\r\n\r\n            lastCandidateCount = 0;\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.633Z"
+}

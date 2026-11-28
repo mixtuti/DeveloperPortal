@@ -1,0 +1,785 @@
+{
+    "parserVersion": 3,
+    "id": "Game.Tests.AgentUpdateManagerTest",
+    "name": "AgentUpdateManagerTest",
+    "fileName": "AgentUpdateManagerTest.cs",
+    "namespace": "Game.Tests",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class AgentUpdateManagerTest : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "エージェント更新管理システムの基本機能、 負荷分散および境界条件を検証する。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "Framework.AI.Scheduling",
+        "UnityEngine",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "RunAllTests",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void RunAllTests()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべてのテストを実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "AgentUpdateManagerTest",
+            "fullName": "AgentUpdateManagerTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "エージェント更新管理システムの基本機能、 負荷分散および境界条件を検証する。",
+            "remarks": "",
+            "attributes": [
+                {
+                    "name": "DisallowMultipleComponent",
+                    "arguments": [],
+                    "raw": "DisallowMultipleComponent"
+                }
+            ],
+            "declaration": "public sealed class AgentUpdateManagerTest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "runTestsOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runTestsOnStart = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "開始時にすべてのテストを実行する。"
+                            ],
+                            "raw": "Tooltip(\"開始時にすべてのテストを実行する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Tests On Start",
+                        "type": "bool",
+                        "header": "テスト設定",
+                        "tooltip": "開始時にすべてのテストを実行する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト結果"
+                            ],
+                            "raw": "Header(\"テスト結果\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "成功したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"成功したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Passed Count",
+                        "type": "int",
+                        "header": "テスト結果",
+                        "tooltip": "成功したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "失敗したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"失敗したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Failed Count",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "失敗したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "開始時のテスト実行を制御する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunAllTests",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void RunAllTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべてのテストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "すべてのテストを実行"
+                            ],
+                            "raw": "ContextMenu(\"すべてのテストを実行\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Prepare",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Prepare(\r\n            AgentUpdateManager manager,\r\n            float interval = 0.25f,\r\n            int maxUpdates = 8,\r\n            bool stagger = false)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "manager",
+                            "type": "AgentUpdateManager",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "更新管理システム"
+                        },
+                        {
+                            "name": "interval",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "0.25f",
+                            "description": "標準更新間隔"
+                        },
+                        {
+                            "name": "maxUpdates",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": "8",
+                            "description": "最大実行件数"
+                        },
+                        {
+                            "name": "stagger",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": "false",
+                            "description": "初回更新を分散するか"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト間で登録情報と統計情報を初期化する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestRegistration",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestRegistration(\r\n            AgentUpdateManager manager)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "manager",
+                            "type": "AgentUpdateManager",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "更新管理システム"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "登録および登録解除を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestInterval",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestInterval(\r\n            AgentUpdateManager manager)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "manager",
+                            "type": "AgentUpdateManager",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "更新管理システム"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "更新間隔と経過時間の管理を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestDistribution",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestDistribution(\r\n            AgentUpdateManager manager)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "manager",
+                            "type": "AgentUpdateManager",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "更新管理システム"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "最大実行件数と更新タイミングの分散を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestUpdateRequest",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestUpdateRequest(\r\n            AgentUpdateManager manager)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "manager",
+                            "type": "AgentUpdateManager",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "更新管理システム"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "更新要求と要求の重複防止を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestPause",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestPause(\r\n            AgentUpdateManager manager)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "manager",
+                            "type": "AgentUpdateManager",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "更新管理システム"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "一時停止とエージェントの無効状態を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestRegistrationDuringTick",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestRegistrationDuringTick(\r\n            AgentUpdateManager manager)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "manager",
+                            "type": "AgentUpdateManager",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "更新管理システム"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "更新処理中の登録変更を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestStatistics",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestStatistics(\r\n            AgentUpdateManager manager)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "manager",
+                            "type": "AgentUpdateManager",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "更新管理システム"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "統計情報と更新設定の変更を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestInvalidInput",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestInvalidInput(\r\n            AgentUpdateManager manager)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "manager",
+                            "type": "AgentUpdateManager",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "更新管理システム"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "不正な引数が拒否されることを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Throws",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool Throws<TException>(Action action)\r\n            where TException : Exception",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証対象の処理"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "TException",
+                            "description": "期待する例外型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定された処理が期待する例外を発生させるか検証する。",
+                    "returns": "期待する例外が発生した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(bool passed, string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "passed",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テストの成功判定"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個別のテスト結果を出力し、結果を集計する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [
+                {
+                    "name": "TestAgent",
+                    "fullName": "AgentUpdateManagerTest.TestAgent",
+                    "kind": "class",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "sealed"
+                    ],
+                    "summary": "テスト用の仮想エージェント。",
+                    "remarks": "",
+                    "attributes": [],
+                    "declaration": "private sealed class TestAgent : IAgentTickable",
+                    "inheritance": [
+                        "IAgentTickable"
+                    ],
+                    "typeParameters": [],
+                    "members": [
+                        {
+                            "name": "IsTickEnabled",
+                            "kind": "property",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public bool IsTickEnabled",
+                            "returnType": "",
+                            "valueType": "bool",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [
+                                "get",
+                                "set"
+                            ],
+                            "summary": "更新可能かどうか。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "true",
+                            "kind": "field",
+                            "accessibility": "private",
+                            "modifiers": [],
+                            "signature": "= true",
+                            "returnType": "",
+                            "valueType": "=",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [],
+                            "summary": "",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "TickCount",
+                            "kind": "property",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public int TickCount",
+                            "returnType": "",
+                            "valueType": "int",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [
+                                "get",
+                                "private set"
+                            ],
+                            "summary": "更新された回数。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "LastDeltaTime",
+                            "kind": "property",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public float LastDeltaTime",
+                            "returnType": "",
+                            "valueType": "float",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [
+                                "get",
+                                "private set"
+                            ],
+                            "summary": "最後に受け取った経過時間。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "OnTick",
+                            "kind": "property",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public Action OnTick",
+                            "returnType": "",
+                            "valueType": "Action",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [
+                                "get",
+                                "set"
+                            ],
+                            "summary": "更新時に追加で実行するテスト処理。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "Tick",
+                            "kind": "method",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public void Tick(float deltaTime)",
+                            "returnType": "void",
+                            "valueType": "",
+                            "value": "",
+                            "parameters": [
+                                {
+                                    "name": "deltaTime",
+                                    "type": "float",
+                                    "modifier": "",
+                                    "defaultValue": null,
+                                    "description": "経過時間。単位は秒"
+                                }
+                            ],
+                            "typeParameters": [],
+                            "accessors": [],
+                            "summary": "更新回数と経過時間を記録する。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        }
+                    ],
+                    "nestedTypes": [],
+                    "enumValues": [],
+                    "line": 32
+                }
+            ],
+            "enumValues": [],
+            "line": 13
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing Framework.AI.Scheduling;\r\nusing UnityEngine;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// エージェント更新管理システムの基本機能、\r\n    /// 負荷分散および境界条件を検証する。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    public sealed class AgentUpdateManagerTest : MonoBehaviour\r\n    {\r\n        [Header(\"テスト設定\")]\r\n        [SerializeField]\r\n        [Tooltip(\"開始時にすべてのテストを実行する。\")]\r\n        private bool runTestsOnStart = true;\r\n\r\n        [Header(\"テスト結果\")]\r\n        [SerializeField]\r\n        [Tooltip(\"成功したテスト件数。\")]\r\n        private int passedCount;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"失敗したテスト件数。\")]\r\n        private int failedCount;\r\n\r\n        /// <summary>\r\n        /// テスト用の仮想エージェント。\r\n        /// </summary>\r\n        private sealed class TestAgent : IAgentTickable\r\n        {\r\n            /// <summary>\r\n            /// 更新可能かどうか。\r\n            /// </summary>\r\n            public bool IsTickEnabled { get; set; } = true;\r\n\r\n            /// <summary>\r\n            /// 更新された回数。\r\n            /// </summary>\r\n            public int TickCount { get; private set; }\r\n\r\n            /// <summary>\r\n            /// 最後に受け取った経過時間。\r\n            /// </summary>\r\n            public float LastDeltaTime { get; private set; }\r\n\r\n            /// <summary>\r\n            /// 更新時に追加で実行するテスト処理。\r\n            /// </summary>\r\n            public Action OnTick { get; set; }\r\n\r\n            /// <summary>\r\n            /// 更新回数と経過時間を記録する。\r\n            /// </summary>\r\n            /// <param name=\"deltaTime\">経過時間。単位は秒</param>\r\n            public void Tick(float deltaTime)\r\n            {\r\n                TickCount++;\r\n\r\n                LastDeltaTime = deltaTime;\r\n\r\n                OnTick?.Invoke();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 開始時のテスト実行を制御する。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            if (runTestsOnStart)\r\n            {\r\n                RunAllTests();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべてのテストを実行する。\r\n        /// </summary>\r\n        [ContextMenu(\"すべてのテストを実行\")]\r\n        public void RunAllTests()\r\n        {\r\n            if (!Application.isPlaying)\r\n            {\r\n                Debug.LogWarning(\r\n                    \"再生モードでテストを実行してください。\",\r\n                    this);\r\n\r\n                return;\r\n            }\r\n\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n            // テスト専用の一時オブジェクトを生成する。\r\n            GameObject testObject =\r\n                new GameObject(\"AgentUpdateManager_Test\");\r\n\r\n            var manager =\r\n                testObject.AddComponent<AgentUpdateManager>();\r\n\r\n            manager.AutoUpdate = false;\r\n\r\n            try\r\n            {\r\n                TestRegistration(manager);\r\n                TestInterval(manager);\r\n                TestDistribution(manager);\r\n                TestUpdateRequest(manager);\r\n                TestPause(manager);\r\n                TestRegistrationDuringTick(manager);\r\n                TestStatistics(manager);\r\n                TestInvalidInput(manager);\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogException(exception, this);\r\n            }\r\n            finally\r\n            {\r\n                manager.Clear();\r\n\r\n                testObject.SetActive(false);\r\n\r\n                Destroy(testObject);\r\n            }\r\n\r\n            Debug.Log(\r\n                $\"【AgentUpdateManager テスト結果】\\n\" +\r\n                $\"成功：{passedCount}\\n\" +\r\n                $\"失敗：{failedCount}\\n\" +\r\n                (failedCount == 0\r\n                    ? \"すべてのテストに成功しました。\"\r\n                    : \"失敗したテストを確認してください。\"),\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト間で登録情報と統計情報を初期化する。\r\n        /// </summary>\r\n        /// <param name=\"manager\">更新管理システム</param>\r\n        /// <param name=\"interval\">標準更新間隔</param>\r\n        /// <param name=\"maxUpdates\">最大実行件数</param>\r\n        /// <param name=\"stagger\">初回更新を分散するか</param>\r\n        private void Prepare(\r\n            AgentUpdateManager manager,\r\n            float interval = 0.25f,\r\n            int maxUpdates = 8,\r\n            bool stagger = false)\r\n        {\r\n            manager.Clear();\r\n\r\n            manager.Resume();\r\n\r\n            manager.ResetStatistics();\r\n\r\n            manager.Configure(\r\n                new AgentUpdateSettings(\r\n                    interval,\r\n                    maxUpdates,\r\n                    stagger));\r\n        }\r\n\r\n        /// <summary>\r\n        /// 登録および登録解除を検証する。\r\n        /// </summary>\r\n        /// <param name=\"manager\">更新管理システム</param>\r\n        private void TestRegistration(\r\n            AgentUpdateManager manager)\r\n        {\r\n            Prepare(manager);\r\n\r\n            var agent = new TestAgent();\r\n\r\n            bool emptyPassed =\r\n                manager.RegisteredCount == 0;\r\n            Debug.Assert(emptyPassed, \"初期登録件数\", this);\r\n            Check(emptyPassed, \"初期登録件数\");\r\n\r\n            bool registerPassed =\r\n                manager.TryRegister(agent) &&\r\n                manager.RegisteredCount == 1;\r\n            Debug.Assert(registerPassed, \"エージェントの登録\", this);\r\n            Check(registerPassed, \"エージェントの登録\");\r\n\r\n            bool duplicatePassed =\r\n                !manager.TryRegister(agent) &&\r\n                manager.RegisteredCount == 1;\r\n            Debug.Assert(duplicatePassed, \"重複登録の拒否\", this);\r\n            Check(duplicatePassed, \"重複登録の拒否\");\r\n\r\n            bool containsPassed = manager.Contains(agent);\r\n            Debug.Assert(containsPassed, \"登録状態の検索\", this);\r\n            Check(containsPassed, \"登録状態の検索\");\r\n\r\n            bool removePassed =\r\n                manager.TryUnregister(agent) &&\r\n                !manager.Contains(agent) &&\r\n                !manager.TryUnregister(agent) &&\r\n                manager.RegisteredCount == 0;\r\n            Debug.Assert(removePassed, \"登録解除と再解除\", this);\r\n            Check(removePassed, \"登録解除と再解除\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 更新間隔と経過時間の管理を検証する。\r\n        /// </summary>\r\n        /// <param name=\"manager\">更新管理システム</param>\r\n        private void TestInterval(\r\n            AgentUpdateManager manager)\r\n        {\r\n            Prepare(manager);\r\n\r\n            var agent = new TestAgent();\r\n\r\n            manager.TryRegister(agent);\r\n\r\n            manager.Tick(0.125f);\r\n\r\n            bool waitingPassed = agent.TickCount == 0;\r\n            Debug.Assert(waitingPassed, \"更新予定前の待機\", this);\r\n            Check(waitingPassed, \"更新予定前の待機\");\r\n\r\n            manager.Tick(0.125f);\r\n\r\n            bool intervalPassed = agent.TickCount == 1;\r\n            Debug.Assert(intervalPassed, \"更新予定到達時の実行\", this);\r\n            Check(intervalPassed, \"更新予定到達時の実行\");\r\n\r\n            bool deltaPassed =\r\n                Mathf.Approximately(\r\n                    agent.LastDeltaTime,\r\n                    0.25f);\r\n            Debug.Assert(deltaPassed, \"経過時間の通知\", this);\r\n            Check(deltaPassed, \"経過時間の通知\");\r\n\r\n            manager.Tick(1f);\r\n\r\n            bool longFramePassed =\r\n                agent.TickCount == 2 &&\r\n                Mathf.Approximately(\r\n                    agent.LastDeltaTime,\r\n                    1f);\r\n            Debug.Assert(longFramePassed, \"長時間経過時の単一更新\", this);\r\n            Check(longFramePassed, \"長時間経過時の単一更新\");\r\n\r\n            manager.TrySetInterval(agent, 0.5f);\r\n\r\n            manager.Tick(0.25f);\r\n\r\n            bool waiting = agent.TickCount == 2;\r\n\r\n            manager.Tick(0.25f);\r\n\r\n            bool changedPassed =\r\n                waiting && agent.TickCount == 3;\r\n            Debug.Assert(changedPassed, \"個別更新間隔の変更\", this);\r\n            Check(changedPassed, \"個別更新間隔の変更\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 最大実行件数と更新タイミングの分散を検証する。\r\n        /// </summary>\r\n        /// <param name=\"manager\">更新管理システム</param>\r\n        private void TestDistribution(\r\n            AgentUpdateManager manager)\r\n        {\r\n            Prepare(manager, 0.25f, 2);\r\n\r\n            var agents = new TestAgent[5];\r\n\r\n            for (int i = 0; i < agents.Length; i++)\r\n            {\r\n                agents[i] = new TestAgent();\r\n\r\n                manager.TryRegister(agents[i]);\r\n            }\r\n\r\n            manager.Tick(0.25f);\r\n\r\n            bool budgetPassed =\r\n                manager.LastTickUpdateCount == 2;\r\n            Debug.Assert(budgetPassed, \"最大実行件数の制限\", this);\r\n            Check(budgetPassed, \"最大実行件数の制限\");\r\n\r\n            manager.Tick(0.0625f);\r\n\r\n            bool nextPassed =\r\n                agents[2].TickCount == 1 &&\r\n                agents[3].TickCount == 1;\r\n            Debug.Assert(nextPassed, \"次の個体への更新分散\", this);\r\n            Check(nextPassed, \"次の個体への更新分散\");\r\n\r\n            manager.Tick(0.0625f);\r\n\r\n            bool fairnessPassed =\r\n                agents[4].TickCount == 1;\r\n            Debug.Assert(fairnessPassed, \"後続個体の更新保証\", this);\r\n            Check(fairnessPassed, \"後続個体の更新保証\");\r\n\r\n            bool totalPassed =\r\n                manager.TotalUpdateCount == 5;\r\n            Debug.Assert(totalPassed, \"分散更新の累計件数\", this);\r\n            Check(totalPassed, \"分散更新の累計件数\");\r\n\r\n            Prepare(manager, 1f, 8, true);\r\n\r\n            for (int i = 0; i < 8; i++)\r\n            {\r\n                manager.TryRegister(new TestAgent());\r\n            }\r\n\r\n            manager.Tick(0.5f);\r\n\r\n            bool staggerPassed =\r\n                manager.LastTickUpdateCount > 0 &&\r\n                manager.LastTickUpdateCount < 8;\r\n            Debug.Assert(staggerPassed, \"初回更新タイミングの分散\", this);\r\n            Check(staggerPassed, \"初回更新タイミングの分散\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 更新要求と要求の重複防止を検証する。\r\n        /// </summary>\r\n        /// <param name=\"manager\">更新管理システム</param>\r\n        private void TestUpdateRequest(\r\n            AgentUpdateManager manager)\r\n        {\r\n            Prepare(manager, 1f, 1);\r\n\r\n            var first = new TestAgent();\r\n            var second = new TestAgent();\r\n\r\n            manager.TryRegister(first);\r\n            manager.TryRegister(second);\r\n\r\n            bool requestPassed =\r\n                manager.RequestUpdate(first) &&\r\n                first.TickCount == 0;\r\n            Debug.Assert(requestPassed, \"更新要求の登録\", this);\r\n            Check(requestPassed, \"更新要求の登録\");\r\n\r\n            manager.RequestUpdate(first);\r\n            manager.RequestUpdate(first);\r\n            manager.RequestUpdate(second);\r\n\r\n            manager.Tick(0.125f);\r\n\r\n            bool immediatePassed =\r\n                first.TickCount == 1 &&\r\n                second.TickCount == 0;\r\n            Debug.Assert(immediatePassed, \"要求時の前倒し更新\", this);\r\n            Check(immediatePassed, \"要求時の前倒し更新\");\r\n\r\n            manager.Tick(0.125f);\r\n\r\n            bool limitPassed =\r\n                first.TickCount == 1 &&\r\n                second.TickCount == 1;\r\n            Debug.Assert(limitPassed, \"要求の統合と実行件数制限\", this);\r\n            Check(limitPassed, \"要求の統合と実行件数制限\");\r\n\r\n            bool missingPassed =\r\n                !manager.RequestUpdate(new TestAgent());\r\n            Debug.Assert(missingPassed, \"未登録対象への更新要求拒否\", this);\r\n            Check(missingPassed, \"未登録対象への更新要求拒否\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 一時停止とエージェントの無効状態を検証する。\r\n        /// </summary>\r\n        /// <param name=\"manager\">更新管理システム</param>\r\n        private void TestPause(\r\n            AgentUpdateManager manager)\r\n        {\r\n            Prepare(manager);\r\n\r\n            var agent = new TestAgent();\r\n\r\n            manager.TryRegister(agent);\r\n\r\n            double beforePause = manager.ElapsedTime;\r\n\r\n            manager.Pause();\r\n\r\n            manager.Tick(1f);\r\n\r\n            bool pausePassed =\r\n                agent.TickCount == 0 &&\r\n                manager.IsPaused;\r\n            Debug.Assert(pausePassed, \"一時停止中の更新抑止\", this);\r\n            Check(pausePassed, \"一時停止中の更新抑止\");\r\n\r\n            bool timePassed =\r\n                manager.ElapsedTime == beforePause;\r\n            Debug.Assert(timePassed, \"一時停止中の時間停止\", this);\r\n            Check(timePassed, \"一時停止中の時間停止\");\r\n\r\n            manager.Resume();\r\n\r\n            manager.Tick(0.25f);\r\n\r\n            bool resumePassed =\r\n                agent.TickCount == 1 &&\r\n                !manager.IsPaused;\r\n            Debug.Assert(resumePassed, \"更新処理の再開\", this);\r\n            Check(resumePassed, \"更新処理の再開\");\r\n\r\n            agent.IsTickEnabled = false;\r\n\r\n            manager.Tick(1f);\r\n\r\n            bool disabledPassed =\r\n                agent.TickCount == 1;\r\n            Debug.Assert(disabledPassed, \"無効個体の更新抑止\", this);\r\n            Check(disabledPassed, \"無効個体の更新抑止\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 更新処理中の登録変更を検証する。\r\n        /// </summary>\r\n        /// <param name=\"manager\">更新管理システム</param>\r\n        private void TestRegistrationDuringTick(\r\n            AgentUpdateManager manager)\r\n        {\r\n            Prepare(manager);\r\n\r\n            var first = new TestAgent();\r\n            var second = new TestAgent();\r\n            var third = new TestAgent();\r\n\r\n            first.OnTick = () =>\r\n            {\r\n                manager.TryUnregister(first);\r\n\r\n                manager.TryUnregister(second);\r\n\r\n                manager.TryRegister(third);\r\n            };\r\n\r\n            manager.TryRegister(first);\r\n            manager.TryRegister(second);\r\n\r\n            manager.Tick(0.25f);\r\n\r\n            bool selfPassed =\r\n                first.TickCount == 1 &&\r\n                !manager.Contains(first);\r\n            Debug.Assert(selfPassed, \"更新中の自己登録解除\", this);\r\n            Check(selfPassed, \"更新中の自己登録解除\");\r\n\r\n            bool otherPassed =\r\n                second.TickCount == 0 &&\r\n                !manager.Contains(second);\r\n            Debug.Assert(otherPassed, \"更新中の他個体登録解除\", this);\r\n            Check(otherPassed, \"更新中の他個体登録解除\");\r\n\r\n            bool newPassed =\r\n                third.TickCount == 0 &&\r\n                manager.RegisteredCount == 1 &&\r\n                manager.Contains(third);\r\n            Debug.Assert(newPassed, \"更新中の新規登録\", this);\r\n            Check(newPassed, \"更新中の新規登録\");\r\n\r\n            manager.Tick(0.25f);\r\n\r\n            bool nextPassed =\r\n                third.TickCount == 1;\r\n            Debug.Assert(nextPassed, \"新規登録個体の次回更新\", this);\r\n            Check(nextPassed, \"新規登録個体の次回更新\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 統計情報と更新設定の変更を検証する。\r\n        /// </summary>\r\n        /// <param name=\"manager\">更新管理システム</param>\r\n        private void TestStatistics(\r\n            AgentUpdateManager manager)\r\n        {\r\n            Prepare(manager);\r\n\r\n            var agent = new TestAgent();\r\n\r\n            manager.TryRegister(agent);\r\n\r\n            manager.Tick(0.25f);\r\n            manager.Tick(0.25f);\r\n\r\n            bool statisticsPassed =\r\n                manager.TotalUpdateCount == 2 &&\r\n                manager.LastTickUpdateCount == 1;\r\n            Debug.Assert(statisticsPassed, \"更新統計の記録\", this);\r\n            Check(statisticsPassed, \"更新統計の記録\");\r\n\r\n            manager.ResetStatistics();\r\n\r\n            bool resetPassed =\r\n                manager.TotalUpdateCount == 0 &&\r\n                manager.LastTickUpdateCount == 0 &&\r\n                manager.RegisteredCount == 1;\r\n            Debug.Assert(resetPassed, \"統計情報のみのリセット\", this);\r\n            Check(resetPassed, \"統計情報のみのリセット\");\r\n\r\n            manager.Configure(\r\n                new AgentUpdateSettings(\r\n                    0.5f,\r\n                    4,\r\n                    false));\r\n\r\n            bool settingsPassed =\r\n                manager.Settings.UpdateInterval == 0.5f &&\r\n                manager.Settings.MaxUpdatesPerTick == 4;\r\n            Debug.Assert(settingsPassed, \"更新管理設定の変更\", this);\r\n            Check(settingsPassed, \"更新管理設定の変更\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 不正な引数が拒否されることを検証する。\r\n        /// </summary>\r\n        /// <param name=\"manager\">更新管理システム</param>\r\n        private void TestInvalidInput(\r\n            AgentUpdateManager manager)\r\n        {\r\n            Prepare(manager);\r\n\r\n            bool nullPassed =\r\n                Throws<ArgumentNullException>(() =>\r\n                {\r\n                    manager.TryRegister(null);\r\n                });\r\n            Debug.Assert(nullPassed, \"null個体の登録拒否\", this);\r\n            Check(nullPassed, \"null個体の登録拒否\");\r\n\r\n            bool intervalPassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    manager.TryRegister(\r\n                        new TestAgent(),\r\n                        0f);\r\n                });\r\n            Debug.Assert(intervalPassed, \"不正更新間隔の拒否\", this);\r\n            Check(intervalPassed, \"不正更新間隔の拒否\");\r\n\r\n            bool timePassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    manager.Tick(-1f);\r\n                });\r\n            Debug.Assert(timePassed, \"負の経過時間の拒否\", this);\r\n            Check(timePassed, \"負の経過時間の拒否\");\r\n\r\n            bool settingsPassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    new AgentUpdateSettings(0.25f, 0);\r\n                });\r\n            Debug.Assert(settingsPassed, \"不正実行件数の拒否\", this);\r\n            Check(settingsPassed, \"不正実行件数の拒否\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された処理が期待する例外を発生させるか検証する。\r\n        /// </summary>\r\n        /// <typeparam name=\"TException\">期待する例外型</typeparam>\r\n        /// <param name=\"action\">検証対象の処理</param>\r\n        /// <returns>期待する例外が発生した場合はtrue</returns>\r\n        private bool Throws<TException>(Action action)\r\n            where TException : Exception\r\n        {\r\n            try\r\n            {\r\n                action();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                if (exception.GetType() == typeof(TException))\r\n                {\r\n                    return true;\r\n                }\r\n\r\n                throw;\r\n            }\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個別のテスト結果を出力し、結果を集計する。\r\n        /// </summary>\r\n        /// <param name=\"passed\">テストの成功判定</param>\r\n        /// <param name=\"testName\">テスト名</param>\r\n        private void Check(bool passed, string testName)\r\n        {\r\n            if (passed)\r\n            {\r\n                passedCount++;\r\n\r\n                Debug.Log(\r\n                    $\"<color=#00CC66>【成功】</color> {testName}\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogError(\r\n                    $\"【失敗】{testName}\",\r\n                    this);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.141Z"
+}

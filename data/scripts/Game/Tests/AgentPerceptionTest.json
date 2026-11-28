@@ -1,0 +1,572 @@
+{
+    "parserVersion": 3,
+    "id": "Game.Tests.AgentPerceptionTest",
+    "name": "AgentPerceptionTest",
+    "fileName": "AgentPerceptionTest.cs",
+    "namespace": "Game.Tests",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class AgentPerceptionTest : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "認識情報、視線判定、グリッド視覚センサーを検証する。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "Framework.Grid",
+        "Framework.AI.Perception",
+        "UnityEngine",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "RunAllTests",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void RunAllTests()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべての認識システムのテストを実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "AgentPerceptionTest",
+            "fullName": "AgentPerceptionTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "認識情報、視線判定、グリッド視覚センサーを検証する。",
+            "remarks": "",
+            "attributes": [
+                {
+                    "name": "DisallowMultipleComponent",
+                    "arguments": [],
+                    "raw": "DisallowMultipleComponent"
+                }
+            ],
+            "declaration": "public sealed class AgentPerceptionTest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "runTestsOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runTestsOnStart = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "開始時にすべてのテストを実行する。"
+                            ],
+                            "raw": "Tooltip(\"開始時にすべてのテストを実行する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Tests On Start",
+                        "type": "bool",
+                        "header": "テスト設定",
+                        "tooltip": "開始時にすべてのテストを実行する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト結果"
+                            ],
+                            "raw": "Header(\"テスト結果\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "成功したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"成功したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Passed Count",
+                        "type": "int",
+                        "header": "テスト結果",
+                        "tooltip": "成功したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "失敗したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"失敗したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Failed Count",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "失敗したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "開始時のテスト実行を制御する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunAllTests",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void RunAllTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべての認識システムのテストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "すべてのテストを実行"
+                            ],
+                            "raw": "ContextMenu(\"すべてのテストを実行\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateMap",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private GridMap<bool> CreateMap()",
+                    "returnType": "GridMap<bool>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "遮蔽物のないテスト用グリッドを生成する。",
+                    "returns": "9×9のグリッド。trueは遮蔽物",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateSensor",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private GridVisionSensor<bool> CreateSensor(\r\n            GridMap<bool> map,\r\n            float range = 5f,\r\n            float fieldOfView = 360f)",
+                    "returnType": "GridVisionSensor<bool>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "map",
+                            "type": "GridMap<bool>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "判定対象のグリッド"
+                        },
+                        {
+                            "name": "range",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "5f",
+                            "description": "認識距離。単位はセル"
+                        },
+                        {
+                            "name": "fieldOfView",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "360f",
+                            "description": "視野角。単位は度"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用視覚センサーを生成する。",
+                    "returns": "生成した視覚センサー",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestStimulus",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestStimulus()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識情報の保持と既定値を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestLineOfSight",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestLineOfSight()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "基本的な視線判定を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestObstacles",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestObstacles()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "遮蔽物とセルの角による遮蔽を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestRange",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestRange()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識距離と距離の境界条件を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestFieldOfView",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestFieldOfView()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "視野角と観測方向を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestObservation",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestObservation()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "視覚認識による刺激情報の生成を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestConfiguration",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestConfiguration()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "設定変更と不要な遮蔽判定の省略を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestInvalidInput",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestInvalidInput()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "不正な引数が拒否されることを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Throws",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool Throws<TException>(Action action)\r\n            where TException : Exception",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証対象の処理"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "TException",
+                            "description": "期待する例外型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定された処理が期待する例外を発生させるか検証する。",
+                    "returns": "期待する例外が発生した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(bool passed, string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "passed",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テストの成功判定"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個別のテスト結果を出力し、結果を集計する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 13
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing Framework.Grid;\r\nusing Framework.AI.Perception;\r\nusing UnityEngine;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// 認識情報、視線判定、グリッド視覚センサーを検証する。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    public sealed class AgentPerceptionTest : MonoBehaviour\r\n    {\r\n        [Header(\"テスト設定\")]\r\n        [SerializeField]\r\n        [Tooltip(\"開始時にすべてのテストを実行する。\")]\r\n        private bool runTestsOnStart = true;\r\n\r\n        [Header(\"テスト結果\")]\r\n        [SerializeField]\r\n        [Tooltip(\"成功したテスト件数。\")]\r\n        private int passedCount;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"失敗したテスト件数。\")]\r\n        private int failedCount;\r\n\r\n        /// <summary>\r\n        /// 開始時のテスト実行を制御する。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            if (runTestsOnStart)\r\n            {\r\n                RunAllTests();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべての認識システムのテストを実行する。\r\n        /// </summary>\r\n        [ContextMenu(\"すべてのテストを実行\")]\r\n        public void RunAllTests()\r\n        {\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n            try\r\n            {\r\n                TestStimulus();\r\n                TestLineOfSight();\r\n                TestObstacles();\r\n                TestRange();\r\n                TestFieldOfView();\r\n                TestObservation();\r\n                TestConfiguration();\r\n                TestInvalidInput();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogException(exception, this);\r\n            }\r\n\r\n            Debug.Log(\r\n                $\"【AgentPerception テスト結果】\\n\" +\r\n                $\"成功：{passedCount}\\n\" +\r\n                $\"失敗：{failedCount}\\n\" +\r\n                (failedCount == 0 && passedCount == 40\r\n                    ? \"すべてのテストに成功しました。\"\r\n                    : \"失敗または未実行のテストを確認してください。\"),\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 遮蔽物のないテスト用グリッドを生成する。\r\n        /// </summary>\r\n        /// <returns>9×9のグリッド。trueは遮蔽物</returns>\r\n        private GridMap<bool> CreateMap()\r\n        {\r\n            return new GridMap<bool>(\r\n                9,\r\n                9,\r\n                position => false);\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト用視覚センサーを生成する。\r\n        /// </summary>\r\n        /// <param name=\"map\">判定対象のグリッド</param>\r\n        /// <param name=\"range\">認識距離。単位はセル</param>\r\n        /// <param name=\"fieldOfView\">視野角。単位は度</param>\r\n        /// <returns>生成した視覚センサー</returns>\r\n        private GridVisionSensor<bool> CreateSensor(\r\n            GridMap<bool> map,\r\n            float range = 5f,\r\n            float fieldOfView = 360f)\r\n        {\r\n            return new GridVisionSensor<bool>(\r\n                map,\r\n                position => map.GetCell(position),\r\n                range,\r\n                fieldOfView);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 認識情報の保持と既定値を検証する。\r\n        /// </summary>\r\n        private void TestStimulus()\r\n        {\r\n            Guid sourceId = Guid.NewGuid();\r\n\r\n            var position = new Vector2Int(3, 4);\r\n\r\n            var stimulus =\r\n                new PerceptionStimulus<Vector2Int>(\r\n                    sourceId,\r\n                    PerceptionType.Sight,\r\n                    position,\r\n                    0.8f,\r\n                    12.5d);\r\n\r\n            bool sourcePassed =\r\n                stimulus.SourceId == sourceId &&\r\n                stimulus.Type == PerceptionType.Sight;\r\n            Debug.Assert(sourcePassed, \"認識対象と認識手段\", this);\r\n            Check(sourcePassed, \"認識対象と認識手段\");\r\n\r\n            bool positionPassed =\r\n                stimulus.Position == position;\r\n            Debug.Assert(positionPassed, \"認識位置の保持\", this);\r\n            Check(positionPassed, \"認識位置の保持\");\r\n\r\n            bool dataPassed =\r\n                stimulus.Confidence == 0.8f &&\r\n                stimulus.Timestamp == 12.5d &&\r\n                stimulus.IsValid;\r\n            Debug.Assert(dataPassed, \"信頼度と認識時刻\", this);\r\n            Check(dataPassed, \"信頼度と認識時刻\");\r\n\r\n            position = new Vector2Int(5, 6);\r\n\r\n            bool snapshotPassed =\r\n                stimulus.Position == new Vector2Int(3, 4);\r\n            Debug.Assert(snapshotPassed, \"認識時点の位置保持\", this);\r\n            Check(snapshotPassed, \"認識時点の位置保持\");\r\n\r\n            var empty =\r\n                default(PerceptionStimulus<Vector2Int>);\r\n\r\n            bool defaultPassed = !empty.IsValid;\r\n            Debug.Assert(defaultPassed, \"既定認識情報の無効状態\", this);\r\n            Check(defaultPassed, \"既定認識情報の無効状態\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 基本的な視線判定を検証する。\r\n        /// </summary>\r\n        private void TestLineOfSight()\r\n        {\r\n            var map = CreateMap();\r\n\r\n            Func<Vector2Int, bool> blocksSight =\r\n                position => map.GetCell(position);\r\n\r\n            var origin = new Vector2Int(1, 1);\r\n\r\n            bool horizontalPassed =\r\n                GridLineOfSight.HasLineOfSight(\r\n                    map, origin,\r\n                    new Vector2Int(7, 1),\r\n                    blocksSight);\r\n            Debug.Assert(horizontalPassed, \"水平方向の視線\", this);\r\n            Check(horizontalPassed, \"水平方向の視線\");\r\n\r\n            bool verticalPassed =\r\n                GridLineOfSight.HasLineOfSight(\r\n                    map, origin,\r\n                    new Vector2Int(1, 7),\r\n                    blocksSight);\r\n            Debug.Assert(verticalPassed, \"垂直方向の視線\", this);\r\n            Check(verticalPassed, \"垂直方向の視線\");\r\n\r\n            bool diagonalPassed =\r\n                GridLineOfSight.HasLineOfSight(\r\n                    map, origin,\r\n                    new Vector2Int(7, 7),\r\n                    blocksSight);\r\n            Debug.Assert(diagonalPassed, \"斜め方向の視線\", this);\r\n            Check(diagonalPassed, \"斜め方向の視線\");\r\n\r\n            bool reversePassed =\r\n                GridLineOfSight.HasLineOfSight(\r\n                    map,\r\n                    new Vector2Int(7, 5),\r\n                    origin,\r\n                    blocksSight);\r\n            Debug.Assert(reversePassed, \"逆方向の視線\", this);\r\n            Check(reversePassed, \"逆方向の視線\");\r\n\r\n            bool samePassed =\r\n                GridLineOfSight.HasLineOfSight(\r\n                    map, origin, origin, blocksSight);\r\n            Debug.Assert(samePassed, \"同一セルの視線\", this);\r\n            Check(samePassed, \"同一セルの視線\");\r\n\r\n            bool outsidePassed =\r\n                !GridLineOfSight.HasLineOfSight(\r\n                    map, origin,\r\n                    new Vector2Int(9, 1),\r\n                    blocksSight) &&\r\n                !GridLineOfSight.HasLineOfSight(\r\n                    map,\r\n                    new Vector2Int(-1, 1),\r\n                    origin,\r\n                    blocksSight);\r\n            Debug.Assert(outsidePassed, \"範囲外の視線拒否\", this);\r\n            Check(outsidePassed, \"範囲外の視線拒否\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 遮蔽物とセルの角による遮蔽を検証する。\r\n        /// </summary>\r\n        private void TestObstacles()\r\n        {\r\n            var map = CreateMap();\r\n\r\n            Func<Vector2Int, bool> blocksSight =\r\n                position => map.GetCell(position);\r\n\r\n            var origin = new Vector2Int(1, 1);\r\n            var target = new Vector2Int(5, 1);\r\n            var wall = new Vector2Int(3, 1);\r\n\r\n            map.SetCell(wall, true);\r\n\r\n            bool wallPassed =\r\n                !GridLineOfSight.HasLineOfSight(\r\n                    map, origin, target, blocksSight);\r\n            Debug.Assert(wallPassed, \"壁による視線遮断\", this);\r\n            Check(wallPassed, \"壁による視線遮断\");\r\n\r\n            map.SetCell(wall, false);\r\n\r\n            bool removedPassed =\r\n                GridLineOfSight.HasLineOfSight(\r\n                    map, origin, target, blocksSight);\r\n            Debug.Assert(removedPassed, \"壁除去後の視線回復\", this);\r\n            Check(removedPassed, \"壁除去後の視線回復\");\r\n\r\n            map.SetCell(target, true);\r\n\r\n            bool targetPassed =\r\n                !GridLineOfSight.HasLineOfSight(\r\n                    map, origin, target, blocksSight);\r\n            Debug.Assert(targetPassed, \"終点セルの遮蔽\", this);\r\n            Check(targetPassed, \"終点セルの遮蔽\");\r\n\r\n            map.SetCell(target, false);\r\n            map.SetCell(origin, true);\r\n\r\n            bool originPassed =\r\n                GridLineOfSight.HasLineOfSight(\r\n                    map, origin, target, blocksSight);\r\n            Debug.Assert(originPassed, \"始点セルの遮蔽除外\", this);\r\n            Check(originPassed, \"始点セルの遮蔽除外\");\r\n\r\n            map.SetCell(origin, false);\r\n\r\n            var diagonalTarget = new Vector2Int(3, 3);\r\n\r\n            map.SetCell(new Vector2Int(2, 1), true);\r\n\r\n            bool cornerPassed =\r\n                !GridLineOfSight.HasLineOfSight(\r\n                    map, origin,\r\n                    diagonalTarget,\r\n                    blocksSight);\r\n            Debug.Assert(cornerPassed, \"斜め方向の角による遮蔽\", this);\r\n            Check(cornerPassed, \"斜め方向の角による遮蔽\");\r\n\r\n            map.SetCell(new Vector2Int(2, 1), false);\r\n            map.SetCell(new Vector2Int(1, 2), true);\r\n\r\n            bool otherCornerPassed =\r\n                !GridLineOfSight.HasLineOfSight(\r\n                    map, origin,\r\n                    diagonalTarget,\r\n                    blocksSight) &&\r\n                !GridLineOfSight.HasLineOfSight(\r\n                    map, diagonalTarget,\r\n                    origin,\r\n                    blocksSight);\r\n            Debug.Assert(otherCornerPassed, \"反対側の角と逆方向の遮蔽\", this);\r\n            Check(otherCornerPassed, \"反対側の角と逆方向の遮蔽\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 認識距離と距離の境界条件を検証する。\r\n        /// </summary>\r\n        private void TestRange()\r\n        {\r\n            var map = CreateMap();\r\n\r\n            var sensor = CreateSensor(map, 5f);\r\n\r\n            var origin = new Vector2Int(1, 1);\r\n\r\n            bool insidePassed =\r\n                sensor.CanSee(\r\n                    origin, Vector2Int.right,\r\n                    new Vector2Int(4, 1));\r\n            Debug.Assert(insidePassed, \"認識距離内の対象\", this);\r\n            Check(insidePassed, \"認識距離内の対象\");\r\n\r\n            bool boundaryPassed =\r\n                sensor.CanSee(\r\n                    origin, Vector2Int.right,\r\n                    new Vector2Int(6, 1));\r\n            Debug.Assert(boundaryPassed, \"認識距離の境界\", this);\r\n            Check(boundaryPassed, \"認識距離の境界\");\r\n\r\n            bool outsidePassed =\r\n                !sensor.CanSee(\r\n                    origin, Vector2Int.right,\r\n                    new Vector2Int(7, 1));\r\n            Debug.Assert(outsidePassed, \"認識距離外の対象\", this);\r\n            Check(outsidePassed, \"認識距離外の対象\");\r\n\r\n            bool diagonalPassed =\r\n                sensor.CanSee(\r\n                    origin, Vector2Int.right,\r\n                    new Vector2Int(4, 5)) &&\r\n                !sensor.CanSee(\r\n                    origin, Vector2Int.right,\r\n                    new Vector2Int(5, 5));\r\n            Debug.Assert(diagonalPassed, \"ユークリッド距離による判定\", this);\r\n            Check(diagonalPassed, \"ユークリッド距離による判定\");\r\n\r\n            sensor.Configure(0f, 360f);\r\n\r\n            bool zeroPassed =\r\n                sensor.CanSee(\r\n                    origin, Vector2Int.zero, origin) &&\r\n                !sensor.CanSee(\r\n                    origin, Vector2Int.right,\r\n                    origin + Vector2Int.right);\r\n            Debug.Assert(zeroPassed, \"認識距離0の境界条件\", this);\r\n            Check(zeroPassed, \"認識距離0の境界条件\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 視野角と観測方向を検証する。\r\n        /// </summary>\r\n        private void TestFieldOfView()\r\n        {\r\n            var map = CreateMap();\r\n\r\n            var sensor = CreateSensor(map, 5f, 90f);\r\n\r\n            var origin = new Vector2Int(4, 4);\r\n\r\n            bool frontPassed =\r\n                sensor.CanSee(\r\n                    origin, Vector2Int.right,\r\n                    new Vector2Int(6, 4));\r\n            Debug.Assert(frontPassed, \"正面方向の認識\", this);\r\n            Check(frontPassed, \"正面方向の認識\");\r\n\r\n            bool behindPassed =\r\n                !sensor.CanSee(\r\n                    origin, Vector2Int.right,\r\n                    new Vector2Int(2, 4));\r\n            Debug.Assert(behindPassed, \"背後の認識抑止\", this);\r\n            Check(behindPassed, \"背後の認識抑止\");\r\n\r\n            bool sidePassed =\r\n                !sensor.CanSee(\r\n                    origin, Vector2Int.right,\r\n                    new Vector2Int(4, 6));\r\n            Debug.Assert(sidePassed, \"視野角外の認識抑止\", this);\r\n            Check(sidePassed, \"視野角外の認識抑止\");\r\n\r\n            bool boundaryPassed =\r\n                sensor.CanSee(\r\n                    origin, Vector2Int.right,\r\n                    new Vector2Int(6, 6));\r\n            Debug.Assert(boundaryPassed, \"視野角の境界\", this);\r\n            Check(boundaryPassed, \"視野角の境界\");\r\n\r\n            bool zeroDirectionPassed =\r\n                !sensor.CanSee(\r\n                    origin, Vector2Int.zero,\r\n                    new Vector2Int(6, 4));\r\n            Debug.Assert(zeroDirectionPassed, \"向き未指定時の認識抑止\", this);\r\n            Check(zeroDirectionPassed, \"向き未指定時の認識抑止\");\r\n\r\n            sensor.Configure(5f, 360f);\r\n\r\n            bool fullPassed =\r\n                sensor.CanSee(\r\n                    origin, Vector2Int.right,\r\n                    new Vector2Int(2, 4)) &&\r\n                sensor.CanSee(\r\n                    origin, Vector2Int.zero,\r\n                    new Vector2Int(4, 6));\r\n            Debug.Assert(fullPassed, \"全方向の認識\", this);\r\n            Check(fullPassed, \"全方向の認識\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 視覚認識による刺激情報の生成を検証する。\r\n        /// </summary>\r\n        private void TestObservation()\r\n        {\r\n            var map = CreateMap();\r\n\r\n            var sensor = CreateSensor(map);\r\n\r\n            Guid sourceId = Guid.NewGuid();\r\n\r\n            var origin = new Vector2Int(1, 1);\r\n            var target = new Vector2Int(4, 1);\r\n\r\n            bool observed = sensor.TryObserve(\r\n                sourceId,\r\n                origin,\r\n                Vector2Int.right,\r\n                target,\r\n                10d,\r\n                out PerceptionStimulus<Vector2Int> stimulus);\r\n\r\n            bool successPassed =\r\n                observed && stimulus.IsValid;\r\n            Debug.Assert(successPassed, \"視覚認識の成功\", this);\r\n            Check(successPassed, \"視覚認識の成功\");\r\n\r\n            bool dataPassed =\r\n                stimulus.SourceId == sourceId &&\r\n                stimulus.Type == PerceptionType.Sight &&\r\n                stimulus.Position == target &&\r\n                stimulus.Confidence == 1f &&\r\n                stimulus.Timestamp == 10d;\r\n            Debug.Assert(dataPassed, \"視覚認識情報の内容\", this);\r\n            Check(dataPassed, \"視覚認識情報の内容\");\r\n\r\n            map.SetCell(new Vector2Int(2, 1), true);\r\n\r\n            bool blockedPassed =\r\n                !sensor.TryObserve(\r\n                    sourceId,\r\n                    origin,\r\n                    Vector2Int.right,\r\n                    target,\r\n                    11d,\r\n                    out PerceptionStimulus<Vector2Int> blocked);\r\n            Debug.Assert(blockedPassed, \"遮蔽物による認識失敗\", this);\r\n            Check(blockedPassed, \"遮蔽物による認識失敗\");\r\n\r\n            bool defaultPassed =\r\n                !blocked.IsValid &&\r\n                blocked.SourceId == Guid.Empty;\r\n            Debug.Assert(defaultPassed, \"認識失敗時の既定値\", this);\r\n            Check(defaultPassed, \"認識失敗時の既定値\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 設定変更と不要な遮蔽判定の省略を検証する。\r\n        /// </summary>\r\n        private void TestConfiguration()\r\n        {\r\n            var map = CreateMap();\r\n\r\n            // 遮蔽判定処理の呼び出し件数。\r\n            int queryCount = 0;\r\n\r\n            var sensor = new GridVisionSensor<bool>(\r\n                map,\r\n                position =>\r\n                {\r\n                    queryCount++;\r\n\r\n                    return map.GetCell(position);\r\n                },\r\n                2f,\r\n                90f);\r\n\r\n            var origin = new Vector2Int(4, 4);\r\n\r\n            sensor.CanSee(\r\n                origin,\r\n                Vector2Int.right,\r\n                new Vector2Int(8, 4));\r\n\r\n            bool rangeSkipPassed = queryCount == 0;\r\n            Debug.Assert(rangeSkipPassed, \"距離判定による遮蔽処理省略\", this);\r\n            Check(rangeSkipPassed, \"距離判定による遮蔽処理省略\");\r\n\r\n            sensor.CanSee(\r\n                origin,\r\n                Vector2Int.right,\r\n                new Vector2Int(3, 4));\r\n\r\n            bool angleSkipPassed = queryCount == 0;\r\n            Debug.Assert(angleSkipPassed, \"視野角による遮蔽処理省略\", this);\r\n            Check(angleSkipPassed, \"視野角による遮蔽処理省略\");\r\n\r\n            sensor.Configure(4f, 360f);\r\n\r\n            bool configurePassed =\r\n                sensor.Range == 4f &&\r\n                sensor.FieldOfView == 360f &&\r\n                sensor.CanSee(\r\n                    origin,\r\n                    Vector2Int.right,\r\n                    new Vector2Int(1, 4)) &&\r\n                queryCount > 0;\r\n            Debug.Assert(configurePassed, \"設定変更の即時反映\", this);\r\n            Check(configurePassed, \"設定変更の即時反映\");\r\n\r\n            bool rejected =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    sensor.Configure(7f, 361f);\r\n                });\r\n\r\n            bool preservePassed =\r\n                rejected &&\r\n                sensor.Range == 4f &&\r\n                sensor.FieldOfView == 360f;\r\n            Debug.Assert(preservePassed, \"不正設定時の既存設定維持\", this);\r\n            Check(preservePassed, \"不正設定時の既存設定維持\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 不正な引数が拒否されることを検証する。\r\n        /// </summary>\r\n        private void TestInvalidInput()\r\n        {\r\n            var map = CreateMap();\r\n\r\n            bool mapPassed =\r\n                Throws<ArgumentNullException>(() =>\r\n                {\r\n                    new GridVisionSensor<bool>(\r\n                        null,\r\n                        position => false);\r\n                });\r\n            Debug.Assert(mapPassed, \"nullグリッドの拒否\", this);\r\n            Check(mapPassed, \"nullグリッドの拒否\");\r\n\r\n            bool predicatePassed =\r\n                Throws<ArgumentNullException>(() =>\r\n                {\r\n                    new GridVisionSensor<bool>(\r\n                        map, null);\r\n                });\r\n            Debug.Assert(predicatePassed, \"null遮蔽判定の拒否\", this);\r\n            Check(predicatePassed, \"null遮蔽判定の拒否\");\r\n\r\n            bool rangePassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    new GridVisionSensor<bool>(\r\n                        map,\r\n                        position => false,\r\n                        float.NaN);\r\n                });\r\n            Debug.Assert(rangePassed, \"不正認識距離の拒否\", this);\r\n            Check(rangePassed, \"不正認識距離の拒否\");\r\n\r\n            bool stimulusPassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    new PerceptionStimulus<Vector2Int>(\r\n                        Guid.Empty,\r\n                        PerceptionType.Sight,\r\n                        Vector2Int.zero,\r\n                        1.1f,\r\n                        0d);\r\n                });\r\n            Debug.Assert(stimulusPassed, \"不正信頼度の拒否\", this);\r\n            Check(stimulusPassed, \"不正信頼度の拒否\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された処理が期待する例外を発生させるか検証する。\r\n        /// </summary>\r\n        /// <typeparam name=\"TException\">期待する例外型</typeparam>\r\n        /// <param name=\"action\">検証対象の処理</param>\r\n        /// <returns>期待する例外が発生した場合はtrue</returns>\r\n        private bool Throws<TException>(Action action)\r\n            where TException : Exception\r\n        {\r\n            try\r\n            {\r\n                action();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                if (exception.GetType() == typeof(TException))\r\n                {\r\n                    return true;\r\n                }\r\n\r\n                throw;\r\n            }\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個別のテスト結果を出力し、結果を集計する。\r\n        /// </summary>\r\n        /// <param name=\"passed\">テストの成功判定</param>\r\n        /// <param name=\"testName\">テスト名</param>\r\n        private void Check(bool passed, string testName)\r\n        {\r\n            if (passed)\r\n            {\r\n                passedCount++;\r\n\r\n                Debug.Log(\r\n                    $\"<color=#00CC66>【成功】</color> {testName}\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogError(\r\n                    $\"【失敗】{testName}\",\r\n                    this);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.119Z"
+}

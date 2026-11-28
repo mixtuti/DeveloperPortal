@@ -1,0 +1,1965 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Core.MazeEnemyContext",
+    "name": "MazeEnemyContext",
+    "fileName": "MazeEnemyContext.cs",
+    "namespace": "Game.AI.Core",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class MazeEnemyContext : IDisposable",
+    "typeParameters": [],
+    "summary": "迷路内の敵エージェントが利用する 実行時情報と依存関係を管理する。",
+    "remarks": "行動判断や移動処理は担当しない。 ステージと移動制御の初期化後に生成する。 使用終了時にはDisposeを呼び出す。",
+    "inheritance": [
+        "IDisposable"
+    ],
+    "dependencies": [
+        "System",
+        "Framework.AI.Core",
+        "Framework.AI.Memory",
+        "Framework.AI.Perception",
+        "Framework.Grid",
+        "Framework.Movement",
+        "Framework.Parameters",
+        "Game.AI.Parameters",
+        "Game.Map",
+        "Game.Stage",
+        "UnityEngine",
+        "IDisposable"
+    ],
+    "members": [
+        {
+            "name": "Agent",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public AgentContext<MazeEnemyParameter> Agent",
+            "returnType": "",
+            "valueType": "AgentContext<MazeEnemyParameter>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "汎用エージェントコンテキスト。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Id",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Guid Id => Agent.Id",
+            "returnType": "",
+            "valueType": "Guid",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "エージェントの個体識別子。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Name",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public string Name => Agent.Name",
+            "returnType": "",
+            "valueType": "string",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "エージェントの表示名。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Parameters",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public ParameterSet<MazeEnemyParameter> Parameters =>\r\n            Agent.Parameters",
+            "returnType": "",
+            "valueType": "ParameterSet<MazeEnemyParameter>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "個体固有の実行時パラメーターセット。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "StageManager",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeStageManager StageManager",
+            "returnType": "",
+            "valueType": "MazeStageManager",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "ステージの管理コンポーネント。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Map",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridMap<MazeCell> Map",
+            "returnType": "",
+            "valueType": "GridMap<MazeCell>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "コンテキスト生成時の迷路データ。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Movement",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridMovementController Movement",
+            "returnType": "",
+            "valueType": "GridMovementController",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "エージェントの移動制御コンポーネント。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SpawnPosition",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int SpawnPosition",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "エージェントの初期出現位置。 グリッド座標で保持する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TerritoryCenter",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int TerritoryCenter",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "private set"
+            ],
+            "summary": "縄張りの中心位置。 グリッド座標で保持する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "VisionSensor",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridVisionSensor<MazeCell> VisionSensor",
+            "returnType": "",
+            "valueType": "GridVisionSensor<MazeCell>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "プレイヤーなどを認識する視覚センサー。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ThreatVisionSensor",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridVisionSensor<MazeCell> ThreatVisionSensor",
+            "returnType": "",
+            "valueType": "GridVisionSensor<MazeCell>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "脅威を認識する視覚センサー。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "PerceptionMemory",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public PerceptionMemory<Vector2Int> PerceptionMemory",
+            "returnType": "",
+            "valueType": "PerceptionMemory<Vector2Int>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "認識対象の記憶を管理する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SpatialMemory",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public SpatialMemory<Vector2Int> SpatialMemory",
+            "returnType": "",
+            "valueType": "SpatialMemory<Vector2Int>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "セルの訪問履歴を管理する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CurrentCell",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int CurrentCell => Movement.CurrentCell",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "最後に到達したセルのグリッド座標。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CurrentDirection",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int CurrentDirection =>\r\n            Movement.CurrentDirection",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の移動方向。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TargetCell",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int TargetCell => Movement.TargetCell",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の移動先セル。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsTraversing",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsTraversing => Movement.IsTraversing",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "セル間を移動中であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsAtCellCenter",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsAtCellCenter => Movement.IsAtCellCenter",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "セルの中心に位置しているか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CurrentTime",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public double CurrentTime => StageManager.ElapsedTime",
+            "returnType": "",
+            "valueType": "double",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "ステージ内の経過時間。単位は秒。",
+            "returns": "",
+            "remarks": "ステージ管理側のスケール時間を参照する。",
+            "exceptions": []
+        },
+        {
+            "name": "IsDisposed",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsDisposed => isDisposed",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "コンテキストが解放済みであるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsValid",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsValid =>\r\n            !isDisposed &&\r\n            StageManager != null &&\r\n            Movement != null &&\r\n            Movement.IsInitialized &&\r\n            !Parameters.IsDisposed &&\r\n            StageManager.HasStage &&\r\n            ReferenceEquals(StageManager.Map, Map)",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在のステージで使用可能な状態であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CanAct",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool CanAct =>\r\n            IsValid &&\r\n            StageManager.IsPlaying &&\r\n            !Movement.IsPaused",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "エージェントが行動可能な状態であるか。",
+            "returns": "",
+            "remarks": "Agent自身の状態判定は呼び出し側で行う。",
+            "exceptions": []
+        },
+        {
+            "name": "IsPerceptionMemoryEnabled",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsPerceptionMemoryEnabled =>\r\n            IsValid &&\r\n            Parameters.GetValue(\r\n                MazeEnemyParameter.MemoryDuration) > 0f",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "認識対象の記憶機能が有効であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MazeEnemyContext",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyContext(\r\n            AgentContext<MazeEnemyParameter> agent,\r\n            MazeStageManager stageManager,\r\n            GridMovementController movement,\r\n            Vector2Int spawnPosition)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "agent",
+                    "type": "AgentContext<MazeEnemyParameter>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "初期化済みの汎用エージェント情報"
+                },
+                {
+                    "name": "stageManager",
+                    "type": "MazeStageManager",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "ステージ管理コンポーネント"
+                },
+                {
+                    "name": "movement",
+                    "type": "GridMovementController",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "初期化済みの移動制御コンポーネント"
+                },
+                {
+                    "name": "spawnPosition",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "初期出現位置。グリッド座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "敵エージェントの実行コンテキストを生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "必須の依存関係が指定されていない場合。"
+                },
+                {
+                    "name": "InvalidOperationException",
+                    "description": "ステージや移動制御が未初期化の場合、 または必要なパラメーターが不足している場合。"
+                },
+                {
+                    "name": "ArgumentException",
+                    "description": "初期出現位置が通行可能でない場合。"
+                }
+            ]
+        },
+        {
+            "name": "GetParameterValue",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float GetParameterValue(\r\n            MazeEnemyParameter id)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "MazeEnemyParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "パラメーター識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターの現在値を取得する。",
+            "returns": "補正適用後の実行時の値",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetNormalizedParameterValue",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float GetNormalizedParameterValue(\r\n            MazeEnemyParameter id)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "MazeEnemyParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "パラメーター識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターの正規化値を取得する。",
+            "returns": "0から1までの正規化値",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsWalkable",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsWalkable(Vector2Int position)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "確認対象のグリッド座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたセルが通行可能であるか確認する。",
+            "returns": "有効なステージ内で通行可能な場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TrySetTerritoryCenter",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TrySetTerritoryCenter(\r\n            Vector2Int position)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "新しい中心位置。グリッド座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "縄張りの中心位置を変更する。",
+            "returns": "有効な通行可能セルを設定できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ResetTerritoryCenter",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool ResetTerritoryCenter()",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "縄張りの中心を初期出現位置へ戻す。",
+            "returns": "初期出現位置へ戻せた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RecordVisit",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool RecordVisit(Vector2Int position)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "訪問したセルのグリッド座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたセルの訪問を記録する。",
+            "returns": "新しい訪問記録を登録できた場合はtrue",
+            "remarks": "呼び出し側が実際のセル到達時に実行する。 同一セルの同一時刻の記録は重複登録しない。",
+            "exceptions": []
+        },
+        {
+            "name": "RecordCurrentVisit",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool RecordCurrentVisit()",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在位置の訪問を記録する。",
+            "returns": "セル中心で新しい訪問を記録できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RememberObservation",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool RememberObservation(\r\n            PerceptionStimulus<Vector2Int> stimulus)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "stimulus",
+                    "type": "PerceptionStimulus<Vector2Int>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識対象の情報"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "認識した対象の情報を記憶する。",
+            "returns": "新しい認識情報を記憶できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryRecallObservation",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryRecallObservation(\r\n            Guid sourceId,\r\n            out PerceptionStimulus<Vector2Int> stimulus,\r\n            out float confidence)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "sourceId",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識対象の識別子"
+                },
+                {
+                    "name": "stimulus",
+                    "type": "PerceptionStimulus<Vector2Int>",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "最後に認識した情報。失敗時は既定値"
+                },
+                {
+                    "name": "confidence",
+                    "type": "float",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "時間経過を反映した信頼度。失敗時は0"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された対象の記憶を取得する。",
+            "returns": "有効な記憶を取得できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RemoveExpiredObservations",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int RemoveExpiredObservations()",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "保持期限を過ぎた認識情報を削除する。",
+            "returns": "削除した記憶の件数",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetUnvisitedScore",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float GetUnvisitedScore(\r\n            Vector2Int position)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "評価対象のグリッド座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたセルの未訪問評価を取得する。",
+            "returns": "0から1までの未訪問評価。 通行不可能な場合は0",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ClearMemories",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void ClearMemories()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "認識対象の記憶とセルの訪問履歴を初期化する。",
+            "returns": "",
+            "remarks": "パラメーターや縄張りの中心は変更しない。 現在位置が通行可能な場合は再登録する。",
+            "exceptions": []
+        },
+        {
+            "name": "Dispose",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Dispose()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "コンテキストが所有するリソースを解放する。",
+            "returns": "",
+            "remarks": "外部から受け取ったParameterSet、 StageManager、Movementは破棄しない。 複数回呼び出しても安全。",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyContext",
+            "fullName": "MazeEnemyContext",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "迷路内の敵エージェントが利用する 実行時情報と依存関係を管理する。",
+            "remarks": "行動判断や移動処理は担当しない。 ステージと移動制御の初期化後に生成する。 使用終了時にはDisposeを呼び出す。",
+            "attributes": [],
+            "declaration": "public sealed class MazeEnemyContext : IDisposable",
+            "inheritance": [
+                "IDisposable"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "isDisposed",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isDisposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "コンテキストが解放されているか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MinimumMemoryDuration",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const double MinimumMemoryDuration = 0.001d",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "0.001d",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "記憶機能が使用可能な最小時間。単位は秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "0.001d",
+                    "inspector": null
+                },
+                {
+                    "name": "Agent",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public AgentContext<MazeEnemyParameter> Agent",
+                    "returnType": "",
+                    "valueType": "AgentContext<MazeEnemyParameter>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "汎用エージェントコンテキスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Id",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Guid Id => Agent.Id",
+                    "returnType": "",
+                    "valueType": "Guid",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "エージェントの個体識別子。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Name",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public string Name => Agent.Name",
+                    "returnType": "",
+                    "valueType": "string",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "エージェントの表示名。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Parameters",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public ParameterSet<MazeEnemyParameter> Parameters =>\r\n            Agent.Parameters",
+                    "returnType": "",
+                    "valueType": "ParameterSet<MazeEnemyParameter>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "個体固有の実行時パラメーターセット。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "StageManager",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeStageManager StageManager",
+                    "returnType": "",
+                    "valueType": "MazeStageManager",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "ステージの管理コンポーネント。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Map",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public GridMap<MazeCell> Map",
+                    "returnType": "",
+                    "valueType": "GridMap<MazeCell>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "コンテキスト生成時の迷路データ。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Movement",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public GridMovementController Movement",
+                    "returnType": "",
+                    "valueType": "GridMovementController",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "エージェントの移動制御コンポーネント。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SpawnPosition",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int SpawnPosition",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "エージェントの初期出現位置。 グリッド座標で保持する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TerritoryCenter",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int TerritoryCenter",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get",
+                        "private set"
+                    ],
+                    "summary": "縄張りの中心位置。 グリッド座標で保持する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "VisionSensor",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public GridVisionSensor<MazeCell> VisionSensor",
+                    "returnType": "",
+                    "valueType": "GridVisionSensor<MazeCell>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "プレイヤーなどを認識する視覚センサー。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ThreatVisionSensor",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public GridVisionSensor<MazeCell> ThreatVisionSensor",
+                    "returnType": "",
+                    "valueType": "GridVisionSensor<MazeCell>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "脅威を認識する視覚センサー。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PerceptionMemory",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public PerceptionMemory<Vector2Int> PerceptionMemory",
+                    "returnType": "",
+                    "valueType": "PerceptionMemory<Vector2Int>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "認識対象の記憶を管理する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SpatialMemory",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public SpatialMemory<Vector2Int> SpatialMemory",
+                    "returnType": "",
+                    "valueType": "SpatialMemory<Vector2Int>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "セルの訪問履歴を管理する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CurrentCell",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int CurrentCell => Movement.CurrentCell",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "最後に到達したセルのグリッド座標。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CurrentDirection",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int CurrentDirection =>\r\n            Movement.CurrentDirection",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の移動方向。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TargetCell",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int TargetCell => Movement.TargetCell",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の移動先セル。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsTraversing",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsTraversing => Movement.IsTraversing",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "セル間を移動中であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsAtCellCenter",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsAtCellCenter => Movement.IsAtCellCenter",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "セルの中心に位置しているか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CurrentTime",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public double CurrentTime => StageManager.ElapsedTime",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "ステージ内の経過時間。単位は秒。",
+                    "returns": "",
+                    "remarks": "ステージ管理側のスケール時間を参照する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsDisposed",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsDisposed => isDisposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "コンテキストが解放済みであるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsValid",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsValid =>\r\n            !isDisposed &&\r\n            StageManager != null &&\r\n            Movement != null &&\r\n            Movement.IsInitialized &&\r\n            !Parameters.IsDisposed &&\r\n            StageManager.HasStage &&\r\n            ReferenceEquals(StageManager.Map, Map)",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在のステージで使用可能な状態であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CanAct",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool CanAct =>\r\n            IsValid &&\r\n            StageManager.IsPlaying &&\r\n            !Movement.IsPaused",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "エージェントが行動可能な状態であるか。",
+                    "returns": "",
+                    "remarks": "Agent自身の状態判定は呼び出し側で行う。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsPerceptionMemoryEnabled",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsPerceptionMemoryEnabled =>\r\n            IsValid &&\r\n            Parameters.GetValue(\r\n                MazeEnemyParameter.MemoryDuration) > 0f",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "認識対象の記憶機能が有効であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MazeEnemyContext",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyContext(\r\n            AgentContext<MazeEnemyParameter> agent,\r\n            MazeStageManager stageManager,\r\n            GridMovementController movement,\r\n            Vector2Int spawnPosition)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "agent",
+                            "type": "AgentContext<MazeEnemyParameter>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "初期化済みの汎用エージェント情報"
+                        },
+                        {
+                            "name": "stageManager",
+                            "type": "MazeStageManager",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "ステージ管理コンポーネント"
+                        },
+                        {
+                            "name": "movement",
+                            "type": "GridMovementController",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "初期化済みの移動制御コンポーネント"
+                        },
+                        {
+                            "name": "spawnPosition",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "初期出現位置。グリッド座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵エージェントの実行コンテキストを生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "必須の依存関係が指定されていない場合。"
+                        },
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "ステージや移動制御が未初期化の場合、 または必要なパラメーターが不足している場合。"
+                        },
+                        {
+                            "name": "ArgumentException",
+                            "description": "初期出現位置が通行可能でない場合。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetParameterValue",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float GetParameterValue(\r\n            MazeEnemyParameter id)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "MazeEnemyParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "パラメーター識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターの現在値を取得する。",
+                    "returns": "補正適用後の実行時の値",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetNormalizedParameterValue",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float GetNormalizedParameterValue(\r\n            MazeEnemyParameter id)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "MazeEnemyParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "パラメーター識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターの正規化値を取得する。",
+                    "returns": "0から1までの正規化値",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsWalkable",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsWalkable(Vector2Int position)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "確認対象のグリッド座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたセルが通行可能であるか確認する。",
+                    "returns": "有効なステージ内で通行可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TrySetTerritoryCenter",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TrySetTerritoryCenter(\r\n            Vector2Int position)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "新しい中心位置。グリッド座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "縄張りの中心位置を変更する。",
+                    "returns": "有効な通行可能セルを設定できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ResetTerritoryCenter",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool ResetTerritoryCenter()",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "縄張りの中心を初期出現位置へ戻す。",
+                    "returns": "初期出現位置へ戻せた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RecordVisit",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool RecordVisit(Vector2Int position)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "訪問したセルのグリッド座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたセルの訪問を記録する。",
+                    "returns": "新しい訪問記録を登録できた場合はtrue",
+                    "remarks": "呼び出し側が実際のセル到達時に実行する。 同一セルの同一時刻の記録は重複登録しない。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RecordCurrentVisit",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool RecordCurrentVisit()",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在位置の訪問を記録する。",
+                    "returns": "セル中心で新しい訪問を記録できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RememberObservation",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool RememberObservation(\r\n            PerceptionStimulus<Vector2Int> stimulus)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "stimulus",
+                            "type": "PerceptionStimulus<Vector2Int>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識対象の情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識した対象の情報を記憶する。",
+                    "returns": "新しい認識情報を記憶できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryRecallObservation",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryRecallObservation(\r\n            Guid sourceId,\r\n            out PerceptionStimulus<Vector2Int> stimulus,\r\n            out float confidence)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "sourceId",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識対象の識別子"
+                        },
+                        {
+                            "name": "stimulus",
+                            "type": "PerceptionStimulus<Vector2Int>",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "最後に認識した情報。失敗時は既定値"
+                        },
+                        {
+                            "name": "confidence",
+                            "type": "float",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "時間経過を反映した信頼度。失敗時は0"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された対象の記憶を取得する。",
+                    "returns": "有効な記憶を取得できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RemoveExpiredObservations",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int RemoveExpiredObservations()",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "保持期限を過ぎた認識情報を削除する。",
+                    "returns": "削除した記憶の件数",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetUnvisitedScore",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float GetUnvisitedScore(\r\n            Vector2Int position)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価対象のグリッド座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたセルの未訪問評価を取得する。",
+                    "returns": "0から1までの未訪問評価。 通行不可能な場合は0",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ClearMemories",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void ClearMemories()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識対象の記憶とセルの訪問履歴を初期化する。",
+                    "returns": "",
+                    "remarks": "パラメーターや縄張りの中心は変更しない。 現在位置が通行可能な場合は再登録する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Dispose",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Dispose()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "コンテキストが所有するリソースを解放する。",
+                    "returns": "",
+                    "remarks": "外部から受け取ったParameterSet、 StageManager、Movementは破棄しない。 複数回呼び出しても安全。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValidateParameters",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static void ValidateParameters(\r\n            ParameterSet<MazeEnemyParameter> parameters)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "parameters",
+                            "type": "ParameterSet<MazeEnemyParameter>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証対象のパラメーターセット"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "必要なパラメーターが登録されているか検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "必要なパラメーターが存在しない場合。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "BlocksSight",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool BlocksSight(Vector2Int position)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "確認対象のグリッド座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたセルが視界を遮るか確認する。",
+                    "returns": "壁または範囲外の場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetEffectiveMemoryDuration",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private double GetEffectiveMemoryDuration()",
+                    "returnType": "double",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "記憶機能へ設定可能な保持時間を取得する。",
+                    "returns": "正の記憶保持時間。単位は秒",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HandleParameterValueChanged",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void HandleParameterValueChanged(\r\n            MazeEnemyParameter id,\r\n            float previousValue,\r\n            float newValue)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "MazeEnemyParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更された識別子"
+                        },
+                        {
+                            "name": "previousValue",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更前の値"
+                        },
+                        {
+                            "name": "newValue",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更後の値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "パラメーター変更を関連機能へ反映する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "EnsureValid",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void EnsureValid()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "コンテキストが使用可能な状態か検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ObjectDisposedException",
+                            "description": "コンテキストが解放済みの場合。"
+                        },
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "現在のステージで使用できない場合。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 25
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing Framework.AI.Core;\r\nusing Framework.AI.Memory;\r\nusing Framework.AI.Perception;\r\nusing Framework.Grid;\r\nusing Framework.Movement;\r\nusing Framework.Parameters;\r\nusing Game.AI.Parameters;\r\nusing Game.Map;\r\nusing Game.Stage;\r\nusing UnityEngine;\r\n\r\nnamespace Game.AI.Core\r\n{\r\n    /// <summary>\r\n    /// 迷路内の敵エージェントが利用する\r\n    /// 実行時情報と依存関係を管理する。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// 行動判断や移動処理は担当しない。\r\n    /// ステージと移動制御の初期化後に生成する。\r\n    /// 使用終了時にはDisposeを呼び出す。\r\n    /// </remarks>\r\n    public sealed class MazeEnemyContext : IDisposable\r\n    {\r\n        /// <summary>\r\n        /// コンテキストが解放されているか。\r\n        /// </summary>\r\n        private bool isDisposed;\r\n\r\n        /// <summary>\r\n        /// 記憶機能が使用可能な最小時間。単位は秒。\r\n        /// </summary>\r\n        private const double MinimumMemoryDuration = 0.001d;\r\n\r\n        /// <summary>\r\n        /// 汎用エージェントコンテキスト。\r\n        /// </summary>\r\n        public AgentContext<MazeEnemyParameter> Agent { get; }\r\n\r\n        /// <summary>\r\n        /// エージェントの個体識別子。\r\n        /// </summary>\r\n        public Guid Id => Agent.Id;\r\n\r\n        /// <summary>\r\n        /// エージェントの表示名。\r\n        /// </summary>\r\n        public string Name => Agent.Name;\r\n\r\n        /// <summary>\r\n        /// 個体固有の実行時パラメーターセット。\r\n        /// </summary>\r\n        public ParameterSet<MazeEnemyParameter> Parameters =>\r\n            Agent.Parameters;\r\n\r\n        /// <summary>\r\n        /// ステージの管理コンポーネント。\r\n        /// </summary>\r\n        public MazeStageManager StageManager { get; }\r\n\r\n        /// <summary>\r\n        /// コンテキスト生成時の迷路データ。\r\n        /// </summary>\r\n        public GridMap<MazeCell> Map { get; }\r\n\r\n        /// <summary>\r\n        /// エージェントの移動制御コンポーネント。\r\n        /// </summary>\r\n        public GridMovementController Movement { get; }\r\n\r\n        /// <summary>\r\n        /// エージェントの初期出現位置。\r\n        /// グリッド座標で保持する。\r\n        /// </summary>\r\n        public Vector2Int SpawnPosition { get; }\r\n\r\n        /// <summary>\r\n        /// 縄張りの中心位置。\r\n        /// グリッド座標で保持する。\r\n        /// </summary>\r\n        public Vector2Int TerritoryCenter { get; private set; }\r\n\r\n        /// <summary>\r\n        /// プレイヤーなどを認識する視覚センサー。\r\n        /// </summary>\r\n        public GridVisionSensor<MazeCell> VisionSensor { get; }\r\n\r\n        /// <summary>\r\n        /// 脅威を認識する視覚センサー。\r\n        /// </summary>\r\n        public GridVisionSensor<MazeCell> ThreatVisionSensor { get; }\r\n\r\n        /// <summary>\r\n        /// 認識対象の記憶を管理する。\r\n        /// </summary>\r\n        public PerceptionMemory<Vector2Int> PerceptionMemory { get; }\r\n\r\n        /// <summary>\r\n        /// セルの訪問履歴を管理する。\r\n        /// </summary>\r\n        public SpatialMemory<Vector2Int> SpatialMemory { get; }\r\n\r\n        /// <summary>\r\n        /// 最後に到達したセルのグリッド座標。\r\n        /// </summary>\r\n        public Vector2Int CurrentCell => Movement.CurrentCell;\r\n\r\n        /// <summary>\r\n        /// 現在の移動方向。\r\n        /// </summary>\r\n        public Vector2Int CurrentDirection =>\r\n            Movement.CurrentDirection;\r\n\r\n        /// <summary>\r\n        /// 現在の移動先セル。\r\n        /// </summary>\r\n        public Vector2Int TargetCell => Movement.TargetCell;\r\n\r\n        /// <summary>\r\n        /// セル間を移動中であるか。\r\n        /// </summary>\r\n        public bool IsTraversing => Movement.IsTraversing;\r\n\r\n        /// <summary>\r\n        /// セルの中心に位置しているか。\r\n        /// </summary>\r\n        public bool IsAtCellCenter => Movement.IsAtCellCenter;\r\n\r\n        /// <summary>\r\n        /// ステージ内の経過時間。単位は秒。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// ステージ管理側のスケール時間を参照する。\r\n        /// </remarks>\r\n        public double CurrentTime => StageManager.ElapsedTime;\r\n\r\n        /// <summary>\r\n        /// コンテキストが解放済みであるか。\r\n        /// </summary>\r\n        public bool IsDisposed => isDisposed;\r\n\r\n        /// <summary>\r\n        /// 現在のステージで使用可能な状態であるか。\r\n        /// </summary>\r\n        public bool IsValid =>\r\n            !isDisposed &&\r\n            StageManager != null &&\r\n            Movement != null &&\r\n            Movement.IsInitialized &&\r\n            !Parameters.IsDisposed &&\r\n            StageManager.HasStage &&\r\n            ReferenceEquals(StageManager.Map, Map);\r\n\r\n        /// <summary>\r\n        /// エージェントが行動可能な状態であるか。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// Agent自身の状態判定は呼び出し側で行う。\r\n        /// </remarks>\r\n        public bool CanAct =>\r\n            IsValid &&\r\n            StageManager.IsPlaying &&\r\n            !Movement.IsPaused;\r\n\r\n        /// <summary>\r\n        /// 認識対象の記憶機能が有効であるか。\r\n        /// </summary>\r\n        public bool IsPerceptionMemoryEnabled =>\r\n            IsValid &&\r\n            Parameters.GetValue(\r\n                MazeEnemyParameter.MemoryDuration) > 0f;\r\n\r\n        /// <summary>\r\n        /// 敵エージェントの実行コンテキストを生成する。\r\n        /// </summary>\r\n        /// <param name=\"agent\">\r\n        /// 初期化済みの汎用エージェント情報\r\n        /// </param>\r\n        /// <param name=\"stageManager\">\r\n        /// ステージ管理コンポーネント\r\n        /// </param>\r\n        /// <param name=\"movement\">\r\n        /// 初期化済みの移動制御コンポーネント\r\n        /// </param>\r\n        /// <param name=\"spawnPosition\">\r\n        /// 初期出現位置。グリッド座標\r\n        /// </param>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 必須の依存関係が指定されていない場合。\r\n        /// </exception>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// ステージや移動制御が未初期化の場合、\r\n        /// または必要なパラメーターが不足している場合。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentException\">\r\n        /// 初期出現位置が通行可能でない場合。\r\n        /// </exception>\r\n        public MazeEnemyContext(\r\n            AgentContext<MazeEnemyParameter> agent,\r\n            MazeStageManager stageManager,\r\n            GridMovementController movement,\r\n            Vector2Int spawnPosition)\r\n        {\r\n            if (agent == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(agent));\r\n            }\r\n\r\n            if (stageManager == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(stageManager));\r\n            }\r\n\r\n            if (movement == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(movement));\r\n            }\r\n\r\n            if (agent.Parameters.IsDisposed)\r\n            {\r\n                throw new ObjectDisposedException(\r\n                    nameof(agent.Parameters));\r\n            }\r\n\r\n            if (!stageManager.HasStage ||\r\n                stageManager.Map == null)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"ステージが生成されていません。\");\r\n            }\r\n\r\n            if (!movement.IsInitialized)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"移動制御が初期化されていません。\");\r\n            }\r\n\r\n            ValidateParameters(agent.Parameters);\r\n\r\n            if (!stageManager.IsWalkable(spawnPosition))\r\n            {\r\n                throw new ArgumentException(\r\n                    \"初期出現位置が通行可能ではありません。\",\r\n                    nameof(spawnPosition));\r\n            }\r\n\r\n            if (!stageManager.IsWalkable(movement.CurrentCell))\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"移動制御の現在位置が通行可能ではありません。\");\r\n            }\r\n\r\n            Agent = agent;\r\n            StageManager = stageManager;\r\n            Movement = movement;\r\n            Map = stageManager.Map;\r\n\r\n            SpawnPosition = spawnPosition;\r\n            TerritoryCenter = spawnPosition;\r\n\r\n            // 個体ごとの視覚センサーを生成する。\r\n            VisionSensor = new GridVisionSensor<MazeCell>(\r\n                Map,\r\n                BlocksSight,\r\n                Parameters.GetValue(\r\n                    MazeEnemyParameter.DetectionRange),\r\n                360f);\r\n\r\n            // 脅威認識には独立した認識距離を使用する。\r\n            ThreatVisionSensor =\r\n                new GridVisionSensor<MazeCell>(\r\n                    Map,\r\n                    BlocksSight,\r\n                    Parameters.GetValue(\r\n                        MazeEnemyParameter.ThreatDetectionRange),\r\n                    360f);\r\n\r\n            // 個体固有の記憶領域を生成する。\r\n            PerceptionMemory =\r\n                new PerceptionMemory<Vector2Int>(\r\n                    GetEffectiveMemoryDuration());\r\n\r\n            SpatialMemory =\r\n                new SpatialMemory<Vector2Int>();\r\n\r\n            // 初期位置を訪問済みとして登録する。\r\n            SpatialMemory.RecordVisit(\r\n                Movement.CurrentCell,\r\n                CurrentTime);\r\n\r\n            // パラメーター変更を認識機能へ反映する。\r\n            Parameters.ValueChanged +=\r\n                HandleParameterValueChanged;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターの現在値を取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">パラメーター識別子</param>\r\n        /// <returns>補正適用後の実行時の値</returns>\r\n        public float GetParameterValue(\r\n            MazeEnemyParameter id)\r\n        {\r\n            EnsureValid();\r\n\r\n            return Parameters.GetValue(id);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターの正規化値を取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">パラメーター識別子</param>\r\n        /// <returns>0から1までの正規化値</returns>\r\n        public float GetNormalizedParameterValue(\r\n            MazeEnemyParameter id)\r\n        {\r\n            EnsureValid();\r\n\r\n            return Parameters.GetNormalizedValue(id);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたセルが通行可能であるか確認する。\r\n        /// </summary>\r\n        /// <param name=\"position\">\r\n        /// 確認対象のグリッド座標\r\n        /// </param>\r\n        /// <returns>\r\n        /// 有効なステージ内で通行可能な場合はtrue\r\n        /// </returns>\r\n        public bool IsWalkable(Vector2Int position)\r\n        {\r\n            return IsValid &&\r\n                StageManager.IsWalkable(position);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 縄張りの中心位置を変更する。\r\n        /// </summary>\r\n        /// <param name=\"position\">\r\n        /// 新しい中心位置。グリッド座標\r\n        /// </param>\r\n        /// <returns>\r\n        /// 有効な通行可能セルを設定できた場合はtrue\r\n        /// </returns>\r\n        public bool TrySetTerritoryCenter(\r\n            Vector2Int position)\r\n        {\r\n            if (!IsWalkable(position))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            TerritoryCenter = position;\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 縄張りの中心を初期出現位置へ戻す。\r\n        /// </summary>\r\n        /// <returns>\r\n        /// 初期出現位置へ戻せた場合はtrue\r\n        /// </returns>\r\n        public bool ResetTerritoryCenter()\r\n        {\r\n            return TrySetTerritoryCenter(SpawnPosition);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたセルの訪問を記録する。\r\n        /// </summary>\r\n        /// <param name=\"position\">\r\n        /// 訪問したセルのグリッド座標\r\n        /// </param>\r\n        /// <returns>\r\n        /// 新しい訪問記録を登録できた場合はtrue\r\n        /// </returns>\r\n        /// <remarks>\r\n        /// 呼び出し側が実際のセル到達時に実行する。\r\n        /// 同一セルの同一時刻の記録は重複登録しない。\r\n        /// </remarks>\r\n        public bool RecordVisit(Vector2Int position)\r\n        {\r\n            if (!IsWalkable(position))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return SpatialMemory.RecordVisit(\r\n                position,\r\n                CurrentTime);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在位置の訪問を記録する。\r\n        /// </summary>\r\n        /// <returns>\r\n        /// セル中心で新しい訪問を記録できた場合はtrue\r\n        /// </returns>\r\n        public bool RecordCurrentVisit()\r\n        {\r\n            if (!IsValid || !IsAtCellCenter)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return RecordVisit(CurrentCell);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 認識した対象の情報を記憶する。\r\n        /// </summary>\r\n        /// <param name=\"stimulus\">認識対象の情報</param>\r\n        /// <returns>\r\n        /// 新しい認識情報を記憶できた場合はtrue\r\n        /// </returns>\r\n        public bool RememberObservation(\r\n            PerceptionStimulus<Vector2Int> stimulus)\r\n        {\r\n            if (!IsPerceptionMemoryEnabled ||\r\n                !stimulus.IsValid ||\r\n                stimulus.Timestamp > CurrentTime ||\r\n                !Map.IsInside(stimulus.Position))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return PerceptionMemory.Remember(stimulus);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された対象の記憶を取得する。\r\n        /// </summary>\r\n        /// <param name=\"sourceId\">認識対象の識別子</param>\r\n        /// <param name=\"stimulus\">\r\n        /// 最後に認識した情報。失敗時は既定値\r\n        /// </param>\r\n        /// <param name=\"confidence\">\r\n        /// 時間経過を反映した信頼度。失敗時は0\r\n        /// </param>\r\n        /// <returns>\r\n        /// 有効な記憶を取得できた場合はtrue\r\n        /// </returns>\r\n        public bool TryRecallObservation(\r\n            Guid sourceId,\r\n            out PerceptionStimulus<Vector2Int> stimulus,\r\n            out float confidence)\r\n        {\r\n            stimulus = default;\r\n            confidence = 0f;\r\n\r\n            if (!IsPerceptionMemoryEnabled)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return PerceptionMemory.TryRecall(\r\n                sourceId,\r\n                CurrentTime,\r\n                out stimulus,\r\n                out confidence);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 保持期限を過ぎた認識情報を削除する。\r\n        /// </summary>\r\n        /// <returns>削除した記憶の件数</returns>\r\n        public int RemoveExpiredObservations()\r\n        {\r\n            if (!IsValid)\r\n            {\r\n                return 0;\r\n            }\r\n\r\n            if (!IsPerceptionMemoryEnabled)\r\n            {\r\n                int count = PerceptionMemory.Count;\r\n\r\n                PerceptionMemory.Clear();\r\n\r\n                return count;\r\n            }\r\n\r\n            return PerceptionMemory.RemoveExpired(\r\n                CurrentTime);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたセルの未訪問評価を取得する。\r\n        /// </summary>\r\n        /// <param name=\"position\">\r\n        /// 評価対象のグリッド座標\r\n        /// </param>\r\n        /// <returns>\r\n        /// 0から1までの未訪問評価。\r\n        /// 通行不可能な場合は0\r\n        /// </returns>\r\n        public float GetUnvisitedScore(\r\n            Vector2Int position)\r\n        {\r\n            if (!IsWalkable(position))\r\n            {\r\n                return 0f;\r\n            }\r\n\r\n            float duration = Parameters.GetValue(\r\n                MazeEnemyParameter.VisitMemoryDuration);\r\n\r\n            // 保持時間が0の場合は訪問履歴を評価に使用しない。\r\n            if (duration <= 0f)\r\n            {\r\n                return 1f;\r\n            }\r\n\r\n            return SpatialMemory.GetUnvisitedScore(\r\n                position,\r\n                CurrentTime,\r\n                duration);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 認識対象の記憶とセルの訪問履歴を初期化する。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// パラメーターや縄張りの中心は変更しない。\r\n        /// 現在位置が通行可能な場合は再登録する。\r\n        /// </remarks>\r\n        public void ClearMemories()\r\n        {\r\n            EnsureValid();\r\n\r\n            PerceptionMemory.Clear();\r\n            SpatialMemory.Clear();\r\n\r\n            if (IsWalkable(CurrentCell))\r\n            {\r\n                SpatialMemory.RecordVisit(\r\n                    CurrentCell,\r\n                    CurrentTime);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// コンテキストが所有するリソースを解放する。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// 外部から受け取ったParameterSet、\r\n        /// StageManager、Movementは破棄しない。\r\n        /// 複数回呼び出しても安全。\r\n        /// </remarks>\r\n        public void Dispose()\r\n        {\r\n            if (isDisposed)\r\n            {\r\n                return;\r\n            }\r\n\r\n            isDisposed = true;\r\n\r\n            Parameters.ValueChanged -=\r\n                HandleParameterValueChanged;\r\n\r\n            PerceptionMemory.Clear();\r\n            SpatialMemory.Clear();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 必要なパラメーターが登録されているか検証する。\r\n        /// </summary>\r\n        /// <param name=\"parameters\">\r\n        /// 検証対象のパラメーターセット\r\n        /// </param>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 必要なパラメーターが存在しない場合。\r\n        /// </exception>\r\n        private static void ValidateParameters(\r\n            ParameterSet<MazeEnemyParameter> parameters)\r\n        {\r\n            foreach (var definition in\r\n                MazeEnemyParameterCatalog.Definitions)\r\n            {\r\n                if (!parameters.Contains(definition.Id))\r\n                {\r\n                    throw new InvalidOperationException(\r\n                        $\"敵パラメーターが不足しています：\" +\r\n                        $\"{definition.Id}\");\r\n                }\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたセルが視界を遮るか確認する。\r\n        /// </summary>\r\n        /// <param name=\"position\">\r\n        /// 確認対象のグリッド座標\r\n        /// </param>\r\n        /// <returns>\r\n        /// 壁または範囲外の場合はtrue\r\n        /// </returns>\r\n        private bool BlocksSight(Vector2Int position)\r\n        {\r\n            if (!Map.TryGetCell(position, out var cell))\r\n            {\r\n                return true;\r\n            }\r\n\r\n            return !cell.IsWalkable;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 記憶機能へ設定可能な保持時間を取得する。\r\n        /// </summary>\r\n        /// <returns>正の記憶保持時間。単位は秒</returns>\r\n        private double GetEffectiveMemoryDuration()\r\n        {\r\n            float duration = Parameters.GetValue(\r\n                MazeEnemyParameter.MemoryDuration);\r\n\r\n            return Math.Max(\r\n                MinimumMemoryDuration,\r\n                duration);\r\n        }\r\n\r\n        /// <summary>\r\n        /// パラメーター変更を関連機能へ反映する。\r\n        /// </summary>\r\n        /// <param name=\"id\">変更された識別子</param>\r\n        /// <param name=\"previousValue\">変更前の値</param>\r\n        /// <param name=\"newValue\">変更後の値</param>\r\n        private void HandleParameterValueChanged(\r\n            MazeEnemyParameter id,\r\n            float previousValue,\r\n            float newValue)\r\n        {\r\n            if (!IsValid)\r\n            {\r\n                return;\r\n            }\r\n\r\n            switch (id)\r\n            {\r\n                case MazeEnemyParameter.DetectionRange:\r\n\r\n                    VisionSensor.Configure(\r\n                        newValue,\r\n                        VisionSensor.FieldOfView);\r\n\r\n                    break;\r\n\r\n                case MazeEnemyParameter.ThreatDetectionRange:\r\n\r\n                    ThreatVisionSensor.Configure(\r\n                        newValue,\r\n                        ThreatVisionSensor.FieldOfView);\r\n\r\n                    break;\r\n\r\n                case MazeEnemyParameter.MemoryDuration:\r\n\r\n                    // 保持時間0は記憶機能の無効化として扱う。\r\n                    if (newValue <= 0f)\r\n                    {\r\n                        PerceptionMemory.Clear();\r\n                    }\r\n\r\n                    PerceptionMemory.SetRetentionDuration(\r\n                        GetEffectiveMemoryDuration());\r\n\r\n                    PerceptionMemory.RemoveExpired(\r\n                        CurrentTime);\r\n\r\n                    break;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// コンテキストが使用可能な状態か検証する。\r\n        /// </summary>\r\n        /// <exception cref=\"ObjectDisposedException\">\r\n        /// コンテキストが解放済みの場合。\r\n        /// </exception>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 現在のステージで使用できない場合。\r\n        /// </exception>\r\n        private void EnsureValid()\r\n        {\r\n            if (isDisposed)\r\n            {\r\n                throw new ObjectDisposedException(\r\n                    nameof(MazeEnemyContext));\r\n            }\r\n\r\n            if (!IsValid)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"敵コンテキストが無効な状態です。\");\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.506Z"
+}

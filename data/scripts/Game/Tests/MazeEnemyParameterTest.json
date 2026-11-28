@@ -1,0 +1,579 @@
+{
+    "parserVersion": 3,
+    "id": "Game.Tests.MazeEnemyParameterTest",
+    "name": "MazeEnemyParameterTest",
+    "fileName": "MazeEnemyParameterTest.cs",
+    "namespace": "Game.Tests",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class MazeEnemyParameterTest : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "敵の共通パラメーターとプロファイルを検証する。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "Framework.Parameters",
+        "Game.AI.Parameters",
+        "UnityEngine",
+        "UnityEditor",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "RunAllTests",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void RunAllTests()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべてのテストを実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyParameterTest",
+            "fullName": "MazeEnemyParameterTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "敵の共通パラメーターとプロファイルを検証する。",
+            "remarks": "",
+            "attributes": [
+                {
+                    "name": "DisallowMultipleComponent",
+                    "arguments": [],
+                    "raw": "DisallowMultipleComponent"
+                }
+            ],
+            "declaration": "public sealed class MazeEnemyParameterTest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "runTestsOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runTestsOnStart = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "開始時にテストを実行する。"
+                            ],
+                            "raw": "Tooltip(\"開始時にテストを実行する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Tests On Start",
+                        "type": "bool",
+                        "header": "テスト設定",
+                        "tooltip": "開始時にテストを実行する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト結果"
+                            ],
+                            "raw": "Header(\"テスト結果\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "成功したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"成功したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Passed Count",
+                        "type": "int",
+                        "header": "テスト結果",
+                        "tooltip": "成功したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "失敗したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"失敗したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Failed Count",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "失敗したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "ExpectedTestCount",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const int ExpectedTestCount = 40",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "40",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "予定されているテスト件数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "40",
+                    "inspector": null
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "開始時のテスト実行を制御する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunAllTests",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void RunAllTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべてのテストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "すべてのテストを実行"
+                            ],
+                            "raw": "ContextMenu(\"すべてのテストを実行\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestDefinitions",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestDefinitions()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "共通パラメーター定義を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestDefaultParameters",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestDefaultParameters()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "標準パラメーターセットを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestProfile",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestProfile()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵プロファイルの初期値と補正を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestRuntimeChanges",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestRuntimeChanges()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "実行時パラメーターの変更と補正を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestIndependence",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestIndependence()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "エージェント間の独立性とリセットを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SetProfileFloat",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void SetProfileFloat(\r\n            MazeEnemyProfile profile,\r\n            string fieldName,\r\n            float value)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "profile",
+                            "type": "MazeEnemyProfile",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更対象のプロファイル"
+                        },
+                        {
+                            "name": "fieldName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象フィールド名"
+                        },
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "設定する数値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用プロファイルのシリアライズ値を変更する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "DestroyTestProfile",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void DestroyTestProfile(MazeEnemyProfile profile)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "profile",
+                            "type": "MazeEnemyProfile",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "破棄対象"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "一時生成したテスト用プロファイルを破棄する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "NearlyEqual",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool NearlyEqual(float first, float second)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "first",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "比較する数値"
+                        },
+                        {
+                            "name": "second",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "比較対象の数値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "浮動小数点数を許容誤差付きで比較する。",
+                    "returns": "十分に近い場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Throws",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool Throws<TException>(Action action)\r\n            where TException : Exception",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証対象の処理"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "TException",
+                            "description": "期待する例外型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定された処理が期待する例外を発生させるか確認する。",
+                    "returns": "期待する例外が発生した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(bool passed, string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "passed",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "成功判定"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個別のテスト結果を出力して集計する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 18
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing Framework.Parameters;\r\nusing Game.AI.Parameters;\r\nusing UnityEngine;\r\n\r\n#if UNITY_EDITOR\r\nusing UnityEditor;\r\n#endif\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// 敵の共通パラメーターとプロファイルを検証する。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    public sealed class MazeEnemyParameterTest : MonoBehaviour\r\n    {\r\n        [Header(\"テスト設定\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"開始時にテストを実行する。\")]\r\n        private bool runTestsOnStart = true;\r\n\r\n        [Header(\"テスト結果\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"成功したテスト件数。\")]\r\n        private int passedCount;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"失敗したテスト件数。\")]\r\n        private int failedCount;\r\n\r\n        /// <summary>\r\n        /// 予定されているテスト件数。\r\n        /// </summary>\r\n        private const int ExpectedTestCount = 40;\r\n\r\n        /// <summary>\r\n        /// 開始時のテスト実行を制御する。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            if (runTestsOnStart)\r\n            {\r\n                RunAllTests();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべてのテストを実行する。\r\n        /// </summary>\r\n        [ContextMenu(\"すべてのテストを実行\")]\r\n        public void RunAllTests()\r\n        {\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n#if UNITY_EDITOR\r\n            try\r\n            {\r\n                TestDefinitions();\r\n                TestDefaultParameters();\r\n                TestProfile();\r\n                TestRuntimeChanges();\r\n                TestIndependence();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogException(exception, this);\r\n            }\r\n\r\n            Debug.Log(\r\n                $\"【MazeEnemyParameter テスト結果】\\n\" +\r\n                $\"成功：{passedCount}\\n\" +\r\n                $\"失敗：{failedCount}\\n\" +\r\n                (passedCount == ExpectedTestCount &&\r\n                 failedCount == 0\r\n                    ? \"すべてのテストに成功しました。\"\r\n                    : \"失敗または未実行のテストがあります。\"),\r\n                this);\r\n#else\r\n            Debug.LogWarning(\r\n                \"このテストはUnity Editor専用です。\",\r\n                this);\r\n#endif\r\n        }\r\n\r\n        /// <summary>\r\n        /// 共通パラメーター定義を検証する。\r\n        /// </summary>\r\n        private void TestDefinitions()\r\n        {\r\n            bool countPassed =\r\n                MazeEnemyParameterCatalog.Count == 16;\r\n            Debug.Assert(countPassed, \"定義件数\", this);\r\n            Check(countPassed, \"定義件数\");\r\n\r\n            bool enumPassed =\r\n                Enum.GetValues(\r\n                    typeof(MazeEnemyParameter)).Length == 17;\r\n            Debug.Assert(enumPassed, \"識別子件数\", this);\r\n            Check(enumPassed, \"識別子件数\");\r\n\r\n            bool nonePassed =\r\n                !MazeEnemyParameterCatalog.Contains(\r\n                    MazeEnemyParameter.None);\r\n            Debug.Assert(nonePassed, \"Noneの定義除外\", this);\r\n            Check(nonePassed, \"Noneの定義除外\");\r\n\r\n            var ids = new HashSet<MazeEnemyParameter>();\r\n\r\n            bool uniquePassed = true;\r\n\r\n            foreach (var definition in\r\n                MazeEnemyParameterCatalog.Definitions)\r\n            {\r\n                uniquePassed &= ids.Add(definition.Id);\r\n            }\r\n\r\n            Debug.Assert(uniquePassed, \"識別子の一意性\", this);\r\n            Check(uniquePassed, \"識別子の一意性\");\r\n\r\n            bool coveragePassed = true;\r\n\r\n            foreach (MazeEnemyParameter id in\r\n                Enum.GetValues(typeof(MazeEnemyParameter)))\r\n            {\r\n                if (id != MazeEnemyParameter.None)\r\n                {\r\n                    coveragePassed &=\r\n                        MazeEnemyParameterCatalog.Contains(id);\r\n                }\r\n            }\r\n\r\n            Debug.Assert(coveragePassed, \"全識別子の定義確認\", this);\r\n            Check(coveragePassed, \"全識別子の定義確認\");\r\n\r\n            bool rangePassed = true;\r\n\r\n            foreach (var definition in\r\n                MazeEnemyParameterCatalog.Definitions)\r\n            {\r\n                rangePassed &= definition.IsInRange(\r\n                    definition.DefaultValue);\r\n            }\r\n\r\n            Debug.Assert(rangePassed, \"全初期値の範囲確認\", this);\r\n            Check(rangePassed, \"全初期値の範囲確認\");\r\n\r\n            bool missingPassed =\r\n                !MazeEnemyParameterCatalog.TryGetDefinition(\r\n                    MazeEnemyParameter.None,\r\n                    out var missing) &&\r\n                missing == null;\r\n            Debug.Assert(missingPassed, \"未定義識別子の取得失敗\", this);\r\n            Check(missingPassed, \"未定義識別子の取得失敗\");\r\n\r\n            bool exceptionPassed =\r\n                Throws<KeyNotFoundException>(() =>\r\n                    MazeEnemyParameterCatalog.GetDefinition(\r\n                        (MazeEnemyParameter)9999));\r\n            Debug.Assert(exceptionPassed, \"不正識別子の例外処理\", this);\r\n            Check(exceptionPassed, \"不正識別子の例外処理\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 標準パラメーターセットを検証する。\r\n        /// </summary>\r\n        private void TestDefaultParameters()\r\n        {\r\n            using (var parameters =\r\n                MazeEnemyParameterCatalog.CreateParameterSet())\r\n            {\r\n                bool countPassed = parameters.Count == 16;\r\n                Debug.Assert(countPassed, \"全パラメーター登録\", this);\r\n                Check(countPassed, \"全パラメーター登録\");\r\n\r\n                bool speedPassed = NearlyEqual(\r\n                    parameters.GetValue(\r\n                        MazeEnemyParameter.MoveSpeed), 3.5f);\r\n                Debug.Assert(speedPassed, \"基本移動速度\", this);\r\n                Check(speedPassed, \"基本移動速度\");\r\n\r\n                bool chasePassed = NearlyEqual(\r\n                    parameters.GetValue(\r\n                        MazeEnemyParameter.ChaseSpeedMultiplier),\r\n                    1.15f);\r\n                Debug.Assert(chasePassed, \"追跡速度倍率\", this);\r\n                Check(chasePassed, \"追跡速度倍率\");\r\n\r\n                bool escapePassed = NearlyEqual(\r\n                    parameters.GetValue(\r\n                        MazeEnemyParameter.EscapeSpeedMultiplier),\r\n                    1.3f);\r\n                Debug.Assert(escapePassed, \"逃走速度倍率\", this);\r\n                Check(escapePassed, \"逃走速度倍率\");\r\n\r\n                bool detectionPassed = NearlyEqual(\r\n                    parameters.GetValue(\r\n                        MazeEnemyParameter.DetectionRange), 6f);\r\n                Debug.Assert(detectionPassed, \"認識距離\", this);\r\n                Check(detectionPassed, \"認識距離\");\r\n\r\n                bool memoryPassed = NearlyEqual(\r\n                    parameters.GetValue(\r\n                        MazeEnemyParameter.MemoryDuration), 5f);\r\n                Debug.Assert(memoryPassed, \"記憶保持時間\", this);\r\n                Check(memoryPassed, \"記憶保持時間\");\r\n\r\n                bool defaultsPassed = true;\r\n\r\n                foreach (var definition in\r\n                    MazeEnemyParameterCatalog.Definitions)\r\n                {\r\n                    defaultsPassed &= NearlyEqual(\r\n                        parameters.GetValue(definition.Id),\r\n                        definition.DefaultValue);\r\n                }\r\n\r\n                Debug.Assert(defaultsPassed, \"全標準値の一致\", this);\r\n                Check(defaultsPassed, \"全標準値の一致\");\r\n\r\n                bool sharedPassed = ReferenceEquals(\r\n                    parameters.GetParameter(\r\n                        MazeEnemyParameter.MoveSpeed).Definition,\r\n                    MazeEnemyParameterCatalog.GetDefinition(\r\n                        MazeEnemyParameter.MoveSpeed));\r\n                Debug.Assert(sharedPassed, \"共通定義の共有\", this);\r\n                Check(sharedPassed, \"共通定義の共有\");\r\n            }\r\n        }\r\n\r\n#if UNITY_EDITOR\r\n        /// <summary>\r\n        /// 敵プロファイルの初期値と補正を検証する。\r\n        /// </summary>\r\n        private void TestProfile()\r\n        {\r\n            var profile =\r\n                ScriptableObject.CreateInstance<MazeEnemyProfile>();\r\n\r\n            try\r\n            {\r\n                bool namePassed =\r\n                    profile.DisplayName == \"標準型\";\r\n                Debug.Assert(namePassed, \"プロファイル表示名\", this);\r\n                Check(namePassed, \"プロファイル表示名\");\r\n\r\n                bool defaultsPassed = true;\r\n\r\n                foreach (var definition in\r\n                    MazeEnemyParameterCatalog.Definitions)\r\n                {\r\n                    defaultsPassed &= NearlyEqual(\r\n                        profile.GetInitialValue(definition.Id),\r\n                        definition.DefaultValue);\r\n                }\r\n\r\n                Debug.Assert(defaultsPassed, \"プロファイル標準値\", this);\r\n                Check(defaultsPassed, \"プロファイル標準値\");\r\n\r\n                SetProfileFloat(profile, \"aggression\", 0.95f);\r\n\r\n                bool aggressionPassed = NearlyEqual(\r\n                    profile.GetInitialValue(\r\n                        MazeEnemyParameter.Aggression), 0.95f);\r\n                Debug.Assert(aggressionPassed, \"性格設定の反映\", this);\r\n                Check(aggressionPassed, \"性格設定の反映\");\r\n\r\n                SetProfileFloat(profile, \"moveSpeed\", 4.2f);\r\n\r\n                bool speedPassed = NearlyEqual(\r\n                    profile.GetInitialValue(\r\n                        MazeEnemyParameter.MoveSpeed), 4.2f);\r\n                Debug.Assert(speedPassed, \"能力設定の反映\", this);\r\n                Check(speedPassed, \"能力設定の反映\");\r\n\r\n                SetProfileFloat(profile, \"caution\", 2f);\r\n\r\n                bool maxPassed = NearlyEqual(\r\n                    profile.GetInitialValue(\r\n                        MazeEnemyParameter.Caution), 1f);\r\n                Debug.Assert(maxPassed, \"上限値の補正\", this);\r\n                Check(maxPassed, \"上限値の補正\");\r\n\r\n                SetProfileFloat(profile, \"exploration\", -1f);\r\n\r\n                bool minPassed = NearlyEqual(\r\n                    profile.GetInitialValue(\r\n                        MazeEnemyParameter.Exploration), 0f);\r\n                Debug.Assert(minPassed, \"下限値の補正\", this);\r\n                Check(minPassed, \"下限値の補正\");\r\n\r\n                using (var parameters =\r\n                    profile.CreateParameterSet())\r\n                {\r\n                    bool initialPassed = NearlyEqual(\r\n                        parameters.GetParameter(\r\n                            MazeEnemyParameter.Aggression)\r\n                            .InitialValue, 0.95f);\r\n                    Debug.Assert(initialPassed, \"固有初期値の登録\", this);\r\n                    Check(initialPassed, \"固有初期値の登録\");\r\n                }\r\n\r\n                bool invalidPassed =\r\n                    Throws<KeyNotFoundException>(() =>\r\n                        profile.GetInitialValue(\r\n                            MazeEnemyParameter.None));\r\n                Debug.Assert(invalidPassed, \"不正プロファイル識別子\", this);\r\n                Check(invalidPassed, \"不正プロファイル識別子\");\r\n            }\r\n            finally\r\n            {\r\n                DestroyTestProfile(profile);\r\n            }\r\n        }\r\n#endif\r\n\r\n        /// <summary>\r\n        /// 実行時パラメーターの変更と補正を検証する。\r\n        /// </summary>\r\n        private void TestRuntimeChanges()\r\n        {\r\n            using (var parameters =\r\n                MazeEnemyParameterCatalog.CreateParameterSet())\r\n            {\r\n                var id = MazeEnemyParameter.MoveSpeed;\r\n\r\n                parameters.SetBaseValue(id, 4f);\r\n\r\n                bool basePassed = NearlyEqual(\r\n                    parameters.GetValue(id), 4f);\r\n                Debug.Assert(basePassed, \"基本値変更\", this);\r\n                Check(basePassed, \"基本値変更\");\r\n\r\n                var additive =\r\n                    ParameterModifier.CreateAdditive(1f);\r\n\r\n                parameters.TryAddModifier(id, additive);\r\n\r\n                bool additivePassed = NearlyEqual(\r\n                    parameters.GetValue(id), 5f);\r\n                Debug.Assert(additivePassed, \"加算補正\", this);\r\n                Check(additivePassed, \"加算補正\");\r\n\r\n                var multiplier =\r\n                    ParameterModifier.CreateMultiplicative(2f);\r\n\r\n                parameters.TryAddModifier(id, multiplier);\r\n\r\n                bool multiplierPassed = NearlyEqual(\r\n                    parameters.GetValue(id), 10f);\r\n                Debug.Assert(multiplierPassed, \"乗算補正\", this);\r\n                Check(multiplierPassed, \"乗算補正\");\r\n\r\n                parameters.SetBaseValue(id, 10f);\r\n\r\n                bool clampPassed = NearlyEqual(\r\n                    parameters.GetValue(id), 12f);\r\n                Debug.Assert(clampPassed, \"最終値の上限補正\", this);\r\n                Check(clampPassed, \"最終値の上限補正\");\r\n\r\n                parameters.TryRemoveModifier(id, multiplier.Id);\r\n\r\n                bool removePassed = NearlyEqual(\r\n                    parameters.GetValue(id), 11f);\r\n                Debug.Assert(removePassed, \"補正の解除\", this);\r\n                Check(removePassed, \"補正の解除\");\r\n\r\n                parameters.ClearModifiers();\r\n\r\n                bool clearPassed = NearlyEqual(\r\n                    parameters.GetValue(id), 10f);\r\n                Debug.Assert(clearPassed, \"全補正の解除\", this);\r\n                Check(clearPassed, \"全補正の解除\");\r\n\r\n                parameters.SetBaseValue(\r\n                    MazeEnemyParameter.Aggression, 2f);\r\n\r\n                bool personalityPassed = NearlyEqual(\r\n                    parameters.GetValue(\r\n                        MazeEnemyParameter.Aggression), 1f);\r\n                Debug.Assert(personalityPassed, \"性格値の範囲補正\", this);\r\n                Check(personalityPassed, \"性格値の範囲補正\");\r\n\r\n                parameters.SetBaseValue(\r\n                    MazeEnemyParameter.Caution, 1f);\r\n\r\n                bool coexistPassed =\r\n                    NearlyEqual(\r\n                        parameters.GetValue(\r\n                            MazeEnemyParameter.Aggression), 1f) &&\r\n                    NearlyEqual(\r\n                        parameters.GetValue(\r\n                            MazeEnemyParameter.Caution), 1f);\r\n                Debug.Assert(coexistPassed, \"攻撃性と警戒心の独立性\", this);\r\n                Check(coexistPassed, \"攻撃性と警戒心の独立性\");\r\n            }\r\n        }\r\n\r\n#if UNITY_EDITOR\r\n        /// <summary>\r\n        /// エージェント間の独立性とリセットを検証する。\r\n        /// </summary>\r\n        private void TestIndependence()\r\n        {\r\n            var profile =\r\n                ScriptableObject.CreateInstance<MazeEnemyProfile>();\r\n\r\n            try\r\n            {\r\n                SetProfileFloat(profile, \"aggression\", 0.9f);\r\n                SetProfileFloat(profile, \"moveSpeed\", 4f);\r\n\r\n                using (var first = profile.CreateParameterSet())\r\n                using (var second = profile.CreateParameterSet())\r\n                {\r\n                    var id = MazeEnemyParameter.Aggression;\r\n\r\n                    bool instancePassed =\r\n                        !ReferenceEquals(\r\n                            first.GetParameter(id),\r\n                            second.GetParameter(id));\r\n                    Debug.Assert(instancePassed, \"実行時インスタンスの独立\", this);\r\n                    Check(instancePassed, \"実行時インスタンスの独立\");\r\n\r\n                    first.SetBaseValue(id, 0.2f);\r\n\r\n                    bool valuePassed = NearlyEqual(\r\n                        second.GetValue(id), 0.9f);\r\n                    Debug.Assert(valuePassed, \"他個体への変更影響防止\", this);\r\n                    Check(valuePassed, \"他個体への変更影響防止\");\r\n\r\n                    first.TryAddModifier(\r\n                        id,\r\n                        ParameterModifier.CreateAdditive(0.3f));\r\n\r\n                    bool modifierPassed =\r\n                        second.GetParameter(id).ModifierCount == 0;\r\n                    Debug.Assert(modifierPassed, \"補正状態の独立\", this);\r\n                    Check(modifierPassed, \"補正状態の独立\");\r\n\r\n                    bool profilePassed = NearlyEqual(\r\n                        profile.GetInitialValue(id), 0.9f);\r\n                    Debug.Assert(profilePassed, \"共有プロファイルの保護\", this);\r\n                    Check(profilePassed, \"共有プロファイルの保護\");\r\n\r\n                    first.ResetAll();\r\n\r\n                    bool resetPassed = NearlyEqual(\r\n                        first.GetValue(id), 0.9f);\r\n                    Debug.Assert(resetPassed, \"固有初期値への復帰\", this);\r\n                    Check(resetPassed, \"固有初期値への復帰\");\r\n\r\n                    bool resetModifierPassed =\r\n                        first.GetParameter(id).ModifierCount == 0;\r\n                    Debug.Assert(resetModifierPassed, \"リセット時の補正解除\", this);\r\n                    Check(resetModifierPassed, \"リセット時の補正解除\");\r\n\r\n                    SetProfileFloat(profile, \"aggression\", 0.6f);\r\n\r\n                    using (var third = profile.CreateParameterSet())\r\n                    {\r\n                        bool snapshotPassed =\r\n                            NearlyEqual(first.GetValue(id), 0.9f) &&\r\n                            NearlyEqual(third.GetValue(id), 0.6f);\r\n                        Debug.Assert(snapshotPassed, \"生成後の設定独立性\", this);\r\n                        Check(snapshotPassed, \"生成後の設定独立性\");\r\n                    }\r\n\r\n                    first.Dispose();\r\n\r\n                    bool disposePassed =\r\n                        first.IsDisposed &&\r\n                        !second.IsDisposed &&\r\n                        NearlyEqual(second.GetValue(id), 0.9f);\r\n                    Debug.Assert(disposePassed, \"個別解放の独立性\", this);\r\n                    Check(disposePassed, \"個別解放の独立性\");\r\n                }\r\n            }\r\n            finally\r\n            {\r\n                DestroyTestProfile(profile);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト用プロファイルのシリアライズ値を変更する。\r\n        /// </summary>\r\n        /// <param name=\"profile\">変更対象のプロファイル</param>\r\n        /// <param name=\"fieldName\">対象フィールド名</param>\r\n        /// <param name=\"value\">設定する数値</param>\r\n        private void SetProfileFloat(\r\n            MazeEnemyProfile profile,\r\n            string fieldName,\r\n            float value)\r\n        {\r\n            var serializedObject =\r\n                new SerializedObject(profile);\r\n\r\n            serializedObject.Update();\r\n\r\n            var property =\r\n                serializedObject.FindProperty(fieldName);\r\n\r\n            if (property == null)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    $\"フィールドが見つかりません：{fieldName}\");\r\n            }\r\n\r\n            property.floatValue = value;\r\n\r\n            serializedObject.ApplyModifiedPropertiesWithoutUndo();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 一時生成したテスト用プロファイルを破棄する。\r\n        /// </summary>\r\n        /// <param name=\"profile\">破棄対象</param>\r\n        private void DestroyTestProfile(MazeEnemyProfile profile)\r\n        {\r\n            if (profile == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            if (Application.isPlaying)\r\n            {\r\n                Destroy(profile);\r\n            }\r\n            else\r\n            {\r\n                DestroyImmediate(profile);\r\n            }\r\n        }\r\n#endif\r\n\r\n        /// <summary>\r\n        /// 浮動小数点数を許容誤差付きで比較する。\r\n        /// </summary>\r\n        /// <param name=\"first\">比較する数値</param>\r\n        /// <param name=\"second\">比較対象の数値</param>\r\n        /// <returns>十分に近い場合はtrue</returns>\r\n        private bool NearlyEqual(float first, float second)\r\n        {\r\n            return Mathf.Abs(first - second) <= 0.0001f;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された処理が期待する例外を発生させるか確認する。\r\n        /// </summary>\r\n        /// <typeparam name=\"TException\">期待する例外型</typeparam>\r\n        /// <param name=\"action\">検証対象の処理</param>\r\n        /// <returns>期待する例外が発生した場合はtrue</returns>\r\n        private bool Throws<TException>(Action action)\r\n            where TException : Exception\r\n        {\r\n            try\r\n            {\r\n                action();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                if (exception.GetType() == typeof(TException))\r\n                {\r\n                    return true;\r\n                }\r\n\r\n                throw;\r\n            }\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個別のテスト結果を出力して集計する。\r\n        /// </summary>\r\n        /// <param name=\"passed\">成功判定</param>\r\n        /// <param name=\"testName\">テスト名</param>\r\n        private void Check(bool passed, string testName)\r\n        {\r\n            if (passed)\r\n            {\r\n                passedCount++;\r\n\r\n                Debug.Log(\r\n                    $\"<color=#00CC66>【成功】</color> {testName}\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogError(\r\n                    $\"【失敗】{testName}\",\r\n                    this);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.583Z"
+}

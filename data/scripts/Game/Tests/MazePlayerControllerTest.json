@@ -1,5 +1,5 @@
 {
-    "parserVersion": 2,
+    "parserVersion": 3,
     "id": "Game.Tests.MazePlayerControllerTest",
     "name": "MazePlayerControllerTest",
     "fileName": "MazePlayerControllerTest.cs",
@@ -76,11 +76,1144 @@
             "exceptions": []
         }
     ],
+    "types": [
+        {
+            "name": "MazePlayerControllerTest",
+            "fullName": "MazePlayerControllerTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "プレイヤーとステージの連携を検証するクラス。 初期化、移動、宝石取得、ポーズ、速度変更、 ステージクリア、再生成を検証する。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public class MazePlayerControllerTest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "stageManager",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeStageManager stageManager",
+                    "returnType": "",
+                    "valueType": "MazeStageManager",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ管理クラス。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "参照設定"
+                            ],
+                            "raw": "Header(\"参照設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Stage Manager",
+                        "type": "MazeStageManager",
+                        "header": "参照設定",
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "playerBinder",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazePlayerStageBinder playerBinder",
+                    "returnType": "",
+                    "valueType": "MazePlayerStageBinder",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "プレイヤー接続クラス。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Player Binder",
+                        "type": "MazePlayerStageBinder",
+                        "header": null,
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "runTestsOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runTestsOnStart = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "開始時に自動テストを実行するか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "開始時に結合テストを実行する"
+                            ],
+                            "raw": "Tooltip(\"開始時に結合テストを実行する\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Tests On Start",
+                        "type": "bool",
+                        "header": "テスト設定",
+                        "tooltip": "開始時に結合テストを実行する",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "startManualPlayAfterTests",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool startManualPlayAfterTests = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト後に新しいステージを開始するか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "テスト成功後に手動プレイへ移行する"
+                            ],
+                            "raw": "Tooltip(\"テスト成功後に手動プレイへ移行する\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Start Manual Play After Tests",
+                        "type": "bool",
+                        "header": null,
+                        "tooltip": "テスト成功後に手動プレイへ移行する",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "成功したテスト項目数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト結果"
+                            ],
+                            "raw": "Header(\"テスト結果\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Passed Count",
+                        "type": "int",
+                        "header": "テスト結果",
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "失敗したテスト項目数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Failed Count",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "observedPlayer",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazePlayerController observedPlayer",
+                    "returnType": "",
+                    "valueType": "MazePlayerController",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在イベントを監視しているプレイヤー。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "gemEventCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int gemEventCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "宝石取得イベントの発生回数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "cellEventCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int cellEventCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "セル到達イベントの発生回数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "clearEventCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int clearEventCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "クリアイベントの発生回数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "isTesting",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isTesting",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "自動テストを実行中か。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Tolerance",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const float Tolerance = 0.001f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.001f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "位置・時間比較用の許容誤差。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "0.001f",
+                    "inspector": null
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private IEnumerator Start()",
+                    "returnType": "IEnumerator",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "シーン開始時の処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnDestroy",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnDestroy()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "コンポーネント破棄時の処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunAllTests",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void RunAllTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべての結合テストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/全自動テストを実行する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/全自動テストを実行する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunTestsCoroutine",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private IEnumerator RunTestsCoroutine()",
+                    "returnType": "IEnumerator",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "フレームをまたいで結合テストを実行する。",
+                    "returns": "テスト実行用IEnumerator",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateTestSettings",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeStageGenerationSettings CreateTestSettings()",
+                    "returnType": "MazeStageGenerationSettings",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "結合テスト専用のステージ設定を生成する。",
+                    "returns": "テスト用ステージ生成設定",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "FinishTests",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void FinishTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト結果を出力して終了する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestInitialization",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestInitialization(\r\n            MazePlayerController player)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "player",
+                            "type": "MazePlayerController",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト対象のプレイヤー"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "プレイヤーの初期化状態を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestSpeed",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestSpeed(\r\n            MazePlayerController player)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "player",
+                            "type": "MazePlayerController",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト対象のプレイヤー"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "移動速度変更機能を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestInvalidDirection",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestInvalidDirection(\r\n            MazePlayerController player)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "player",
+                            "type": "MazePlayerController",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト対象のプレイヤー"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "不正な移動方向が拒否されるか検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestMovementAndCollection",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestMovementAndCollection(\r\n            MazePlayerController player,\r\n            Vector2Int direction)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "player",
+                            "type": "MazePlayerController",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト対象のプレイヤー"
+                        },
+                        {
+                            "name": "direction",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "移動する方向"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "移動と宝石取得の連携を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestPause",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestPause(\r\n            MazePlayerController player)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "player",
+                            "type": "MazePlayerController",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト対象のプレイヤー"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ポーズ中のプレイヤー状態を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestResume",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestResume(\r\n            MazePlayerController player)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "player",
+                            "type": "MazePlayerController",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト対象のプレイヤー"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ポーズ解除後の状態を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestClear",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestClear(\r\n            MazePlayerController player)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "player",
+                            "type": "MazePlayerController",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト対象のプレイヤー"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "全宝石取得後のクリア処理を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestRegeneration",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestRegeneration(\r\n            MazePlayerController oldPlayer,\r\n            MazeStageGenerationSettings settings)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "oldPlayer",
+                            "type": "MazePlayerController",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "再生成前のプレイヤー"
+                        },
+                        {
+                            "name": "settings",
+                            "type": "MazeStageGenerationSettings",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "ステージ生成設定"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ再生成時のプレイヤー接続を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "StartManualPlay",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void StartManualPlay()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "通常設定で手動プレイを開始する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "手動テスト/新しいステージを開始"
+                            ],
+                            "raw": "ContextMenu(\"手動テスト/新しいステージを開始\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PrintCurrentState",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void PrintCurrentState()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在のステージ情報を出力する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "手動テスト/現在の状態を表示"
+                            ],
+                            "raw": "ContextMenu(\"手動テスト/現在の状態を表示\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnStageGenerated",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnStageGenerated(\r\n            MazeStageGenerationResult result)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "result",
+                            "type": "MazeStageGenerationResult",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "生成されたステージ情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ生成完了時のイベント処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ObservePlayer",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void ObservePlayer(\r\n            MazePlayerController player)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "player",
+                            "type": "MazePlayerController",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "新しい監視対象"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "プレイヤーの監視対象を変更する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnCellEntered",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnCellEntered(Vector2Int position)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "到達したセル座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "セル到達イベントを記録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnGemCollected",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnGemCollected(Vector2Int position)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得したセル座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "宝石取得イベントを記録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnItemCollected",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnItemCollected(Vector2Int position)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得したセル座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "アイテム取得イベントを記録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnItemUseRequested",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnItemUseRequested()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "アイテム使用要求を確認する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnSummonRequested",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnSummonRequested()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "召喚要求を確認する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnStageCleared",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnStageCleared(float elapsedTime)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "elapsedTime",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "クリアまでの経過時間"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージクリアイベントを記録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryFindAdjacentGem",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool TryFindAdjacentGem(\r\n            Vector2Int position,\r\n            out Vector2Int direction)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検索元のセル座標"
+                        },
+                        {
+                            "name": "direction",
+                            "type": "Vector2Int",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "宝石セルへの方向"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在位置に隣接する宝石セルを検索する。",
+                    "returns": "宝石セルが見つかった場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValidateReferences",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool ValidateReferences()",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "必要な参照を検証する。",
+                    "returns": "参照が正常な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(\r\n            bool condition,\r\n            string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "condition",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "成功条件"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト項目名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト結果を記録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 17
+        }
+    ],
     "source": "\r\nusing System;\r\nusing System.Collections;\r\nusing System.Collections.Generic;\r\nusing UnityEngine;\r\nusing Game.Character;\r\nusing Game.Stage;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// プレイヤーとステージの連携を検証するクラス。\r\n    ///\r\n    /// 初期化、移動、宝石取得、ポーズ、速度変更、\r\n    /// ステージクリア、再生成を検証する。\r\n    /// </summary>\r\n    public class MazePlayerControllerTest : MonoBehaviour\r\n    {\r\n        #region Inspector Fields\r\n\r\n        [Header(\"参照設定\")]\r\n\r\n        /// <summary>ステージ管理クラス。</summary>\r\n        [SerializeField]\r\n        private MazeStageManager stageManager;\r\n\r\n        /// <summary>プレイヤー接続クラス。</summary>\r\n        [SerializeField]\r\n        private MazePlayerStageBinder playerBinder;\r\n\r\n        [Header(\"テスト設定\")]\r\n\r\n        /// <summary>開始時に自動テストを実行するか。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"開始時に結合テストを実行する\")]\r\n        private bool runTestsOnStart = true;\r\n\r\n        /// <summary>テスト後に新しいステージを開始するか。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"テスト成功後に手動プレイへ移行する\")]\r\n        private bool startManualPlayAfterTests = true;\r\n\r\n        [Header(\"テスト結果\")]\r\n\r\n        /// <summary>成功したテスト項目数。</summary>\r\n        [SerializeField]\r\n        private int passedCount;\r\n\r\n        /// <summary>失敗したテスト項目数。</summary>\r\n        [SerializeField]\r\n        private int failedCount;\r\n\r\n        #endregion\r\n\r\n        #region Runtime Fields\r\n\r\n        /// <summary>現在イベントを監視しているプレイヤー。</summary>\r\n        private MazePlayerController observedPlayer;\r\n\r\n        /// <summary>宝石取得イベントの発生回数。</summary>\r\n        private int gemEventCount;\r\n\r\n        /// <summary>セル到達イベントの発生回数。</summary>\r\n        private int cellEventCount;\r\n\r\n        /// <summary>クリアイベントの発生回数。</summary>\r\n        private int clearEventCount;\r\n\r\n        /// <summary>自動テストを実行中か。</summary>\r\n        private bool isTesting;\r\n\r\n        /// <summary>位置・時間比較用の許容誤差。</summary>\r\n        private const float Tolerance = 0.001f;\r\n\r\n        #endregion\r\n\r\n        #region Unity Methods\r\n\r\n        /// <summary>シーン開始時の処理。</summary>\r\n        private IEnumerator Start()\r\n        {\r\n            if (!ValidateReferences())\r\n            {\r\n                yield break;\r\n            }\r\n\r\n            stageManager.StageGenerated += OnStageGenerated;\r\n            stageManager.StageCleared += OnStageCleared;\r\n\r\n            // 他コンポーネントのStart完了を待つ。\r\n            yield return null;\r\n\r\n            if (runTestsOnStart)\r\n            {\r\n                RunAllTests();\r\n            }\r\n            else\r\n            {\r\n                ObservePlayer(playerBinder.CurrentPlayer);\r\n            }\r\n        }\r\n\r\n        /// <summary>コンポーネント破棄時の処理。</summary>\r\n        private void OnDestroy()\r\n        {\r\n            if (stageManager != null)\r\n            {\r\n                stageManager.StageGenerated -=\r\n                    OnStageGenerated;\r\n\r\n                stageManager.StageCleared -=\r\n                    OnStageCleared;\r\n            }\r\n\r\n            ObservePlayer(null);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Test Control Methods\r\n\r\n        /// <summary>すべての結合テストを実行する。</summary>\r\n        [ContextMenu(\"テスト/全自動テストを実行する\")]\r\n        public void RunAllTests()\r\n        {\r\n            if (!Application.isPlaying ||\r\n                isTesting ||\r\n                !ValidateReferences())\r\n            {\r\n                return;\r\n            }\r\n\r\n            StartCoroutine(RunTestsCoroutine());\r\n        }\r\n\r\n        /// <summary>\r\n        /// フレームをまたいで結合テストを実行する。\r\n        /// </summary>\r\n        /// <returns>テスト実行用IEnumerator</returns>\r\n        private IEnumerator RunTestsCoroutine()\r\n        {\r\n            isTesting = true;\r\n\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n            Debug.Log(\r\n                \"【MazePlayerController 結合テスト開始】\",\r\n                this);\r\n\r\n            // テスト専用設定でステージを生成する。\r\n            MazeStageGenerationSettings settings =\r\n                CreateTestSettings();\r\n\r\n            bool generated =\r\n                stageManager.GenerateStage(settings);\r\n\r\n            Check(generated, \"テストステージの生成\");\r\n\r\n            yield return null;\r\n\r\n            MazePlayerController player =\r\n                playerBinder.CurrentPlayer;\r\n\r\n            Check(\r\n                player != null,\r\n                \"プレイヤーの生成\");\r\n\r\n            Check(\r\n                playerBinder.HasPlayer,\r\n                \"プレイヤーとの接続\");\r\n\r\n            if (!generated ||\r\n                player == null ||\r\n                !player.IsInitialized)\r\n            {\r\n                FinishTests();\r\n                yield break;\r\n            }\r\n\r\n            ObservePlayer(player);\r\n\r\n            TestInitialization(player);\r\n\r\n            // AutoStartStageが無効な場合にも対応する。\r\n            if (stageManager.State == MazeStageState.Ready)\r\n            {\r\n                stageManager.StartStage();\r\n            }\r\n\r\n            Check(\r\n                stageManager.IsPlaying,\r\n                \"ステージの開始\");\r\n\r\n            Check(\r\n                player.CanAct,\r\n                \"プレイヤーの行動許可\");\r\n\r\n            Check(\r\n                !player.Movement.IsPaused,\r\n                \"移動処理の再開\");\r\n\r\n            TestSpeed(player);\r\n\r\n            TestInvalidDirection(player);\r\n\r\n            // 宝石が配置された隣接セルを検索する。\r\n            bool found = TryFindAdjacentGem(\r\n                player.CurrentCell,\r\n                out Vector2Int direction);\r\n\r\n            Check(found, \"隣接する宝石セルの取得\");\r\n\r\n            if (!found)\r\n            {\r\n                FinishTests();\r\n                yield break;\r\n            }\r\n\r\n            TestMovementAndCollection(player, direction);\r\n\r\n            TestPause(player);\r\n\r\n            // ポーズ中に経過時間が増加しないことを確認する。\r\n            float pausedTime = stageManager.ElapsedTime;\r\n\r\n            yield return null;\r\n            yield return null;\r\n\r\n            Check(\r\n                Mathf.Abs(\r\n                    stageManager.ElapsedTime - pausedTime)\r\n                    <= Tolerance,\r\n                \"ポーズ中の経過時間停止\");\r\n\r\n            TestResume(player);\r\n\r\n            TestClear(player);\r\n\r\n            // ステージ再生成によるプレイヤーの交換を検証する。\r\n            TestRegeneration(player, settings);\r\n\r\n            FinishTests();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 結合テスト専用のステージ設定を生成する。\r\n        /// </summary>\r\n        /// <returns>テスト用ステージ生成設定</returns>\r\n        private MazeStageGenerationSettings CreateTestSettings()\r\n        {\r\n            MazeStageGenerationSettings settings =\r\n                new MazeStageGenerationSettings();\r\n\r\n            settings.MazeSettings.Width = 15;\r\n            settings.MazeSettings.Height = 11;\r\n            settings.MazeSettings.UseFixedSeed = true;\r\n            settings.MazeSettings.Seed = 12345;\r\n\r\n            // 通行可能な隣接セルへ宝石が配置されるようにする。\r\n            settings.EnemyCount = 0;\r\n            settings.InitialItemCount = 0;\r\n            settings.ItemSpawnCount = 0;\r\n            settings.GemRate = 1f;\r\n            settings.BreakableWallRate = 0f;\r\n\r\n            return settings;\r\n        }\r\n\r\n        /// <summary>テスト結果を出力して終了する。</summary>\r\n        private void FinishTests()\r\n        {\r\n            isTesting = false;\r\n\r\n            string message =\r\n                \"【MazePlayerController テスト結果】\\n\" +\r\n                $\"成功：{passedCount}\\n\" +\r\n                $\"失敗：{failedCount}\";\r\n\r\n            if (failedCount == 0)\r\n            {\r\n                Debug.Log(\r\n                    message +\r\n                    \"\\nすべての結合テストに成功しました。\",\r\n                    this);\r\n\r\n                if (startManualPlayAfterTests)\r\n                {\r\n                    StartManualPlay();\r\n                }\r\n            }\r\n            else\r\n            {\r\n                Debug.LogError(message, this);\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Automated Test Methods\r\n\r\n        /// <summary>\r\n        /// プレイヤーの初期化状態を検証する。\r\n        /// </summary>\r\n        /// <param name=\"player\">テスト対象のプレイヤー</param>\r\n        private void TestInitialization(\r\n            MazePlayerController player)\r\n        {\r\n            Check(\r\n                player.IsInitialized,\r\n                \"プレイヤーの初期化\");\r\n\r\n            Check(\r\n                player.Movement != null,\r\n                \"移動コンポーネントの取得\");\r\n\r\n            Check(\r\n                player.Movement.IsInitialized,\r\n                \"移動コンポーネントの初期化\");\r\n\r\n            Check(\r\n                !player.Movement.AutoUpdate,\r\n                \"移動更新の二重実行防止\");\r\n\r\n            Check(\r\n                player.CurrentCell ==\r\n                stageManager.StageResult.PlayerSpawnPosition,\r\n                \"プレイヤーの初期セル座標\");\r\n\r\n            Check(\r\n                player.Movement.IsAtCellCenter,\r\n                \"セル中心への初期配置\");\r\n\r\n            Check(\r\n                stageManager.IsWalkable(player.CurrentCell),\r\n                \"初期位置の通行可能判定\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 移動速度変更機能を検証する。\r\n        /// </summary>\r\n        /// <param name=\"player\">テスト対象のプレイヤー</param>\r\n        private void TestSpeed(\r\n            MazePlayerController player)\r\n        {\r\n            float originalSpeed = player.BaseMoveSpeed;\r\n\r\n            player.SetBaseMoveSpeed(4f);\r\n\r\n            Check(\r\n                Mathf.Approximately(\r\n                    player.CurrentMoveSpeed, 4f),\r\n                \"基本移動速度の変更\");\r\n\r\n            player.SetSpeedMultiplier(1.5f);\r\n\r\n            Check(\r\n                Mathf.Approximately(\r\n                    player.CurrentMoveSpeed, 6f),\r\n                \"速度倍率の適用\");\r\n\r\n            Check(\r\n                Mathf.Approximately(\r\n                    player.Movement.MoveSpeed, 6f),\r\n                \"移動コンポーネントへの速度反映\");\r\n\r\n            player.ResetSpeedMultiplier();\r\n\r\n            Check(\r\n                Mathf.Approximately(\r\n                    player.SpeedMultiplier, 1f),\r\n                \"速度倍率の初期化\");\r\n\r\n            Check(\r\n                Mathf.Approximately(\r\n                    player.Movement.MoveSpeed, 4f),\r\n                \"通常速度への復帰\");\r\n\r\n            player.SetBaseMoveSpeed(originalSpeed);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 不正な移動方向が拒否されるか検証する。\r\n        /// </summary>\r\n        /// <param name=\"player\">テスト対象のプレイヤー</param>\r\n        private void TestInvalidDirection(\r\n            MazePlayerController player)\r\n        {\r\n            Check(\r\n                !player.RequestDirection(Vector2Int.zero),\r\n                \"ゼロ方向の拒否\");\r\n\r\n            Check(\r\n                !player.RequestDirection(\r\n                    new Vector2Int(1, 1)),\r\n                \"斜め方向の拒否\");\r\n\r\n            Check(\r\n                !player.RequestDirection(\r\n                    new Vector2Int(2, 0)),\r\n                \"不正な方向ベクトルの拒否\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 移動と宝石取得の連携を検証する。\r\n        /// </summary>\r\n        /// <param name=\"player\">テスト対象のプレイヤー</param>\r\n        /// <param name=\"direction\">移動する方向</param>\r\n        private void TestMovementAndCollection(\r\n            MazePlayerController player,\r\n            Vector2Int direction)\r\n        {\r\n            Vector2Int startCell = player.CurrentCell;\r\n            Vector2Int targetCell = startCell + direction;\r\n\r\n            int previousGemCount =\r\n                stageManager.RemainingGemCount;\r\n\r\n            gemEventCount = 0;\r\n            cellEventCount = 0;\r\n\r\n            float originalSpeed = player.BaseMoveSpeed;\r\n\r\n            player.SetBaseMoveSpeed(4f);\r\n\r\n            Check(\r\n                player.RequestDirection(direction),\r\n                \"移動方向の予約\");\r\n\r\n            // 1セルの半分だけ移動させる。\r\n            player.Movement.Tick(0.125f);\r\n\r\n            Check(\r\n                player.Movement.IsTraversing,\r\n                \"セル間の移動開始\");\r\n\r\n            Check(\r\n                player.CurrentCell == startCell,\r\n                \"移動中の現在セル維持\");\r\n\r\n            Check(\r\n                stageManager.RemainingGemCount ==\r\n                previousGemCount,\r\n                \"セル到達前の宝石取得防止\");\r\n\r\n            // 残り半分を移動させる。\r\n            player.Movement.Tick(0.125f);\r\n\r\n            Check(\r\n                player.CurrentCell == targetCell,\r\n                \"目的セルへの到達\");\r\n\r\n            Check(\r\n                stageManager.RemainingGemCount ==\r\n                previousGemCount - 1,\r\n                \"宝石の自動取得\");\r\n\r\n            Check(\r\n                !stageManager.Map.GetCell(targetCell).HasGem,\r\n                \"取得済み宝石のセル情報更新\");\r\n\r\n            Check(\r\n                gemEventCount == 1,\r\n                \"宝石取得イベント\");\r\n\r\n            Check(\r\n                cellEventCount == 1,\r\n                \"セル到達イベント\");\r\n\r\n            player.Movement.StopImmediately();\r\n\r\n            player.SetBaseMoveSpeed(originalSpeed);\r\n        }\r\n\r\n        /// <summary>\r\n        /// ポーズ中のプレイヤー状態を検証する。\r\n        /// </summary>\r\n        /// <param name=\"player\">テスト対象のプレイヤー</param>\r\n        private void TestPause(\r\n            MazePlayerController player)\r\n        {\r\n            Vector3 previousPosition =\r\n                player.transform.position;\r\n\r\n            Check(\r\n                stageManager.PauseStage(),\r\n                \"ステージのポーズ\");\r\n\r\n            Check(\r\n                !player.CanAct,\r\n                \"ポーズ中の行動禁止\");\r\n\r\n            Check(\r\n                player.Movement.IsPaused,\r\n                \"移動処理の一時停止\");\r\n\r\n            Check(\r\n                !player.RequestDirection(Vector2Int.up),\r\n                \"ポーズ中の移動要求拒否\");\r\n\r\n            // 外部からTickを実行しても移動しないことを確認する。\r\n            player.Movement.Tick(1f);\r\n\r\n            Check(\r\n                Vector3.Distance(\r\n                    previousPosition,\r\n                    player.transform.position) <= Tolerance,\r\n                \"ポーズ中の位置維持\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// ポーズ解除後の状態を検証する。\r\n        /// </summary>\r\n        /// <param name=\"player\">テスト対象のプレイヤー</param>\r\n        private void TestResume(\r\n            MazePlayerController player)\r\n        {\r\n            Check(\r\n                stageManager.ResumeStage(),\r\n                \"ステージの再開\");\r\n\r\n            Check(\r\n                player.CanAct,\r\n                \"再開後の行動許可\");\r\n\r\n            Check(\r\n                !player.Movement.IsPaused,\r\n                \"再開後の移動許可\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 全宝石取得後のクリア処理を検証する。\r\n        /// </summary>\r\n        /// <param name=\"player\">テスト対象のプレイヤー</param>\r\n        private void TestClear(\r\n            MazePlayerController player)\r\n        {\r\n            clearEventCount = 0;\r\n\r\n            // 列挙中にセルを書き換えないよう、\r\n            // 残っている宝石の座標を先に取得する。\r\n            List<Vector2Int> gemPositions =\r\n                new List<Vector2Int>(\r\n                    stageManager.Map.FindPositions(\r\n                        cell => cell.HasGem));\r\n\r\n            // 最後の宝石だけ残す。\r\n            for (int i = 0;\r\n                 i < gemPositions.Count - 1;\r\n                 i++)\r\n            {\r\n                stageManager.TryCollectGem(gemPositions[i]);\r\n            }\r\n\r\n            Check(\r\n                stageManager.RemainingGemCount == 1,\r\n                \"最後の宝石を残した状態\");\r\n\r\n            if (gemPositions.Count == 0)\r\n            {\r\n                return;\r\n            }\r\n\r\n            Vector2Int lastGem =\r\n                gemPositions[gemPositions.Count - 1];\r\n\r\n            // 最後の宝石を取得する。\r\n            // ここではステージのクリア連携を直接検証する。\r\n            stageManager.TryCollectGem(lastGem);\r\n\r\n            Check(\r\n                stageManager.RemainingGemCount == 0,\r\n                \"全宝石の取得\");\r\n\r\n            Check(\r\n                stageManager.State == MazeStageState.Cleared,\r\n                \"ステージクリア判定\");\r\n\r\n            Check(\r\n                !player.CanAct,\r\n                \"クリア後の行動禁止\");\r\n\r\n            Check(\r\n                player.Movement.IsPaused,\r\n                \"クリア直後の移動停止\");\r\n\r\n            Check(\r\n                clearEventCount == 1,\r\n                \"クリアイベントの発生\");\r\n\r\n            Check(\r\n                !player.RequestDirection(Vector2Int.right),\r\n                \"クリア後の移動要求拒否\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// ステージ再生成時のプレイヤー接続を検証する。\r\n        /// </summary>\r\n        /// <param name=\"oldPlayer\">再生成前のプレイヤー</param>\r\n        /// <param name=\"settings\">ステージ生成設定</param>\r\n        private void TestRegeneration(\r\n            MazePlayerController oldPlayer,\r\n            MazeStageGenerationSettings settings)\r\n        {\r\n            Check(\r\n                stageManager.GenerateStage(settings),\r\n                \"ステージの再生成\");\r\n\r\n            MazePlayerController newPlayer =\r\n                playerBinder.CurrentPlayer;\r\n\r\n            Check(\r\n                newPlayer != null,\r\n                \"新しいプレイヤーの生成\");\r\n\r\n            Check(\r\n                newPlayer != null &&\r\n                !ReferenceEquals(oldPlayer, newPlayer),\r\n                \"プレイヤーインスタンスの交換\");\r\n\r\n            Check(\r\n                oldPlayer == null ||\r\n                !oldPlayer.IsInitialized,\r\n                \"古いプレイヤーの接続解除\");\r\n\r\n            Check(\r\n                newPlayer != null &&\r\n                newPlayer.IsInitialized,\r\n                \"新しいプレイヤーの初期化\");\r\n\r\n            Check(\r\n                stageManager.RemainingGemCount ==\r\n                stageManager.InitialGemCount,\r\n                \"再生成後の宝石数初期化\");\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Manual Test Methods\r\n\r\n        /// <summary>通常設定で手動プレイを開始する。</summary>\r\n        [ContextMenu(\"手動テスト/新しいステージを開始\")]\r\n        public void StartManualPlay()\r\n        {\r\n            if (!Application.isPlaying ||\r\n                isTesting ||\r\n                !ValidateReferences())\r\n            {\r\n                return;\r\n            }\r\n\r\n            if (!stageManager.GenerateStage())\r\n            {\r\n                return;\r\n            }\r\n\r\n            ObservePlayer(playerBinder.CurrentPlayer);\r\n\r\n            if (stageManager.State == MazeStageState.Ready)\r\n            {\r\n                stageManager.StartStage();\r\n            }\r\n\r\n            Debug.Log(\r\n                \"【手動プレイ開始】\\n\" +\r\n                \"WASD・矢印キー：移動\\n\" +\r\n                \"Space：アイテム使用要求\\n\" +\r\n                \"E：召喚要求\\n\" +\r\n                \"Esc：ポーズ・再開\",\r\n                this);\r\n        }\r\n\r\n        /// <summary>現在のステージ情報を出力する。</summary>\r\n        [ContextMenu(\"手動テスト/現在の状態を表示\")]\r\n        public void PrintCurrentState()\r\n        {\r\n            if (!Application.isPlaying ||\r\n                stageManager == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            MazePlayerController player =\r\n                playerBinder.CurrentPlayer;\r\n\r\n            Debug.Log(\r\n                \"【現在のプレイ状態】\\n\" +\r\n                $\"ステージ状態：{stageManager.State}\\n\" +\r\n                $\"残り宝石：{stageManager.RemainingGemCount}\\n\" +\r\n                $\"取得済み宝石：{stageManager.CollectedGemCount}\\n\" +\r\n                $\"経過時間：{stageManager.ElapsedTime:F2}秒\\n\" +\r\n                $\"現在セル：{player?.CurrentCell}\\n\" +\r\n                $\"移動方向：{player?.CurrentDirection}\",\r\n                this);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Event Methods\r\n\r\n        /// <summary>\r\n        /// ステージ生成完了時のイベント処理。\r\n        /// </summary>\r\n        /// <param name=\"result\">生成されたステージ情報</param>\r\n        private void OnStageGenerated(\r\n            MazeStageGenerationResult result)\r\n        {\r\n            ObservePlayer(playerBinder.CurrentPlayer);\r\n        }\r\n\r\n        /// <summary>\r\n        /// プレイヤーの監視対象を変更する。\r\n        /// </summary>\r\n        /// <param name=\"player\">新しい監視対象</param>\r\n        private void ObservePlayer(\r\n            MazePlayerController player)\r\n        {\r\n            if (observedPlayer != null)\r\n            {\r\n                observedPlayer.CellEntered -= OnCellEntered;\r\n                observedPlayer.GemCollected -= OnGemCollected;\r\n                observedPlayer.ItemCollected -= OnItemCollected;\r\n\r\n                observedPlayer.ItemUseRequested -=\r\n                    OnItemUseRequested;\r\n\r\n                observedPlayer.SummonRequested -=\r\n                    OnSummonRequested;\r\n            }\r\n\r\n            observedPlayer = player;\r\n\r\n            if (observedPlayer == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            observedPlayer.CellEntered += OnCellEntered;\r\n            observedPlayer.GemCollected += OnGemCollected;\r\n            observedPlayer.ItemCollected += OnItemCollected;\r\n\r\n            observedPlayer.ItemUseRequested +=\r\n                OnItemUseRequested;\r\n\r\n            observedPlayer.SummonRequested +=\r\n                OnSummonRequested;\r\n        }\r\n\r\n        /// <summary>セル到達イベントを記録する。</summary>\r\n        /// <param name=\"position\">到達したセル座標</param>\r\n        private void OnCellEntered(Vector2Int position)\r\n        {\r\n            cellEventCount++;\r\n        }\r\n\r\n        /// <summary>宝石取得イベントを記録する。</summary>\r\n        /// <param name=\"position\">取得したセル座標</param>\r\n        private void OnGemCollected(Vector2Int position)\r\n        {\r\n            gemEventCount++;\r\n\r\n            Debug.Log(\r\n                $\"宝石取得：{position} / \" +\r\n                $\"残り：{stageManager.RemainingGemCount}\",\r\n                this);\r\n        }\r\n\r\n        /// <summary>アイテム取得イベントを記録する。</summary>\r\n        /// <param name=\"position\">取得したセル座標</param>\r\n        private void OnItemCollected(Vector2Int position)\r\n        {\r\n            Debug.Log($\"アイテム取得：{position}\", this);\r\n        }\r\n\r\n        /// <summary>アイテム使用要求を確認する。</summary>\r\n        private void OnItemUseRequested()\r\n        {\r\n            Debug.Log(\"アイテム使用要求\", this);\r\n        }\r\n\r\n        /// <summary>召喚要求を確認する。</summary>\r\n        private void OnSummonRequested()\r\n        {\r\n            Debug.Log(\"召喚要求\", this);\r\n        }\r\n\r\n        /// <summary>ステージクリアイベントを記録する。</summary>\r\n        /// <param name=\"elapsedTime\">クリアまでの経過時間</param>\r\n        private void OnStageCleared(float elapsedTime)\r\n        {\r\n            clearEventCount++;\r\n\r\n            Debug.Log(\r\n                \"【ステージクリア！！】\\n\" +\r\n                $\"クリアタイム：{elapsedTime:F2}秒\",\r\n                this);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Utility Methods\r\n\r\n        /// <summary>\r\n        /// 現在位置に隣接する宝石セルを検索する。\r\n        /// </summary>\r\n        /// <param name=\"position\">検索元のセル座標</param>\r\n        /// <param name=\"direction\">宝石セルへの方向</param>\r\n        /// <returns>宝石セルが見つかった場合はtrue</returns>\r\n        private bool TryFindAdjacentGem(\r\n            Vector2Int position,\r\n            out Vector2Int direction)\r\n        {\r\n            foreach (Vector2Int neighbor in\r\n                stageManager.Map.GetNeighbors(position))\r\n            {\r\n                if (stageManager.IsWalkable(neighbor) &&\r\n                    stageManager.Map.GetCell(neighbor).HasGem)\r\n                {\r\n                    direction = neighbor - position;\r\n\r\n                    return true;\r\n                }\r\n            }\r\n\r\n            direction = Vector2Int.zero;\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 必要な参照を検証する。\r\n        /// </summary>\r\n        /// <returns>参照が正常な場合はtrue</returns>\r\n        private bool ValidateReferences()\r\n        {\r\n            if (stageManager == null ||\r\n                playerBinder == null)\r\n            {\r\n                Debug.LogError(\r\n                    \"プレイヤーテストに必要な参照を\" +\r\n                    \"設定してください。\",\r\n                    this);\r\n\r\n                return false;\r\n            }\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>テスト結果を記録する。</summary>\r\n        /// <param name=\"condition\">成功条件</param>\r\n        /// <param name=\"testName\">テスト項目名</param>\r\n        private void Check(\r\n            bool condition,\r\n            string testName)\r\n        {\r\n            if (condition)\r\n            {\r\n                passedCount++;\r\n\r\n                Debug.Log($\"[成功] {testName}\", this);\r\n            }\r\n            else\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogError($\"[失敗] {testName}\", this);\r\n            }\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
     "tips": [],
     "examples": [],
     "notes": [],
     "related": [],
     "tests": [],
-    "generatedAt": "2026-11-26T16:10:17.999Z"
+    "generatedAt": "2026-11-28T15:50:00.845Z"
 }

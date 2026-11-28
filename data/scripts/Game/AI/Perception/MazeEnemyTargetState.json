@@ -1,0 +1,56 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Perception.MazeEnemyTargetState",
+    "name": "MazeEnemyTargetState",
+    "fileName": "MazeEnemyTargetState.cs",
+    "namespace": "Game.AI.Perception",
+    "type": "enum",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public enum MazeEnemyTargetState",
+    "typeParameters": [],
+    "summary": "敵AIによる対象の認識状態。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [],
+    "members": [],
+    "types": [
+        {
+            "name": "MazeEnemyTargetState",
+            "fullName": "MazeEnemyTargetState",
+            "kind": "enum",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "敵AIによる対象の認識状態。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public enum MazeEnemyTargetState",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [],
+            "nestedTypes": [],
+            "enumValues": [
+                {
+                    "name": "Unknown",
+                    "value": "0"
+                },
+                {
+                    "name": "Visible",
+                    "value": "1"
+                },
+                {
+                    "name": "Remembered",
+                    "value": "2"
+                }
+            ],
+            "line": 7
+        }
+    ],
+    "source": "\r\nnamespace Game.AI.Perception\r\n{\r\n    /// <summary>\r\n    /// 敵AIによる対象の認識状態。\r\n    /// </summary>\r\n    public enum MazeEnemyTargetState\r\n    {\r\n        /// <summary>\r\n        /// 対象を認識していない状態。\r\n        /// </summary>\r\n        Unknown = 0,\r\n\r\n        /// <summary>\r\n        /// 対象を現在視認している状態。\r\n        /// </summary>\r\n        Visible = 1,\r\n\r\n        /// <summary>\r\n        /// 対象を見失っているが、\r\n        /// 最後の認識情報を記憶している状態。\r\n        /// </summary>\r\n        Remembered = 2\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.736Z"
+}

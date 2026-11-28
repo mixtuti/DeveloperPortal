@@ -1,0 +1,1101 @@
+{
+    "parserVersion": 3,
+    "id": "Game.Stage.MazeEnemyStageBinder",
+    "name": "MazeEnemyStageBinder",
+    "fileName": "MazeEnemyStageBinder.cs",
+    "namespace": "Game.Stage",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class MazeEnemyStageBinder : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "ステージに生成された敵とAIシステムを接続する。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "Framework.AI.Scheduling",
+        "Framework.Movement",
+        "Game.AI.Controllers",
+        "Game.AI.Parameters",
+        "Game.AI.Perception",
+        "UnityEngine",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "BoundEnemyCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int BoundEnemyCount =>\r\n            enemies.Count",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "接続済みの敵AI数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Enemies",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public IReadOnlyList<MazeEnemyController> Enemies =>\r\n            enemies",
+            "returnType": "",
+            "valueType": "IReadOnlyList<MazeEnemyController>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "接続済みの敵コントローラー一覧。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "PlayerId",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Guid PlayerId => playerId",
+            "returnType": "",
+            "valueType": "Guid",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "プレイヤーの認識対象識別子。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "StageManager",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeStageManager StageManager =>\r\n            stageManager",
+            "returnType": "",
+            "valueType": "MazeStageManager",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "接続先のステージ管理システム。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "UpdateManager",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public AgentUpdateManager UpdateManager =>\r\n            updateManager",
+            "returnType": "",
+            "valueType": "AgentUpdateManager",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "AI更新管理システム。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "BindCurrentStage",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool BindCurrentStage()",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在のステージに敵AIを接続する。",
+            "returns": "全敵の接続に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ReleaseEnemies",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void ReleaseEnemies()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "接続済みの敵AIを解放する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyStageBinder",
+            "fullName": "MazeEnemyStageBinder",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "ステージに生成された敵とAIシステムを接続する。",
+            "remarks": "",
+            "attributes": [
+                {
+                    "name": "DisallowMultipleComponent",
+                    "arguments": [],
+                    "raw": "DisallowMultipleComponent"
+                }
+            ],
+            "declaration": "public sealed class MazeEnemyStageBinder : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "stageManager",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeStageManager stageManager",
+                    "returnType": "",
+                    "valueType": "MazeStageManager",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "依存コンポーネント"
+                            ],
+                            "raw": "Header(\"依存コンポーネント\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "ステージ管理システム。"
+                            ],
+                            "raw": "Tooltip(\"ステージ管理システム。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Stage Manager",
+                        "type": "MazeStageManager",
+                        "header": "依存コンポーネント",
+                        "tooltip": "ステージ管理システム。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "stageSpawner",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeStageSpawner stageSpawner",
+                    "returnType": "",
+                    "valueType": "MazeStageSpawner",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "ステージオブジェクトの生成システム。"
+                            ],
+                            "raw": "Tooltip(\"ステージオブジェクトの生成システム。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Stage Spawner",
+                        "type": "MazeStageSpawner",
+                        "header": null,
+                        "tooltip": "ステージオブジェクトの生成システム。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "updateManager",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private AgentUpdateManager updateManager",
+                    "returnType": "",
+                    "valueType": "AgentUpdateManager",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "敵AIの思考更新管理システム。"
+                            ],
+                            "raw": "Tooltip(\"敵AIの思考更新管理システム。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Update Manager",
+                        "type": "AgentUpdateManager",
+                        "header": null,
+                        "tooltip": "敵AIの思考更新管理システム。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "enemyProfiles",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeEnemyProfile[] enemyProfiles",
+                    "returnType": "",
+                    "valueType": "MazeEnemyProfile[]",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "敵プロファイル設定"
+                            ],
+                            "raw": "Header(\"敵プロファイル設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "生成順に適用する敵プロファイル。"
+                            ],
+                            "raw": "Tooltip(\"生成順に適用する敵プロファイル。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Enemy Profiles",
+                        "type": "MazeEnemyProfile[]",
+                        "header": "敵プロファイル設定",
+                        "tooltip": "生成順に適用する敵プロファイル。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "repeatProfiles",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool repeatProfiles = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "敵の数がプロファイル数を超えた場合に繰り返し使用する。"
+                            ],
+                            "raw": "Tooltip(\"敵の数がプロファイル数を超えた場合に繰り返し使用する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Repeat Profiles",
+                        "type": "bool",
+                        "header": null,
+                        "tooltip": "敵の数がプロファイル数を超えた場合に繰り返し使用する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "printDebugLog",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool printDebugLog = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "デバッグ設定"
+                            ],
+                            "raw": "Header(\"デバッグ設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "敵AIの接続結果をログに出力する。"
+                            ],
+                            "raw": "Tooltip(\"敵AIの接続結果をログに出力する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Print Debug Log",
+                        "type": "bool",
+                        "header": "デバッグ設定",
+                        "tooltip": "敵AIの接続結果をログに出力する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "boundEnemyCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int boundEnemyCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "実行時情報・確認専用"
+                            ],
+                            "raw": "Header(\"実行時情報・確認専用\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "接続済みの敵AIの数。"
+                            ],
+                            "raw": "Tooltip(\"接続済みの敵AIの数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Bound Enemy Count",
+                        "type": "int",
+                        "header": "実行時情報・確認専用",
+                        "tooltip": "接続済みの敵AIの数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "enemies",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly List<MazeEnemyController>\r\n            enemies = new List<MazeEnemyController>()",
+                    "returnType": "",
+                    "valueType": "List<MazeEnemyController>",
+                    "value": "new List<MazeEnemyController>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "接続済みの敵コントローラー。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new List<MazeEnemyController>()",
+                    "inspector": null
+                },
+                {
+                    "name": "targetBuffer",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly List<MazeEnemyTargetSnapshot>\r\n            targetBuffer =\r\n                new List<MazeEnemyTargetSnapshot>(4)",
+                    "returnType": "",
+                    "valueType": "List<MazeEnemyTargetSnapshot>",
+                    "value": "new List<MazeEnemyTargetSnapshot>(4)",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識対象候補の再利用バッファー。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new List<MazeEnemyTargetSnapshot>(4)",
+                    "inspector": null
+                },
+                {
+                    "name": "playerMovement",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private GridMovementController playerMovement",
+                    "returnType": "",
+                    "valueType": "GridMovementController",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "プレイヤーの移動コントローラー。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "playerId",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private Guid playerId",
+                    "returnType": "",
+                    "valueType": "Guid",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識対象としてのプレイヤー識別子。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "boundStage",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeStageGenerationResult boundStage",
+                    "returnType": "",
+                    "valueType": "MazeStageGenerationResult",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "接続済みのステージ生成結果。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "bindRequested",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool bindRequested",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "接続処理を予約しているか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "BoundEnemyCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int BoundEnemyCount =>\r\n            enemies.Count",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "接続済みの敵AI数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Enemies",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public IReadOnlyList<MazeEnemyController> Enemies =>\r\n            enemies",
+                    "returnType": "",
+                    "valueType": "IReadOnlyList<MazeEnemyController>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "接続済みの敵コントローラー一覧。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PlayerId",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Guid PlayerId => playerId",
+                    "returnType": "",
+                    "valueType": "Guid",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "プレイヤーの認識対象識別子。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "StageManager",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeStageManager StageManager =>\r\n            stageManager",
+                    "returnType": "",
+                    "valueType": "MazeStageManager",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "接続先のステージ管理システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "UpdateManager",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public AgentUpdateManager UpdateManager =>\r\n            updateManager",
+                    "returnType": "",
+                    "valueType": "AgentUpdateManager",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "AI更新管理システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Awake",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Awake()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "必要なコンポーネントを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CacheComponents",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void CacheComponents()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "未設定のコンポーネントを自身から取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnEnable",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnEnable()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ管理イベントを購読する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HandleStageGenerated",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void HandleStageGenerated(\r\n            MazeStageGenerationResult result)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "result",
+                            "type": "MazeStageGenerationResult",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "ステージ生成結果"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ生成完了時に接続を予約する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HandleStageStateChanged",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void HandleStageStateChanged(\r\n            MazeStageState previous,\r\n            MazeStageState current)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "previous",
+                            "type": "MazeStageState",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更前の状態"
+                        },
+                        {
+                            "name": "current",
+                            "type": "MazeStageState",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更後の状態"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ状態の変化を処理する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "LateUpdate",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void LateUpdate()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "予約された敵AI接続処理を実行する。",
+                    "returns": "",
+                    "remarks": "他のステージ接続処理とのイベント順序依存を避けるため、 フレーム終了時に接続する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "BindCurrentStage",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool BindCurrentStage()",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在のステージに敵AIを接続する。",
+                    "returns": "全敵の接続に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetProfile",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeEnemyProfile GetProfile(int index)",
+                    "returnType": "MazeEnemyProfile",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "index",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "敵の生成番号"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された生成番号のプロファイルを取得する。",
+                    "returns": "適用するプロファイル",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CachePlayerMovement",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void CachePlayerMovement()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "プレイヤーの移動コンポーネントを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetTargetSnapshots",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private IReadOnlyList<MazeEnemyTargetSnapshot>\r\n            GetTargetSnapshots()",
+                    "returnType": "IReadOnlyList<MazeEnemyTargetSnapshot>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵AIに認識対象候補を提供する。",
+                    "returns": "現在の認識対象候補一覧",
+                    "remarks": "認識対象の候補情報であり、視認済み情報ではない。 返却するリストは再利用するため保持しないこと。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ReleaseEnemies",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void ReleaseEnemies()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "接続済みの敵AIを解放する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RebindFromInspector",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void RebindFromInspector()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在のステージに敵AIを再接続する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "現在のステージに敵AIを再接続"
+                            ],
+                            "raw": "ContextMenu(\"現在のステージに敵AIを再接続\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnDisable",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnDisable()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "無効化時にイベント購読と敵AIを解放する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnDestroy",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnDestroy()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "オブジェクト破棄時に資源を解放する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 16
+        }
+    ],
+    "source": "using System;\r\nusing System.Collections.Generic;\r\nusing Framework.AI.Scheduling;\r\nusing Framework.Movement;\r\nusing Game.AI.Controllers;\r\nusing Game.AI.Parameters;\r\nusing Game.AI.Perception;\r\nusing UnityEngine;\r\n\r\nnamespace Game.Stage\r\n{\r\n    /// <summary>\r\n    /// ステージに生成された敵とAIシステムを接続する。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    public sealed class MazeEnemyStageBinder : MonoBehaviour\r\n    {\r\n        [Header(\"依存コンポーネント\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"ステージ管理システム。\")]\r\n        private MazeStageManager stageManager;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"ステージオブジェクトの生成システム。\")]\r\n        private MazeStageSpawner stageSpawner;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"敵AIの思考更新管理システム。\")]\r\n        private AgentUpdateManager updateManager;\r\n\r\n        [Header(\"敵プロファイル設定\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"生成順に適用する敵プロファイル。\")]\r\n        private MazeEnemyProfile[] enemyProfiles;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"敵の数がプロファイル数を超えた場合に繰り返し使用する。\")]\r\n        private bool repeatProfiles = true;\r\n\r\n        [Header(\"デバッグ設定\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"敵AIの接続結果をログに出力する。\")]\r\n        private bool printDebugLog = true;\r\n\r\n        [Header(\"実行時情報・確認専用\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"接続済みの敵AIの数。\")]\r\n        private int boundEnemyCount;\r\n\r\n        /// <summary>\r\n        /// 接続済みの敵コントローラー。\r\n        /// </summary>\r\n        private readonly List<MazeEnemyController>\r\n            enemies = new List<MazeEnemyController>();\r\n\r\n        /// <summary>\r\n        /// 認識対象候補の再利用バッファー。\r\n        /// </summary>\r\n        private readonly List<MazeEnemyTargetSnapshot>\r\n            targetBuffer =\r\n                new List<MazeEnemyTargetSnapshot>(4);\r\n\r\n        /// <summary>\r\n        /// プレイヤーの移動コントローラー。\r\n        /// </summary>\r\n        private GridMovementController playerMovement;\r\n\r\n        /// <summary>\r\n        /// 認識対象としてのプレイヤー識別子。\r\n        /// </summary>\r\n        private Guid playerId;\r\n\r\n        /// <summary>\r\n        /// 接続済みのステージ生成結果。\r\n        /// </summary>\r\n        private MazeStageGenerationResult boundStage;\r\n\r\n        /// <summary>\r\n        /// 接続処理を予約しているか。\r\n        /// </summary>\r\n        private bool bindRequested;\r\n\r\n        /// <summary>\r\n        /// 接続済みの敵AI数。\r\n        /// </summary>\r\n        public int BoundEnemyCount =>\r\n            enemies.Count;\r\n\r\n        /// <summary>\r\n        /// 接続済みの敵コントローラー一覧。\r\n        /// </summary>\r\n        public IReadOnlyList<MazeEnemyController> Enemies =>\r\n            enemies;\r\n\r\n        /// <summary>\r\n        /// プレイヤーの認識対象識別子。\r\n        /// </summary>\r\n        public Guid PlayerId => playerId;\r\n\r\n        /// <summary>\r\n        /// 接続先のステージ管理システム。\r\n        /// </summary>\r\n        public MazeStageManager StageManager =>\r\n            stageManager;\r\n\r\n        /// <summary>\r\n        /// AI更新管理システム。\r\n        /// </summary>\r\n        public AgentUpdateManager UpdateManager =>\r\n            updateManager;\r\n\r\n        /// <summary>\r\n        /// 必要なコンポーネントを取得する。\r\n        /// </summary>\r\n        private void Awake()\r\n        {\r\n            CacheComponents();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 未設定のコンポーネントを自身から取得する。\r\n        /// </summary>\r\n        private void CacheComponents()\r\n        {\r\n            if (stageManager == null)\r\n            {\r\n                stageManager =\r\n                    GetComponent<MazeStageManager>();\r\n            }\r\n\r\n            if (stageSpawner == null)\r\n            {\r\n                stageSpawner =\r\n                    GetComponent<MazeStageSpawner>();\r\n            }\r\n\r\n            if (updateManager == null)\r\n            {\r\n                updateManager =\r\n                    GetComponent<AgentUpdateManager>();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// ステージ管理イベントを購読する。\r\n        /// </summary>\r\n        private void OnEnable()\r\n        {\r\n            CacheComponents();\r\n\r\n            if (stageManager == null ||\r\n                stageSpawner == null ||\r\n                updateManager == null)\r\n            {\r\n                Debug.LogError(\r\n                    \"敵AI接続用コンポーネントが不足しています。\",\r\n                    this);\r\n\r\n                return;\r\n            }\r\n\r\n            stageManager.StageGenerated +=\r\n                HandleStageGenerated;\r\n\r\n            stageManager.StateChanged +=\r\n                HandleStageStateChanged;\r\n\r\n            // 既にステージが存在する場合にも対応する。\r\n            bindRequested = stageManager.HasStage;\r\n        }\r\n\r\n        /// <summary>\r\n        /// ステージ生成完了時に接続を予約する。\r\n        /// </summary>\r\n        /// <param name=\"result\">ステージ生成結果</param>\r\n        private void HandleStageGenerated(\r\n            MazeStageGenerationResult result)\r\n        {\r\n            ReleaseEnemies();\r\n\r\n            bindRequested = true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// ステージ状態の変化を処理する。\r\n        /// </summary>\r\n        /// <param name=\"previous\">変更前の状態</param>\r\n        /// <param name=\"current\">変更後の状態</param>\r\n        private void HandleStageStateChanged(\r\n            MazeStageState previous,\r\n            MazeStageState current)\r\n        {\r\n            switch (current)\r\n            {\r\n                case MazeStageState.None:\r\n                case MazeStageState.Generating:\r\n\r\n                    ReleaseEnemies();\r\n\r\n                    bindRequested = false;\r\n\r\n                    break;\r\n\r\n                case MazeStageState.Ready:\r\n                case MazeStageState.Playing:\r\n\r\n                    if (boundStage !=\r\n                        stageManager.StageResult)\r\n                    {\r\n                        bindRequested = true;\r\n                    }\r\n\r\n                    break;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 予約された敵AI接続処理を実行する。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// 他のステージ接続処理とのイベント順序依存を避けるため、\r\n        /// フレーム終了時に接続する。\r\n        /// </remarks>\r\n        private void LateUpdate()\r\n        {\r\n            if (!bindRequested)\r\n            {\r\n                return;\r\n            }\r\n\r\n            bindRequested = false;\r\n\r\n            BindCurrentStage();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在のステージに敵AIを接続する。\r\n        /// </summary>\r\n        /// <returns>全敵の接続に成功した場合はtrue</returns>\r\n        public bool BindCurrentStage()\r\n        {\r\n            if (!isActiveAndEnabled ||\r\n                stageManager == null ||\r\n                stageSpawner == null ||\r\n                updateManager == null ||\r\n                !stageManager.HasStage)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (stageManager.State != MazeStageState.Ready &&\r\n                stageManager.State != MazeStageState.Playing &&\r\n                stageManager.State != MazeStageState.Paused)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            ReleaseEnemies();\r\n\r\n            bindRequested = false;\r\n\r\n            MazeStageGenerationResult result =\r\n                stageManager.StageResult;\r\n\r\n            boundStage = result;\r\n\r\n            // ステージごとに認識対象の識別子を更新する。\r\n            playerId = Guid.NewGuid();\r\n\r\n            CachePlayerMovement();\r\n\r\n            var instances =\r\n                stageSpawner.EnemyInstances;\r\n\r\n            var spawnPositions =\r\n                result.EnemySpawnPositions;\r\n\r\n            int expectedCount =\r\n                spawnPositions.Count;\r\n\r\n            if (instances.Count != expectedCount)\r\n            {\r\n                Debug.LogError(\r\n                    $\"敵生成数と初期座標数が一致しません。\" +\r\n                    $\" 生成数：{instances.Count}\" +\r\n                    $\" 座標数：{expectedCount}\",\r\n                    this);\r\n\r\n                return false;\r\n            }\r\n\r\n            bool allSucceeded = true;\r\n\r\n            for (int i = 0; i < instances.Count; i++)\r\n            {\r\n                GameObject instance = instances[i];\r\n\r\n                if (instance == null)\r\n                {\r\n                    allSucceeded = false;\r\n\r\n                    continue;\r\n                }\r\n\r\n                var controller =\r\n                    instance.GetComponent<MazeEnemyController>();\r\n\r\n                if (controller == null)\r\n                {\r\n                    Debug.LogError(\r\n                        $\"{instance.name} に \" +\r\n                        \"MazeEnemyControllerがありません。\",\r\n                        instance);\r\n\r\n                    allSucceeded = false;\r\n\r\n                    continue;\r\n                }\r\n\r\n                MazeEnemyProfile selectedProfile =\r\n                    GetProfile(i);\r\n\r\n                bool succeeded =\r\n                    controller.Initialize(\r\n                        stageManager,\r\n                        updateManager,\r\n                        spawnPositions[i],\r\n                        GetTargetSnapshots,\r\n                        selectedProfile);\r\n\r\n                if (!succeeded)\r\n                {\r\n                    Debug.LogError(\r\n                        $\"敵AIの接続に失敗しました：\" +\r\n                        $\"{instance.name}\",\r\n                        instance);\r\n\r\n                    allSucceeded = false;\r\n\r\n                    continue;\r\n                }\r\n\r\n                enemies.Add(controller);\r\n            }\r\n\r\n            boundEnemyCount = enemies.Count;\r\n\r\n            if (printDebugLog)\r\n            {\r\n                Debug.Log(\r\n                    $\"【敵AI接続完了】\" +\r\n                    $\" {boundEnemyCount}/{expectedCount}体\",\r\n                    this);\r\n            }\r\n\r\n            return allSucceeded;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された生成番号のプロファイルを取得する。\r\n        /// </summary>\r\n        /// <param name=\"index\">敵の生成番号</param>\r\n        /// <returns>適用するプロファイル</returns>\r\n        private MazeEnemyProfile GetProfile(int index)\r\n        {\r\n            if (enemyProfiles == null ||\r\n                enemyProfiles.Length == 0)\r\n            {\r\n                return null;\r\n            }\r\n\r\n            if (index < enemyProfiles.Length)\r\n            {\r\n                return enemyProfiles[index];\r\n            }\r\n\r\n            if (repeatProfiles)\r\n            {\r\n                return enemyProfiles[\r\n                    index % enemyProfiles.Length];\r\n            }\r\n\r\n            return null;\r\n        }\r\n\r\n        /// <summary>\r\n        /// プレイヤーの移動コンポーネントを取得する。\r\n        /// </summary>\r\n        private void CachePlayerMovement()\r\n        {\r\n            GameObject player =\r\n                stageSpawner.PlayerInstance;\r\n\r\n            playerMovement = player != null\r\n                ? player.GetComponent<GridMovementController>()\r\n                : null;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 敵AIに認識対象候補を提供する。\r\n        /// </summary>\r\n        /// <returns>現在の認識対象候補一覧</returns>\r\n        /// <remarks>\r\n        /// 認識対象の候補情報であり、視認済み情報ではない。\r\n        /// 返却するリストは再利用するため保持しないこと。\r\n        /// </remarks>\r\n        private IReadOnlyList<MazeEnemyTargetSnapshot>\r\n            GetTargetSnapshots()\r\n        {\r\n            targetBuffer.Clear();\r\n\r\n            if (stageManager == null ||\r\n                !stageManager.IsPlaying)\r\n            {\r\n                return targetBuffer;\r\n            }\r\n\r\n            if (playerMovement == null)\r\n            {\r\n                CachePlayerMovement();\r\n            }\r\n\r\n            if (playerMovement != null &&\r\n                playerMovement.IsInitialized &&\r\n                playerMovement.isActiveAndEnabled &&\r\n                playerId != Guid.Empty)\r\n            {\r\n                // 停止中のプレイヤーは速度0として扱う。\r\n                bool moving =\r\n                    playerMovement.IsMoving &&\r\n                    !playerMovement.IsPaused;\r\n\r\n                float speed = moving\r\n                    ? playerMovement.MoveSpeed\r\n                    : 0f;\r\n\r\n                Vector2Int direction = moving\r\n                    ? playerMovement.CurrentDirection\r\n                    : Vector2Int.zero;\r\n\r\n                targetBuffer.Add(\r\n                    new MazeEnemyTargetSnapshot(\r\n                        playerId,\r\n                        MazeEnemyTargetType.Player,\r\n                        playerMovement.CurrentCell,\r\n                        direction,\r\n                        speed));\r\n            }\r\n\r\n            return targetBuffer;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 接続済みの敵AIを解放する。\r\n        /// </summary>\r\n        public void ReleaseEnemies()\r\n        {\r\n            for (int i = 0; i < enemies.Count; i++)\r\n            {\r\n                MazeEnemyController controller =\r\n                    enemies[i];\r\n\r\n                if (controller != null)\r\n                {\r\n                    controller.Release();\r\n                }\r\n            }\r\n\r\n            enemies.Clear();\r\n            targetBuffer.Clear();\r\n\r\n            boundEnemyCount = 0;\r\n            boundStage = null;\r\n            playerMovement = null;\r\n            playerId = Guid.Empty;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在のステージに敵AIを再接続する。\r\n        /// </summary>\r\n        [ContextMenu(\"現在のステージに敵AIを再接続\")]\r\n        private void RebindFromInspector()\r\n        {\r\n            if (Application.isPlaying)\r\n            {\r\n                BindCurrentStage();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 無効化時にイベント購読と敵AIを解放する。\r\n        /// </summary>\r\n        private void OnDisable()\r\n        {\r\n            if (stageManager != null)\r\n            {\r\n                stageManager.StageGenerated -=\r\n                    HandleStageGenerated;\r\n\r\n                stageManager.StateChanged -=\r\n                    HandleStageStateChanged;\r\n            }\r\n\r\n            bindRequested = false;\r\n\r\n            ReleaseEnemies();\r\n        }\r\n\r\n        /// <summary>\r\n        /// オブジェクト破棄時に資源を解放する。\r\n        /// </summary>\r\n        private void OnDestroy()\r\n        {\r\n            ReleaseEnemies();\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.666Z"
+}

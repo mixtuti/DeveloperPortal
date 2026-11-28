@@ -1,0 +1,56 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Perception.MazeEnemyTargetType",
+    "name": "MazeEnemyTargetType",
+    "fileName": "MazeEnemyTargetType.cs",
+    "namespace": "Game.AI.Perception",
+    "type": "enum",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public enum MazeEnemyTargetType",
+    "typeParameters": [],
+    "summary": "敵AIが認識する対象の種類。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [],
+    "members": [],
+    "types": [
+        {
+            "name": "MazeEnemyTargetType",
+            "fullName": "MazeEnemyTargetType",
+            "kind": "enum",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "敵AIが認識する対象の種類。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public enum MazeEnemyTargetType",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [],
+            "nestedTypes": [],
+            "enumValues": [
+                {
+                    "name": "None",
+                    "value": "0"
+                },
+                {
+                    "name": "Player",
+                    "value": "1"
+                },
+                {
+                    "name": "Threat",
+                    "value": "2"
+                }
+            ],
+            "line": 6
+        }
+    ],
+    "source": "namespace Game.AI.Perception\r\n{\r\n    /// <summary>\r\n    /// 敵AIが認識する対象の種類。\r\n    /// </summary>\r\n    public enum MazeEnemyTargetType\r\n    {\r\n        /// <summary>\r\n        /// 未指定の対象。\r\n        /// </summary>\r\n        None = 0,\r\n\r\n        /// <summary>\r\n        /// 追跡対象となるプレイヤー。\r\n        /// </summary>\r\n        Player = 1,\r\n\r\n        /// <summary>\r\n        /// 回避対象となる脅威。\r\n        /// </summary>\r\n        Threat = 2\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.746Z"
+}

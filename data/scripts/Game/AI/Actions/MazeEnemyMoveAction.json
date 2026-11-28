@@ -1,0 +1,615 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Actions.MazeEnemyMoveAction",
+    "name": "MazeEnemyMoveAction",
+    "fileName": "MazeEnemyMoveAction.cs",
+    "namespace": "Game.AI.Actions",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class MazeEnemyMoveAction\r\n        : IAgentAction<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext>",
+    "typeParameters": [],
+    "summary": "指定された目的地へ移動する敵AIの共通行動。",
+    "remarks": "巡回、探索、追跡、迎撃、逃走、帰還に使用する。 行動ごとに独立したインスタンスを生成すること。",
+    "inheritance": [
+        "IAgentAction<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext>"
+    ],
+    "dependencies": [
+        "System",
+        "Framework.AI.Actions",
+        "Framework.Movement",
+        "UnityEngine",
+        "IAgentAction<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext>"
+    ],
+    "members": [
+        {
+            "name": "Id",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyActionType Id",
+            "returnType": "",
+            "valueType": "MazeEnemyActionType",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "行動の識別子。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Settings",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public AgentActionSettings Settings",
+            "returnType": "",
+            "valueType": "AgentActionSettings",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "行動の実行設定。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ActiveDestination",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int ActiveDestination =>\r\n            activeDestination",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の目的地。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasActivePath",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasActivePath =>\r\n            hasActivePath",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "有効な経路を設定できているか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MazeEnemyMoveAction",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyMoveAction(\r\n            MazeEnemyActionType id,\r\n            AgentActionSettings settings = null)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "MazeEnemyActionType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動の種類"
+                },
+                {
+                    "name": "settings",
+                    "type": "AgentActionSettings",
+                    "modifier": "",
+                    "defaultValue": "null",
+                    "description": "行動設定"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "移動行動を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentException",
+                    "description": "移動行動以外が指定された場合。"
+                }
+            ]
+        },
+        {
+            "name": "CanEnter",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool CanEnter(\r\n            MazeEnemyActionContext context)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "MazeEnemyActionContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動コンテキスト"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "移動行動を開始可能であるか確認する。",
+            "returns": "開始可能な場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Enter",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Enter(\r\n            MazeEnemyActionContext context)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "MazeEnemyActionContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動コンテキスト"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "移動行動を開始する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Tick",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public AgentActionStatus Tick(\r\n            MazeEnemyActionContext context,\r\n            float deltaTime)",
+            "returnType": "AgentActionStatus",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "MazeEnemyActionContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動コンテキスト"
+                },
+                {
+                    "name": "deltaTime",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "経過時間"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "移動行動を更新する。",
+            "returns": "行動の実行状態",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Exit",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Exit(\r\n            MazeEnemyActionContext context,\r\n            AgentActionExitReason reason)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "MazeEnemyActionContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動コンテキスト"
+                },
+                {
+                    "name": "reason",
+                    "type": "AgentActionExitReason",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "終了理由"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "移動行動を終了する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyMoveAction",
+            "fullName": "MazeEnemyMoveAction",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "指定された目的地へ移動する敵AIの共通行動。",
+            "remarks": "巡回、探索、追跡、迎撃、逃走、帰還に使用する。 行動ごとに独立したインスタンスを生成すること。",
+            "attributes": [],
+            "declaration": "public sealed class MazeEnemyMoveAction\r\n        : IAgentAction<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext>",
+            "inheritance": [
+                "IAgentAction<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext>"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "activeDestination",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private Vector2Int activeDestination",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在実行している移動の目的地。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "hasActivePath",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool hasActivePath",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "有効な経路を設定できているか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Id",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyActionType Id",
+                    "returnType": "",
+                    "valueType": "MazeEnemyActionType",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "行動の識別子。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Settings",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public AgentActionSettings Settings",
+                    "returnType": "",
+                    "valueType": "AgentActionSettings",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "行動の実行設定。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ActiveDestination",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int ActiveDestination =>\r\n            activeDestination",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の目的地。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HasActivePath",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool HasActivePath =>\r\n            hasActivePath",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "有効な経路を設定できているか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MazeEnemyMoveAction",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyMoveAction(\r\n            MazeEnemyActionType id,\r\n            AgentActionSettings settings = null)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動の種類"
+                        },
+                        {
+                            "name": "settings",
+                            "type": "AgentActionSettings",
+                            "modifier": "",
+                            "defaultValue": "null",
+                            "description": "行動設定"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "移動行動を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentException",
+                            "description": "移動行動以外が指定された場合。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CanEnter",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool CanEnter(\r\n            MazeEnemyActionContext context)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "MazeEnemyActionContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動コンテキスト"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "移動行動を開始可能であるか確認する。",
+                    "returns": "開始可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Enter",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Enter(\r\n            MazeEnemyActionContext context)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "MazeEnemyActionContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動コンテキスト"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "移動行動を開始する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Tick",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public AgentActionStatus Tick(\r\n            MazeEnemyActionContext context,\r\n            float deltaTime)",
+                    "returnType": "AgentActionStatus",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "MazeEnemyActionContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動コンテキスト"
+                        },
+                        {
+                            "name": "deltaTime",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "経過時間"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "移動行動を更新する。",
+                    "returns": "行動の実行状態",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryApplyDestination",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool TryApplyDestination(\r\n            MazeEnemyActionContext context,\r\n            Vector2Int destination)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "MazeEnemyActionContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動コンテキスト"
+                        },
+                        {
+                            "name": "destination",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "目的地"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "新しい目的地への経路を設定する。",
+                    "returns": "経路設定に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Exit",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Exit(\r\n            MazeEnemyActionContext context,\r\n            AgentActionExitReason reason)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "MazeEnemyActionContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動コンテキスト"
+                        },
+                        {
+                            "name": "reason",
+                            "type": "AgentActionExitReason",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "終了理由"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "移動行動を終了する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 15
+        }
+    ],
+    "source": "using System;\r\nusing Framework.AI.Actions;\r\nusing Framework.Movement;\r\nusing UnityEngine;\r\n\r\nnamespace Game.AI.Actions\r\n{\r\n    /// <summary>\r\n    /// 指定された目的地へ移動する敵AIの共通行動。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// 巡回、探索、追跡、迎撃、逃走、帰還に使用する。\r\n    /// 行動ごとに独立したインスタンスを生成すること。\r\n    /// </remarks>\r\n    public sealed class MazeEnemyMoveAction\r\n        : IAgentAction<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext>\r\n    {\r\n        /// <summary>\r\n        /// 現在実行している移動の目的地。\r\n        /// </summary>\r\n        private Vector2Int activeDestination;\r\n\r\n        /// <summary>\r\n        /// 有効な経路を設定できているか。\r\n        /// </summary>\r\n        private bool hasActivePath;\r\n\r\n        /// <summary>\r\n        /// 行動の識別子。\r\n        /// </summary>\r\n        public MazeEnemyActionType Id { get; }\r\n\r\n        /// <summary>\r\n        /// 行動の実行設定。\r\n        /// </summary>\r\n        public AgentActionSettings Settings { get; }\r\n\r\n        /// <summary>\r\n        /// 現在の目的地。\r\n        /// </summary>\r\n        public Vector2Int ActiveDestination =>\r\n            activeDestination;\r\n\r\n        /// <summary>\r\n        /// 有効な経路を設定できているか。\r\n        /// </summary>\r\n        public bool HasActivePath =>\r\n            hasActivePath;\r\n\r\n        /// <summary>\r\n        /// 移動行動を生成する。\r\n        /// </summary>\r\n        /// <param name=\"id\">行動の種類</param>\r\n        /// <param name=\"settings\">行動設定</param>\r\n        /// <exception cref=\"ArgumentException\">\r\n        /// 移動行動以外が指定された場合。\r\n        /// </exception>\r\n        public MazeEnemyMoveAction(\r\n            MazeEnemyActionType id,\r\n            AgentActionSettings settings = null)\r\n        {\r\n            if (!MazeEnemyActionContext\r\n                    .IsMovementAction(id))\r\n            {\r\n                throw new ArgumentException(\r\n                    \"移動行動を指定してください。\",\r\n                    nameof(id));\r\n            }\r\n\r\n            Id = id;\r\n\r\n            Settings = settings ??\r\n                new AgentActionSettings(\r\n                    minimumDuration: 0f,\r\n                    cooldown: 0f,\r\n                    canInterrupt: true);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 移動行動を開始可能であるか確認する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動コンテキスト</param>\r\n        /// <returns>開始可能な場合はtrue</returns>\r\n        public bool CanEnter(\r\n            MazeEnemyActionContext context)\r\n        {\r\n            if (context == null ||\r\n                !context.CanAct ||\r\n                context.GetMoveSpeed(Id) <= 0f)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return context.TryGetDestination(\r\n                       Id, out Vector2Int destination) &&\r\n                   context.Enemy.IsWalkable(destination);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 移動行動を開始する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動コンテキスト</param>\r\n        public void Enter(\r\n            MazeEnemyActionContext context)\r\n        {\r\n            hasActivePath = false;\r\n            activeDestination = default;\r\n\r\n            if (!CanEnter(context))\r\n            {\r\n                return;\r\n            }\r\n\r\n            context.TryGetDestination(\r\n                Id, out Vector2Int destination);\r\n\r\n            context.Movement.MoveSpeed =\r\n                context.GetMoveSpeed(Id);\r\n\r\n            TryApplyDestination(context, destination);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 移動行動を更新する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動コンテキスト</param>\r\n        /// <param name=\"deltaTime\">経過時間</param>\r\n        /// <returns>行動の実行状態</returns>\r\n        public AgentActionStatus Tick(\r\n            MazeEnemyActionContext context,\r\n            float deltaTime)\r\n        {\r\n            if (context == null ||\r\n                !context.IsValid)\r\n            {\r\n                return AgentActionStatus.Failed;\r\n            }\r\n\r\n            // 一時停止中は行動状態を維持する。\r\n            if (!context.CanAct)\r\n            {\r\n                return AgentActionStatus.Running;\r\n            }\r\n\r\n            float speed = context.GetMoveSpeed(Id);\r\n\r\n            if (speed <= 0f)\r\n            {\r\n                return AgentActionStatus.Failed;\r\n            }\r\n\r\n            if (!context.TryGetDestination(\r\n                    Id, out Vector2Int destination) ||\r\n                !context.Enemy.IsWalkable(destination))\r\n            {\r\n                return AgentActionStatus.Failed;\r\n            }\r\n\r\n            // パラメーターの変化を移動速度へ反映する。\r\n            context.Movement.MoveSpeed = speed;\r\n\r\n            // 開始時の経路設定に失敗している場合。\r\n            if (!hasActivePath)\r\n            {\r\n                return AgentActionStatus.Failed;\r\n            }\r\n\r\n            // 目的地が変化した場合のみ経路を再設定する。\r\n            if (destination != activeDestination)\r\n            {\r\n                if (!TryApplyDestination(\r\n                        context, destination))\r\n                {\r\n                    return AgentActionStatus.Failed;\r\n                }\r\n            }\r\n\r\n            switch (context.PathFollower.State)\r\n            {\r\n                case GridPathFollowerState.Following:\r\n                case GridPathFollowerState.Paused:\r\n                    return AgentActionStatus.Running;\r\n\r\n                case GridPathFollowerState.Completed:\r\n                    return AgentActionStatus.Succeeded;\r\n\r\n                case GridPathFollowerState.Failed:\r\n                case GridPathFollowerState.Cancelled:\r\n                case GridPathFollowerState.Idle:\r\n                case GridPathFollowerState.Disposed:\r\n                default:\r\n                    return AgentActionStatus.Failed;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 新しい目的地への経路を設定する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動コンテキスト</param>\r\n        /// <param name=\"destination\">目的地</param>\r\n        /// <returns>経路設定に成功した場合はtrue</returns>\r\n        private bool TryApplyDestination(\r\n            MazeEnemyActionContext context,\r\n            Vector2Int destination)\r\n        {\r\n            hasActivePath =\r\n                context.TryMoveTo(destination);\r\n\r\n            if (!hasActivePath)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            activeDestination = destination;\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 移動行動を終了する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動コンテキスト</param>\r\n        /// <param name=\"reason\">終了理由</param>\r\n        public void Exit(\r\n            MazeEnemyActionContext context,\r\n            AgentActionExitReason reason)\r\n        {\r\n            hasActivePath = false;\r\n            activeDestination = default;\r\n\r\n            if (context != null &&\r\n                !context.IsDisposed)\r\n            {\r\n                context.StopMovement();\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.558Z"
+}

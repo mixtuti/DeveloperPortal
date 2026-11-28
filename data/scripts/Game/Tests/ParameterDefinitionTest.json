@@ -1,0 +1,596 @@
+{
+    "parserVersion": 3,
+    "id": "Game.Tests.ParameterDefinitionTest",
+    "name": "ParameterDefinitionTest",
+    "fileName": "ParameterDefinitionTest.cs",
+    "namespace": "Game.Tests",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class ParameterDefinitionTest : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "ParameterDefinitionの基本機能と境界条件を検証する。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "Framework.Parameters",
+        "UnityEngine",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "RunAllTests",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void RunAllTests()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべてのテストを実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "ParameterDefinitionTest",
+            "fullName": "ParameterDefinitionTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "ParameterDefinitionの基本機能と境界条件を検証する。",
+            "remarks": "",
+            "attributes": [
+                {
+                    "name": "DisallowMultipleComponent",
+                    "arguments": [],
+                    "raw": "DisallowMultipleComponent"
+                }
+            ],
+            "declaration": "public sealed class ParameterDefinitionTest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "runTestsOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runTestsOnStart = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "開始時にすべてのテストを実行する。"
+                            ],
+                            "raw": "Tooltip(\"開始時にすべてのテストを実行する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Tests On Start",
+                        "type": "bool",
+                        "header": "テスト設定",
+                        "tooltip": "開始時にすべてのテストを実行する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト結果"
+                            ],
+                            "raw": "Header(\"テスト結果\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "成功したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"成功したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Passed Count",
+                        "type": "int",
+                        "header": "テスト結果",
+                        "tooltip": "成功したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "失敗したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"失敗したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Failed Count",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "失敗したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "開始時のテスト実行を制御する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunAllTests",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void RunAllTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべてのテストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "すべてのテストを実行"
+                            ],
+                            "raw": "ContextMenu(\"すべてのテストを実行\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateDefinition",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private ParameterDefinition<TestParameterId> CreateDefinition()",
+                    "returnType": "ParameterDefinition<TestParameterId>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "標準的なテスト用定義を生成する。",
+                    "returns": "移動速度のパラメーター定義",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestDefinition",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestDefinition()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "定義情報が正しく保持されることを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestRange",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestRange()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "有効範囲の判定を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestClamp",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestClamp()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "値の範囲制限を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestNormalize",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestNormalize()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "パラメーターの正規化を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestDenormalize",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestDenormalize()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "正規化値から実際の値への変換を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestFixedValue",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestFixedValue()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "最小値と最大値が等しい定義を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestIdentifier",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestIdentifier()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "識別子の比較と異なる識別子型への対応を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestInvalidDefinition",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestInvalidDefinition()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "不正な定義が例外によって拒否されることを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestInvalidInput",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestInvalidInput()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "各変換処理に対する不正な入力値を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestExtremeRange",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestExtremeRange()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "極端に広い数値範囲での中間計算を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Throws",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool Throws<TException>(Action action)\r\n            where TException : Exception",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証対象の処理"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "TException",
+                            "description": "期待する例外型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定された処理が期待する例外を発生させるか検証する。",
+                    "returns": "期待する例外が発生した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(bool passed, string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "passed",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テストの成功判定"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個別のテスト結果を出力し、成功件数と失敗件数を集計する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [
+                {
+                    "name": "TestParameterId",
+                    "fullName": "ParameterDefinitionTest.TestParameterId",
+                    "kind": "enum",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "summary": "テスト用のパラメーター識別子。",
+                    "remarks": "",
+                    "attributes": [],
+                    "declaration": "private enum TestParameterId",
+                    "inheritance": [],
+                    "typeParameters": [],
+                    "members": [],
+                    "nestedTypes": [],
+                    "enumValues": [
+                        {
+                            "name": "MoveSpeed",
+                            "value": null
+                        },
+                        {
+                            "name": "Aggression",
+                            "value": null
+                        }
+                    ],
+                    "line": 31
+                }
+            ],
+            "enumValues": [],
+            "line": 12
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing Framework.Parameters;\r\nusing UnityEngine;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// ParameterDefinitionの基本機能と境界条件を検証する。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    public sealed class ParameterDefinitionTest : MonoBehaviour\r\n    {\r\n        [Header(\"テスト設定\")]\r\n        [SerializeField]\r\n        [Tooltip(\"開始時にすべてのテストを実行する。\")]\r\n        private bool runTestsOnStart = true;\r\n\r\n        [Header(\"テスト結果\")]\r\n        [SerializeField]\r\n        [Tooltip(\"成功したテスト件数。\")]\r\n        private int passedCount;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"失敗したテスト件数。\")]\r\n        private int failedCount;\r\n\r\n        /// <summary>\r\n        /// テスト用のパラメーター識別子。\r\n        /// </summary>\r\n        private enum TestParameterId\r\n        {\r\n            /// <summary>\r\n            /// 移動速度。\r\n            /// </summary>\r\n            MoveSpeed,\r\n\r\n            /// <summary>\r\n            /// 攻撃性。\r\n            /// </summary>\r\n            Aggression\r\n        }\r\n\r\n        /// <summary>\r\n        /// 開始時のテスト実行を制御する。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            if (runTestsOnStart)\r\n            {\r\n                RunAllTests();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべてのテストを実行する。\r\n        /// </summary>\r\n        [ContextMenu(\"すべてのテストを実行\")]\r\n        public void RunAllTests()\r\n        {\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n            try\r\n            {\r\n                TestDefinition();\r\n                TestRange();\r\n                TestClamp();\r\n                TestNormalize();\r\n                TestDenormalize();\r\n                TestFixedValue();\r\n                TestIdentifier();\r\n                TestInvalidDefinition();\r\n                TestInvalidInput();\r\n                TestExtremeRange();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                failedCount++;\r\n                Debug.LogException(exception, this);\r\n            }\r\n\r\n            Debug.Log(\r\n                $\"【ParameterDefinition テスト結果】\\n\" +\r\n                $\"成功：{passedCount}\\n\" +\r\n                $\"失敗：{failedCount}\\n\" +\r\n                (failedCount == 0\r\n                    ? \"すべてのテストに成功しました。\"\r\n                    : \"失敗したテストを確認してください。\"),\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 標準的なテスト用定義を生成する。\r\n        /// </summary>\r\n        /// <returns>移動速度のパラメーター定義</returns>\r\n        private ParameterDefinition<TestParameterId> CreateDefinition()\r\n        {\r\n            return new ParameterDefinition<TestParameterId>(\r\n                TestParameterId.MoveSpeed,\r\n                5f,\r\n                0f,\r\n                10f);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 定義情報が正しく保持されることを検証する。\r\n        /// </summary>\r\n        private void TestDefinition()\r\n        {\r\n            var definition = CreateDefinition();\r\n\r\n            bool idPassed =\r\n                definition.Id == TestParameterId.MoveSpeed;\r\n            Debug.Assert(idPassed, \"識別子の検証\", this);\r\n            Check(idPassed, \"識別子の検証\");\r\n\r\n            bool defaultPassed = definition.DefaultValue == 5f;\r\n            Debug.Assert(defaultPassed, \"初期値の検証\", this);\r\n            Check(defaultPassed, \"初期値の検証\");\r\n\r\n            bool minPassed = definition.MinValue == 0f;\r\n            Debug.Assert(minPassed, \"最小値の検証\", this);\r\n            Check(minPassed, \"最小値の検証\");\r\n\r\n            bool maxPassed = definition.MaxValue == 10f;\r\n            Debug.Assert(maxPassed, \"最大値の検証\", this);\r\n            Check(maxPassed, \"最大値の検証\");\r\n\r\n            bool fixedPassed = !definition.IsFixedValue;\r\n            Debug.Assert(fixedPassed, \"通常範囲の検証\", this);\r\n            Check(fixedPassed, \"通常範囲の検証\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 有効範囲の判定を検証する。\r\n        /// </summary>\r\n        private void TestRange()\r\n        {\r\n            var definition = CreateDefinition();\r\n\r\n            bool normalPassed = definition.IsInRange(5f);\r\n            Debug.Assert(normalPassed, \"範囲内の判定\", this);\r\n            Check(normalPassed, \"範囲内の判定\");\r\n\r\n            bool minPassed = definition.IsInRange(0f);\r\n            Debug.Assert(minPassed, \"下限境界の判定\", this);\r\n            Check(minPassed, \"下限境界の判定\");\r\n\r\n            bool maxPassed = definition.IsInRange(10f);\r\n            Debug.Assert(maxPassed, \"上限境界の判定\", this);\r\n            Check(maxPassed, \"上限境界の判定\");\r\n\r\n            bool belowPassed = !definition.IsInRange(-1f);\r\n            Debug.Assert(belowPassed, \"下限未満の判定\", this);\r\n            Check(belowPassed, \"下限未満の判定\");\r\n\r\n            bool abovePassed = !definition.IsInRange(11f);\r\n            Debug.Assert(abovePassed, \"上限超過の判定\", this);\r\n            Check(abovePassed, \"上限超過の判定\");\r\n\r\n            bool nanPassed = !definition.IsInRange(float.NaN);\r\n            Debug.Assert(nanPassed, \"NaNの判定\", this);\r\n            Check(nanPassed, \"NaNの判定\");\r\n\r\n            bool infinityPassed =\r\n                !definition.IsInRange(float.PositiveInfinity);\r\n            Debug.Assert(infinityPassed, \"無限大の判定\", this);\r\n            Check(infinityPassed, \"無限大の判定\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 値の範囲制限を検証する。\r\n        /// </summary>\r\n        private void TestClamp()\r\n        {\r\n            var definition = CreateDefinition();\r\n\r\n            bool normalPassed = definition.Clamp(5f) == 5f;\r\n            Debug.Assert(normalPassed, \"範囲内の制限\", this);\r\n            Check(normalPassed, \"範囲内の制限\");\r\n\r\n            bool belowPassed = definition.Clamp(-5f) == 0f;\r\n            Debug.Assert(belowPassed, \"下限への制限\", this);\r\n            Check(belowPassed, \"下限への制限\");\r\n\r\n            bool abovePassed = definition.Clamp(15f) == 10f;\r\n            Debug.Assert(abovePassed, \"上限への制限\", this);\r\n            Check(abovePassed, \"上限への制限\");\r\n\r\n            bool minPassed = definition.Clamp(0f) == 0f;\r\n            Debug.Assert(minPassed, \"下限値の維持\", this);\r\n            Check(minPassed, \"下限値の維持\");\r\n\r\n            bool maxPassed = definition.Clamp(10f) == 10f;\r\n            Debug.Assert(maxPassed, \"上限値の維持\", this);\r\n            Check(maxPassed, \"上限値の維持\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// パラメーターの正規化を検証する。\r\n        /// </summary>\r\n        private void TestNormalize()\r\n        {\r\n            var definition = CreateDefinition();\r\n\r\n            bool centerPassed =\r\n                Mathf.Approximately(definition.Normalize(5f), 0.5f);\r\n            Debug.Assert(centerPassed, \"中央値の正規化\", this);\r\n            Check(centerPassed, \"中央値の正規化\");\r\n\r\n            bool minPassed = definition.Normalize(0f) == 0f;\r\n            Debug.Assert(minPassed, \"最小値の正規化\", this);\r\n            Check(minPassed, \"最小値の正規化\");\r\n\r\n            bool maxPassed = definition.Normalize(10f) == 1f;\r\n            Debug.Assert(maxPassed, \"最大値の正規化\", this);\r\n            Check(maxPassed, \"最大値の正規化\");\r\n\r\n            bool belowPassed = definition.Normalize(-5f) == 0f;\r\n            Debug.Assert(belowPassed, \"下限未満の正規化\", this);\r\n            Check(belowPassed, \"下限未満の正規化\");\r\n\r\n            bool abovePassed = definition.Normalize(15f) == 1f;\r\n            Debug.Assert(abovePassed, \"上限超過の正規化\", this);\r\n            Check(abovePassed, \"上限超過の正規化\");\r\n\r\n            var signedDefinition =\r\n                new ParameterDefinition<string>(\"Signed\", 0f, -10f, 10f);\r\n\r\n            bool signedPassed =\r\n                Mathf.Approximately(\r\n                    signedDefinition.Normalize(0f),\r\n                    0.5f);\r\n            Debug.Assert(signedPassed, \"負数を含む正規化\", this);\r\n            Check(signedPassed, \"負数を含む正規化\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 正規化値から実際の値への変換を検証する。\r\n        /// </summary>\r\n        private void TestDenormalize()\r\n        {\r\n            var definition = CreateDefinition();\r\n\r\n            bool centerPassed =\r\n                Mathf.Approximately(definition.Denormalize(0.5f), 5f);\r\n            Debug.Assert(centerPassed, \"中央値への変換\", this);\r\n            Check(centerPassed, \"中央値への変換\");\r\n\r\n            bool minPassed = definition.Denormalize(0f) == 0f;\r\n            Debug.Assert(minPassed, \"最小値への変換\", this);\r\n            Check(minPassed, \"最小値への変換\");\r\n\r\n            bool maxPassed = definition.Denormalize(1f) == 10f;\r\n            Debug.Assert(maxPassed, \"最大値への変換\", this);\r\n            Check(maxPassed, \"最大値への変換\");\r\n\r\n            bool belowPassed = definition.Denormalize(-1f) == 0f;\r\n            Debug.Assert(belowPassed, \"下限未満の変換\", this);\r\n            Check(belowPassed, \"下限未満の変換\");\r\n\r\n            bool abovePassed = definition.Denormalize(2f) == 10f;\r\n            Debug.Assert(abovePassed, \"上限超過の変換\", this);\r\n            Check(abovePassed, \"上限超過の変換\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 最小値と最大値が等しい定義を検証する。\r\n        /// </summary>\r\n        private void TestFixedValue()\r\n        {\r\n            var definition =\r\n                new ParameterDefinition<string>(\"Fixed\", 5f, 5f, 5f);\r\n\r\n            bool fixedPassed = definition.IsFixedValue;\r\n            Debug.Assert(fixedPassed, \"固定値の判定\", this);\r\n            Check(fixedPassed, \"固定値の判定\");\r\n\r\n            bool clampPassed = definition.Clamp(100f) == 5f;\r\n            Debug.Assert(clampPassed, \"固定値への制限\", this);\r\n            Check(clampPassed, \"固定値への制限\");\r\n\r\n            bool normalizePassed = definition.Normalize(5f) == 0f;\r\n            Debug.Assert(normalizePassed, \"固定値の正規化\", this);\r\n            Check(normalizePassed, \"固定値の正規化\");\r\n\r\n            bool denormalizePassed =\r\n                definition.Denormalize(0.8f) == 5f;\r\n            Debug.Assert(denormalizePassed, \"固定値への変換\", this);\r\n            Check(denormalizePassed, \"固定値への変換\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 識別子の比較と異なる識別子型への対応を検証する。\r\n        /// </summary>\r\n        private void TestIdentifier()\r\n        {\r\n            var definition = CreateDefinition();\r\n\r\n            bool matchPassed =\r\n                definition.MatchesId(TestParameterId.MoveSpeed);\r\n            Debug.Assert(matchPassed, \"識別子の一致\", this);\r\n            Check(matchPassed, \"識別子の一致\");\r\n\r\n            bool mismatchPassed =\r\n                !definition.MatchesId(TestParameterId.Aggression);\r\n            Debug.Assert(mismatchPassed, \"識別子の不一致\", this);\r\n            Check(mismatchPassed, \"識別子の不一致\");\r\n\r\n            var stringDefinition =\r\n                new ParameterDefinition<string>(\r\n                    \"Aggression\", 0.5f, 0f, 1f);\r\n\r\n            bool stringPassed =\r\n                stringDefinition.MatchesId(\"Aggression\");\r\n            Debug.Assert(stringPassed, \"文字列識別子\", this);\r\n            Check(stringPassed, \"文字列識別子\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 不正な定義が例外によって拒否されることを検証する。\r\n        /// </summary>\r\n        private void TestInvalidDefinition()\r\n        {\r\n            bool nullPassed = Throws<ArgumentNullException>(() =>\r\n            {\r\n                new ParameterDefinition<string>(null, 5f, 0f, 10f);\r\n            });\r\n            Debug.Assert(nullPassed, \"null識別子の拒否\", this);\r\n            Check(nullPassed, \"null識別子の拒否\");\r\n\r\n            bool rangePassed = Throws<ArgumentException>(() =>\r\n            {\r\n                new ParameterDefinition<string>(\"Test\", 5f, 10f, 0f);\r\n            });\r\n            Debug.Assert(rangePassed, \"逆転した範囲の拒否\", this);\r\n            Check(rangePassed, \"逆転した範囲の拒否\");\r\n\r\n            bool belowPassed = Throws<ArgumentOutOfRangeException>(() =>\r\n            {\r\n                new ParameterDefinition<string>(\"Test\", -1f, 0f, 10f);\r\n            });\r\n            Debug.Assert(belowPassed, \"下限未満の初期値の拒否\", this);\r\n            Check(belowPassed, \"下限未満の初期値の拒否\");\r\n\r\n            bool abovePassed = Throws<ArgumentOutOfRangeException>(() =>\r\n            {\r\n                new ParameterDefinition<string>(\"Test\", 11f, 0f, 10f);\r\n            });\r\n            Debug.Assert(abovePassed, \"上限超過の初期値の拒否\", this);\r\n            Check(abovePassed, \"上限超過の初期値の拒否\");\r\n\r\n            bool nanPassed = Throws<ArgumentOutOfRangeException>(() =>\r\n            {\r\n                new ParameterDefinition<string>(\r\n                    \"Test\", float.NaN, 0f, 10f);\r\n            });\r\n            Debug.Assert(nanPassed, \"NaN初期値の拒否\", this);\r\n            Check(nanPassed, \"NaN初期値の拒否\");\r\n\r\n            bool minPassed = Throws<ArgumentOutOfRangeException>(() =>\r\n            {\r\n                new ParameterDefinition<string>(\r\n                    \"Test\", 5f, float.NegativeInfinity, 10f);\r\n            });\r\n            Debug.Assert(minPassed, \"無限大の最小値の拒否\", this);\r\n            Check(minPassed, \"無限大の最小値の拒否\");\r\n\r\n            bool maxPassed = Throws<ArgumentOutOfRangeException>(() =>\r\n            {\r\n                new ParameterDefinition<string>(\r\n                    \"Test\", 5f, 0f, float.PositiveInfinity);\r\n            });\r\n            Debug.Assert(maxPassed, \"無限大の最大値の拒否\", this);\r\n            Check(maxPassed, \"無限大の最大値の拒否\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 各変換処理に対する不正な入力値を検証する。\r\n        /// </summary>\r\n        private void TestInvalidInput()\r\n        {\r\n            var definition = CreateDefinition();\r\n\r\n            bool clampPassed = Throws<ArgumentOutOfRangeException>(() =>\r\n            {\r\n                definition.Clamp(float.NaN);\r\n            });\r\n            Debug.Assert(clampPassed, \"Clampの不正入力\", this);\r\n            Check(clampPassed, \"Clampの不正入力\");\r\n\r\n            bool normalizePassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    definition.Normalize(float.PositiveInfinity);\r\n                });\r\n            Debug.Assert(normalizePassed, \"Normalizeの不正入力\", this);\r\n            Check(normalizePassed, \"Normalizeの不正入力\");\r\n\r\n            bool denormalizePassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    definition.Denormalize(float.NegativeInfinity);\r\n                });\r\n            Debug.Assert(denormalizePassed, \"Denormalizeの不正入力\", this);\r\n            Check(denormalizePassed, \"Denormalizeの不正入力\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 極端に広い数値範囲での中間計算を検証する。\r\n        /// </summary>\r\n        private void TestExtremeRange()\r\n        {\r\n            var definition =\r\n                new ParameterDefinition<string>(\r\n                    \"Extreme\",\r\n                    0f,\r\n                    -float.MaxValue,\r\n                    float.MaxValue);\r\n\r\n            bool normalizePassed =\r\n                Mathf.Approximately(definition.Normalize(0f), 0.5f);\r\n            Debug.Assert(normalizePassed, \"広範囲の正規化\", this);\r\n            Check(normalizePassed, \"広範囲の正規化\");\r\n\r\n            bool denormalizePassed =\r\n                definition.Denormalize(0.5f) == 0f;\r\n            Debug.Assert(denormalizePassed, \"広範囲の逆変換\", this);\r\n            Check(denormalizePassed, \"広範囲の逆変換\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された処理が期待する例外を発生させるか検証する。\r\n        /// </summary>\r\n        /// <typeparam name=\"TException\">期待する例外型</typeparam>\r\n        /// <param name=\"action\">検証対象の処理</param>\r\n        /// <returns>期待する例外が発生した場合はtrue</returns>\r\n        private bool Throws<TException>(Action action)\r\n            where TException : Exception\r\n        {\r\n            try\r\n            {\r\n                action();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                // 派生型を含めず、期待した例外型との完全一致を確認する。\r\n                if (exception.GetType() == typeof(TException))\r\n                {\r\n                    return true;\r\n                }\r\n\r\n                throw;\r\n            }\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個別のテスト結果を出力し、成功件数と失敗件数を集計する。\r\n        /// </summary>\r\n        /// <param name=\"passed\">テストの成功判定</param>\r\n        /// <param name=\"testName\">テスト名</param>\r\n        private void Check(bool passed, string testName)\r\n        {\r\n            if (passed)\r\n            {\r\n                // 成功件数を加算し、テスト結果を出力する。\r\n                passedCount++;\r\n\r\n                Debug.Log(\r\n                    $\"<color=#00CC66>【成功】</color> {testName}\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                // 失敗件数を加算し、エラーログを出力する。\r\n                failedCount++;\r\n\r\n                Debug.LogError(\r\n                    $\"【失敗】{testName}\",\r\n                    this);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.957Z"
+}

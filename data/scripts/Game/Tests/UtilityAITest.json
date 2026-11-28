@@ -1,0 +1,546 @@
+{
+    "parserVersion": 3,
+    "id": "Game.Tests.UtilityAITest",
+    "name": "UtilityAITest",
+    "fileName": "UtilityAITest.cs",
+    "namespace": "Game.Tests",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class UtilityAITest : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "Utility AIの評価計算と行動選択を検証する。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "Framework.AI.Decision",
+        "UnityEngine",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "RunAllTests",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void RunAllTests()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべてのUtility AIテストを実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "UtilityAITest",
+            "fullName": "UtilityAITest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "Utility AIの評価計算と行動選択を検証する。",
+            "remarks": "",
+            "attributes": [
+                {
+                    "name": "DisallowMultipleComponent",
+                    "arguments": [],
+                    "raw": "DisallowMultipleComponent"
+                }
+            ],
+            "declaration": "public sealed class UtilityAITest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "runTestsOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runTestsOnStart = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "開始時にすべてのテストを実行する。"
+                            ],
+                            "raw": "Tooltip(\"開始時にすべてのテストを実行する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Tests On Start",
+                        "type": "bool",
+                        "header": "テスト設定",
+                        "tooltip": "開始時にすべてのテストを実行する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト結果"
+                            ],
+                            "raw": "Header(\"テスト結果\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "成功したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"成功したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Passed Count",
+                        "type": "int",
+                        "header": "テスト結果",
+                        "tooltip": "成功したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "失敗したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"失敗したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Failed Count",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "失敗したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "ExpectedTestCount",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const int ExpectedTestCount = 48",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "48",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "予定されているテスト件数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "48",
+                    "inspector": null
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "開始時のテスト実行を制御する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunAllTests",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void RunAllTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべてのUtility AIテストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "すべてのテストを実行"
+                            ],
+                            "raw": "ContextMenu(\"すべてのテストを実行\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateOption",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private UtilityOption<string, float> CreateOption(\r\n            string id,\r\n            float score)",
+                    "returnType": "UtilityOption<string, float>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動識別子"
+                        },
+                        {
+                            "name": "score",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "固定評価値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "固定評価値を返すテスト用行動候補を生成する。",
+                    "returns": "生成した行動候補",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestMath",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestMath()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "評価値の計算と変換を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestConsideration",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestConsideration()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個別の評価要素を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestOption",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestOption()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動候補の評価計算を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestEvaluation",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestEvaluation()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動評価結果の保持を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestSelection",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestSelection()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動候補の登録と選択を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestContinuation",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestContinuation()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動継続性と同点時の優先順位を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestSafety",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestSafety()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "不正入力と評価中の安全性を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Throws",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool Throws<TException>(Action action)\r\n            where TException : Exception",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証対象の処理"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "TException",
+                            "description": "期待する例外型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定された処理が期待する例外を発生させるか検証する。",
+                    "returns": "期待する例外が発生した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(bool passed, string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "passed",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テストの成功判定"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個別のテスト結果を出力し、結果を集計する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 12
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing Framework.AI.Decision;\r\nusing UnityEngine;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// Utility AIの評価計算と行動選択を検証する。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    public sealed class UtilityAITest : MonoBehaviour\r\n    {\r\n        [Header(\"テスト設定\")]\r\n        [SerializeField]\r\n        [Tooltip(\"開始時にすべてのテストを実行する。\")]\r\n        private bool runTestsOnStart = true;\r\n\r\n        [Header(\"テスト結果\")]\r\n        [SerializeField]\r\n        [Tooltip(\"成功したテスト件数。\")]\r\n        private int passedCount;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"失敗したテスト件数。\")]\r\n        private int failedCount;\r\n\r\n        /// <summary>\r\n        /// 予定されているテスト件数。\r\n        /// </summary>\r\n        private const int ExpectedTestCount = 48;\r\n\r\n        /// <summary>\r\n        /// 開始時のテスト実行を制御する。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            if (runTestsOnStart)\r\n            {\r\n                RunAllTests();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべてのUtility AIテストを実行する。\r\n        /// </summary>\r\n        [ContextMenu(\"すべてのテストを実行\")]\r\n        public void RunAllTests()\r\n        {\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n            try\r\n            {\r\n                TestMath();\r\n                TestConsideration();\r\n                TestOption();\r\n                TestEvaluation();\r\n                TestSelection();\r\n                TestContinuation();\r\n                TestSafety();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogException(exception, this);\r\n            }\r\n\r\n            Debug.Log(\r\n                $\"【UtilityAI テスト結果】\\n\" +\r\n                $\"成功：{passedCount}\\n\" +\r\n                $\"失敗：{failedCount}\\n\" +\r\n                (failedCount == 0 &&\r\n                 passedCount == ExpectedTestCount\r\n                    ? \"すべてのテストに成功しました。\"\r\n                    : \"失敗または未実行のテストを確認してください。\"),\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 固定評価値を返すテスト用行動候補を生成する。\r\n        /// </summary>\r\n        /// <param name=\"id\">行動識別子</param>\r\n        /// <param name=\"score\">固定評価値</param>\r\n        /// <returns>生成した行動候補</returns>\r\n        private UtilityOption<string, float> CreateOption(\r\n            string id,\r\n            float score)\r\n        {\r\n            return new UtilityOption<string, float>(\r\n                id,\r\n                new[]\r\n                {\r\n                    new UtilityConsideration<float>(\r\n                        \"固定評価\", context => score)\r\n                },\r\n                useCompensation: false);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 評価値の計算と変換を検証する。\r\n        /// </summary>\r\n        private void TestMath()\r\n        {\r\n            bool clampPassed =\r\n                UtilityMath.Clamp01(-1f) == 0f &&\r\n                UtilityMath.Clamp01(2f) == 1f;\r\n            Debug.Assert(clampPassed, \"評価値の範囲制限\", this);\r\n            Check(clampPassed, \"評価値の範囲制限\");\r\n\r\n            bool nanPassed =\r\n                UtilityMath.Clamp01(float.NaN) == 0f;\r\n            Debug.Assert(nanPassed, \"NaN評価値の安全処理\", this);\r\n            Check(nanPassed, \"NaN評価値の安全処理\");\r\n\r\n            bool normalizePassed =\r\n                UtilityMath.Normalize(5f, 0f, 10f) == 0.5f;\r\n            Debug.Assert(normalizePassed, \"評価値の正規化\", this);\r\n            Check(normalizePassed, \"評価値の正規化\");\r\n\r\n            bool boundaryPassed =\r\n                UtilityMath.Normalize(-1f, 0f, 10f) == 0f &&\r\n                UtilityMath.Normalize(11f, 0f, 10f) == 1f;\r\n            Debug.Assert(boundaryPassed, \"正規化の境界条件\", this);\r\n            Check(boundaryPassed, \"正規化の境界条件\");\r\n\r\n            bool invertPassed =\r\n                UtilityMath.Invert(0.25f) == 0.75f;\r\n            Debug.Assert(invertPassed, \"評価値の反転\", this);\r\n            Check(invertPassed, \"評価値の反転\");\r\n\r\n            bool powerPassed =\r\n                Mathf.Approximately(\r\n                    UtilityMath.Power(0.5f, 2f),\r\n                    0.25f);\r\n            Debug.Assert(powerPassed, \"べき乗曲線\", this);\r\n            Check(powerPassed, \"べき乗曲線\");\r\n\r\n            bool smoothPassed =\r\n                Mathf.Approximately(\r\n                    UtilityMath.SmoothStep(0.25f),\r\n                    0.15625f);\r\n            Debug.Assert(smoothPassed, \"S字評価曲線\", this);\r\n            Check(smoothPassed, \"S字評価曲線\");\r\n\r\n            bool singlePassed =\r\n                UtilityMath.Compensate(0.5f, 1) == 0.5f;\r\n            Debug.Assert(singlePassed, \"単一評価要素の補正\", this);\r\n            Check(singlePassed, \"単一評価要素の補正\");\r\n\r\n            bool compensationPassed =\r\n                Mathf.Approximately(\r\n                    UtilityMath.Compensate(0.5f, 2),\r\n                    0.625f);\r\n            Debug.Assert(compensationPassed, \"複数評価要素の補正\", this);\r\n            Check(compensationPassed, \"複数評価要素の補正\");\r\n\r\n            bool endpointPassed =\r\n                UtilityMath.Compensate(0f, 5) == 0f &&\r\n                UtilityMath.Compensate(1f, 5) == 1f;\r\n            Debug.Assert(endpointPassed, \"補正値の境界条件\", this);\r\n            Check(endpointPassed, \"補正値の境界条件\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個別の評価要素を検証する。\r\n        /// </summary>\r\n        private void TestConsideration()\r\n        {\r\n            var consideration =\r\n                new UtilityConsideration<float>(\r\n                    \"攻撃性\",\r\n                    context => context);\r\n\r\n            bool namePassed =\r\n                consideration.Name == \"攻撃性\";\r\n            Debug.Assert(namePassed, \"評価要素名の保持\", this);\r\n            Check(namePassed, \"評価要素名の保持\");\r\n\r\n            bool valuePassed =\r\n                consideration.Evaluate(0.7f) == 0.7f;\r\n            Debug.Assert(valuePassed, \"評価処理の実行\", this);\r\n            Check(valuePassed, \"評価処理の実行\");\r\n\r\n            bool clampPassed =\r\n                consideration.Evaluate(-2f) == 0f &&\r\n                consideration.Evaluate(2f) == 1f;\r\n            Debug.Assert(clampPassed, \"評価要素の範囲制限\", this);\r\n            Check(clampPassed, \"評価要素の範囲制限\");\r\n\r\n            bool nanPassed =\r\n                consideration.Evaluate(float.NaN) == 0f;\r\n            Debug.Assert(nanPassed, \"不正評価値の安全処理\", this);\r\n            Check(nanPassed, \"不正評価値の安全処理\");\r\n\r\n            bool contextPassed =\r\n                consideration.Evaluate(0.2f) == 0.2f &&\r\n                consideration.Evaluate(0.8f) == 0.8f;\r\n            Debug.Assert(contextPassed, \"意思決定情報の変更反映\", this);\r\n            Check(contextPassed, \"意思決定情報の変更反映\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動候補の評価計算を検証する。\r\n        /// </summary>\r\n        private void TestOption()\r\n        {\r\n            var first =\r\n                new UtilityConsideration<float>(\r\n                    \"攻撃性\", context => 0.5f);\r\n\r\n            var second =\r\n                new UtilityConsideration<float>(\r\n                    \"信頼度\", context => 0.8f);\r\n\r\n            var option =\r\n                new UtilityOption<string, float>(\r\n                    \"Chase\",\r\n                    new[] { first, second },\r\n                    0.5f,\r\n                    false);\r\n\r\n            bool definitionPassed =\r\n                option.Id == \"Chase\" &&\r\n                option.Weight == 0.5f &&\r\n                option.Considerations.Count == 2 &&\r\n                !option.UseCompensation;\r\n            Debug.Assert(definitionPassed, \"行動候補の定義保持\", this);\r\n            Check(definitionPassed, \"行動候補の定義保持\");\r\n\r\n            bool productPassed =\r\n                Mathf.Approximately(\r\n                    option.Evaluate(0f), 0.2f);\r\n            Debug.Assert(productPassed, \"重み付き乗算評価\", this);\r\n            Check(productPassed, \"重み付き乗算評価\");\r\n\r\n            var compensated =\r\n                new UtilityOption<string, float>(\r\n                    \"Chase\",\r\n                    new[] { first, second });\r\n\r\n            bool compensationPassed =\r\n                Mathf.Approximately(\r\n                    compensated.Evaluate(0f), 0.55f);\r\n            Debug.Assert(compensationPassed, \"補正付き乗算評価\", this);\r\n            Check(compensationPassed, \"補正付き乗算評価\");\r\n\r\n            var empty =\r\n                new UtilityOption<string, float>(\r\n                    \"Idle\",\r\n                    Array.Empty<UtilityConsideration<float>>(),\r\n                    0.3f);\r\n\r\n            bool emptyPassed =\r\n                empty.Evaluate(0f) == 0.3f;\r\n            Debug.Assert(emptyPassed, \"評価要素なしの基本重み\", this);\r\n            Check(emptyPassed, \"評価要素なしの基本重み\");\r\n\r\n            // 不要な評価処理が実行された回数。\r\n            int queryCount = 0;\r\n\r\n            var counter =\r\n                new UtilityConsideration<float>(\r\n                    \"呼び出し確認\",\r\n                    context =>\r\n                    {\r\n                        queryCount++;\r\n\r\n                        return 1f;\r\n                    });\r\n\r\n            var unavailable =\r\n                new UtilityOption<string, float>(\r\n                    \"Unavailable\",\r\n                    new[] { counter },\r\n                    availability: context => false);\r\n\r\n            bool unavailablePassed =\r\n                !unavailable.IsAvailable(0f) &&\r\n                unavailable.Evaluate(0f) == 0f &&\r\n                queryCount == 0;\r\n            Debug.Assert(unavailablePassed, \"利用不可能な行動の評価省略\", this);\r\n            Check(unavailablePassed, \"利用不可能な行動の評価省略\");\r\n\r\n            var zeroWeight =\r\n                new UtilityOption<string, float>(\r\n                    \"Disabled\",\r\n                    new[] { counter },\r\n                    weight: 0f);\r\n\r\n            bool weightPassed =\r\n                zeroWeight.Evaluate(0f) == 0f &&\r\n                queryCount == 0;\r\n            Debug.Assert(weightPassed, \"基本重み0の評価省略\", this);\r\n            Check(weightPassed, \"基本重み0の評価省略\");\r\n\r\n            var zero =\r\n                new UtilityConsideration<float>(\r\n                    \"無効条件\", context => 0f);\r\n\r\n            var earlyExit =\r\n                new UtilityOption<string, float>(\r\n                    \"EarlyExit\",\r\n                    new[] { zero, counter });\r\n\r\n            bool earlyExitPassed =\r\n                earlyExit.Evaluate(0f) == 0f &&\r\n                queryCount == 0;\r\n            Debug.Assert(earlyExitPassed, \"評価値0による早期終了\", this);\r\n            Check(earlyExitPassed, \"評価値0による早期終了\");\r\n\r\n            var source =\r\n                new[] { first };\r\n\r\n            var copied =\r\n                new UtilityOption<string, float>(\r\n                    \"Copied\", source);\r\n\r\n            source[0] = zero;\r\n\r\n            bool copyPassed =\r\n                copied.Evaluate(0f) == 0.5f;\r\n            Debug.Assert(copyPassed, \"評価要素コレクションの独立性\", this);\r\n            Check(copyPassed, \"評価要素コレクションの独立性\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動評価結果の保持を検証する。\r\n        /// </summary>\r\n        private void TestEvaluation()\r\n        {\r\n            var evaluation =\r\n                new UtilityEvaluation<string>(\r\n                    \"Chase\", 0.6f, true, 0.1f);\r\n\r\n            bool dataPassed =\r\n                evaluation.ActionId == \"Chase\" &&\r\n                evaluation.RawScore == 0.6f &&\r\n                evaluation.IsCurrentAction &&\r\n                evaluation.IsValid &&\r\n                evaluation.IsSelectable;\r\n            Debug.Assert(dataPassed, \"評価結果の情報保持\", this);\r\n            Check(dataPassed, \"評価結果の情報保持\");\r\n\r\n            bool bonusPassed =\r\n                Mathf.Approximately(\r\n                    evaluation.SelectionScore, 0.7f);\r\n            Debug.Assert(bonusPassed, \"継続優遇値の適用\", this);\r\n            Check(bonusPassed, \"継続優遇値の適用\");\r\n\r\n            var other =\r\n                new UtilityEvaluation<string>(\r\n                    \"Patrol\", 0.6f, false, 0.1f);\r\n\r\n            bool otherPassed =\r\n                other.SelectionScore == 0.6f;\r\n            Debug.Assert(otherPassed, \"新規行動への優遇抑止\", this);\r\n            Check(otherPassed, \"新規行動への優遇抑止\");\r\n\r\n            var invalid =\r\n                new UtilityEvaluation<string>(\r\n                    \"Chase\", 0f, true, 0.1f);\r\n\r\n            bool invalidPassed =\r\n                invalid.SelectionScore == 0f &&\r\n                !invalid.IsSelectable;\r\n            Debug.Assert(invalidPassed, \"無効行動への優遇抑止\", this);\r\n            Check(invalidPassed, \"無効行動への優遇抑止\");\r\n\r\n            var empty = default(UtilityEvaluation<string>);\r\n\r\n            bool defaultPassed =\r\n                !empty.IsValid && !empty.IsSelectable;\r\n            Debug.Assert(defaultPassed, \"既定評価結果の無効状態\", this);\r\n            Check(defaultPassed, \"既定評価結果の無効状態\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動候補の登録と選択を検証する。\r\n        /// </summary>\r\n        private void TestSelection()\r\n        {\r\n            var selector =\r\n                new UtilitySelector<string, float>();\r\n\r\n            bool emptyPassed =\r\n                !selector.TrySelect(0f, out var empty) &&\r\n                !empty.IsValid &&\r\n                selector.Count == 0;\r\n            Debug.Assert(emptyPassed, \"行動候補なしの選択失敗\", this);\r\n            Check(emptyPassed, \"行動候補なしの選択失敗\");\r\n\r\n            bool addPassed =\r\n                selector.TryAddOption(\r\n                    CreateOption(\"Chase\", 0.8f)) &&\r\n                selector.TryAddOption(\r\n                    CreateOption(\"Patrol\", 0.5f)) &&\r\n                selector.Count == 2 &&\r\n                selector.HasOption(\"Chase\");\r\n            Debug.Assert(addPassed, \"行動候補の登録\", this);\r\n            Check(addPassed, \"行動候補の登録\");\r\n\r\n            bool duplicatePassed =\r\n                !selector.TryAddOption(\r\n                    CreateOption(\"Chase\", 1f)) &&\r\n                selector.Count == 2;\r\n            Debug.Assert(duplicatePassed, \"重複行動IDの拒否\", this);\r\n            Check(duplicatePassed, \"重複行動IDの拒否\");\r\n\r\n            bool bestPassed =\r\n                selector.TrySelect(0f, out var selected) &&\r\n                selected.ActionId == \"Chase\" &&\r\n                selected.RawScore == 0.8f;\r\n            Debug.Assert(bestPassed, \"最高評価行動の選択\", this);\r\n            Check(bestPassed, \"最高評価行動の選択\");\r\n\r\n            bool historyPassed =\r\n                selector.LastEvaluations.Count == 2 &&\r\n                selector.LastEvaluations[0].ActionId == \"Chase\" &&\r\n                selector.LastEvaluations[1].ActionId == \"Patrol\";\r\n            Debug.Assert(historyPassed, \"全行動候補の評価結果保持\", this);\r\n            Check(historyPassed, \"全行動候補の評価結果保持\");\r\n\r\n            bool removePassed =\r\n                selector.TryRemoveOption(\"Chase\") &&\r\n                !selector.HasOption(\"Chase\") &&\r\n                selector.LastEvaluations.Count == 0 &&\r\n                selector.TrySelect(0f, out var next) &&\r\n                next.ActionId == \"Patrol\";\r\n            Debug.Assert(removePassed, \"行動削除後の再選択\", this);\r\n            Check(removePassed, \"行動削除後の再選択\");\r\n\r\n            selector.Clear();\r\n\r\n            bool clearPassed =\r\n                selector.Count == 0 &&\r\n                selector.LastEvaluations.Count == 0 &&\r\n                !selector.TrySelect(0f, out _);\r\n            Debug.Assert(clearPassed, \"行動候補と評価結果の全削除\", this);\r\n            Check(clearPassed, \"行動候補と評価結果の全削除\");\r\n\r\n            selector.TryAddOption(\r\n                CreateOption(\"Disabled\", 0f));\r\n\r\n            bool zeroPassed =\r\n                !selector.TrySelect(0f, out var zero) &&\r\n                !zero.IsValid &&\r\n                selector.LastEvaluations.Count == 1;\r\n            Debug.Assert(zeroPassed, \"評価値0の行動選択抑止\", this);\r\n            Check(zeroPassed, \"評価値0の行動選択抑止\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動継続性と同点時の優先順位を検証する。\r\n        /// </summary>\r\n        private void TestContinuation()\r\n        {\r\n            var selector =\r\n                new UtilitySelector<string, float>(0.1f);\r\n\r\n            selector.TryAddOption(\r\n                CreateOption(\"Patrol\", 0.65f));\r\n\r\n            selector.TryAddOption(\r\n                CreateOption(\"Chase\", 0.6f));\r\n\r\n            bool continuePassed =\r\n                selector.TrySelect(\r\n                    0f, \"Chase\", out var continued) &&\r\n                continued.ActionId == \"Chase\";\r\n            Debug.Assert(continuePassed, \"継続優遇による行動維持\", this);\r\n            Check(continuePassed, \"継続優遇による行動維持\");\r\n\r\n            selector.SetContinuationBonus(0.01f);\r\n\r\n            bool switchPassed =\r\n                selector.TrySelect(\r\n                    0f, \"Chase\", out var switched) &&\r\n                switched.ActionId == \"Patrol\";\r\n            Debug.Assert(switchPassed, \"高評価行動への切り替え\", this);\r\n            Check(switchPassed, \"高評価行動への切り替え\");\r\n\r\n            selector.Clear();\r\n            selector.SetContinuationBonus(0f);\r\n\r\n            selector.TryAddOption(\r\n                CreateOption(\"First\", 0.5f));\r\n\r\n            selector.TryAddOption(\r\n                CreateOption(\"Second\", 0.5f));\r\n\r\n            bool tiePassed =\r\n                selector.TrySelect(0f, out var first) &&\r\n                first.ActionId == \"First\";\r\n            Debug.Assert(tiePassed, \"同点時の登録順優先\", this);\r\n            Check(tiePassed, \"同点時の登録順優先\");\r\n\r\n            bool currentTiePassed =\r\n                selector.TrySelect(\r\n                    0f, \"Second\", out var second) &&\r\n                second.ActionId == \"Second\";\r\n            Debug.Assert(currentTiePassed, \"同点時の現在行動優先\", this);\r\n            Check(currentTiePassed, \"同点時の現在行動優先\");\r\n\r\n            selector.Clear();\r\n            selector.SetContinuationBonus(1f);\r\n\r\n            selector.TryAddOption(\r\n                CreateOption(\"Invalid\", 0f));\r\n\r\n            selector.TryAddOption(\r\n                CreateOption(\"Valid\", 0.1f));\r\n\r\n            bool invalidPassed =\r\n                selector.TrySelect(\r\n                    0f, \"Invalid\", out var valid) &&\r\n                valid.ActionId == \"Valid\";\r\n            Debug.Assert(invalidPassed, \"無効になった現在行動の解除\", this);\r\n            Check(invalidPassed, \"無効になった現在行動の解除\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 不正入力と評価中の安全性を検証する。\r\n        /// </summary>\r\n        private void TestSafety()\r\n        {\r\n            bool rangePassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    UtilityMath.Normalize(0f, 1f, 1f);\r\n                });\r\n            Debug.Assert(rangePassed, \"不正正規化範囲の拒否\", this);\r\n            Check(rangePassed, \"不正正規化範囲の拒否\");\r\n\r\n            bool exponentPassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    UtilityMath.Power(0.5f, 0f);\r\n                });\r\n            Debug.Assert(exponentPassed, \"不正指数の拒否\", this);\r\n            Check(exponentPassed, \"不正指数の拒否\");\r\n\r\n            bool evaluatorPassed =\r\n                Throws<ArgumentNullException>(() =>\r\n                {\r\n                    new UtilityConsideration<float>(\r\n                        \"Invalid\", null);\r\n                });\r\n            Debug.Assert(evaluatorPassed, \"null評価処理の拒否\", this);\r\n            Check(evaluatorPassed, \"null評価処理の拒否\");\r\n\r\n            bool weightPassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    new UtilityOption<string, float>(\r\n                        \"Invalid\",\r\n                        Array.Empty<UtilityConsideration<float>>(),\r\n                        1.1f);\r\n                });\r\n            Debug.Assert(weightPassed, \"不正基本重みの拒否\", this);\r\n            Check(weightPassed, \"不正基本重みの拒否\");\r\n\r\n            var selector =\r\n                new UtilitySelector<string, float>();\r\n\r\n            bool bonusPassed =\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    selector.SetContinuationBonus(-1f);\r\n                }) &&\r\n                selector.ContinuationBonus == 0.1f;\r\n            Debug.Assert(bonusPassed, \"不正継続優遇値の拒否\", this);\r\n            Check(bonusPassed, \"不正継続優遇値の拒否\");\r\n\r\n            selector.TryAddOption(\r\n                new UtilityOption<string, float>(\r\n                    \"Reentrant\",\r\n                    new[]\r\n                    {\r\n                        new UtilityConsideration<float>(\r\n                            \"構成変更\",\r\n                            context =>\r\n                            {\r\n                                selector.Clear();\r\n\r\n                                return 1f;\r\n                            })\r\n                    }));\r\n\r\n            bool reentrantPassed =\r\n                Throws<InvalidOperationException>(() =>\r\n                {\r\n                    selector.TrySelect(0f, out _);\r\n                }) &&\r\n                selector.Count == 1 &&\r\n                selector.LastEvaluations.Count == 0;\r\n            Debug.Assert(reentrantPassed, \"評価中の構成変更防止\", this);\r\n            Check(reentrantPassed, \"評価中の構成変更防止\");\r\n\r\n            selector.Clear();\r\n\r\n            selector.TryAddOption(\r\n                CreateOption(\"Recovered\", 0.5f));\r\n\r\n            bool recoveryPassed =\r\n                selector.TrySelect(0f, out var recovered) &&\r\n                recovered.ActionId == \"Recovered\";\r\n            Debug.Assert(recoveryPassed, \"例外発生後の再評価\", this);\r\n            Check(recoveryPassed, \"例外発生後の再評価\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された処理が期待する例外を発生させるか検証する。\r\n        /// </summary>\r\n        /// <typeparam name=\"TException\">期待する例外型</typeparam>\r\n        /// <param name=\"action\">検証対象の処理</param>\r\n        /// <returns>期待する例外が発生した場合はtrue</returns>\r\n        private bool Throws<TException>(Action action)\r\n            where TException : Exception\r\n        {\r\n            try\r\n            {\r\n                action();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                if (exception.GetType() == typeof(TException))\r\n                {\r\n                    return true;\r\n                }\r\n\r\n                throw;\r\n            }\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個別のテスト結果を出力し、結果を集計する。\r\n        /// </summary>\r\n        /// <param name=\"passed\">テストの成功判定</param>\r\n        /// <param name=\"testName\">テスト名</param>\r\n        private void Check(bool passed, string testName)\r\n        {\r\n            if (passed)\r\n            {\r\n                passedCount++;\r\n\r\n                Debug.Log(\r\n                    $\"<color=#00CC66>【成功】</color> {testName}\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogError(\r\n                    $\"【失敗】{testName}\",\r\n                    this);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:01.115Z"
+}

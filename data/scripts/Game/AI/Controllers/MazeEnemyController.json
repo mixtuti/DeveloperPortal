@@ -1,0 +1,1668 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Controllers.MazeEnemyController",
+    "name": "MazeEnemyController",
+    "fileName": "MazeEnemyController.cs",
+    "namespace": "Game.AI.Controllers",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class MazeEnemyController : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "敵個体のAIと移動処理を管理する。",
+    "remarks": "AIの思考更新はAgentUpdateManagerが担当する。 フレーム単位の移動更新は本クラスが担当する。",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "Framework.AI.Core",
+        "Framework.AI.Scheduling",
+        "Framework.Movement",
+        "Framework.Parameters",
+        "Game.AI.Actions",
+        "Game.AI.Core",
+        "Game.AI.Parameters",
+        "Game.AI.Perception",
+        "Game.Stage",
+        "UnityEngine",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "IsInitialized",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsInitialized => initialized",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "初期化済みであるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Profile",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyProfile Profile => profile",
+            "returnType": "",
+            "valueType": "MazeEnemyProfile",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "敵のプロファイル。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Movement",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridMovementController Movement => movement",
+            "returnType": "",
+            "valueType": "GridMovementController",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "敵の移動コントローラー。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Agent",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyAgent Agent => agent",
+            "returnType": "",
+            "valueType": "MazeEnemyAgent",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "敵個体の自律型AI。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Parameters",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public ParameterSet<MazeEnemyParameter> Parameters =>\r\n            parameters",
+            "returnType": "",
+            "valueType": "ParameterSet<MazeEnemyParameter>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "敵個体のパラメーターセット。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "EnemyContext",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyContext EnemyContext =>\r\n            enemyContext",
+            "returnType": "",
+            "valueType": "MazeEnemyContext",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "敵個体の基本コンテキスト。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CurrentAction",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyActionType CurrentAction =>\r\n            agent != null\r\n                ? agent.CurrentAction\r\n                : MazeEnemyActionType.None",
+            "returnType": "",
+            "valueType": "MazeEnemyActionType",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の行動。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CanAct",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool CanAct =>\r\n            initialized &&\r\n            isActiveAndEnabled &&\r\n            stageManager != null &&\r\n            stageManager.IsPlaying &&\r\n            agent != null &&\r\n            agent.CanThink",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "敵が現在行動可能であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Initialize",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Initialize(\r\n            MazeStageManager newStageManager,\r\n            AgentUpdateManager newUpdateManager,\r\n            Vector2Int spawnPosition,\r\n            Func<IReadOnlyList<MazeEnemyTargetSnapshot>>\r\n                targetProvider,\r\n            MazeEnemyProfile overrideProfile = null)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "newStageManager",
+                    "type": "MazeStageManager",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "接続先のステージ管理システム"
+                },
+                {
+                    "name": "newUpdateManager",
+                    "type": "AgentUpdateManager",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "AI更新管理システム"
+                },
+                {
+                    "name": "spawnPosition",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "敵の初期セル座標"
+                },
+                {
+                    "name": "targetProvider",
+                    "type": "Func<IReadOnlyList<MazeEnemyTargetSnapshot>>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識対象候補の取得処理"
+                },
+                {
+                    "name": "overrideProfile",
+                    "type": "MazeEnemyProfile",
+                    "modifier": "",
+                    "defaultValue": "null",
+                    "description": "個体に適用する任意のプロファイル"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "敵個体を初期化する。",
+            "returns": "初期化に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SynchronizeStageState",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void SynchronizeStageState()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "ステージ状態と敵AIの状態を同期する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Release",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Release()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "敵個体が所有する資源を解放する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyController",
+            "fullName": "MazeEnemyController",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "敵個体のAIと移動処理を管理する。",
+            "remarks": "AIの思考更新はAgentUpdateManagerが担当する。 フレーム単位の移動更新は本クラスが担当する。",
+            "attributes": [
+                {
+                    "name": "DisallowMultipleComponent",
+                    "arguments": [],
+                    "raw": "DisallowMultipleComponent"
+                },
+                {
+                    "name": "RequireComponent",
+                    "arguments": [
+                        "typeof(GridMovementController)"
+                    ],
+                    "raw": "RequireComponent(typeof(GridMovementController))"
+                }
+            ],
+            "declaration": "public sealed class MazeEnemyController : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "profile",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeEnemyProfile profile",
+                    "returnType": "",
+                    "valueType": "MazeEnemyProfile",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "敵AI設定"
+                            ],
+                            "raw": "Header(\"敵AI設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "敵の性格と能力を定義するプロファイル。"
+                            ],
+                            "raw": "Tooltip(\"敵の性格と能力を定義するプロファイル。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Profile",
+                        "type": "MazeEnemyProfile",
+                        "header": "敵AI設定",
+                        "tooltip": "敵の性格と能力を定義するプロファイル。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "thinkInterval",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float thinkInterval = 0.2f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.2f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "AIの思考更新間隔。単位は秒。"
+                            ],
+                            "raw": "Tooltip(\"AIの思考更新間隔。単位は秒。\")"
+                        },
+                        {
+                            "name": "Min",
+                            "arguments": [
+                                0.01
+                            ],
+                            "raw": "Min(0.01f)"
+                        }
+                    ],
+                    "initialValue": "0.2f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Think Interval",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "AIの思考更新間隔。単位は秒。",
+                        "range": null,
+                        "min": 0.01,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "0.2f"
+                    }
+                },
+                {
+                    "name": "movement",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private GridMovementController movement",
+                    "returnType": "",
+                    "valueType": "GridMovementController",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "コンポーネント"
+                            ],
+                            "raw": "Header(\"コンポーネント\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "敵のグリッド移動コントローラー。"
+                            ],
+                            "raw": "Tooltip(\"敵のグリッド移動コントローラー。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Movement",
+                        "type": "GridMovementController",
+                        "header": "コンポーネント",
+                        "tooltip": "敵のグリッド移動コントローラー。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "logActionChanges",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool logActionChanges = false",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "false",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "デバッグ設定"
+                            ],
+                            "raw": "Header(\"デバッグ設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "行動切り替え時にログを出力する。"
+                            ],
+                            "raw": "Tooltip(\"行動切り替え時にログを出力する。\")"
+                        }
+                    ],
+                    "initialValue": "false",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Log Action Changes",
+                        "type": "bool",
+                        "header": "デバッグ設定",
+                        "tooltip": "行動切り替え時にログを出力する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "false"
+                    }
+                },
+                {
+                    "name": "drawDebugPath",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool drawDebugPath = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "Sceneビューに移動経路を表示する。"
+                            ],
+                            "raw": "Tooltip(\"Sceneビューに移動経路を表示する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Draw Debug Path",
+                        "type": "bool",
+                        "header": null,
+                        "tooltip": "Sceneビューに移動経路を表示する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "initialized",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool initialized",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "実行時情報・確認専用"
+                            ],
+                            "raw": "Header(\"実行時情報・確認専用\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "敵AIが初期化されているか。"
+                            ],
+                            "raw": "Tooltip(\"敵AIが初期化されているか。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Initialized",
+                        "type": "bool",
+                        "header": "実行時情報・確認専用",
+                        "tooltip": "敵AIが初期化されているか。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "currentAction",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeEnemyActionType currentAction",
+                    "returnType": "",
+                    "valueType": "MazeEnemyActionType",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "現在実行している行動。"
+                            ],
+                            "raw": "Tooltip(\"現在実行している行動。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Current Action",
+                        "type": "MazeEnemyActionType",
+                        "header": null,
+                        "tooltip": "現在実行している行動。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "currentCell",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private Vector2Int currentCell",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "現在のセル座標。"
+                            ],
+                            "raw": "Tooltip(\"現在のセル座標。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Current Cell",
+                        "type": "Vector2Int",
+                        "header": null,
+                        "tooltip": "現在のセル座標。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "hasDestination",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool hasDestination",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "目的地が設定されているか。"
+                            ],
+                            "raw": "Tooltip(\"目的地が設定されているか。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Has Destination",
+                        "type": "bool",
+                        "header": null,
+                        "tooltip": "目的地が設定されているか。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "destination",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private Vector2Int destination",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "現在の行動目的地。"
+                            ],
+                            "raw": "Tooltip(\"現在の行動目的地。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Destination",
+                        "type": "Vector2Int",
+                        "header": null,
+                        "tooltip": "現在の行動目的地。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "currentMoveSpeed",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float currentMoveSpeed",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "現在の移動速度。"
+                            ],
+                            "raw": "Tooltip(\"現在の移動速度。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Current Move Speed",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "現在の移動速度。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "playerVisible",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool playerVisible",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "プレイヤーを視認しているか。"
+                            ],
+                            "raw": "Tooltip(\"プレイヤーを視認しているか。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Player Visible",
+                        "type": "bool",
+                        "header": null,
+                        "tooltip": "プレイヤーを視認しているか。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "rememberedTargetCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int rememberedTargetCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "記憶している対象の数。"
+                            ],
+                            "raw": "Tooltip(\"記憶している対象の数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Remembered Target Count",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "記憶している対象の数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "tickCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private long tickCount",
+                    "returnType": "",
+                    "valueType": "long",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "AIの思考更新回数。"
+                            ],
+                            "raw": "Tooltip(\"AIの思考更新回数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Tick Count",
+                        "type": "long",
+                        "header": null,
+                        "tooltip": "AIの思考更新回数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "stageManager",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeStageManager stageManager",
+                    "returnType": "",
+                    "valueType": "MazeStageManager",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "接続先のステージ管理システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "updateManager",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private AgentUpdateManager updateManager",
+                    "returnType": "",
+                    "valueType": "AgentUpdateManager",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "AIの更新管理システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "parameters",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private ParameterSet<MazeEnemyParameter> parameters",
+                    "returnType": "",
+                    "valueType": "ParameterSet<MazeEnemyParameter>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個体専用のパラメーターセット。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "enemyContext",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeEnemyContext enemyContext",
+                    "returnType": "",
+                    "valueType": "MazeEnemyContext",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵AIの基本コンテキスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "agent",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeEnemyAgent agent",
+                    "returnType": "",
+                    "valueType": "MazeEnemyAgent",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個体専用の自律型AI。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsInitialized",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsInitialized => initialized",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "初期化済みであるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Profile",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyProfile Profile => profile",
+                    "returnType": "",
+                    "valueType": "MazeEnemyProfile",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "敵のプロファイル。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Movement",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public GridMovementController Movement => movement",
+                    "returnType": "",
+                    "valueType": "GridMovementController",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "敵の移動コントローラー。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Agent",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyAgent Agent => agent",
+                    "returnType": "",
+                    "valueType": "MazeEnemyAgent",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "敵個体の自律型AI。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Parameters",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public ParameterSet<MazeEnemyParameter> Parameters =>\r\n            parameters",
+                    "returnType": "",
+                    "valueType": "ParameterSet<MazeEnemyParameter>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "敵個体のパラメーターセット。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "EnemyContext",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyContext EnemyContext =>\r\n            enemyContext",
+                    "returnType": "",
+                    "valueType": "MazeEnemyContext",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "敵個体の基本コンテキスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CurrentAction",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyActionType CurrentAction =>\r\n            agent != null\r\n                ? agent.CurrentAction\r\n                : MazeEnemyActionType.None",
+                    "returnType": "",
+                    "valueType": "MazeEnemyActionType",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の行動。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CanAct",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool CanAct =>\r\n            initialized &&\r\n            isActiveAndEnabled &&\r\n            stageManager != null &&\r\n            stageManager.IsPlaying &&\r\n            agent != null &&\r\n            agent.CanThink",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "敵が現在行動可能であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Awake",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Awake()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "自身のコンポーネントを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CacheComponents",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void CacheComponents()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "必要なコンポーネントを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Initialize",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool Initialize(\r\n            MazeStageManager newStageManager,\r\n            AgentUpdateManager newUpdateManager,\r\n            Vector2Int spawnPosition,\r\n            Func<IReadOnlyList<MazeEnemyTargetSnapshot>>\r\n                targetProvider,\r\n            MazeEnemyProfile overrideProfile = null)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "newStageManager",
+                            "type": "MazeStageManager",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "接続先のステージ管理システム"
+                        },
+                        {
+                            "name": "newUpdateManager",
+                            "type": "AgentUpdateManager",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "AI更新管理システム"
+                        },
+                        {
+                            "name": "spawnPosition",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "敵の初期セル座標"
+                        },
+                        {
+                            "name": "targetProvider",
+                            "type": "Func<IReadOnlyList<MazeEnemyTargetSnapshot>>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識対象候補の取得処理"
+                        },
+                        {
+                            "name": "overrideProfile",
+                            "type": "MazeEnemyProfile",
+                            "modifier": "",
+                            "defaultValue": "null",
+                            "description": "個体に適用する任意のプロファイル"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵個体を初期化する。",
+                    "returns": "初期化に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HandleStageStateChanged",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void HandleStageStateChanged(\r\n            MazeStageState previous,\r\n            MazeStageState current)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "previous",
+                            "type": "MazeStageState",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更前の状態"
+                        },
+                        {
+                            "name": "current",
+                            "type": "MazeStageState",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更後の状態"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ状態の変化を処理する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SynchronizeStageState",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void SynchronizeStageState()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ状態と敵AIの状態を同期する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PauseAgent",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void PauseAgent()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "AIと移動処理を一時停止する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Update",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Update()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "フレーム単位の移動処理を実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "LateUpdate",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void LateUpdate()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "フレーム終了時に確認用情報を更新する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RefreshDebugInformation",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void RefreshDebugInformation()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "Inspectorの確認用情報を更新する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HandleActionStarted",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void HandleActionStarted(\r\n            MazeEnemyActionType action)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "開始した行動"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動開始時の確認ログを出力する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HandleActionEnded",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void HandleActionEnded(\r\n            MazeEnemyActionType action,\r\n            Framework.AI.Actions.AgentActionExitReason reason)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "終了した行動"
+                        },
+                        {
+                            "name": "reason",
+                            "type": "Framework.AI.Actions.AgentActionExitReason",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "終了理由"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動終了時の確認ログを出力する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnEnable",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnEnable()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "オブジェクト有効化時に状態を同期する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnDisable",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnDisable()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "オブジェクト無効化時にAIを停止する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Release",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Release()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵個体が所有する資源を解放する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnDestroy",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnDestroy()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "オブジェクト破棄時に資源を解放する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnDrawGizmosSelected",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnDrawGizmosSelected()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "Sceneビューに現在の移動経路を描画する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 25
+        }
+    ],
+    "source": "using System;\r\nusing System.Collections.Generic;\r\nusing Framework.AI.Core;\r\nusing Framework.AI.Scheduling;\r\nusing Framework.Movement;\r\nusing Framework.Parameters;\r\nusing Game.AI.Actions;\r\nusing Game.AI.Core;\r\nusing Game.AI.Parameters;\r\nusing Game.AI.Perception;\r\nusing Game.Stage;\r\nusing UnityEngine;\r\n\r\nnamespace Game.AI.Controllers\r\n{\r\n    /// <summary>\r\n    /// 敵個体のAIと移動処理を管理する。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// AIの思考更新はAgentUpdateManagerが担当する。\r\n    /// フレーム単位の移動更新は本クラスが担当する。\r\n    /// </remarks>\r\n    [DisallowMultipleComponent]\r\n    [RequireComponent(typeof(GridMovementController))]\r\n    public sealed class MazeEnemyController : MonoBehaviour\r\n    {\r\n        [Header(\"敵AI設定\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"敵の性格と能力を定義するプロファイル。\")]\r\n        private MazeEnemyProfile profile;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"AIの思考更新間隔。単位は秒。\")]\r\n        [Min(0.01f)]\r\n        private float thinkInterval = 0.2f;\r\n\r\n        [Header(\"コンポーネント\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"敵のグリッド移動コントローラー。\")]\r\n        private GridMovementController movement;\r\n\r\n        [Header(\"デバッグ設定\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"行動切り替え時にログを出力する。\")]\r\n        private bool logActionChanges = false;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"Sceneビューに移動経路を表示する。\")]\r\n        private bool drawDebugPath = true;\r\n\r\n        [Header(\"実行時情報・確認専用\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"敵AIが初期化されているか。\")]\r\n        private bool initialized;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"現在実行している行動。\")]\r\n        private MazeEnemyActionType currentAction;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"現在のセル座標。\")]\r\n        private Vector2Int currentCell;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"目的地が設定されているか。\")]\r\n        private bool hasDestination;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"現在の行動目的地。\")]\r\n        private Vector2Int destination;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"現在の移動速度。\")]\r\n        private float currentMoveSpeed;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"プレイヤーを視認しているか。\")]\r\n        private bool playerVisible;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"記憶している対象の数。\")]\r\n        private int rememberedTargetCount;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"AIの思考更新回数。\")]\r\n        private long tickCount;\r\n\r\n        /// <summary>\r\n        /// 接続先のステージ管理システム。\r\n        /// </summary>\r\n        private MazeStageManager stageManager;\r\n\r\n        /// <summary>\r\n        /// AIの更新管理システム。\r\n        /// </summary>\r\n        private AgentUpdateManager updateManager;\r\n\r\n        /// <summary>\r\n        /// 個体専用のパラメーターセット。\r\n        /// </summary>\r\n        private ParameterSet<MazeEnemyParameter> parameters;\r\n\r\n        /// <summary>\r\n        /// 敵AIの基本コンテキスト。\r\n        /// </summary>\r\n        private MazeEnemyContext enemyContext;\r\n\r\n        /// <summary>\r\n        /// 個体専用の自律型AI。\r\n        /// </summary>\r\n        private MazeEnemyAgent agent;\r\n\r\n        /// <summary>\r\n        /// 初期化済みであるか。\r\n        /// </summary>\r\n        public bool IsInitialized => initialized;\r\n\r\n        /// <summary>\r\n        /// 敵のプロファイル。\r\n        /// </summary>\r\n        public MazeEnemyProfile Profile => profile;\r\n\r\n        /// <summary>\r\n        /// 敵の移動コントローラー。\r\n        /// </summary>\r\n        public GridMovementController Movement => movement;\r\n\r\n        /// <summary>\r\n        /// 敵個体の自律型AI。\r\n        /// </summary>\r\n        public MazeEnemyAgent Agent => agent;\r\n\r\n        /// <summary>\r\n        /// 敵個体のパラメーターセット。\r\n        /// </summary>\r\n        public ParameterSet<MazeEnemyParameter> Parameters =>\r\n            parameters;\r\n\r\n        /// <summary>\r\n        /// 敵個体の基本コンテキスト。\r\n        /// </summary>\r\n        public MazeEnemyContext EnemyContext =>\r\n            enemyContext;\r\n\r\n        /// <summary>\r\n        /// 現在の行動。\r\n        /// </summary>\r\n        public MazeEnemyActionType CurrentAction =>\r\n            agent != null\r\n                ? agent.CurrentAction\r\n                : MazeEnemyActionType.None;\r\n\r\n        /// <summary>\r\n        /// 敵が現在行動可能であるか。\r\n        /// </summary>\r\n        public bool CanAct =>\r\n            initialized &&\r\n            isActiveAndEnabled &&\r\n            stageManager != null &&\r\n            stageManager.IsPlaying &&\r\n            agent != null &&\r\n            agent.CanThink;\r\n\r\n        /// <summary>\r\n        /// 自身のコンポーネントを取得する。\r\n        /// </summary>\r\n        private void Awake()\r\n        {\r\n            CacheComponents();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 必要なコンポーネントを取得する。\r\n        /// </summary>\r\n        private void CacheComponents()\r\n        {\r\n            if (movement == null)\r\n            {\r\n                movement =\r\n                    GetComponent<GridMovementController>();\r\n            }\r\n\r\n            if (movement != null)\r\n            {\r\n                // 移動処理の二重更新を防止する。\r\n                movement.AutoUpdate = false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 敵個体を初期化する。\r\n        /// </summary>\r\n        /// <param name=\"newStageManager\">\r\n        /// 接続先のステージ管理システム\r\n        /// </param>\r\n        /// <param name=\"newUpdateManager\">\r\n        /// AI更新管理システム\r\n        /// </param>\r\n        /// <param name=\"spawnPosition\">\r\n        /// 敵の初期セル座標\r\n        /// </param>\r\n        /// <param name=\"targetProvider\">\r\n        /// 認識対象候補の取得処理\r\n        /// </param>\r\n        /// <param name=\"overrideProfile\">\r\n        /// 個体に適用する任意のプロファイル\r\n        /// </param>\r\n        /// <returns>初期化に成功した場合はtrue</returns>\r\n        public bool Initialize(\r\n            MazeStageManager newStageManager,\r\n            AgentUpdateManager newUpdateManager,\r\n            Vector2Int spawnPosition,\r\n            Func<IReadOnlyList<MazeEnemyTargetSnapshot>>\r\n                targetProvider,\r\n            MazeEnemyProfile overrideProfile = null)\r\n        {\r\n            CacheComponents();\r\n\r\n            // 初期化前に必要な依存関係を確認する。\r\n            if (newStageManager == null ||\r\n                newUpdateManager == null ||\r\n                targetProvider == null ||\r\n                movement == null ||\r\n                !newStageManager.HasStage ||\r\n                newStageManager.CoordinateConverter == null ||\r\n                !newStageManager.IsWalkable(spawnPosition) ||\r\n                float.IsNaN(thinkInterval) ||\r\n                float.IsInfinity(thinkInterval) ||\r\n                thinkInterval <= 0f)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            Release();\r\n\r\n            stageManager = newStageManager;\r\n            updateManager = newUpdateManager;\r\n\r\n            try\r\n            {\r\n                if (overrideProfile != null)\r\n                {\r\n                    profile = overrideProfile;\r\n                }\r\n\r\n                // プロファイル未設定時は標準値を使用する。\r\n                parameters = profile != null\r\n                    ? profile.CreateParameterSet()\r\n                    : MazeEnemyParameterCatalog\r\n                        .CreateParameterSet();\r\n\r\n                // スポナーによって設定されたZ座標を維持する。\r\n                Vector3 center =\r\n                    stageManager.CoordinateConverter\r\n                        .GetCellCenterWorld(spawnPosition);\r\n\r\n                float zOffset =\r\n                    transform.position.z - center.z;\r\n\r\n                movement.Initialize(\r\n                    stageManager.CoordinateConverter,\r\n                    stageManager.IsWalkable,\r\n                    spawnPosition,\r\n                    zOffset);\r\n\r\n                movement.MoveSpeed =\r\n                    parameters.GetValue(\r\n                        MazeEnemyParameter.MoveSpeed);\r\n\r\n                string agentName = profile != null\r\n                    ? profile.DisplayName\r\n                    : gameObject.name;\r\n\r\n                if (string.IsNullOrWhiteSpace(agentName))\r\n                {\r\n                    agentName = gameObject.name;\r\n                }\r\n\r\n                var agentContext =\r\n                    new AgentContext<MazeEnemyParameter>(\r\n                        agentName,\r\n                        parameters);\r\n\r\n                enemyContext =\r\n                    new MazeEnemyContext(\r\n                        agentContext,\r\n                        stageManager,\r\n                        movement,\r\n                        spawnPosition);\r\n\r\n                agent =\r\n                    new MazeEnemyAgent(\r\n                        enemyContext,\r\n                        targetProvider);\r\n\r\n                if (!agent.Initialize(agentContext))\r\n                {\r\n                    throw new InvalidOperationException(\r\n                        \"敵Agentの初期化に失敗しました。\");\r\n                }\r\n\r\n                agent.ActionController.ActionStarted +=\r\n                    HandleActionStarted;\r\n\r\n                agent.ActionController.ActionEnded +=\r\n                    HandleActionEnded;\r\n\r\n                stageManager.StateChanged +=\r\n                    HandleStageStateChanged;\r\n\r\n                if (!updateManager.TryRegister(\r\n                        agent, thinkInterval))\r\n                {\r\n                    throw new InvalidOperationException(\r\n                        \"Agentの更新登録に失敗しました。\");\r\n                }\r\n\r\n                initialized = true;\r\n\r\n                SynchronizeStageState();\r\n                RefreshDebugInformation();\r\n\r\n                return true;\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                Debug.LogException(exception, this);\r\n\r\n                Release();\r\n\r\n                return false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// ステージ状態の変化を処理する。\r\n        /// </summary>\r\n        /// <param name=\"previous\">変更前の状態</param>\r\n        /// <param name=\"current\">変更後の状態</param>\r\n        private void HandleStageStateChanged(\r\n            MazeStageState previous,\r\n            MazeStageState current)\r\n        {\r\n            SynchronizeStageState();\r\n        }\r\n\r\n        /// <summary>\r\n        /// ステージ状態と敵AIの状態を同期する。\r\n        /// </summary>\r\n        public void SynchronizeStageState()\r\n        {\r\n            if (!initialized ||\r\n                agent == null ||\r\n                stageManager == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            if (!isActiveAndEnabled)\r\n            {\r\n                PauseAgent();\r\n\r\n                return;\r\n            }\r\n\r\n            switch (stageManager.State)\r\n            {\r\n                case MazeStageState.Playing:\r\n\r\n                    if (agent.IsPaused)\r\n                    {\r\n                        agent.Resume();\r\n                    }\r\n                    else if (!agent.IsActive)\r\n                    {\r\n                        agent.Activate();\r\n                    }\r\n\r\n                    // 再開時は早めに思考処理を実行する。\r\n                    if (updateManager != null)\r\n                    {\r\n                        updateManager.RequestUpdate(agent);\r\n                    }\r\n\r\n                    break;\r\n\r\n                case MazeStageState.Paused:\r\n\r\n                    PauseAgent();\r\n\r\n                    break;\r\n\r\n                default:\r\n\r\n                    // 準備中・クリア・失敗などでは停止する。\r\n                    if (agent.IsActive || agent.IsPaused)\r\n                    {\r\n                        agent.Deactivate();\r\n                    }\r\n\r\n                    movement.StopImmediately();\r\n                    movement.Pause();\r\n\r\n                    break;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// AIと移動処理を一時停止する。\r\n        /// </summary>\r\n        private void PauseAgent()\r\n        {\r\n            if (agent != null && agent.IsActive)\r\n            {\r\n                agent.Pause();\r\n            }\r\n\r\n            if (movement != null)\r\n            {\r\n                movement.Pause();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// フレーム単位の移動処理を実行する。\r\n        /// </summary>\r\n        private void Update()\r\n        {\r\n            if (CanAct)\r\n            {\r\n                movement.Tick(Time.deltaTime);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// フレーム終了時に確認用情報を更新する。\r\n        /// </summary>\r\n        private void LateUpdate()\r\n        {\r\n            if (initialized)\r\n            {\r\n                RefreshDebugInformation();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// Inspectorの確認用情報を更新する。\r\n        /// </summary>\r\n        private void RefreshDebugInformation()\r\n        {\r\n            if (agent == null || movement == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            currentAction = agent.CurrentAction;\r\n            currentCell = movement.CurrentCell;\r\n            currentMoveSpeed = movement.MoveSpeed;\r\n            tickCount = agent.TickCount;\r\n\r\n            hasDestination =\r\n                agent.TryGetCurrentDestination(\r\n                    out destination);\r\n\r\n            playerVisible =\r\n                agent.Perception != null &&\r\n                agent.Perception.TryGetBestObservation(\r\n                    MazeEnemyTargetType.Player,\r\n                    out var observation) &&\r\n                observation.IsVisible;\r\n\r\n            rememberedTargetCount =\r\n                agent.Perception != null\r\n                    ? agent.Perception.RememberedCount\r\n                    : 0;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動開始時の確認ログを出力する。\r\n        /// </summary>\r\n        /// <param name=\"action\">開始した行動</param>\r\n        private void HandleActionStarted(\r\n            MazeEnemyActionType action)\r\n        {\r\n            if (logActionChanges)\r\n            {\r\n                Debug.Log(\r\n                    $\"【敵AI】{gameObject.name} \" +\r\n                    $\"行動開始：{action}\",\r\n                    this);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動終了時の確認ログを出力する。\r\n        /// </summary>\r\n        /// <param name=\"action\">終了した行動</param>\r\n        /// <param name=\"reason\">終了理由</param>\r\n        private void HandleActionEnded(\r\n            MazeEnemyActionType action,\r\n            Framework.AI.Actions.AgentActionExitReason reason)\r\n        {\r\n            if (logActionChanges)\r\n            {\r\n                Debug.Log(\r\n                    $\"【敵AI】{gameObject.name} \" +\r\n                    $\"行動終了：{action} / {reason}\",\r\n                    this);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// オブジェクト有効化時に状態を同期する。\r\n        /// </summary>\r\n        private void OnEnable()\r\n        {\r\n            SynchronizeStageState();\r\n        }\r\n\r\n        /// <summary>\r\n        /// オブジェクト無効化時にAIを停止する。\r\n        /// </summary>\r\n        private void OnDisable()\r\n        {\r\n            if (initialized)\r\n            {\r\n                PauseAgent();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 敵個体が所有する資源を解放する。\r\n        /// </summary>\r\n        public void Release()\r\n        {\r\n            initialized = false;\r\n\r\n            if (stageManager != null)\r\n            {\r\n                stageManager.StateChanged -=\r\n                    HandleStageStateChanged;\r\n            }\r\n\r\n            if (agent != null)\r\n            {\r\n                if (updateManager != null)\r\n                {\r\n                    updateManager.TryUnregister(agent);\r\n                }\r\n\r\n                if (agent.ActionController != null)\r\n                {\r\n                    agent.ActionController.ActionStarted -=\r\n                        HandleActionStarted;\r\n\r\n                    agent.ActionController.ActionEnded -=\r\n                        HandleActionEnded;\r\n                }\r\n\r\n                agent.Dispose();\r\n                agent = null;\r\n            }\r\n\r\n            enemyContext?.Dispose();\r\n            enemyContext = null;\r\n\r\n            parameters?.Dispose();\r\n            parameters = null;\r\n\r\n            if (movement != null &&\r\n                movement.IsInitialized)\r\n            {\r\n                movement.StopImmediately();\r\n                movement.Pause();\r\n            }\r\n\r\n            stageManager = null;\r\n            updateManager = null;\r\n\r\n            currentAction = MazeEnemyActionType.None;\r\n            currentCell = default;\r\n            destination = default;\r\n            hasDestination = false;\r\n            currentMoveSpeed = 0f;\r\n            playerVisible = false;\r\n            rememberedTargetCount = 0;\r\n            tickCount = 0;\r\n        }\r\n\r\n        /// <summary>\r\n        /// オブジェクト破棄時に資源を解放する。\r\n        /// </summary>\r\n        private void OnDestroy()\r\n        {\r\n            Release();\r\n        }\r\n\r\n        /// <summary>\r\n        /// Sceneビューに現在の移動経路を描画する。\r\n        /// </summary>\r\n        private void OnDrawGizmosSelected()\r\n        {\r\n            if (!drawDebugPath ||\r\n                !Application.isPlaying ||\r\n                !initialized ||\r\n                agent == null ||\r\n                agent.ActionContext == null ||\r\n                stageManager == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            var converter =\r\n                stageManager.CoordinateConverter;\r\n\r\n            if (converter == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            var follower =\r\n                agent.ActionContext.PathFollower;\r\n\r\n            if (!follower.HasPath)\r\n            {\r\n                return;\r\n            }\r\n\r\n            var path = follower.Path;\r\n\r\n            switch (agent.CurrentAction)\r\n            {\r\n                case MazeEnemyActionType.Chase:\r\n                    Gizmos.color = Color.red;\r\n                    break;\r\n\r\n                case MazeEnemyActionType.Intercept:\r\n                    Gizmos.color = Color.magenta;\r\n                    break;\r\n\r\n                case MazeEnemyActionType.Escape:\r\n                    Gizmos.color = Color.cyan;\r\n                    break;\r\n\r\n                case MazeEnemyActionType.ReturnToTerritory:\r\n                    Gizmos.color = Color.yellow;\r\n                    break;\r\n\r\n                default:\r\n                    Gizmos.color = Color.green;\r\n                    break;\r\n            }\r\n\r\n            // タイルマップより手前に経路を表示する。\r\n            Vector3 offset =\r\n                new Vector3(0f, 0f, -0.3f);\r\n\r\n            Vector3 previous = transform.position;\r\n\r\n            int startIndex = Mathf.Max(\r\n                0, follower.CurrentPathIndex);\r\n\r\n            for (int i = startIndex; i < path.Count; i++)\r\n            {\r\n                Vector3 point =\r\n                    converter.GetCellCenterWorld(path[i]) +\r\n                    offset;\r\n\r\n                Gizmos.DrawLine(previous, point);\r\n                Gizmos.DrawSphere(point, 0.055f);\r\n\r\n                previous = point;\r\n            }\r\n\r\n            if (agent.TryGetCurrentDestination(\r\n                    out Vector2Int target))\r\n            {\r\n                Vector3 targetWorld =\r\n                    converter.GetCellCenterWorld(target) +\r\n                    offset;\r\n\r\n                Gizmos.DrawWireSphere(\r\n                    targetWorld, 0.25f);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.524Z"
+}

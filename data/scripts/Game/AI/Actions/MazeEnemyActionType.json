@@ -1,0 +1,76 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Actions.MazeEnemyActionType",
+    "name": "MazeEnemyActionType",
+    "fileName": "MazeEnemyActionType.cs",
+    "namespace": "Game.AI.Actions",
+    "type": "enum",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public enum MazeEnemyActionType",
+    "typeParameters": [],
+    "summary": "敵AIが実行可能な行動の種類。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [],
+    "members": [],
+    "types": [
+        {
+            "name": "MazeEnemyActionType",
+            "fullName": "MazeEnemyActionType",
+            "kind": "enum",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "敵AIが実行可能な行動の種類。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public enum MazeEnemyActionType",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [],
+            "nestedTypes": [],
+            "enumValues": [
+                {
+                    "name": "None",
+                    "value": "0"
+                },
+                {
+                    "name": "Idle",
+                    "value": "100"
+                },
+                {
+                    "name": "Patrol",
+                    "value": "200"
+                },
+                {
+                    "name": "Explore",
+                    "value": "201"
+                },
+                {
+                    "name": "Chase",
+                    "value": "300"
+                },
+                {
+                    "name": "Intercept",
+                    "value": "301"
+                },
+                {
+                    "name": "Escape",
+                    "value": "400"
+                },
+                {
+                    "name": "ReturnToTerritory",
+                    "value": "500"
+                }
+            ],
+            "line": 6
+        }
+    ],
+    "source": "namespace Game.AI.Actions\r\n{\r\n    /// <summary>\r\n    /// 敵AIが実行可能な行動の種類。\r\n    /// </summary>\r\n    public enum MazeEnemyActionType\r\n    {\r\n        /// <summary>\r\n        /// 行動未指定。\r\n        /// </summary>\r\n        None = 0,\r\n\r\n        /// <summary>\r\n        /// 待機する。\r\n        /// </summary>\r\n        Idle = 100,\r\n\r\n        /// <summary>\r\n        /// 指定された地点を巡回する。\r\n        /// </summary>\r\n        Patrol = 200,\r\n\r\n        /// <summary>\r\n        /// 未訪問地点などを探索する。\r\n        /// </summary>\r\n        Explore = 201,\r\n\r\n        /// <summary>\r\n        /// プレイヤーを直接追跡する。\r\n        /// </summary>\r\n        Chase = 300,\r\n\r\n        /// <summary>\r\n        /// プレイヤーの進行先へ先回りする。\r\n        /// </summary>\r\n        Intercept = 301,\r\n\r\n        /// <summary>\r\n        /// 脅威から逃走する。\r\n        /// </summary>\r\n        Escape = 400,\r\n\r\n        /// <summary>\r\n        /// 自身の縄張りへ帰還する。\r\n        /// </summary>\r\n        ReturnToTerritory = 500\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.479Z"
+}

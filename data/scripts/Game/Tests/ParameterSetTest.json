@@ -1,0 +1,621 @@
+{
+    "parserVersion": 3,
+    "id": "Game.Tests.ParameterSetTest",
+    "name": "ParameterSetTest",
+    "fileName": "ParameterSetTest.cs",
+    "namespace": "Game.Tests",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class ParameterSetTest : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "ParameterSetの登録、値管理、補正、 イベント通知および破棄処理を検証する。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "Framework.Parameters",
+        "UnityEngine",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "RunAllTests",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void RunAllTests()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべてのテストを実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "ParameterSetTest",
+            "fullName": "ParameterSetTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "ParameterSetの登録、値管理、補正、 イベント通知および破棄処理を検証する。",
+            "remarks": "",
+            "attributes": [
+                {
+                    "name": "DisallowMultipleComponent",
+                    "arguments": [],
+                    "raw": "DisallowMultipleComponent"
+                }
+            ],
+            "declaration": "public sealed class ParameterSetTest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "runTestsOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runTestsOnStart = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "開始時にすべてのテストを実行する。"
+                            ],
+                            "raw": "Tooltip(\"開始時にすべてのテストを実行する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Tests On Start",
+                        "type": "bool",
+                        "header": "テスト設定",
+                        "tooltip": "開始時にすべてのテストを実行する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト結果"
+                            ],
+                            "raw": "Header(\"テスト結果\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "成功したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"成功したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Passed Count",
+                        "type": "int",
+                        "header": "テスト結果",
+                        "tooltip": "成功したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "失敗したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"失敗したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Failed Count",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "失敗したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "開始時のテスト実行を制御する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunAllTests",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void RunAllTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべてのテストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "すべてのテストを実行"
+                            ],
+                            "raw": "ContextMenu(\"すべてのテストを実行\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateSpeedDefinition",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private ParameterDefinition<TestParameterId>\r\n            CreateSpeedDefinition()",
+                    "returnType": "ParameterDefinition<TestParameterId>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "移動速度のテスト用定義を生成する。",
+                    "returns": "移動速度の定義",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateAggressionDefinition",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private ParameterDefinition<TestParameterId>\r\n            CreateAggressionDefinition()",
+                    "returnType": "ParameterDefinition<TestParameterId>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "攻撃性のテスト用定義を生成する。",
+                    "returns": "攻撃性の定義",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateSet",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private ParameterSet<TestParameterId> CreateSet()",
+                    "returnType": "ParameterSet<TestParameterId>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "標準的なテスト用パラメーター集合を生成する。",
+                    "returns": "2種類のパラメーターを登録した集合",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestRegistration",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestRegistration()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "パラメーターの初期化と登録を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestRetrieval",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestRetrieval()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "パラメーターの検索と値の取得を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestValueChanges",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestValueChanges()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "基本値の変更と範囲制限を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestModifiers",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestModifiers()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "複数パラメーターの補正管理を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestReset",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestReset()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個別および全体のリセットを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestEvents",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestEvents()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "変更イベントと再入対策を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestIndependence",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestIndependence()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個体ごとの状態が独立していることを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestLifecycle",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestLifecycle()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "登録解除、消去および破棄処理を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestInvalidInput",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestInvalidInput()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "不正な引数と未登録識別子の処理を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Throws",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool Throws<TException>(Action action)\r\n            where TException : Exception",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証対象の処理"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "TException",
+                            "description": "期待する例外型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定された処理が期待する例外を発生させるか検証する。",
+                    "returns": "期待する例外が発生した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(bool passed, string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "passed",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テストの成功判定"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個別のテスト結果を出力し、結果を集計する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [
+                {
+                    "name": "TestParameterId",
+                    "fullName": "ParameterSetTest.TestParameterId",
+                    "kind": "enum",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "summary": "テスト用パラメーター識別子。",
+                    "remarks": "",
+                    "attributes": [],
+                    "declaration": "private enum TestParameterId",
+                    "inheritance": [],
+                    "typeParameters": [],
+                    "members": [],
+                    "nestedTypes": [],
+                    "enumValues": [
+                        {
+                            "name": "MoveSpeed",
+                            "value": null
+                        },
+                        {
+                            "name": "Aggression",
+                            "value": null
+                        },
+                        {
+                            "name": "Exploration",
+                            "value": null
+                        }
+                    ],
+                    "line": 33
+                }
+            ],
+            "enumValues": [],
+            "line": 14
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing Framework.Parameters;\r\nusing UnityEngine;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// ParameterSetの登録、値管理、補正、\r\n    /// イベント通知および破棄処理を検証する。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    public sealed class ParameterSetTest : MonoBehaviour\r\n    {\r\n        [Header(\"テスト設定\")]\r\n        [SerializeField]\r\n        [Tooltip(\"開始時にすべてのテストを実行する。\")]\r\n        private bool runTestsOnStart = true;\r\n\r\n        [Header(\"テスト結果\")]\r\n        [SerializeField]\r\n        [Tooltip(\"成功したテスト件数。\")]\r\n        private int passedCount;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"失敗したテスト件数。\")]\r\n        private int failedCount;\r\n\r\n        /// <summary>\r\n        /// テスト用パラメーター識別子。\r\n        /// </summary>\r\n        private enum TestParameterId\r\n        {\r\n            /// <summary>\r\n            /// 移動速度。\r\n            /// </summary>\r\n            MoveSpeed,\r\n\r\n            /// <summary>\r\n            /// 攻撃性。\r\n            /// </summary>\r\n            Aggression,\r\n\r\n            /// <summary>\r\n            /// 探索意欲。\r\n            /// </summary>\r\n            Exploration\r\n        }\r\n\r\n        /// <summary>\r\n        /// 開始時のテスト実行を制御する。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            if (runTestsOnStart)\r\n            {\r\n                RunAllTests();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべてのテストを実行する。\r\n        /// </summary>\r\n        [ContextMenu(\"すべてのテストを実行\")]\r\n        public void RunAllTests()\r\n        {\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n            try\r\n            {\r\n                TestRegistration();\r\n                TestRetrieval();\r\n                TestValueChanges();\r\n                TestModifiers();\r\n                TestReset();\r\n                TestEvents();\r\n                TestIndependence();\r\n                TestLifecycle();\r\n                TestInvalidInput();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogException(exception, this);\r\n            }\r\n\r\n            Debug.Log(\r\n                $\"【ParameterSet テスト結果】\\n\" +\r\n                $\"成功：{passedCount}\\n\" +\r\n                $\"失敗：{failedCount}\\n\" +\r\n                (failedCount == 0\r\n                    ? \"すべてのテストに成功しました。\"\r\n                    : \"失敗したテストを確認してください。\"),\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 移動速度のテスト用定義を生成する。\r\n        /// </summary>\r\n        /// <returns>移動速度の定義</returns>\r\n        private ParameterDefinition<TestParameterId>\r\n            CreateSpeedDefinition()\r\n        {\r\n            return new ParameterDefinition<TestParameterId>(\r\n                TestParameterId.MoveSpeed,\r\n                4f,\r\n                0f,\r\n                10f);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 攻撃性のテスト用定義を生成する。\r\n        /// </summary>\r\n        /// <returns>攻撃性の定義</returns>\r\n        private ParameterDefinition<TestParameterId>\r\n            CreateAggressionDefinition()\r\n        {\r\n            return new ParameterDefinition<TestParameterId>(\r\n                TestParameterId.Aggression,\r\n                0.5f,\r\n                0f,\r\n                1f);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 標準的なテスト用パラメーター集合を生成する。\r\n        /// </summary>\r\n        /// <returns>2種類のパラメーターを登録した集合</returns>\r\n        private ParameterSet<TestParameterId> CreateSet()\r\n        {\r\n            return new ParameterSet<TestParameterId>(\r\n                new[]\r\n                {\r\n                    CreateSpeedDefinition(),\r\n                    CreateAggressionDefinition()\r\n                });\r\n        }\r\n\r\n        /// <summary>\r\n        /// パラメーターの初期化と登録を検証する。\r\n        /// </summary>\r\n        private void TestRegistration()\r\n        {\r\n            using (var set = new ParameterSet<TestParameterId>())\r\n            {\r\n                bool emptyPassed =\r\n                    set.Count == 0 && !set.HasParameters;\r\n                Debug.Assert(emptyPassed, \"空の集合の生成\", this);\r\n                Check(emptyPassed, \"空の集合の生成\");\r\n\r\n                bool registerPassed =\r\n                    set.TryRegister(CreateSpeedDefinition());\r\n                Debug.Assert(registerPassed, \"標準初期値での登録\", this);\r\n                Check(registerPassed, \"標準初期値での登録\");\r\n\r\n                bool customPassed =\r\n                    set.TryRegister(\r\n                        CreateAggressionDefinition(),\r\n                        0.8f);\r\n                Debug.Assert(customPassed, \"個体固有初期値での登録\", this);\r\n                Check(customPassed, \"個体固有初期値での登録\");\r\n\r\n                bool countPassed =\r\n                    set.Count == 2 && set.HasParameters;\r\n                Debug.Assert(countPassed, \"登録件数\", this);\r\n                Check(countPassed, \"登録件数\");\r\n\r\n                bool duplicatePassed =\r\n                    !set.TryRegister(CreateSpeedDefinition()) &&\r\n                    set.Count == 2;\r\n                Debug.Assert(duplicatePassed, \"重複登録の拒否\", this);\r\n                Check(duplicatePassed, \"重複登録の拒否\");\r\n\r\n                bool customValuePassed =\r\n                    Mathf.Approximately(\r\n                        set.GetValue(TestParameterId.Aggression),\r\n                        0.8f);\r\n                Debug.Assert(customValuePassed, \"個体固有初期値の保持\", this);\r\n                Check(customValuePassed, \"個体固有初期値の保持\");\r\n            }\r\n\r\n            using (var set = CreateSet())\r\n            {\r\n                bool batchPassed = set.Count == 2;\r\n                Debug.Assert(batchPassed, \"定義一覧からの生成\", this);\r\n                Check(batchPassed, \"定義一覧からの生成\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// パラメーターの検索と値の取得を検証する。\r\n        /// </summary>\r\n        private void TestRetrieval()\r\n        {\r\n            using (var set = CreateSet())\r\n            {\r\n                bool containsPassed =\r\n                    set.Contains(TestParameterId.MoveSpeed) &&\r\n                    !set.Contains(TestParameterId.Exploration);\r\n                Debug.Assert(containsPassed, \"登録状態の判定\", this);\r\n                Check(containsPassed, \"登録状態の判定\");\r\n\r\n                bool getPassed =\r\n                    set.GetParameter(\r\n                        TestParameterId.MoveSpeed).Value == 4f;\r\n                Debug.Assert(getPassed, \"パラメーターの取得\", this);\r\n                Check(getPassed, \"パラメーターの取得\");\r\n\r\n                bool tryGetPassed =\r\n                    set.TryGetParameter(\r\n                        TestParameterId.Aggression,\r\n                        out var parameter) &&\r\n                    parameter.Value == 0.5f;\r\n                Debug.Assert(tryGetPassed, \"安全なパラメーター取得\", this);\r\n                Check(tryGetPassed, \"安全なパラメーター取得\");\r\n\r\n                bool missingPassed =\r\n                    !set.TryGetParameter(\r\n                        TestParameterId.Exploration,\r\n                        out var missing) &&\r\n                    missing == null;\r\n                Debug.Assert(missingPassed, \"未登録パラメーターの検索\", this);\r\n                Check(missingPassed, \"未登録パラメーターの検索\");\r\n\r\n                bool valuePassed =\r\n                    set.TryGetValue(\r\n                        TestParameterId.MoveSpeed,\r\n                        out float value) &&\r\n                    value == 4f &&\r\n                    !set.TryGetValue(\r\n                        TestParameterId.Exploration,\r\n                        out float missingValue) &&\r\n                    missingValue == 0f;\r\n                Debug.Assert(valuePassed, \"最終値の安全な取得\", this);\r\n                Check(valuePassed, \"最終値の安全な取得\");\r\n\r\n                bool normalizedPassed =\r\n                    Mathf.Approximately(\r\n                        set.GetNormalizedValue(\r\n                            TestParameterId.MoveSpeed),\r\n                        0.4f);\r\n                Debug.Assert(normalizedPassed, \"正規化値の取得\", this);\r\n                Check(normalizedPassed, \"正規化値の取得\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 基本値の変更と範囲制限を検証する。\r\n        /// </summary>\r\n        private void TestValueChanges()\r\n        {\r\n            using (var set = CreateSet())\r\n            {\r\n                bool changePassed =\r\n                    set.SetBaseValue(\r\n                        TestParameterId.MoveSpeed,\r\n                        6f) &&\r\n                    set.GetBaseValue(\r\n                        TestParameterId.MoveSpeed) == 6f;\r\n                Debug.Assert(changePassed, \"基本値の変更\", this);\r\n                Check(changePassed, \"基本値の変更\");\r\n\r\n                bool samePassed =\r\n                    !set.SetBaseValue(\r\n                        TestParameterId.MoveSpeed,\r\n                        6f);\r\n                Debug.Assert(samePassed, \"同一基本値の変更省略\", this);\r\n                Check(samePassed, \"同一基本値の変更省略\");\r\n\r\n                bool addPassed =\r\n                    set.AddBaseValue(\r\n                        TestParameterId.MoveSpeed,\r\n                        2f) &&\r\n                    set.GetValue(\r\n                        TestParameterId.MoveSpeed) == 8f;\r\n                Debug.Assert(addPassed, \"基本値への加算\", this);\r\n                Check(addPassed, \"基本値への加算\");\r\n\r\n                bool clampPassed =\r\n                    set.SetBaseValue(\r\n                        TestParameterId.MoveSpeed,\r\n                        100f) &&\r\n                    set.GetValue(\r\n                        TestParameterId.MoveSpeed) == 10f;\r\n                Debug.Assert(clampPassed, \"基本値の範囲制限\", this);\r\n                Check(clampPassed, \"基本値の範囲制限\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 複数パラメーターの補正管理を検証する。\r\n        /// </summary>\r\n        private void TestModifiers()\r\n        {\r\n            using (var set = CreateSet())\r\n            {\r\n                // 補正元を識別するためのオブジェクト。\r\n                object source = new object();\r\n\r\n                var speedModifier =\r\n                    ParameterModifier.CreateAdditive(\r\n                        2f,\r\n                        source);\r\n\r\n                var aggressionModifier =\r\n                    ParameterModifier.CreateAdditive(\r\n                        0.25f,\r\n                        source);\r\n\r\n                bool addPassed =\r\n                    set.TryAddModifier(\r\n                        TestParameterId.MoveSpeed,\r\n                        speedModifier) &&\r\n                    set.GetValue(\r\n                        TestParameterId.MoveSpeed) == 6f;\r\n                Debug.Assert(addPassed, \"補正の追加\", this);\r\n                Check(addPassed, \"補正の追加\");\r\n\r\n                bool duplicatePassed =\r\n                    !set.TryAddModifier(\r\n                        TestParameterId.MoveSpeed,\r\n                        speedModifier);\r\n                Debug.Assert(duplicatePassed, \"補正の重複拒否\", this);\r\n                Check(duplicatePassed, \"補正の重複拒否\");\r\n\r\n                bool missingPassed =\r\n                    !set.TryAddModifier(\r\n                        TestParameterId.Exploration,\r\n                        speedModifier);\r\n                Debug.Assert(missingPassed, \"未登録対象への補正拒否\", this);\r\n                Check(missingPassed, \"未登録対象への補正拒否\");\r\n\r\n                bool removePassed =\r\n                    set.TryRemoveModifier(\r\n                        TestParameterId.MoveSpeed,\r\n                        speedModifier.Id) &&\r\n                    set.GetValue(\r\n                        TestParameterId.MoveSpeed) == 4f;\r\n                Debug.Assert(removePassed, \"個別補正の解除\", this);\r\n                Check(removePassed, \"個別補正の解除\");\r\n\r\n                set.TryAddModifier(\r\n                    TestParameterId.MoveSpeed,\r\n                    speedModifier);\r\n\r\n                set.TryAddModifier(\r\n                    TestParameterId.Aggression,\r\n                    aggressionModifier);\r\n\r\n                bool sourcePassed =\r\n                    set.RemoveModifiersBySource(source) == 2 &&\r\n                    set.GetValue(\r\n                        TestParameterId.MoveSpeed) == 4f &&\r\n                    set.GetValue(\r\n                        TestParameterId.Aggression) == 0.5f;\r\n                Debug.Assert(sourcePassed, \"補正元による全体解除\", this);\r\n                Check(sourcePassed, \"補正元による全体解除\");\r\n\r\n                set.TryAddModifier(\r\n                    TestParameterId.MoveSpeed,\r\n                    speedModifier);\r\n\r\n                set.TryAddModifier(\r\n                    TestParameterId.Aggression,\r\n                    aggressionModifier);\r\n\r\n                bool clearPassed =\r\n                    set.ClearModifiers() == 2 &&\r\n                    set.GetValue(\r\n                        TestParameterId.MoveSpeed) == 4f &&\r\n                    set.GetValue(\r\n                        TestParameterId.Aggression) == 0.5f;\r\n                Debug.Assert(clearPassed, \"全補正の解除\", this);\r\n                Check(clearPassed, \"全補正の解除\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個別および全体のリセットを検証する。\r\n        /// </summary>\r\n        private void TestReset()\r\n        {\r\n            using (var set = CreateSet())\r\n            {\r\n                set.SetBaseValue(\r\n                    TestParameterId.MoveSpeed,\r\n                    8f);\r\n\r\n                set.SetBaseValue(\r\n                    TestParameterId.Aggression,\r\n                    0.9f);\r\n\r\n                set.ResetParameter(\r\n                    TestParameterId.MoveSpeed);\r\n\r\n                bool singlePassed =\r\n                    set.GetValue(\r\n                        TestParameterId.MoveSpeed) == 4f &&\r\n                    Mathf.Approximately(\r\n                        set.GetValue(TestParameterId.Aggression),\r\n                        0.9f);\r\n                Debug.Assert(singlePassed, \"個別リセット\", this);\r\n                Check(singlePassed, \"個別リセット\");\r\n\r\n                set.TryAddModifier(\r\n                    TestParameterId.MoveSpeed,\r\n                    ParameterModifier.CreateAdditive(2f));\r\n\r\n                set.ResetAll();\r\n\r\n                bool allPassed =\r\n                    set.GetValue(\r\n                        TestParameterId.MoveSpeed) == 4f &&\r\n                    set.GetValue(\r\n                        TestParameterId.Aggression) == 0.5f;\r\n                Debug.Assert(allPassed, \"全パラメーターのリセット\", this);\r\n                Check(allPassed, \"全パラメーターのリセット\");\r\n\r\n                bool modifierPassed =\r\n                    !set.GetParameter(\r\n                        TestParameterId.MoveSpeed).HasModifiers;\r\n                Debug.Assert(modifierPassed, \"リセット時の補正解除\", this);\r\n                Check(modifierPassed, \"リセット時の補正解除\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 変更イベントと再入対策を検証する。\r\n        /// </summary>\r\n        private void TestEvents()\r\n        {\r\n            using (var set = CreateSet())\r\n            {\r\n                // イベント発生件数。\r\n                int eventCount = 0;\r\n\r\n                // 最後に通知された識別子。\r\n                TestParameterId lastId =\r\n                    TestParameterId.Exploration;\r\n\r\n                // 最後に通知された変更前後の値。\r\n                float previousValue = 0f;\r\n                float newValue = 0f;\r\n\r\n                // 通知時に状態が更新済みかどうか。\r\n                bool stateUpdated = false;\r\n\r\n                Action<TestParameterId, float, float> handler =\r\n                    (id, previous, current) =>\r\n                    {\r\n                        eventCount++;\r\n                        lastId = id;\r\n                        previousValue = previous;\r\n                        newValue = current;\r\n\r\n                        stateUpdated =\r\n                            set.GetValue(id) == current;\r\n                    };\r\n\r\n                set.ValueChanged += handler;\r\n\r\n                try\r\n                {\r\n                    set.SetBaseValue(\r\n                        TestParameterId.MoveSpeed,\r\n                        6f);\r\n\r\n                    bool countPassed = eventCount == 1;\r\n                    Debug.Assert(countPassed, \"集合の変更イベント\", this);\r\n                    Check(countPassed, \"集合の変更イベント\");\r\n\r\n                    bool argumentsPassed =\r\n                        lastId == TestParameterId.MoveSpeed &&\r\n                        previousValue == 4f &&\r\n                        newValue == 6f &&\r\n                        stateUpdated;\r\n                    Debug.Assert(argumentsPassed, \"イベント引数と状態\", this);\r\n                    Check(argumentsPassed, \"イベント引数と状態\");\r\n\r\n                    set.SetBaseValue(\r\n                        TestParameterId.MoveSpeed,\r\n                        6f);\r\n\r\n                    bool unchangedPassed = eventCount == 1;\r\n                    Debug.Assert(unchangedPassed, \"値不変時の通知省略\", this);\r\n                    Check(unchangedPassed, \"値不変時の通知省略\");\r\n\r\n                    // 通知中の登録解除が拒否されるか確認する。\r\n                    bool reentryRejected = false;\r\n\r\n                    Action<TestParameterId, float, float>\r\n                        reentryHandler = (id, previous, current) =>\r\n                        {\r\n                            reentryRejected =\r\n                                Throws<InvalidOperationException>(\r\n                                    () => set.TryUnregister(id));\r\n                        };\r\n\r\n                    set.ValueChanged += reentryHandler;\r\n\r\n                    try\r\n                    {\r\n                        set.SetBaseValue(\r\n                            TestParameterId.MoveSpeed,\r\n                            7f);\r\n                    }\r\n                    finally\r\n                    {\r\n                        set.ValueChanged -= reentryHandler;\r\n                    }\r\n\r\n                    Debug.Assert(reentryRejected, \"通知中の再入防止\", this);\r\n                    Check(reentryRejected, \"通知中の再入防止\");\r\n                }\r\n                finally\r\n                {\r\n                    set.ValueChanged -= handler;\r\n                }\r\n\r\n                int beforeUnsubscribe = eventCount;\r\n\r\n                set.SetBaseValue(\r\n                    TestParameterId.MoveSpeed,\r\n                    8f);\r\n\r\n                bool unsubscribePassed =\r\n                    eventCount == beforeUnsubscribe;\r\n                Debug.Assert(unsubscribePassed, \"イベントの購読解除\", this);\r\n                Check(unsubscribePassed, \"イベントの購読解除\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個体ごとの状態が独立していることを検証する。\r\n        /// </summary>\r\n        private void TestIndependence()\r\n        {\r\n            // 共通定義を複数の個体で共有する。\r\n            var definition = CreateSpeedDefinition();\r\n\r\n            using (var first = new ParameterSet<TestParameterId>())\r\n            using (var second = new ParameterSet<TestParameterId>())\r\n            {\r\n                first.TryRegister(definition);\r\n                second.TryRegister(definition);\r\n\r\n                first.SetBaseValue(\r\n                    TestParameterId.MoveSpeed,\r\n                    7f);\r\n\r\n                bool valuePassed =\r\n                    first.GetValue(\r\n                        TestParameterId.MoveSpeed) == 7f &&\r\n                    second.GetValue(\r\n                        TestParameterId.MoveSpeed) == 4f;\r\n                Debug.Assert(valuePassed, \"個体別の値管理\", this);\r\n                Check(valuePassed, \"個体別の値管理\");\r\n\r\n                first.TryAddModifier(\r\n                    TestParameterId.MoveSpeed,\r\n                    ParameterModifier.CreateAdditive(2f));\r\n\r\n                bool modifierPassed =\r\n                    first.GetValue(\r\n                        TestParameterId.MoveSpeed) == 9f &&\r\n                    second.GetValue(\r\n                        TestParameterId.MoveSpeed) == 4f;\r\n                Debug.Assert(modifierPassed, \"個体別の補正管理\", this);\r\n                Check(modifierPassed, \"個体別の補正管理\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 登録解除、消去および破棄処理を検証する。\r\n        /// </summary>\r\n        private void TestLifecycle()\r\n        {\r\n            using (var set = CreateSet())\r\n            {\r\n                // 登録解除後も参照を保持して通知の解除を確認する。\r\n                var parameter =\r\n                    set.GetParameter(TestParameterId.MoveSpeed);\r\n\r\n                int eventCount = 0;\r\n\r\n                set.ValueChanged +=\r\n                    (id, previous, current) => eventCount++;\r\n\r\n                bool removePassed =\r\n                    set.TryUnregister(\r\n                        TestParameterId.MoveSpeed) &&\r\n                    set.Count == 1 &&\r\n                    !set.Contains(TestParameterId.MoveSpeed);\r\n                Debug.Assert(removePassed, \"パラメーターの登録解除\", this);\r\n                Check(removePassed, \"パラメーターの登録解除\");\r\n\r\n                parameter.SetBaseValue(8f);\r\n\r\n                bool detachPassed = eventCount == 0;\r\n                Debug.Assert(detachPassed, \"登録解除後の通知切断\", this);\r\n                Check(detachPassed, \"登録解除後の通知切断\");\r\n\r\n                set.Clear();\r\n\r\n                bool clearPassed =\r\n                    set.Count == 0 &&\r\n                    !set.HasParameters;\r\n                Debug.Assert(clearPassed, \"全登録の解除\", this);\r\n                Check(clearPassed, \"全登録の解除\");\r\n\r\n                set.Dispose();\r\n\r\n                // 複数回の破棄が安全であることを確認する。\r\n                set.Dispose();\r\n\r\n                bool disposePassed =\r\n                    set.IsDisposed &&\r\n                    Throws<ObjectDisposedException>(() =>\r\n                    {\r\n                        set.GetValue(TestParameterId.MoveSpeed);\r\n                    });\r\n                Debug.Assert(disposePassed, \"破棄後の操作拒否\", this);\r\n                Check(disposePassed, \"破棄後の操作拒否\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 不正な引数と未登録識別子の処理を検証する。\r\n        /// </summary>\r\n        private void TestInvalidInput()\r\n        {\r\n            using (var set = CreateSet())\r\n            {\r\n                bool nullPassed =\r\n                    Throws<ArgumentNullException>(() =>\r\n                    {\r\n                        set.TryRegister(null);\r\n                    });\r\n                Debug.Assert(nullPassed, \"null定義の拒否\", this);\r\n                Check(nullPassed, \"null定義の拒否\");\r\n\r\n                bool missingPassed =\r\n                    Throws<KeyNotFoundException>(() =>\r\n                    {\r\n                        set.GetValue(TestParameterId.Exploration);\r\n                    });\r\n                Debug.Assert(missingPassed, \"未登録識別子の直接取得拒否\", this);\r\n                Check(missingPassed, \"未登録識別子の直接取得拒否\");\r\n            }\r\n\r\n            bool duplicatePassed =\r\n                Throws<ArgumentException>(() =>\r\n                {\r\n                    using (var set =\r\n                        new ParameterSet<TestParameterId>(\r\n                            new[]\r\n                            {\r\n                                CreateSpeedDefinition(),\r\n                                CreateSpeedDefinition()\r\n                            }))\r\n                    {\r\n                    }\r\n                });\r\n            Debug.Assert(duplicatePassed, \"重複定義一覧の拒否\", this);\r\n            Check(duplicatePassed, \"重複定義一覧の拒否\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された処理が期待する例外を発生させるか検証する。\r\n        /// </summary>\r\n        /// <typeparam name=\"TException\">期待する例外型</typeparam>\r\n        /// <param name=\"action\">検証対象の処理</param>\r\n        /// <returns>期待する例外が発生した場合はtrue</returns>\r\n        private bool Throws<TException>(Action action)\r\n            where TException : Exception\r\n        {\r\n            try\r\n            {\r\n                action();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                if (exception.GetType() == typeof(TException))\r\n                {\r\n                    return true;\r\n                }\r\n\r\n                throw;\r\n            }\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個別のテスト結果を出力し、結果を集計する。\r\n        /// </summary>\r\n        /// <param name=\"passed\">テストの成功判定</param>\r\n        /// <param name=\"testName\">テスト名</param>\r\n        private void Check(bool passed, string testName)\r\n        {\r\n            if (passed)\r\n            {\r\n                passedCount++;\r\n\r\n                Debug.Log(\r\n                    $\"<color=#00CC66>【成功】</color> {testName}\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogError(\r\n                    $\"【失敗】{testName}\",\r\n                    this);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:01.012Z"
+}

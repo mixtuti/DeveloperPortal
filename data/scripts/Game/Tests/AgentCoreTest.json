@@ -1,0 +1,953 @@
+{
+    "parserVersion": 3,
+    "id": "Game.Tests.AgentCoreTest",
+    "name": "AgentCoreTest",
+    "fileName": "AgentCoreTest.cs",
+    "namespace": "Game.Tests",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class AgentCoreTest : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "エージェントの共有情報、稼働状態、 更新処理およびライフサイクルを検証する。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "Framework.AI.Core",
+        "Framework.Parameters",
+        "UnityEngine",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "RunAllTests",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void RunAllTests()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべてのテストを実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "AgentCoreTest",
+            "fullName": "AgentCoreTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "エージェントの共有情報、稼働状態、 更新処理およびライフサイクルを検証する。",
+            "remarks": "",
+            "attributes": [
+                {
+                    "name": "DisallowMultipleComponent",
+                    "arguments": [],
+                    "raw": "DisallowMultipleComponent"
+                }
+            ],
+            "declaration": "public sealed class AgentCoreTest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "runTestsOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runTestsOnStart = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "開始時にすべてのテストを実行する。"
+                            ],
+                            "raw": "Tooltip(\"開始時にすべてのテストを実行する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Tests On Start",
+                        "type": "bool",
+                        "header": "テスト設定",
+                        "tooltip": "開始時にすべてのテストを実行する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト結果"
+                            ],
+                            "raw": "Header(\"テスト結果\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "成功したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"成功したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Passed Count",
+                        "type": "int",
+                        "header": "テスト結果",
+                        "tooltip": "成功したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "失敗したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"失敗したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Failed Count",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "失敗したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "開始時のテスト実行を制御する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunAllTests",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void RunAllTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべてのテストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "すべてのテストを実行"
+                            ],
+                            "raw": "ContextMenu(\"すべてのテストを実行\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateParameters",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private ParameterSet<TestParameterId>\r\n            CreateParameters()",
+                    "returnType": "ParameterSet<TestParameterId>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用パラメーター集合を生成する。",
+                    "returns": "標準パラメーター集合",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateContext",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private AgentContext<TestParameterId> CreateContext(\r\n            ParameterSet<TestParameterId> parameters)",
+                    "returnType": "AgentContext<TestParameterId>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "parameters",
+                            "type": "ParameterSet<TestParameterId>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "パラメーター集合"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用共有情報を生成する。",
+                    "returns": "テスト用共有情報",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestContext",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestContext()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "共有情報の生成と参照を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestInitialization",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestInitialization()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "エージェントの初期化処理を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestStateTransitions",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestStateTransitions()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "稼働状態の遷移を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestTick",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestTick()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "更新処理と更新統計を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestEvents",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestEvents()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "状態変更イベントを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestIndependence",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestIndependence()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "複数エージェントの独立性を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestDisposal",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestDisposal()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "エージェントの破棄処理を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestInvalidInput",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestInvalidInput()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "不正な引数と再入処理の拒否を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Throws",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool Throws<TException>(Action action)\r\n            where TException : Exception",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証対象の処理"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "TException",
+                            "description": "期待する例外型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定された処理が期待する例外を発生させるか検証する。",
+                    "returns": "期待する例外が発生した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(bool passed, string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "passed",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テストの成功判定"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個別のテスト結果を出力し、結果を集計する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [
+                {
+                    "name": "TestParameterId",
+                    "fullName": "AgentCoreTest.TestParameterId",
+                    "kind": "enum",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "summary": "テスト用パラメーター識別子。",
+                    "remarks": "",
+                    "attributes": [],
+                    "declaration": "private enum TestParameterId",
+                    "inheritance": [],
+                    "typeParameters": [],
+                    "members": [],
+                    "nestedTypes": [],
+                    "enumValues": [
+                        {
+                            "name": "MoveSpeed",
+                            "value": null
+                        },
+                        {
+                            "name": "Aggression",
+                            "value": null
+                        }
+                    ],
+                    "line": 33
+                },
+                {
+                    "name": "TestAgent",
+                    "fullName": "AgentCoreTest.TestAgent",
+                    "kind": "class",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "sealed"
+                    ],
+                    "summary": "基本機能の検証に使用する仮想エージェント。",
+                    "remarks": "",
+                    "attributes": [],
+                    "declaration": "private sealed class TestAgent :\r\n            AgentBase<TestParameterId>",
+                    "inheritance": [
+                        "AgentBase<TestParameterId>"
+                    ],
+                    "typeParameters": [],
+                    "members": [
+                        {
+                            "name": "InitializeCount",
+                            "kind": "property",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public int InitializeCount",
+                            "returnType": "",
+                            "valueType": "int",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [
+                                "get",
+                                "private set"
+                            ],
+                            "summary": "初期化処理の実行件数。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "ActivateCount",
+                            "kind": "property",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public int ActivateCount",
+                            "returnType": "",
+                            "valueType": "int",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [
+                                "get",
+                                "private set"
+                            ],
+                            "summary": "稼働開始処理の実行件数。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "DeactivateCount",
+                            "kind": "property",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public int DeactivateCount",
+                            "returnType": "",
+                            "valueType": "int",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [
+                                "get",
+                                "private set"
+                            ],
+                            "summary": "稼働停止処理の実行件数。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "PauseCount",
+                            "kind": "property",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public int PauseCount",
+                            "returnType": "",
+                            "valueType": "int",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [
+                                "get",
+                                "private set"
+                            ],
+                            "summary": "一時停止処理の実行件数。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "ResumeCount",
+                            "kind": "property",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public int ResumeCount",
+                            "returnType": "",
+                            "valueType": "int",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [
+                                "get",
+                                "private set"
+                            ],
+                            "summary": "稼働再開処理の実行件数。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "DisposeCount",
+                            "kind": "property",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public int DisposeCount",
+                            "returnType": "",
+                            "valueType": "int",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [
+                                "get",
+                                "private set"
+                            ],
+                            "summary": "破棄処理の実行件数。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "LastDeltaTime",
+                            "kind": "property",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public float LastDeltaTime",
+                            "returnType": "",
+                            "valueType": "float",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [
+                                "get",
+                                "private set"
+                            ],
+                            "summary": "最後に受け取った経過時間。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "TickAction",
+                            "kind": "property",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public Action TickAction",
+                            "returnType": "",
+                            "valueType": "Action",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [
+                                "get",
+                                "set"
+                            ],
+                            "summary": "更新時に実行する追加テスト処理。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "OnInitialize",
+                            "kind": "method",
+                            "accessibility": "protected",
+                            "modifiers": [
+                                "override"
+                            ],
+                            "signature": "protected override void OnInitialize()",
+                            "returnType": "void",
+                            "valueType": "",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [],
+                            "summary": "初期化処理の実行を記録する。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "OnActivated",
+                            "kind": "method",
+                            "accessibility": "protected",
+                            "modifiers": [
+                                "override"
+                            ],
+                            "signature": "protected override void OnActivated()",
+                            "returnType": "void",
+                            "valueType": "",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [],
+                            "summary": "稼働開始処理の実行を記録する。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "OnDeactivated",
+                            "kind": "method",
+                            "accessibility": "protected",
+                            "modifiers": [
+                                "override"
+                            ],
+                            "signature": "protected override void OnDeactivated()",
+                            "returnType": "void",
+                            "valueType": "",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [],
+                            "summary": "稼働停止処理の実行を記録する。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "OnPaused",
+                            "kind": "method",
+                            "accessibility": "protected",
+                            "modifiers": [
+                                "override"
+                            ],
+                            "signature": "protected override void OnPaused()",
+                            "returnType": "void",
+                            "valueType": "",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [],
+                            "summary": "一時停止処理の実行を記録する。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "OnResumed",
+                            "kind": "method",
+                            "accessibility": "protected",
+                            "modifiers": [
+                                "override"
+                            ],
+                            "signature": "protected override void OnResumed()",
+                            "returnType": "void",
+                            "valueType": "",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [],
+                            "summary": "稼働再開処理の実行を記録する。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "OnTick",
+                            "kind": "method",
+                            "accessibility": "protected",
+                            "modifiers": [
+                                "override"
+                            ],
+                            "signature": "protected override void OnTick(float deltaTime)",
+                            "returnType": "void",
+                            "valueType": "",
+                            "value": "",
+                            "parameters": [
+                                {
+                                    "name": "deltaTime",
+                                    "type": "float",
+                                    "modifier": "",
+                                    "defaultValue": null,
+                                    "description": "経過時間。単位は秒"
+                                }
+                            ],
+                            "typeParameters": [],
+                            "accessors": [],
+                            "summary": "更新時の経過時間と追加処理を記録する。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        },
+                        {
+                            "name": "OnDispose",
+                            "kind": "method",
+                            "accessibility": "protected",
+                            "modifiers": [
+                                "override"
+                            ],
+                            "signature": "protected override void OnDispose()",
+                            "returnType": "void",
+                            "valueType": "",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [],
+                            "summary": "破棄処理の実行を記録する。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": null
+                        }
+                    ],
+                    "nestedTypes": [],
+                    "enumValues": [],
+                    "line": 49
+                }
+            ],
+            "enumValues": [],
+            "line": 14
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing Framework.AI.Core;\r\nusing Framework.Parameters;\r\nusing UnityEngine;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// エージェントの共有情報、稼働状態、\r\n    /// 更新処理およびライフサイクルを検証する。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    public sealed class AgentCoreTest : MonoBehaviour\r\n    {\r\n        [Header(\"テスト設定\")]\r\n        [SerializeField]\r\n        [Tooltip(\"開始時にすべてのテストを実行する。\")]\r\n        private bool runTestsOnStart = true;\r\n\r\n        [Header(\"テスト結果\")]\r\n        [SerializeField]\r\n        [Tooltip(\"成功したテスト件数。\")]\r\n        private int passedCount;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"失敗したテスト件数。\")]\r\n        private int failedCount;\r\n\r\n        /// <summary>\r\n        /// テスト用パラメーター識別子。\r\n        /// </summary>\r\n        private enum TestParameterId\r\n        {\r\n            /// <summary>\r\n            /// 移動速度。\r\n            /// </summary>\r\n            MoveSpeed,\r\n\r\n            /// <summary>\r\n            /// 攻撃性。\r\n            /// </summary>\r\n            Aggression\r\n        }\r\n\r\n        /// <summary>\r\n        /// 基本機能の検証に使用する仮想エージェント。\r\n        /// </summary>\r\n        private sealed class TestAgent :\r\n            AgentBase<TestParameterId>\r\n        {\r\n            /// <summary>\r\n            /// 初期化処理の実行件数。\r\n            /// </summary>\r\n            public int InitializeCount { get; private set; }\r\n\r\n            /// <summary>\r\n            /// 稼働開始処理の実行件数。\r\n            /// </summary>\r\n            public int ActivateCount { get; private set; }\r\n\r\n            /// <summary>\r\n            /// 稼働停止処理の実行件数。\r\n            /// </summary>\r\n            public int DeactivateCount { get; private set; }\r\n\r\n            /// <summary>\r\n            /// 一時停止処理の実行件数。\r\n            /// </summary>\r\n            public int PauseCount { get; private set; }\r\n\r\n            /// <summary>\r\n            /// 稼働再開処理の実行件数。\r\n            /// </summary>\r\n            public int ResumeCount { get; private set; }\r\n\r\n            /// <summary>\r\n            /// 破棄処理の実行件数。\r\n            /// </summary>\r\n            public int DisposeCount { get; private set; }\r\n\r\n            /// <summary>\r\n            /// 最後に受け取った経過時間。\r\n            /// </summary>\r\n            public float LastDeltaTime { get; private set; }\r\n\r\n            /// <summary>\r\n            /// 更新時に実行する追加テスト処理。\r\n            /// </summary>\r\n            public Action TickAction { get; set; }\r\n\r\n            /// <summary>\r\n            /// 初期化処理の実行を記録する。\r\n            /// </summary>\r\n            protected override void OnInitialize()\r\n            {\r\n                InitializeCount++;\r\n            }\r\n\r\n            /// <summary>\r\n            /// 稼働開始処理の実行を記録する。\r\n            /// </summary>\r\n            protected override void OnActivated()\r\n            {\r\n                ActivateCount++;\r\n            }\r\n\r\n            /// <summary>\r\n            /// 稼働停止処理の実行を記録する。\r\n            /// </summary>\r\n            protected override void OnDeactivated()\r\n            {\r\n                DeactivateCount++;\r\n            }\r\n\r\n            /// <summary>\r\n            /// 一時停止処理の実行を記録する。\r\n            /// </summary>\r\n            protected override void OnPaused()\r\n            {\r\n                PauseCount++;\r\n            }\r\n\r\n            /// <summary>\r\n            /// 稼働再開処理の実行を記録する。\r\n            /// </summary>\r\n            protected override void OnResumed()\r\n            {\r\n                ResumeCount++;\r\n            }\r\n\r\n            /// <summary>\r\n            /// 更新時の経過時間と追加処理を記録する。\r\n            /// </summary>\r\n            /// <param name=\"deltaTime\">経過時間。単位は秒</param>\r\n            protected override void OnTick(float deltaTime)\r\n            {\r\n                LastDeltaTime = deltaTime;\r\n\r\n                TickAction?.Invoke();\r\n            }\r\n\r\n            /// <summary>\r\n            /// 破棄処理の実行を記録する。\r\n            /// </summary>\r\n            protected override void OnDispose()\r\n            {\r\n                DisposeCount++;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 開始時のテスト実行を制御する。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            if (runTestsOnStart)\r\n            {\r\n                RunAllTests();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべてのテストを実行する。\r\n        /// </summary>\r\n        [ContextMenu(\"すべてのテストを実行\")]\r\n        public void RunAllTests()\r\n        {\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n            try\r\n            {\r\n                TestContext();\r\n                TestInitialization();\r\n                TestStateTransitions();\r\n                TestTick();\r\n                TestEvents();\r\n                TestIndependence();\r\n                TestDisposal();\r\n                TestInvalidInput();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogException(exception, this);\r\n            }\r\n\r\n            Debug.Log(\r\n                $\"【AgentCore テスト結果】\\n\" +\r\n                $\"成功：{passedCount}\\n\" +\r\n                $\"失敗：{failedCount}\\n\" +\r\n                (failedCount == 0\r\n                    ? \"すべてのテストに成功しました。\"\r\n                    : \"失敗したテストを確認してください。\"),\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト用パラメーター集合を生成する。\r\n        /// </summary>\r\n        /// <returns>標準パラメーター集合</returns>\r\n        private ParameterSet<TestParameterId>\r\n            CreateParameters()\r\n        {\r\n            return new ParameterSet<TestParameterId>(\r\n                new[]\r\n                {\r\n                    new ParameterDefinition<TestParameterId>(\r\n                        TestParameterId.MoveSpeed,\r\n                        4f,\r\n                        0f,\r\n                        10f),\r\n\r\n                    new ParameterDefinition<TestParameterId>(\r\n                        TestParameterId.Aggression,\r\n                        0.5f,\r\n                        0f,\r\n                        1f)\r\n                });\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト用共有情報を生成する。\r\n        /// </summary>\r\n        /// <param name=\"parameters\">パラメーター集合</param>\r\n        /// <returns>テスト用共有情報</returns>\r\n        private AgentContext<TestParameterId> CreateContext(\r\n            ParameterSet<TestParameterId> parameters)\r\n        {\r\n            return new AgentContext<TestParameterId>(\r\n                \"TestAgent\",\r\n                parameters);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 共有情報の生成と参照を検証する。\r\n        /// </summary>\r\n        private void TestContext()\r\n        {\r\n            using (var parameters = CreateParameters())\r\n            {\r\n                var context = CreateContext(parameters);\r\n\r\n                bool idPassed =\r\n                    context.Id != Guid.Empty;\r\n                Debug.Assert(idPassed, \"識別子の自動生成\", this);\r\n                Check(idPassed, \"識別子の自動生成\");\r\n\r\n                bool namePassed =\r\n                    context.Name == \"TestAgent\";\r\n                Debug.Assert(namePassed, \"表示名の保持\", this);\r\n                Check(namePassed, \"表示名の保持\");\r\n\r\n                bool referencePassed =\r\n                    ReferenceEquals(\r\n                        context.Parameters,\r\n                        parameters);\r\n                Debug.Assert(referencePassed, \"パラメーター参照の保持\", this);\r\n                Check(referencePassed, \"パラメーター参照の保持\");\r\n\r\n                Guid customId = Guid.NewGuid();\r\n\r\n                var customContext =\r\n                    new AgentContext<TestParameterId>(\r\n                        customId,\r\n                        \"CustomAgent\",\r\n                        parameters);\r\n\r\n                bool customPassed =\r\n                    customContext.Id == customId;\r\n                Debug.Assert(customPassed, \"指定識別子での生成\", this);\r\n                Check(customPassed, \"指定識別子での生成\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// エージェントの初期化処理を検証する。\r\n        /// </summary>\r\n        private void TestInitialization()\r\n        {\r\n            using (var parameters = CreateParameters())\r\n            using (var agent = new TestAgent())\r\n            {\r\n                bool initialPassed =\r\n                    agent.State == AgentState.Uninitialized &&\r\n                    !agent.IsInitialized &&\r\n                    !agent.IsTickEnabled;\r\n                Debug.Assert(initialPassed, \"未初期化状態\", this);\r\n                Check(initialPassed, \"未初期化状態\");\r\n\r\n                var context = CreateContext(parameters);\r\n\r\n                bool initializePassed =\r\n                    agent.Initialize(context) &&\r\n                    agent.IsInitialized &&\r\n                    agent.State == AgentState.Inactive;\r\n                Debug.Assert(initializePassed, \"エージェントの初期化\", this);\r\n                Check(initializePassed, \"エージェントの初期化\");\r\n\r\n                bool contextPassed =\r\n                    ReferenceEquals(agent.Context, context) &&\r\n                    agent.Id == context.Id &&\r\n                    agent.Name == context.Name &&\r\n                    agent.InitializeCount == 1;\r\n                Debug.Assert(contextPassed, \"共有情報と初期化処理\", this);\r\n                Check(contextPassed, \"共有情報と初期化処理\");\r\n\r\n                bool duplicatePassed =\r\n                    !agent.Initialize(context) &&\r\n                    agent.InitializeCount == 1;\r\n                Debug.Assert(duplicatePassed, \"重複初期化の拒否\", this);\r\n                Check(duplicatePassed, \"重複初期化の拒否\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 稼働状態の遷移を検証する。\r\n        /// </summary>\r\n        private void TestStateTransitions()\r\n        {\r\n            using (var parameters = CreateParameters())\r\n            using (var agent = new TestAgent())\r\n            {\r\n                bool invalidPassed =\r\n                    !agent.Activate() &&\r\n                    !agent.Pause() &&\r\n                    !agent.Resume() &&\r\n                    !agent.Deactivate();\r\n                Debug.Assert(invalidPassed, \"未初期化時の状態変更拒否\", this);\r\n                Check(invalidPassed, \"未初期化時の状態変更拒否\");\r\n\r\n                agent.Initialize(CreateContext(parameters));\r\n\r\n                bool activePassed =\r\n                    agent.Activate() &&\r\n                    agent.IsActive &&\r\n                    agent.IsTickEnabled &&\r\n                    agent.ActivateCount == 1;\r\n                Debug.Assert(activePassed, \"稼働開始\", this);\r\n                Check(activePassed, \"稼働開始\");\r\n\r\n                bool duplicatePassed =\r\n                    !agent.Activate() &&\r\n                    agent.ActivateCount == 1;\r\n                Debug.Assert(duplicatePassed, \"重複稼働開始の拒否\", this);\r\n                Check(duplicatePassed, \"重複稼働開始の拒否\");\r\n\r\n                bool pausePassed =\r\n                    agent.Pause() &&\r\n                    agent.IsPaused &&\r\n                    !agent.IsTickEnabled &&\r\n                    agent.PauseCount == 1;\r\n                Debug.Assert(pausePassed, \"一時停止\", this);\r\n                Check(pausePassed, \"一時停止\");\r\n\r\n                bool resumePassed =\r\n                    agent.Resume() &&\r\n                    agent.IsActive &&\r\n                    agent.ResumeCount == 1;\r\n                Debug.Assert(resumePassed, \"稼働再開\", this);\r\n                Check(resumePassed, \"稼働再開\");\r\n\r\n                agent.Pause();\r\n\r\n                bool inactivePassed =\r\n                    agent.Deactivate() &&\r\n                    agent.State == AgentState.Inactive &&\r\n                    agent.DeactivateCount == 1;\r\n                Debug.Assert(inactivePassed, \"一時停止状態からの非稼働化\", this);\r\n                Check(inactivePassed, \"一時停止状態からの非稼働化\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 更新処理と更新統計を検証する。\r\n        /// </summary>\r\n        private void TestTick()\r\n        {\r\n            using (var parameters = CreateParameters())\r\n            using (var agent = new TestAgent())\r\n            {\r\n                agent.Initialize(CreateContext(parameters));\r\n\r\n                agent.Tick(0.25f);\r\n\r\n                bool inactivePassed =\r\n                    agent.TickCount == 0;\r\n                Debug.Assert(inactivePassed, \"非稼働時の更新抑止\", this);\r\n                Check(inactivePassed, \"非稼働時の更新抑止\");\r\n\r\n                agent.Activate();\r\n\r\n                agent.Tick(0.25f);\r\n\r\n                bool activePassed =\r\n                    agent.TickCount == 1 &&\r\n                    agent.LastDeltaTime == 0.25f;\r\n                Debug.Assert(activePassed, \"稼働中の更新処理\", this);\r\n                Check(activePassed, \"稼働中の更新処理\");\r\n\r\n                agent.Tick(0.5f);\r\n\r\n                bool timePassed =\r\n                    agent.TickCount == 2 &&\r\n                    agent.ElapsedTickTime == 0.75d;\r\n                Debug.Assert(timePassed, \"更新統計の集計\", this);\r\n                Check(timePassed, \"更新統計の集計\");\r\n\r\n                agent.Pause();\r\n\r\n                agent.Tick(1f);\r\n\r\n                bool pausePassed =\r\n                    agent.TickCount == 2 &&\r\n                    agent.ElapsedTickTime == 0.75d;\r\n                Debug.Assert(pausePassed, \"一時停止中の更新抑止\", this);\r\n                Check(pausePassed, \"一時停止中の更新抑止\");\r\n\r\n                agent.Resume();\r\n\r\n                agent.Tick(0f);\r\n\r\n                bool zeroPassed =\r\n                    agent.TickCount == 2;\r\n                Debug.Assert(zeroPassed, \"経過時間0の更新省略\", this);\r\n                Check(zeroPassed, \"経過時間0の更新省略\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 状態変更イベントを検証する。\r\n        /// </summary>\r\n        private void TestEvents()\r\n        {\r\n            using (var parameters = CreateParameters())\r\n            using (var agent = new TestAgent())\r\n            {\r\n                // 状態変更の通知件数。\r\n                int eventCount = 0;\r\n\r\n                // 最後に通知された変更前後の状態。\r\n                AgentState previousState =\r\n                    AgentState.Uninitialized;\r\n\r\n                AgentState newState =\r\n                    AgentState.Uninitialized;\r\n\r\n                // 通知時に状態が確定済みかどうか。\r\n                bool stateUpdated = false;\r\n\r\n                Action<AgentState, AgentState> handler =\r\n                    (previous, current) =>\r\n                    {\r\n                        eventCount++;\r\n\r\n                        previousState = previous;\r\n\r\n                        newState = current;\r\n\r\n                        stateUpdated =\r\n                            agent.State == current;\r\n                    };\r\n\r\n                agent.StateChanged += handler;\r\n\r\n                try\r\n                {\r\n                    agent.Initialize(\r\n                        CreateContext(parameters));\r\n\r\n                    agent.Activate();\r\n\r\n                    bool countPassed = eventCount == 2;\r\n                    Debug.Assert(countPassed, \"状態変更通知の件数\", this);\r\n                    Check(countPassed, \"状態変更通知の件数\");\r\n\r\n                    bool statePassed =\r\n                        previousState == AgentState.Inactive &&\r\n                        newState == AgentState.Active &&\r\n                        stateUpdated;\r\n                    Debug.Assert(statePassed, \"状態変更通知の引数\", this);\r\n                    Check(statePassed, \"状態変更通知の引数\");\r\n                }\r\n                finally\r\n                {\r\n                    agent.StateChanged -= handler;\r\n                }\r\n\r\n                agent.Pause();\r\n\r\n                bool unsubscribePassed =\r\n                    eventCount == 2;\r\n                Debug.Assert(unsubscribePassed, \"状態変更通知の購読解除\", this);\r\n                Check(unsubscribePassed, \"状態変更通知の購読解除\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 複数エージェントの独立性を検証する。\r\n        /// </summary>\r\n        private void TestIndependence()\r\n        {\r\n            using (var firstParameters = CreateParameters())\r\n            using (var secondParameters = CreateParameters())\r\n            using (var first = new TestAgent())\r\n            using (var second = new TestAgent())\r\n            {\r\n                first.Initialize(\r\n                    CreateContext(firstParameters));\r\n\r\n                second.Initialize(\r\n                    CreateContext(secondParameters));\r\n\r\n                first.Activate();\r\n\r\n                first.Tick(0.25f);\r\n\r\n                bool individualPassed =\r\n                    first.Id != second.Id &&\r\n                    first.IsActive &&\r\n                    !second.IsActive &&\r\n                    first.TickCount == 1 &&\r\n                    second.TickCount == 0;\r\n                Debug.Assert(individualPassed, \"個体識別と稼働状態の独立性\", this);\r\n                Check(individualPassed, \"個体識別と稼働状態の独立性\");\r\n\r\n                firstParameters.SetBaseValue(\r\n                    TestParameterId.Aggression,\r\n                    0.9f);\r\n\r\n                bool parameterPassed =\r\n                    Mathf.Approximately(\r\n                        first.Context.Parameters.GetValue(\r\n                            TestParameterId.Aggression),\r\n                        0.9f) &&\r\n                    Mathf.Approximately(\r\n                        second.Context.Parameters.GetValue(\r\n                            TestParameterId.Aggression),\r\n                        0.5f);\r\n                Debug.Assert(parameterPassed, \"個体別パラメーターの独立性\", this);\r\n                Check(parameterPassed, \"個体別パラメーターの独立性\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// エージェントの破棄処理を検証する。\r\n        /// </summary>\r\n        private void TestDisposal()\r\n        {\r\n            using (var parameters = CreateParameters())\r\n            using (var agent = new TestAgent())\r\n            {\r\n                agent.Initialize(CreateContext(parameters));\r\n\r\n                agent.Activate();\r\n\r\n                agent.Dispose();\r\n\r\n                bool disposedPassed =\r\n                    agent.IsDisposed &&\r\n                    !agent.IsInitialized &&\r\n                    !agent.IsTickEnabled &&\r\n                    agent.Context == null;\r\n                Debug.Assert(disposedPassed, \"エージェントの破棄\", this);\r\n                Check(disposedPassed, \"エージェントの破棄\");\r\n\r\n                agent.Dispose();\r\n\r\n                agent.Tick(1f);\r\n\r\n                bool duplicatePassed =\r\n                    agent.DisposeCount == 1 &&\r\n                    agent.TickCount == 0 &&\r\n                    !agent.Activate() &&\r\n                    !agent.Initialize(CreateContext(parameters));\r\n                Debug.Assert(duplicatePassed, \"破棄後の操作と重複破棄\", this);\r\n                Check(duplicatePassed, \"破棄後の操作と重複破棄\");\r\n\r\n                bool ownershipPassed =\r\n                    !parameters.IsDisposed &&\r\n                    parameters.Count == 2;\r\n                Debug.Assert(ownershipPassed, \"外部パラメーター集合の所有権維持\", this);\r\n                Check(ownershipPassed, \"外部パラメーター集合の所有権維持\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 不正な引数と再入処理の拒否を検証する。\r\n        /// </summary>\r\n        private void TestInvalidInput()\r\n        {\r\n            using (var parameters = CreateParameters())\r\n            using (var agent = new TestAgent())\r\n            {\r\n                bool namePassed =\r\n                    Throws<ArgumentException>(() =>\r\n                    {\r\n                        new AgentContext<TestParameterId>(\r\n                            \"\",\r\n                            parameters);\r\n                    });\r\n                Debug.Assert(namePassed, \"不正表示名の拒否\", this);\r\n                Check(namePassed, \"不正表示名の拒否\");\r\n\r\n                bool nullPassed =\r\n                    Throws<ArgumentNullException>(() =>\r\n                    {\r\n                        agent.Initialize(null);\r\n                    });\r\n                Debug.Assert(nullPassed, \"null共有情報の拒否\", this);\r\n                Check(nullPassed, \"null共有情報の拒否\");\r\n\r\n                agent.Initialize(CreateContext(parameters));\r\n\r\n                agent.Activate();\r\n\r\n                bool timePassed =\r\n                    Throws<ArgumentOutOfRangeException>(() =>\r\n                    {\r\n                        agent.Tick(-1f);\r\n                    });\r\n                Debug.Assert(timePassed, \"不正経過時間の拒否\", this);\r\n                Check(timePassed, \"不正経過時間の拒否\");\r\n\r\n                // 更新処理の再入が拒否されるか確認する。\r\n                bool reentryRejected = false;\r\n\r\n                agent.TickAction = () =>\r\n                {\r\n                    reentryRejected =\r\n                        Throws<InvalidOperationException>(() =>\r\n                        {\r\n                            agent.Tick(0.25f);\r\n                        });\r\n                };\r\n\r\n                agent.Tick(0.25f);\r\n\r\n                Debug.Assert(reentryRejected, \"更新処理の再入防止\", this);\r\n                Check(reentryRejected, \"更新処理の再入防止\");\r\n\r\n                // 状態変更通知中の再入が拒否されるか確認する。\r\n                bool transitionRejected = false;\r\n\r\n                Action<AgentState, AgentState> handler =\r\n                    (previous, current) =>\r\n                    {\r\n                        transitionRejected =\r\n                            Throws<InvalidOperationException>(() =>\r\n                            {\r\n                                agent.Resume();\r\n                            });\r\n                    };\r\n\r\n                agent.StateChanged += handler;\r\n\r\n                try\r\n                {\r\n                    agent.Pause();\r\n                }\r\n                finally\r\n                {\r\n                    agent.StateChanged -= handler;\r\n                }\r\n\r\n                Debug.Assert(transitionRejected, \"状態遷移の再入防止\", this);\r\n                Check(transitionRejected, \"状態遷移の再入防止\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された処理が期待する例外を発生させるか検証する。\r\n        /// </summary>\r\n        /// <typeparam name=\"TException\">期待する例外型</typeparam>\r\n        /// <param name=\"action\">検証対象の処理</param>\r\n        /// <returns>期待する例外が発生した場合はtrue</returns>\r\n        private bool Throws<TException>(Action action)\r\n            where TException : Exception\r\n        {\r\n            try\r\n            {\r\n                action();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                if (exception.GetType() == typeof(TException))\r\n                {\r\n                    return true;\r\n                }\r\n\r\n                throw;\r\n            }\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個別のテスト結果を出力し、結果を集計する。\r\n        /// </summary>\r\n        /// <param name=\"passed\">テストの成功判定</param>\r\n        /// <param name=\"testName\">テスト名</param>\r\n        private void Check(bool passed, string testName)\r\n        {\r\n            if (passed)\r\n            {\r\n                passedCount++;\r\n\r\n                Debug.Log(\r\n                    $\"<color=#00CC66>【成功】</color> {testName}\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogError(\r\n                    $\"【失敗】{testName}\",\r\n                    this);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.106Z"
+}

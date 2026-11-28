@@ -1,0 +1,431 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Actions.MazeEnemyIdleAction",
+    "name": "MazeEnemyIdleAction",
+    "fileName": "MazeEnemyIdleAction.cs",
+    "namespace": "Game.AI.Actions",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class MazeEnemyIdleAction\r\n        : IAgentAction<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext>",
+    "typeParameters": [],
+    "summary": "敵AIを待機させる行動。",
+    "remarks": "",
+    "inheritance": [
+        "IAgentAction<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext>"
+    ],
+    "dependencies": [
+        "Framework.AI.Actions",
+        "IAgentAction<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext>"
+    ],
+    "members": [
+        {
+            "name": "Id",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyActionType Id =>\r\n            MazeEnemyActionType.Idle",
+            "returnType": "",
+            "valueType": "MazeEnemyActionType",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "行動の識別子。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Settings",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public AgentActionSettings Settings",
+            "returnType": "",
+            "valueType": "AgentActionSettings",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "行動の実行設定。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MazeEnemyIdleAction",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyIdleAction(\r\n            AgentActionSettings settings = null)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "settings",
+                    "type": "AgentActionSettings",
+                    "modifier": "",
+                    "defaultValue": "null",
+                    "description": "行動設定"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "待機行動を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CanEnter",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool CanEnter(\r\n            MazeEnemyActionContext context)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "MazeEnemyActionContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動コンテキスト"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "待機行動を開始可能であるか確認する。",
+            "returns": "開始可能な場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Enter",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Enter(\r\n            MazeEnemyActionContext context)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "MazeEnemyActionContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動コンテキスト"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "待機行動を開始する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Tick",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public AgentActionStatus Tick(\r\n            MazeEnemyActionContext context,\r\n            float deltaTime)",
+            "returnType": "AgentActionStatus",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "MazeEnemyActionContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動コンテキスト"
+                },
+                {
+                    "name": "deltaTime",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "経過時間"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "待機行動を更新する。",
+            "returns": "行動の実行状態",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Exit",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Exit(\r\n            MazeEnemyActionContext context,\r\n            AgentActionExitReason reason)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "MazeEnemyActionContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動コンテキスト"
+                },
+                {
+                    "name": "reason",
+                    "type": "AgentActionExitReason",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "終了理由"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "待機行動を終了する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyIdleAction",
+            "fullName": "MazeEnemyIdleAction",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "敵AIを待機させる行動。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public sealed class MazeEnemyIdleAction\r\n        : IAgentAction<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext>",
+            "inheritance": [
+                "IAgentAction<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext>"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "Id",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyActionType Id =>\r\n            MazeEnemyActionType.Idle",
+                    "returnType": "",
+                    "valueType": "MazeEnemyActionType",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "行動の識別子。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Settings",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public AgentActionSettings Settings",
+                    "returnType": "",
+                    "valueType": "AgentActionSettings",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "行動の実行設定。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MazeEnemyIdleAction",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyIdleAction(\r\n            AgentActionSettings settings = null)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "settings",
+                            "type": "AgentActionSettings",
+                            "modifier": "",
+                            "defaultValue": "null",
+                            "description": "行動設定"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "待機行動を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CanEnter",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool CanEnter(\r\n            MazeEnemyActionContext context)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "MazeEnemyActionContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動コンテキスト"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "待機行動を開始可能であるか確認する。",
+                    "returns": "開始可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Enter",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Enter(\r\n            MazeEnemyActionContext context)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "MazeEnemyActionContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動コンテキスト"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "待機行動を開始する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Tick",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public AgentActionStatus Tick(\r\n            MazeEnemyActionContext context,\r\n            float deltaTime)",
+                    "returnType": "AgentActionStatus",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "MazeEnemyActionContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動コンテキスト"
+                        },
+                        {
+                            "name": "deltaTime",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "経過時間"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "待機行動を更新する。",
+                    "returns": "行動の実行状態",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Exit",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Exit(\r\n            MazeEnemyActionContext context,\r\n            AgentActionExitReason reason)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "MazeEnemyActionContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動コンテキスト"
+                        },
+                        {
+                            "name": "reason",
+                            "type": "AgentActionExitReason",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "終了理由"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "待機行動を終了する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 8
+        }
+    ],
+    "source": "using Framework.AI.Actions;\r\n\r\nnamespace Game.AI.Actions\r\n{\r\n    /// <summary>\r\n    /// 敵AIを待機させる行動。\r\n    /// </summary>\r\n    public sealed class MazeEnemyIdleAction\r\n        : IAgentAction<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext>\r\n    {\r\n        /// <summary>\r\n        /// 行動の識別子。\r\n        /// </summary>\r\n        public MazeEnemyActionType Id =>\r\n            MazeEnemyActionType.Idle;\r\n\r\n        /// <summary>\r\n        /// 行動の実行設定。\r\n        /// </summary>\r\n        public AgentActionSettings Settings { get; }\r\n\r\n        /// <summary>\r\n        /// 待機行動を生成する。\r\n        /// </summary>\r\n        /// <param name=\"settings\">行動設定</param>\r\n        public MazeEnemyIdleAction(\r\n            AgentActionSettings settings = null)\r\n        {\r\n            Settings = settings ??\r\n                new AgentActionSettings(\r\n                    minimumDuration: 0f,\r\n                    cooldown: 0f,\r\n                    canInterrupt: true);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 待機行動を開始可能であるか確認する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動コンテキスト</param>\r\n        /// <returns>開始可能な場合はtrue</returns>\r\n        public bool CanEnter(\r\n            MazeEnemyActionContext context)\r\n        {\r\n            return context != null &&\r\n                context.CanAct;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 待機行動を開始する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動コンテキスト</param>\r\n        public void Enter(\r\n            MazeEnemyActionContext context)\r\n        {\r\n            context.StopMovement();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 待機行動を更新する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動コンテキスト</param>\r\n        /// <param name=\"deltaTime\">経過時間</param>\r\n        /// <returns>行動の実行状態</returns>\r\n        public AgentActionStatus Tick(\r\n            MazeEnemyActionContext context,\r\n            float deltaTime)\r\n        {\r\n            if (context == null ||\r\n                !context.IsValid)\r\n            {\r\n                return AgentActionStatus.Failed;\r\n            }\r\n\r\n            return AgentActionStatus.Running;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 待機行動を終了する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動コンテキスト</param>\r\n        /// <param name=\"reason\">終了理由</param>\r\n        public void Exit(\r\n            MazeEnemyActionContext context,\r\n            AgentActionExitReason reason)\r\n        {\r\n            // 待機行動固有の終了処理は不要。\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.549Z"
+}

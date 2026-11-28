@@ -1,0 +1,400 @@
+{
+    "parserVersion": 3,
+    "id": "Game.Tests.GridHearingSensorTest",
+    "name": "GridHearingSensorTest",
+    "fileName": "GridHearingSensorTest.cs",
+    "namespace": "Game.Tests",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class GridHearingSensorTest : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "グリッド聴覚センサーの動作を検証する。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "Framework.Grid",
+        "Framework.AI.Perception",
+        "UnityEngine",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "RunTests",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void RunTests()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "全テストを実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "GridHearingSensorTest",
+            "fullName": "GridHearingSensorTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "グリッド聴覚センサーの動作を検証する。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public sealed class GridHearingSensorTest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "runTestsOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runTestsOnStart = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "開始時にテストを実行する。"
+                            ],
+                            "raw": "Tooltip(\"開始時にテストを実行する。\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Tests On Start",
+                        "type": "bool",
+                        "header": "テスト設定",
+                        "tooltip": "開始時にテストを実行する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "成功したテスト数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "失敗したテスト数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "開始時のテスト実行。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunTests",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void RunTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "全テストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "Run Tests"
+                            ],
+                            "raw": "ContextMenu(\"Run Tests\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateSensor",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private GridHearingSensor<bool> CreateSensor(\r\n            out GridMap<bool> map)",
+                    "returnType": "GridHearingSensor<bool>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "map",
+                            "type": "GridMap<bool>",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "テスト用マップ"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用の聴覚センサーを生成する。",
+                    "returns": "聴覚センサー",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestConfiguration",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestConfiguration()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "初期設定と聴覚範囲を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestDistance",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestDistance()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "通路距離とキャッシュを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestHearing",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestHearing()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "聴覚認識の可否を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestConfidence",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestConfidence()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "音の認識信頼度を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestObservation",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestObservation()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "聴覚刺激の生成を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestLifecycle",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestLifecycle()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "無効化と解放処理を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(\r\n            bool condition,\r\n            string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "condition",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証結果"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト結果を集計して出力する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 11
+        }
+    ],
+    "source": "using System;\r\nusing Framework.Grid;\r\nusing Framework.AI.Perception;\r\nusing UnityEngine;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// グリッド聴覚センサーの動作を検証する。\r\n    /// </summary>\r\n    public sealed class GridHearingSensorTest : MonoBehaviour\r\n    {\r\n        [Header(\"テスト設定\")]\r\n        [Tooltip(\"開始時にテストを実行する。\")]\r\n        [SerializeField]\r\n        private bool runTestsOnStart = true;\r\n\r\n        /// <summary>\r\n        /// 成功したテスト数。\r\n        /// </summary>\r\n        private int passedCount;\r\n\r\n        /// <summary>\r\n        /// 失敗したテスト数。\r\n        /// </summary>\r\n        private int failedCount;\r\n\r\n        /// <summary>\r\n        /// 開始時のテスト実行。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            if (runTestsOnStart)\r\n            {\r\n                RunTests();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 全テストを実行する。\r\n        /// </summary>\r\n        [ContextMenu(\"Run Tests\")]\r\n        public void RunTests()\r\n        {\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n            Debug.Log(\r\n                \"===== GridHearingSensor テスト開始 =====\",\r\n                this);\r\n\r\n            TestConfiguration();\r\n            TestDistance();\r\n            TestHearing();\r\n            TestConfidence();\r\n            TestObservation();\r\n            TestLifecycle();\r\n\r\n            Debug.Log(\r\n                $\"===== テスト終了：成功 {passedCount}件 / \" +\r\n                $\"失敗 {failedCount}件 =====\",\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト用の聴覚センサーを生成する。\r\n        /// </summary>\r\n        /// <param name=\"map\">テスト用マップ</param>\r\n        /// <returns>聴覚センサー</returns>\r\n        private GridHearingSensor<bool> CreateSensor(\r\n            out GridMap<bool> map)\r\n        {\r\n            // trueを通路、falseを壁として扱う。\r\n            var newMap = new GridMap<bool>(\r\n                7,\r\n                7,\r\n                position => true);\r\n\r\n            map = newMap;\r\n\r\n            return new GridHearingSensor<bool>(\r\n                newMap,\r\n                position => newMap.GetCell(position),\r\n                8f,\r\n                0.5f);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 初期設定と聴覚範囲を検証する。\r\n        /// </summary>\r\n        private void TestConfiguration()\r\n        {\r\n            using (var sensor = CreateSensor(out _))\r\n            {\r\n                Debug.Assert(\r\n                    sensor.Range == 8f,\r\n                    \"初期聴覚範囲\", this);\r\n                Check(sensor.Range == 8f,\r\n                    \"初期聴覚範囲\");\r\n\r\n                Debug.Assert(\r\n                    sensor.Sensitivity == 0.5f,\r\n                    \"初期聴覚感度\", this);\r\n                Check(sensor.Sensitivity == 0.5f,\r\n                    \"初期聴覚感度\");\r\n\r\n                Debug.Assert(\r\n                    sensor.IsEnabled,\r\n                    \"初期有効状態\", this);\r\n                Check(sensor.IsEnabled,\r\n                    \"初期有効状態\");\r\n\r\n                bool correctRange = Mathf.Approximately(\r\n                    sensor.GetEffectiveRange(0.5f), 4f);\r\n\r\n                Debug.Assert(\r\n                    correctRange,\r\n                    \"通常音量の実効範囲\", this);\r\n                Check(correctRange,\r\n                    \"通常音量の実効範囲\");\r\n\r\n                sensor.Configure(8f, 1f);\r\n\r\n                bool highSensitivity = Mathf.Approximately(\r\n                    sensor.GetEffectiveRange(0.5f), 6f);\r\n\r\n                Debug.Assert(\r\n                    highSensitivity,\r\n                    \"高感度時の実効範囲\", this);\r\n                Check(highSensitivity,\r\n                    \"高感度時の実効範囲\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 通路距離とキャッシュを検証する。\r\n        /// </summary>\r\n        private void TestDistance()\r\n        {\r\n            using (var sensor = CreateSensor(out var map))\r\n            {\r\n                Vector2Int origin = new Vector2Int(1, 1);\r\n                Vector2Int source = new Vector2Int(3, 1);\r\n\r\n                int distance = sensor.GetDistance(\r\n                    origin, source);\r\n\r\n                Debug.Assert(\r\n                    distance == 2,\r\n                    \"直線通路距離\", this);\r\n                Check(distance == 2,\r\n                    \"直線通路距離\");\r\n\r\n                long count = sensor.RecalculationCount;\r\n\r\n                sensor.GetDistance(origin, source);\r\n\r\n                bool cacheUsed =\r\n                    sensor.RecalculationCount == count;\r\n\r\n                Debug.Assert(\r\n                    cacheUsed,\r\n                    \"距離キャッシュ再利用\", this);\r\n                Check(cacheUsed,\r\n                    \"距離キャッシュ再利用\");\r\n\r\n                // 直線経路を壁で遮断する。\r\n                map.SetCell(new Vector2Int(2, 1), false);\r\n\r\n                distance = sensor.GetDistance(\r\n                    origin, source);\r\n\r\n                Debug.Assert(\r\n                    distance == 4,\r\n                    \"壁を迂回する通路距離\", this);\r\n                Check(distance == 4,\r\n                    \"壁を迂回する通路距離\");\r\n\r\n                bool recalculated =\r\n                    sensor.RecalculationCount == count + 1;\r\n\r\n                Debug.Assert(\r\n                    recalculated,\r\n                    \"地形変更後の再計算\", this);\r\n                Check(recalculated,\r\n                    \"地形変更後の再計算\");\r\n\r\n                distance = sensor.GetDistance(\r\n                    origin,\r\n                    new Vector2Int(-1, 0));\r\n\r\n                Debug.Assert(\r\n                    distance == -1,\r\n                    \"範囲外の音源\", this);\r\n                Check(distance == -1,\r\n                    \"範囲外の音源\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 聴覚認識の可否を検証する。\r\n        /// </summary>\r\n        private void TestHearing()\r\n        {\r\n            using (var sensor = CreateSensor(out var map))\r\n            {\r\n                Vector2Int origin = new Vector2Int(1, 1);\r\n                Vector2Int source = new Vector2Int(3, 1);\r\n\r\n                bool heard = sensor.CanHear(\r\n                    origin, source, 0.5f);\r\n\r\n                Debug.Assert(\r\n                    heard,\r\n                    \"通常足音の認識\", this);\r\n                Check(heard,\r\n                    \"通常足音の認識\");\r\n\r\n                heard = sensor.CanHear(\r\n                    origin, source, 0f);\r\n\r\n                Debug.Assert(\r\n                    !heard,\r\n                    \"無音時は認識しない\", this);\r\n                Check(!heard,\r\n                    \"無音時は認識しない\");\r\n\r\n                heard = sensor.CanHear(\r\n                    origin,\r\n                    new Vector2Int(5, 1),\r\n                    0.5f);\r\n\r\n                Debug.Assert(\r\n                    heard,\r\n                    \"聴覚範囲の境界\", this);\r\n                Check(heard,\r\n                    \"聴覚範囲の境界\");\r\n\r\n                heard = sensor.CanHear(\r\n                    origin,\r\n                    new Vector2Int(6, 1),\r\n                    0.5f);\r\n\r\n                Debug.Assert(\r\n                    !heard,\r\n                    \"聴覚範囲外\", this);\r\n                Check(!heard,\r\n                    \"聴覚範囲外\");\r\n\r\n                // 音源への通路を完全に遮断する。\r\n                map.SetCell(new Vector2Int(2, 1), false);\r\n                map.SetCell(new Vector2Int(4, 1), false);\r\n                map.SetCell(new Vector2Int(3, 0), false);\r\n                map.SetCell(new Vector2Int(3, 2), false);\r\n\r\n                heard = sensor.CanHear(\r\n                    origin, source, 1f);\r\n\r\n                Debug.Assert(\r\n                    !heard,\r\n                    \"隔離された音源\", this);\r\n                Check(!heard,\r\n                    \"隔離された音源\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 音の認識信頼度を検証する。\r\n        /// </summary>\r\n        private void TestConfidence()\r\n        {\r\n            using (var sensor = CreateSensor(out _))\r\n            {\r\n                Vector2Int origin = new Vector2Int(1, 1);\r\n\r\n                float near = sensor.GetConfidence(\r\n                    origin,\r\n                    new Vector2Int(2, 1),\r\n                    0.5f);\r\n\r\n                float far = sensor.GetConfidence(\r\n                    origin,\r\n                    new Vector2Int(4, 1),\r\n                    0.5f);\r\n\r\n                Debug.Assert(\r\n                    near > far,\r\n                    \"距離による信頼度減衰\", this);\r\n                Check(near > far,\r\n                    \"距離による信頼度減衰\");\r\n\r\n                bool validRange =\r\n                    near > 0f && near <= 1f;\r\n\r\n                Debug.Assert(\r\n                    validRange,\r\n                    \"信頼度の有効範囲\", this);\r\n                Check(validRange,\r\n                    \"信頼度の有効範囲\");\r\n\r\n                float confidence = sensor.GetConfidence(\r\n                    origin, origin, 0.5f);\r\n\r\n                Debug.Assert(\r\n                    confidence == 1f,\r\n                    \"同一セルの信頼度\", this);\r\n                Check(confidence == 1f,\r\n                    \"同一セルの信頼度\");\r\n\r\n                confidence = sensor.GetConfidence(\r\n                    origin,\r\n                    new Vector2Int(6, 1),\r\n                    0.5f);\r\n\r\n                Debug.Assert(\r\n                    confidence == 0f,\r\n                    \"範囲外の信頼度\", this);\r\n                Check(confidence == 0f,\r\n                    \"範囲外の信頼度\");\r\n\r\n                confidence = sensor.GetConfidence(\r\n                    origin, origin, float.NaN);\r\n\r\n                Debug.Assert(\r\n                    confidence == 0f,\r\n                    \"無効な音量の拒否\", this);\r\n                Check(confidence == 0f,\r\n                    \"無効な音量の拒否\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 聴覚刺激の生成を検証する。\r\n        /// </summary>\r\n        private void TestObservation()\r\n        {\r\n            using (var sensor = CreateSensor(out _))\r\n            {\r\n                Guid id = Guid.NewGuid();\r\n\r\n                Vector2Int origin = new Vector2Int(1, 1);\r\n                Vector2Int source = new Vector2Int(3, 1);\r\n\r\n                bool result = sensor.TryObserve(\r\n                    id,\r\n                    origin,\r\n                    source,\r\n                    0.5f,\r\n                    10d,\r\n                    out var stimulus);\r\n\r\n                Debug.Assert(\r\n                    result,\r\n                    \"聴覚刺激の生成\", this);\r\n                Check(result,\r\n                    \"聴覚刺激の生成\");\r\n\r\n                bool correctType =\r\n                    stimulus.Type == PerceptionType.Hearing;\r\n\r\n                Debug.Assert(\r\n                    correctType,\r\n                    \"聴覚刺激の種類\", this);\r\n                Check(correctType,\r\n                    \"聴覚刺激の種類\");\r\n\r\n                bool correctPosition =\r\n                    stimulus.Position == source;\r\n\r\n                Debug.Assert(\r\n                    correctPosition,\r\n                    \"聴覚刺激の位置\", this);\r\n                Check(correctPosition,\r\n                    \"聴覚刺激の位置\");\r\n\r\n                bool correctData =\r\n                    stimulus.SourceId == id &&\r\n                    stimulus.Timestamp == 10d &&\r\n                    stimulus.IsValid;\r\n\r\n                Debug.Assert(\r\n                    correctData,\r\n                    \"聴覚刺激の基本情報\", this);\r\n                Check(correctData,\r\n                    \"聴覚刺激の基本情報\");\r\n\r\n                result = sensor.TryObserve(\r\n                    Guid.Empty,\r\n                    origin,\r\n                    source,\r\n                    0.5f,\r\n                    10d,\r\n                    out stimulus);\r\n\r\n                Debug.Assert(\r\n                    !result && !stimulus.IsValid,\r\n                    \"無効な音源識別子\", this);\r\n                Check(!result && !stimulus.IsValid,\r\n                    \"無効な音源識別子\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 無効化と解放処理を検証する。\r\n        /// </summary>\r\n        private void TestLifecycle()\r\n        {\r\n            using (var sensor = CreateSensor(out var map))\r\n            {\r\n                Vector2Int origin = new Vector2Int(1, 1);\r\n                Vector2Int source = new Vector2Int(2, 1);\r\n\r\n                sensor.Configure(0f, 0.5f);\r\n\r\n                Debug.Assert(\r\n                    !sensor.IsEnabled,\r\n                    \"聴覚の無効化\", this);\r\n                Check(!sensor.IsEnabled,\r\n                    \"聴覚の無効化\");\r\n\r\n                bool heard = sensor.CanHear(\r\n                    origin, source, 1f);\r\n\r\n                Debug.Assert(\r\n                    !heard,\r\n                    \"無効化中の認識拒否\", this);\r\n                Check(!heard,\r\n                    \"無効化中の認識拒否\");\r\n\r\n                sensor.Configure(8f, 0.5f);\r\n\r\n                heard = sensor.CanHear(\r\n                    origin, source, 0.5f);\r\n\r\n                Debug.Assert(\r\n                    heard,\r\n                    \"聴覚の再有効化\", this);\r\n                Check(heard,\r\n                    \"聴覚の再有効化\");\r\n\r\n                sensor.Dispose();\r\n                sensor.Dispose();\r\n\r\n                Debug.Assert(\r\n                    sensor.IsDisposed,\r\n                    \"複数回の解放\", this);\r\n                Check(sensor.IsDisposed,\r\n                    \"複数回の解放\");\r\n\r\n                map.SetCell(source, false);\r\n\r\n                bool safe =\r\n                    !sensor.CanHear(origin, source, 1f) &&\r\n                    sensor.GetDistance(origin, source) == -1;\r\n\r\n                Debug.Assert(\r\n                    safe,\r\n                    \"解放後の安全性\", this);\r\n                Check(safe,\r\n                    \"解放後の安全性\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト結果を集計して出力する。\r\n        /// </summary>\r\n        /// <param name=\"condition\">検証結果</param>\r\n        /// <param name=\"testName\">テスト名</param>\r\n        private void Check(\r\n            bool condition,\r\n            string testName)\r\n        {\r\n            if (condition)\r\n            {\r\n                passedCount++;\r\n\r\n                Debug.Log(\r\n                    $\"<color=#00CC66>【成功】</color> {testName}\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogError(\r\n                    $\"【失敗】 {testName}\",\r\n                    this);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.252Z"
+}

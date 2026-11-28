@@ -1,0 +1,593 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Spatial.MazeEnemySpatialEvaluation",
+    "name": "MazeEnemySpatialEvaluation",
+    "fileName": "MazeEnemySpatialEvaluation.cs",
+    "namespace": "Game.AI.Spatial",
+    "type": "struct",
+    "accessibility": "public",
+    "modifiers": [
+        "readonly"
+    ],
+    "declaration": "public readonly struct MazeEnemySpatialEvaluation",
+    "typeParameters": [],
+    "summary": "敵AIの移動先候補に対する空間評価結果。",
+    "remarks": "評価時点の情報を保持する。 グリッドやパラメーターの変更によって 既存の評価結果が自動更新されることはない。",
+    "inheritance": [],
+    "dependencies": [
+        "UnityEngine"
+    ],
+    "members": [
+        {
+            "name": "Position",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int Position",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "評価対象のセル座標。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Origin",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int Origin",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "距離計算の起点。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Mode",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemySpatialMode Mode",
+            "returnType": "",
+            "valueType": "MazeEnemySpatialMode",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "使用した空間評価方式。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Distance",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int Distance",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "起点からの最短移動距離。 単位はセル数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "DistanceScore",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float DistanceScore",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "移動距離に対する評価値。 値の範囲は0から1。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "UnvisitedScore",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float UnvisitedScore",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "訪問履歴に基づく未訪問度。 値の範囲は0から1。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Preference",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Preference",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "評価方式に対応する行動傾向。 値の範囲は0から1。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TerritoryEvaluation",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyTerritoryEvaluation\r\n            TerritoryEvaluation",
+            "returnType": "",
+            "valueType": "MazeEnemyTerritoryEvaluation",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "縄張りに関する評価結果。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TerritoryMultiplier",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float TerritoryMultiplier",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "縄張りによる移動先評価倍率。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Score",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Score",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "移動先候補の最終評価値。 値の範囲は0から1。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsValid",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsValid",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "有効な評価結果であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemySpatialEvaluation",
+            "fullName": "MazeEnemySpatialEvaluation",
+            "kind": "struct",
+            "accessibility": "public",
+            "modifiers": [
+                "readonly"
+            ],
+            "summary": "敵AIの移動先候補に対する空間評価結果。",
+            "remarks": "評価時点の情報を保持する。 グリッドやパラメーターの変更によって 既存の評価結果が自動更新されることはない。",
+            "attributes": [],
+            "declaration": "public readonly struct MazeEnemySpatialEvaluation",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "Position",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int Position",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "評価対象のセル座標。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Origin",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int Origin",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "距離計算の起点。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Mode",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemySpatialMode Mode",
+                    "returnType": "",
+                    "valueType": "MazeEnemySpatialMode",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "使用した空間評価方式。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Distance",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int Distance",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "起点からの最短移動距離。 単位はセル数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "DistanceScore",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float DistanceScore",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "移動距離に対する評価値。 値の範囲は0から1。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "UnvisitedScore",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float UnvisitedScore",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "訪問履歴に基づく未訪問度。 値の範囲は0から1。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Preference",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Preference",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "評価方式に対応する行動傾向。 値の範囲は0から1。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TerritoryEvaluation",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyTerritoryEvaluation\r\n            TerritoryEvaluation",
+                    "returnType": "",
+                    "valueType": "MazeEnemyTerritoryEvaluation",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "縄張りに関する評価結果。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TerritoryMultiplier",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float TerritoryMultiplier",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "縄張りによる移動先評価倍率。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Score",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Score",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "移動先候補の最終評価値。 値の範囲は0から1。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsValid",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsValid",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "有効な評価結果であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MazeEnemySpatialEvaluation",
+                    "kind": "constructor",
+                    "accessibility": "internal",
+                    "modifiers": [],
+                    "signature": "internal MazeEnemySpatialEvaluation(\r\n            Vector2Int position,\r\n            Vector2Int origin,\r\n            MazeEnemySpatialMode mode,\r\n            int distance,\r\n            float distanceScore,\r\n            float unvisitedScore,\r\n            float preference,\r\n            MazeEnemyTerritoryEvaluation territoryEvaluation,\r\n            float territoryMultiplier,\r\n            float score)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価対象の座標"
+                        },
+                        {
+                            "name": "origin",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "距離計算の起点"
+                        },
+                        {
+                            "name": "mode",
+                            "type": "MazeEnemySpatialMode",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "空間評価方式"
+                        },
+                        {
+                            "name": "distance",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "最短移動距離"
+                        },
+                        {
+                            "name": "distanceScore",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "距離評価値"
+                        },
+                        {
+                            "name": "unvisitedScore",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "未訪問度"
+                        },
+                        {
+                            "name": "preference",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動傾向"
+                        },
+                        {
+                            "name": "territoryEvaluation",
+                            "type": "MazeEnemyTerritoryEvaluation",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "縄張り評価結果"
+                        },
+                        {
+                            "name": "territoryMultiplier",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "縄張り評価倍率"
+                        },
+                        {
+                            "name": "score",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "最終評価値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "空間評価結果を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 14
+        }
+    ],
+    "source": "\r\nusing UnityEngine;\r\n\r\nnamespace Game.AI.Spatial\r\n{\r\n    /// <summary>\r\n    /// 敵AIの移動先候補に対する空間評価結果。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// 評価時点の情報を保持する。\r\n    /// グリッドやパラメーターの変更によって\r\n    /// 既存の評価結果が自動更新されることはない。\r\n    /// </remarks>\r\n    public readonly struct MazeEnemySpatialEvaluation\r\n    {\r\n        /// <summary>\r\n        /// 評価対象のセル座標。\r\n        /// </summary>\r\n        public Vector2Int Position { get; }\r\n\r\n        /// <summary>\r\n        /// 距離計算の起点。\r\n        /// </summary>\r\n        public Vector2Int Origin { get; }\r\n\r\n        /// <summary>\r\n        /// 使用した空間評価方式。\r\n        /// </summary>\r\n        public MazeEnemySpatialMode Mode { get; }\r\n\r\n        /// <summary>\r\n        /// 起点からの最短移動距離。\r\n        /// 単位はセル数。\r\n        /// </summary>\r\n        public int Distance { get; }\r\n\r\n        /// <summary>\r\n        /// 移動距離に対する評価値。\r\n        /// 値の範囲は0から1。\r\n        /// </summary>\r\n        public float DistanceScore { get; }\r\n\r\n        /// <summary>\r\n        /// 訪問履歴に基づく未訪問度。\r\n        /// 値の範囲は0から1。\r\n        /// </summary>\r\n        public float UnvisitedScore { get; }\r\n\r\n        /// <summary>\r\n        /// 評価方式に対応する行動傾向。\r\n        /// 値の範囲は0から1。\r\n        /// </summary>\r\n        public float Preference { get; }\r\n\r\n        /// <summary>\r\n        /// 縄張りに関する評価結果。\r\n        /// </summary>\r\n        public MazeEnemyTerritoryEvaluation\r\n            TerritoryEvaluation { get; }\r\n\r\n        /// <summary>\r\n        /// 縄張りによる移動先評価倍率。\r\n        /// </summary>\r\n        public float TerritoryMultiplier { get; }\r\n\r\n        /// <summary>\r\n        /// 移動先候補の最終評価値。\r\n        /// 値の範囲は0から1。\r\n        /// </summary>\r\n        public float Score { get; }\r\n\r\n        /// <summary>\r\n        /// 有効な評価結果であるか。\r\n        /// </summary>\r\n        public bool IsValid { get; }\r\n\r\n        /// <summary>\r\n        /// 空間評価結果を生成する。\r\n        /// </summary>\r\n        /// <param name=\"position\">評価対象の座標</param>\r\n        /// <param name=\"origin\">距離計算の起点</param>\r\n        /// <param name=\"mode\">空間評価方式</param>\r\n        /// <param name=\"distance\">最短移動距離</param>\r\n        /// <param name=\"distanceScore\">距離評価値</param>\r\n        /// <param name=\"unvisitedScore\">未訪問度</param>\r\n        /// <param name=\"preference\">行動傾向</param>\r\n        /// <param name=\"territoryEvaluation\">縄張り評価結果</param>\r\n        /// <param name=\"territoryMultiplier\">縄張り評価倍率</param>\r\n        /// <param name=\"score\">最終評価値</param>\r\n        internal MazeEnemySpatialEvaluation(\r\n            Vector2Int position,\r\n            Vector2Int origin,\r\n            MazeEnemySpatialMode mode,\r\n            int distance,\r\n            float distanceScore,\r\n            float unvisitedScore,\r\n            float preference,\r\n            MazeEnemyTerritoryEvaluation territoryEvaluation,\r\n            float territoryMultiplier,\r\n            float score)\r\n        {\r\n            Position = position;\r\n            Origin = origin;\r\n            Mode = mode;\r\n            Distance = distance;\r\n            DistanceScore = distanceScore;\r\n            UnvisitedScore = unvisitedScore;\r\n            Preference = preference;\r\n            TerritoryEvaluation = territoryEvaluation;\r\n            TerritoryMultiplier = territoryMultiplier;\r\n            Score = score;\r\n\r\n            IsValid = true;\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.622Z"
+}

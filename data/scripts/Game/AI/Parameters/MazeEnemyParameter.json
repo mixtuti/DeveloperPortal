@@ -1,0 +1,124 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Parameters.MazeEnemyParameter",
+    "name": "MazeEnemyParameter",
+    "fileName": "MazeEnemyParameter.cs",
+    "namespace": "Game.AI.Parameters",
+    "type": "enum",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public enum MazeEnemyParameter",
+    "typeParameters": [],
+    "summary": "迷路内の敵エージェントが使用する 能力・性格・行動傾向の識別子。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [],
+    "members": [],
+    "types": [
+        {
+            "name": "MazeEnemyParameter",
+            "fullName": "MazeEnemyParameter",
+            "kind": "enum",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "迷路内の敵エージェントが使用する 能力・性格・行動傾向の識別子。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public enum MazeEnemyParameter",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [],
+            "nestedTypes": [],
+            "enumValues": [
+                {
+                    "name": "None",
+                    "value": "0"
+                },
+                {
+                    "name": "MoveSpeed",
+                    "value": "100"
+                },
+                {
+                    "name": "ChaseSpeedMultiplier",
+                    "value": "101"
+                },
+                {
+                    "name": "EscapeSpeedMultiplier",
+                    "value": "102"
+                },
+                {
+                    "name": "DetectionRange",
+                    "value": "200"
+                },
+                {
+                    "name": "ThreatDetectionRange",
+                    "value": "201"
+                },
+                {
+                    "name": "MemoryDuration",
+                    "value": "202"
+                },
+                {
+                    "name": "HearingRange",
+                    "value": "203"
+                },
+                {
+                    "name": "HearingSensitivity",
+                    "value": "204"
+                },
+                {
+                    "name": "HearingAccuracy",
+                    "value": "205"
+                },
+                {
+                    "name": "Aggression",
+                    "value": "300"
+                },
+                {
+                    "name": "Caution",
+                    "value": "301"
+                },
+                {
+                    "name": "Persistence",
+                    "value": "302"
+                },
+                {
+                    "name": "TacticalIntelligence",
+                    "value": "303"
+                },
+                {
+                    "name": "Territoriality",
+                    "value": "304"
+                },
+                {
+                    "name": "Exploration",
+                    "value": "400"
+                },
+                {
+                    "name": "PatrolPreference",
+                    "value": "401"
+                },
+                {
+                    "name": "TerritoryRadius",
+                    "value": "402"
+                },
+                {
+                    "name": "VisitMemoryDuration",
+                    "value": "403"
+                },
+                {
+                    "name": "PredictionTime",
+                    "value": "404"
+                }
+            ],
+            "line": 8
+        }
+    ],
+    "source": "\r\nnamespace Game.AI.Parameters\r\n{\r\n    /// <summary>\r\n    /// 迷路内の敵エージェントが使用する\r\n    /// 能力・性格・行動傾向の識別子。\r\n    /// </summary>\r\n    public enum MazeEnemyParameter\r\n    {\r\n        /// <summary>\r\n        /// 未指定のパラメーター。\r\n        /// </summary>\r\n        None = 0,\r\n\r\n        // ========================================\r\n        // 基本能力：100番台\r\n        // ========================================\r\n\r\n        /// <summary>\r\n        /// 基本移動速度。単位はセル毎秒。\r\n        /// </summary>\r\n        MoveSpeed = 100,\r\n\r\n        /// <summary>\r\n        /// 追跡時の移動速度倍率。\r\n        /// </summary>\r\n        ChaseSpeedMultiplier = 101,\r\n\r\n        /// <summary>\r\n        /// 逃走時の移動速度倍率。\r\n        /// </summary>\r\n        EscapeSpeedMultiplier = 102,\r\n\r\n        // ========================================\r\n        // 認識能力：200番台\r\n        // ========================================\r\n\r\n        /// <summary>\r\n        /// プレイヤーを認識できる距離。\r\n        /// 単位はセル。\r\n        /// </summary>\r\n        DetectionRange = 200,\r\n\r\n        /// <summary>\r\n        /// 脅威を認識できる距離。\r\n        /// 単位はセル。\r\n        /// </summary>\r\n        ThreatDetectionRange = 201,\r\n\r\n        /// <summary>\r\n        /// 認識対象の記憶保持時間。単位は秒。\r\n        /// </summary>\r\n        MemoryDuration = 202,\r\n\r\n        /// <summary>\r\n        /// 仮想音源を認識する基準聴覚範囲。\r\n        /// 単位はセル。0の場合は聴覚を無効化する。\r\n        /// </summary>\r\n        HearingRange = 203,\r\n\r\n        /// <summary>\r\n        /// 仮想音源に対する聴覚感度。\r\n        /// 範囲は0から1。\r\n        /// </summary>\r\n        HearingSensitivity = 204,\r\n\r\n        /// <summary>\r\n        /// 音源の位置を推定する精度。\r\n        /// 範囲は0から1。\r\n        /// </summary>\r\n        HearingAccuracy = 205,\r\n\r\n        // ========================================\r\n        // 性格：300番台\r\n        // ========================================\r\n\r\n        /// <summary>\r\n        /// プレイヤーへの攻撃性。\r\n        /// </summary>\r\n        Aggression = 300,\r\n\r\n        /// <summary>\r\n        /// 危険に対する警戒心。\r\n        /// </summary>\r\n        Caution = 301,\r\n\r\n        /// <summary>\r\n        /// 対象を追い続ける執着心。\r\n        /// </summary>\r\n        Persistence = 302,\r\n\r\n        /// <summary>\r\n        /// 回り込みや予測を利用する戦術的知能。\r\n        /// </summary>\r\n        TacticalIntelligence = 303,\r\n\r\n        /// <summary>\r\n        /// 自分の領域を重視する縄張り意識。\r\n        /// </summary>\r\n        Territoriality = 304,\r\n\r\n        // ========================================\r\n        // 行動傾向：400番台\r\n        // ========================================\r\n\r\n        /// <summary>\r\n        /// 未探索領域への探索意欲。\r\n        /// </summary>\r\n        Exploration = 400,\r\n\r\n        /// <summary>\r\n        /// 通常巡回を選択する傾向。\r\n        /// </summary>\r\n        PatrolPreference = 401,\r\n\r\n        /// <summary>\r\n        /// 縄張りの基準範囲。単位はセル。\r\n        /// </summary>\r\n        TerritoryRadius = 402,\r\n\r\n        /// <summary>\r\n        /// セルの訪問記憶を保持する時間。\r\n        /// 単位は秒。\r\n        /// </summary>\r\n        VisitMemoryDuration = 403,\r\n\r\n        /// <summary>\r\n        /// 対象の移動を予測する時間。\r\n        /// 単位は秒。\r\n        /// </summary>\r\n        PredictionTime = 404\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.566Z"
+}

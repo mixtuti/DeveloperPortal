@@ -1,5 +1,5 @@
 {
-    "parserVersion": 2,
+    "parserVersion": 3,
     "id": "Game.Input.GameplayActions",
     "name": "GameplayActions",
     "fileName": "GameplayActions.cs",
@@ -299,11 +299,391 @@
             "exceptions": []
         }
     ],
+    "types": [
+        {
+            "name": "GameplayActions",
+            "fullName": "GameplayActions",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "InControlを利用したゲームプレイ用操作定義。 キャラクターの移動、アイテム使用、 サポートキャラクター召喚などの操作を管理する。 ゲーム内の処理は行わず、 操作の生成と初期キー割り当てのみを担当する。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public sealed class GameplayActions : PlayerActionSet",
+            "inheritance": [
+                "PlayerActionSet"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "MoveUp",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public PlayerAction MoveUp",
+                    "returnType": "",
+                    "valueType": "PlayerAction",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "上方向への移動操作。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MoveDown",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public PlayerAction MoveDown",
+                    "returnType": "",
+                    "valueType": "PlayerAction",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "下方向への移動操作。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MoveLeft",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public PlayerAction MoveLeft",
+                    "returnType": "",
+                    "valueType": "PlayerAction",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "左方向への移動操作。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MoveRight",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public PlayerAction MoveRight",
+                    "returnType": "",
+                    "valueType": "PlayerAction",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "右方向への移動操作。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Move",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public PlayerTwoAxisAction Move",
+                    "returnType": "",
+                    "valueType": "PlayerTwoAxisAction",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "上下左右をまとめた2軸移動操作。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "UseItem",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public PlayerAction UseItem",
+                    "returnType": "",
+                    "valueType": "PlayerAction",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "アイテム使用操作。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Summon",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public PlayerAction Summon",
+                    "returnType": "",
+                    "valueType": "PlayerAction",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "サポートキャラクター召喚操作。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Pause",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public PlayerAction Pause",
+                    "returnType": "",
+                    "valueType": "PlayerAction",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "ゲームの一時停止操作。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GameplayActions",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public GameplayActions()",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ゲームプレイ用の操作を生成する。 このコンストラクタでは操作のみを生成し、 キー割り当ては行わない。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateWithDefaultBindings",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static GameplayActions CreateWithDefaultBindings()",
+                    "returnType": "GameplayActions",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "初期キー割り当て済みの操作セットを生成する。",
+                    "returns": "初期キー割り当てが設定された操作セット",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "AddDefaultKeyboardBindings",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void AddDefaultKeyboardBindings()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "キーボードの初期キー割り当てを登録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "AddDefaultGamepadBindings",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void AddDefaultGamepadBindings()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ゲームパッドの初期ボタン割り当てを登録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetPlayerAction",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetPlayerAction(\r\n            GameInputAction action,\r\n            out PlayerAction playerAction)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "GameInputAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得する操作識別子"
+                        },
+                        {
+                            "name": "playerAction",
+                            "type": "PlayerAction",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得されたInControlの個別操作"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "操作識別子に対応する個別操作を取得する。 入力取得やキーコンフィグで使用する。 2軸操作のMoveは個別操作ではないため、 このメソッドでは取得できない。",
+                    "returns": "対応する操作が存在する場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetTwoAxisAction",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetTwoAxisAction(\r\n            GameInputAction action,\r\n            out PlayerTwoAxisAction axisAction)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "GameInputAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得する操作識別子"
+                        },
+                        {
+                            "name": "axisAction",
+                            "type": "PlayerTwoAxisAction",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得されたInControlの2軸操作"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "操作識別子に対応する2軸操作を取得する。",
+                    "returns": "対応する2軸操作が存在する場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HasAction",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool HasAction(GameInputAction action)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "GameInputAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "確認する操作識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された操作が登録されているか確認する。",
+                    "returns": "操作が登録されている場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 15
+        }
+    ],
     "source": "\r\nusing InControl;\r\n\r\nnamespace Game.Input\r\n{\r\n    /// <summary>\r\n    /// InControlを利用したゲームプレイ用操作定義。\r\n    ///\r\n    /// キャラクターの移動、アイテム使用、\r\n    /// サポートキャラクター召喚などの操作を管理する。\r\n    ///\r\n    /// ゲーム内の処理は行わず、\r\n    /// 操作の生成と初期キー割り当てのみを担当する。\r\n    /// </summary>\r\n    public sealed class GameplayActions : PlayerActionSet\r\n    {\r\n        #region Action Properties\r\n\r\n        /// <summary>\r\n        /// 上方向への移動操作。\r\n        /// </summary>\r\n        public PlayerAction MoveUp { get; }\r\n\r\n        /// <summary>\r\n        /// 下方向への移動操作。\r\n        /// </summary>\r\n        public PlayerAction MoveDown { get; }\r\n\r\n        /// <summary>\r\n        /// 左方向への移動操作。\r\n        /// </summary>\r\n        public PlayerAction MoveLeft { get; }\r\n\r\n        /// <summary>\r\n        /// 右方向への移動操作。\r\n        /// </summary>\r\n        public PlayerAction MoveRight { get; }\r\n\r\n        /// <summary>\r\n        /// 上下左右をまとめた2軸移動操作。\r\n        /// </summary>\r\n        public PlayerTwoAxisAction Move { get; }\r\n\r\n        /// <summary>\r\n        /// アイテム使用操作。\r\n        /// </summary>\r\n        public PlayerAction UseItem { get; }\r\n\r\n        /// <summary>\r\n        /// サポートキャラクター召喚操作。\r\n        /// </summary>\r\n        public PlayerAction Summon { get; }\r\n\r\n        /// <summary>\r\n        /// ゲームの一時停止操作。\r\n        /// </summary>\r\n        public PlayerAction Pause { get; }\r\n\r\n        #endregion\r\n\r\n        #region Constructor\r\n\r\n        /// <summary>\r\n        /// ゲームプレイ用の操作を生成する。\r\n        ///\r\n        /// このコンストラクタでは操作のみを生成し、\r\n        /// キー割り当ては行わない。\r\n        /// </summary>\r\n        public GameplayActions()\r\n        {\r\n            // 移動操作を生成する。\r\n            MoveUp = CreatePlayerAction(\r\n                nameof(GameInputAction.MoveUp));\r\n\r\n            MoveDown = CreatePlayerAction(\r\n                nameof(GameInputAction.MoveDown));\r\n\r\n            MoveLeft = CreatePlayerAction(\r\n                nameof(GameInputAction.MoveLeft));\r\n\r\n            MoveRight = CreatePlayerAction(\r\n                nameof(GameInputAction.MoveRight));\r\n\r\n            // 4方向の操作を2軸入力にまとめる。\r\n            Move = CreateTwoAxisPlayerAction(\r\n                MoveLeft,\r\n                MoveRight,\r\n                MoveDown,\r\n                MoveUp);\r\n\r\n            // ゲーム固有の操作を生成する。\r\n            UseItem = CreatePlayerAction(\r\n                nameof(GameInputAction.UseItem));\r\n\r\n            Summon = CreatePlayerAction(\r\n                nameof(GameInputAction.Summon));\r\n\r\n            Pause = CreatePlayerAction(\r\n                nameof(GameInputAction.Pause));\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Factory Methods\r\n\r\n        /// <summary>\r\n        /// 初期キー割り当て済みの操作セットを生成する。\r\n        /// </summary>\r\n        /// <returns>\r\n        /// 初期キー割り当てが設定された操作セット\r\n        /// </returns>\r\n        public static GameplayActions CreateWithDefaultBindings()\r\n        {\r\n            // ゲームプレイ用の操作セットを生成する。\r\n            GameplayActions actions = new GameplayActions();\r\n\r\n            // キーボードの初期割り当てを登録する。\r\n            actions.AddDefaultKeyboardBindings();\r\n\r\n            // ゲームパッドの初期割り当てを登録する。\r\n            actions.AddDefaultGamepadBindings();\r\n\r\n            return actions;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Default Bindings\r\n\r\n        /// <summary>\r\n        /// キーボードの初期キー割り当てを登録する。\r\n        /// </summary>\r\n        private void AddDefaultKeyboardBindings()\r\n        {\r\n            // 上方向への移動。\r\n            MoveUp.AddDefaultBinding(Key.W);\r\n            MoveUp.AddDefaultBinding(Key.UpArrow);\r\n\r\n            // 下方向への移動。\r\n            MoveDown.AddDefaultBinding(Key.S);\r\n            MoveDown.AddDefaultBinding(Key.DownArrow);\r\n\r\n            // 左方向への移動。\r\n            MoveLeft.AddDefaultBinding(Key.A);\r\n            MoveLeft.AddDefaultBinding(Key.LeftArrow);\r\n\r\n            // 右方向への移動。\r\n            MoveRight.AddDefaultBinding(Key.D);\r\n            MoveRight.AddDefaultBinding(Key.RightArrow);\r\n\r\n            // アイテム使用。\r\n            UseItem.AddDefaultBinding(Key.Space);\r\n\r\n            // サポートキャラクター召喚。\r\n            Summon.AddDefaultBinding(Key.E);\r\n\r\n            // ゲームの一時停止。\r\n            Pause.AddDefaultBinding(Key.Escape);\r\n        }\r\n\r\n        /// <summary>\r\n        /// ゲームパッドの初期ボタン割り当てを登録する。\r\n        /// </summary>\r\n        private void AddDefaultGamepadBindings()\r\n        {\r\n            // 上方向への移動。\r\n            MoveUp.AddDefaultBinding(\r\n                InputControlType.LeftStickUp);\r\n\r\n            MoveUp.AddDefaultBinding(\r\n                InputControlType.DPadUp);\r\n\r\n            // 下方向への移動。\r\n            MoveDown.AddDefaultBinding(\r\n                InputControlType.LeftStickDown);\r\n\r\n            MoveDown.AddDefaultBinding(\r\n                InputControlType.DPadDown);\r\n\r\n            // 左方向への移動。\r\n            MoveLeft.AddDefaultBinding(\r\n                InputControlType.LeftStickLeft);\r\n\r\n            MoveLeft.AddDefaultBinding(\r\n                InputControlType.DPadLeft);\r\n\r\n            // 右方向への移動。\r\n            MoveRight.AddDefaultBinding(\r\n                InputControlType.LeftStickRight);\r\n\r\n            MoveRight.AddDefaultBinding(\r\n                InputControlType.DPadRight);\r\n\r\n            // アイテム使用。\r\n            // XboxコントローラーのXボタン相当。\r\n            UseItem.AddDefaultBinding(\r\n                InputControlType.Action3);\r\n\r\n            // サポートキャラクター召喚。\r\n            // XboxコントローラーのYボタン相当。\r\n            Summon.AddDefaultBinding(\r\n                InputControlType.Action4);\r\n\r\n            // ゲームの一時停止。\r\n            Pause.AddDefaultBinding(\r\n                InputControlType.Start);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Action Lookup Methods\r\n\r\n        /// <summary>\r\n        /// 操作識別子に対応する個別操作を取得する。\r\n        ///\r\n        /// 入力取得やキーコンフィグで使用する。\r\n        /// 2軸操作のMoveは個別操作ではないため、\r\n        /// このメソッドでは取得できない。\r\n        /// </summary>\r\n        /// <param name=\"action\">\r\n        /// 取得する操作識別子\r\n        /// </param>\r\n        /// <param name=\"playerAction\">\r\n        /// 取得されたInControlの個別操作\r\n        /// </param>\r\n        /// <returns>\r\n        /// 対応する操作が存在する場合はtrue\r\n        /// </returns>\r\n        public bool TryGetPlayerAction(\r\n            GameInputAction action,\r\n            out PlayerAction playerAction)\r\n        {\r\n            switch (action)\r\n            {\r\n                case GameInputAction.MoveUp:\r\n                    playerAction = MoveUp;\r\n                    return true;\r\n\r\n                case GameInputAction.MoveDown:\r\n                    playerAction = MoveDown;\r\n                    return true;\r\n\r\n                case GameInputAction.MoveLeft:\r\n                    playerAction = MoveLeft;\r\n                    return true;\r\n\r\n                case GameInputAction.MoveRight:\r\n                    playerAction = MoveRight;\r\n                    return true;\r\n\r\n                case GameInputAction.UseItem:\r\n                    playerAction = UseItem;\r\n                    return true;\r\n\r\n                case GameInputAction.Summon:\r\n                    playerAction = Summon;\r\n                    return true;\r\n\r\n                case GameInputAction.Pause:\r\n                    playerAction = Pause;\r\n                    return true;\r\n\r\n                default:\r\n                    playerAction = null;\r\n                    return false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 操作識別子に対応する2軸操作を取得する。\r\n        /// </summary>\r\n        /// <param name=\"action\">\r\n        /// 取得する操作識別子\r\n        /// </param>\r\n        /// <param name=\"axisAction\">\r\n        /// 取得されたInControlの2軸操作\r\n        /// </param>\r\n        /// <returns>\r\n        /// 対応する2軸操作が存在する場合はtrue\r\n        /// </returns>\r\n        public bool TryGetTwoAxisAction(\r\n            GameInputAction action,\r\n            out PlayerTwoAxisAction axisAction)\r\n        {\r\n            if (action == GameInputAction.Move)\r\n            {\r\n                axisAction = Move;\r\n                return true;\r\n            }\r\n\r\n            axisAction = null;\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された操作が登録されているか確認する。\r\n        /// </summary>\r\n        /// <param name=\"action\">\r\n        /// 確認する操作識別子\r\n        /// </param>\r\n        /// <returns>\r\n        /// 操作が登録されている場合はtrue\r\n        /// </returns>\r\n        public bool HasAction(GameInputAction action)\r\n        {\r\n            return TryGetPlayerAction(action, out _) ||\r\n                   TryGetTwoAxisAction(action, out _);\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
     "tips": [],
     "examples": [],
     "notes": [],
     "related": [],
     "tests": [],
-    "generatedAt": "2026-11-26T16:10:17.927Z"
+    "generatedAt": "2026-11-28T15:50:00.193Z"
 }

@@ -1,0 +1,580 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Perception.MazeEnemyTargetObservation",
+    "name": "MazeEnemyTargetObservation",
+    "fileName": "MazeEnemyTargetObservation.cs",
+    "namespace": "Game.AI.Perception",
+    "type": "struct",
+    "accessibility": "public",
+    "modifiers": [
+        "readonly"
+    ],
+    "declaration": "public readonly struct MazeEnemyTargetObservation",
+    "typeParameters": [],
+    "summary": "敵AIが認識した対象の観測情報。",
+    "remarks": "記憶状態では最後に観測した情報を保持する。 対象の実際の現在位置は保持しない。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "UnityEngine"
+    ],
+    "members": [
+        {
+            "name": "Id",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Guid Id",
+            "returnType": "",
+            "valueType": "Guid",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "認識対象の一意識別子。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Type",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyTargetType Type",
+            "returnType": "",
+            "valueType": "MazeEnemyTargetType",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "認識対象の種類。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "State",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyTargetState State",
+            "returnType": "",
+            "valueType": "MazeEnemyTargetState",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "対象の認識状態。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "LastKnownPosition",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int LastKnownPosition",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "最後に観測したセル座標。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "LastKnownDirection",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int LastKnownDirection",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "最後に観測した移動方向。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "LastKnownMoveSpeed",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float LastKnownMoveSpeed",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "最後に観測した移動速度。 単位はセル毎秒。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "LastSeenTime",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public double LastSeenTime",
+            "returnType": "",
+            "valueType": "double",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "最後に対象を観測した時刻。 単位は秒。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Confidence",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Confidence",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "観測情報の信頼度。 値の範囲は0から1。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsVisible",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsVisible =>\r\n            State == MazeEnemyTargetState.Visible",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "対象を視認している状態であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsRemembered",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsRemembered =>\r\n            State == MazeEnemyTargetState.Remembered",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "対象の情報を記憶している状態であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsValid",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsValid =>\r\n            Id != Guid.Empty &&\r\n            (IsVisible || IsRemembered)",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "有効な観測情報であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyTargetObservation",
+            "fullName": "MazeEnemyTargetObservation",
+            "kind": "struct",
+            "accessibility": "public",
+            "modifiers": [
+                "readonly"
+            ],
+            "summary": "敵AIが認識した対象の観測情報。",
+            "remarks": "記憶状態では最後に観測した情報を保持する。 対象の実際の現在位置は保持しない。",
+            "attributes": [],
+            "declaration": "public readonly struct MazeEnemyTargetObservation",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "Id",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Guid Id",
+                    "returnType": "",
+                    "valueType": "Guid",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "認識対象の一意識別子。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Type",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyTargetType Type",
+                    "returnType": "",
+                    "valueType": "MazeEnemyTargetType",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "認識対象の種類。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "State",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyTargetState State",
+                    "returnType": "",
+                    "valueType": "MazeEnemyTargetState",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "対象の認識状態。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "LastKnownPosition",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int LastKnownPosition",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "最後に観測したセル座標。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "LastKnownDirection",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int LastKnownDirection",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "最後に観測した移動方向。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "LastKnownMoveSpeed",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float LastKnownMoveSpeed",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "最後に観測した移動速度。 単位はセル毎秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "LastSeenTime",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public double LastSeenTime",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "最後に対象を観測した時刻。 単位は秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Confidence",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Confidence",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "観測情報の信頼度。 値の範囲は0から1。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsVisible",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsVisible =>\r\n            State == MazeEnemyTargetState.Visible",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "対象を視認している状態であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsRemembered",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsRemembered =>\r\n            State == MazeEnemyTargetState.Remembered",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "対象の情報を記憶している状態であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsValid",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsValid =>\r\n            Id != Guid.Empty &&\r\n            (IsVisible || IsRemembered)",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "有効な観測情報であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MazeEnemyTargetObservation",
+                    "kind": "constructor",
+                    "accessibility": "internal",
+                    "modifiers": [],
+                    "signature": "internal MazeEnemyTargetObservation(\r\n            Guid id,\r\n            MazeEnemyTargetType type,\r\n            MazeEnemyTargetState state,\r\n            Vector2Int position,\r\n            Vector2Int direction,\r\n            float moveSpeed,\r\n            double lastSeenTime,\r\n            float confidence)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象識別子"
+                        },
+                        {
+                            "name": "type",
+                            "type": "MazeEnemyTargetType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象の種類"
+                        },
+                        {
+                            "name": "state",
+                            "type": "MazeEnemyTargetState",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識状態"
+                        },
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "最後の観測座標"
+                        },
+                        {
+                            "name": "direction",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "最後の観測移動方向"
+                        },
+                        {
+                            "name": "moveSpeed",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "最後の観測移動速度"
+                        },
+                        {
+                            "name": "lastSeenTime",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "最後の観測時刻"
+                        },
+                        {
+                            "name": "confidence",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "観測情報の信頼度"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "対象の観測情報を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 14
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing UnityEngine;\r\n\r\nnamespace Game.AI.Perception\r\n{\r\n    /// <summary>\r\n    /// 敵AIが認識した対象の観測情報。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// 記憶状態では最後に観測した情報を保持する。\r\n    /// 対象の実際の現在位置は保持しない。\r\n    /// </remarks>\r\n    public readonly struct MazeEnemyTargetObservation\r\n    {\r\n        /// <summary>\r\n        /// 認識対象の一意識別子。\r\n        /// </summary>\r\n        public Guid Id { get; }\r\n\r\n        /// <summary>\r\n        /// 認識対象の種類。\r\n        /// </summary>\r\n        public MazeEnemyTargetType Type { get; }\r\n\r\n        /// <summary>\r\n        /// 対象の認識状態。\r\n        /// </summary>\r\n        public MazeEnemyTargetState State { get; }\r\n\r\n        /// <summary>\r\n        /// 最後に観測したセル座標。\r\n        /// </summary>\r\n        public Vector2Int LastKnownPosition { get; }\r\n\r\n        /// <summary>\r\n        /// 最後に観測した移動方向。\r\n        /// </summary>\r\n        public Vector2Int LastKnownDirection { get; }\r\n\r\n        /// <summary>\r\n        /// 最後に観測した移動速度。\r\n        /// 単位はセル毎秒。\r\n        /// </summary>\r\n        public float LastKnownMoveSpeed { get; }\r\n\r\n        /// <summary>\r\n        /// 最後に対象を観測した時刻。\r\n        /// 単位は秒。\r\n        /// </summary>\r\n        public double LastSeenTime { get; }\r\n\r\n        /// <summary>\r\n        /// 観測情報の信頼度。\r\n        /// 値の範囲は0から1。\r\n        /// </summary>\r\n        public float Confidence { get; }\r\n\r\n        /// <summary>\r\n        /// 対象を視認している状態であるか。\r\n        /// </summary>\r\n        public bool IsVisible =>\r\n            State == MazeEnemyTargetState.Visible;\r\n\r\n        /// <summary>\r\n        /// 対象の情報を記憶している状態であるか。\r\n        /// </summary>\r\n        public bool IsRemembered =>\r\n            State == MazeEnemyTargetState.Remembered;\r\n\r\n        /// <summary>\r\n        /// 有効な観測情報であるか。\r\n        /// </summary>\r\n        public bool IsValid =>\r\n            Id != Guid.Empty &&\r\n            (IsVisible || IsRemembered);\r\n\r\n        /// <summary>\r\n        /// 対象の観測情報を生成する。\r\n        /// </summary>\r\n        /// <param name=\"id\">対象識別子</param>\r\n        /// <param name=\"type\">対象の種類</param>\r\n        /// <param name=\"state\">認識状態</param>\r\n        /// <param name=\"position\">最後の観測座標</param>\r\n        /// <param name=\"direction\">最後の観測移動方向</param>\r\n        /// <param name=\"moveSpeed\">最後の観測移動速度</param>\r\n        /// <param name=\"lastSeenTime\">最後の観測時刻</param>\r\n        /// <param name=\"confidence\">観測情報の信頼度</param>\r\n        internal MazeEnemyTargetObservation(\r\n            Guid id,\r\n            MazeEnemyTargetType type,\r\n            MazeEnemyTargetState state,\r\n            Vector2Int position,\r\n            Vector2Int direction,\r\n            float moveSpeed,\r\n            double lastSeenTime,\r\n            float confidence)\r\n        {\r\n            Id = id;\r\n            Type = type;\r\n            State = state;\r\n\r\n            LastKnownPosition = position;\r\n            LastKnownDirection = direction;\r\n            LastKnownMoveSpeed = moveSpeed;\r\n\r\n            LastSeenTime = lastSeenTime;\r\n            Confidence = Mathf.Clamp01(confidence);\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.716Z"
+}

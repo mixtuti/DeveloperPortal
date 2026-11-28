@@ -1,0 +1,481 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Perception.MazeEnemyTargetSnapshot",
+    "name": "MazeEnemyTargetSnapshot",
+    "fileName": "MazeEnemyTargetSnapshot.cs",
+    "namespace": "Game.AI.Perception",
+    "type": "struct",
+    "accessibility": "public",
+    "modifiers": [
+        "readonly"
+    ],
+    "declaration": "public readonly struct MazeEnemyTargetSnapshot",
+    "typeParameters": [],
+    "summary": "認識判定に使用する対象の現在情報。",
+    "remarks": "認識制御システムへの入力専用データ。 行動評価側から直接参照しないこと。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "Framework.Movement",
+        "UnityEngine"
+    ],
+    "members": [
+        {
+            "name": "Id",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Guid Id",
+            "returnType": "",
+            "valueType": "Guid",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "認識対象の一意識別子。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Type",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyTargetType Type",
+            "returnType": "",
+            "valueType": "MazeEnemyTargetType",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "認識対象の種類。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Position",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int Position",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "対象の現在セル座標。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Direction",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int Direction",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "対象の現在の移動方向。 停止中の場合はゼロベクトル。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MoveSpeed",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float MoveSpeed",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "対象の現在の移動速度。 単位はセル毎秒。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsActive",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsActive",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "対象が認識判定可能な状態であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsValid",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsValid =>\r\n            Id != Guid.Empty &&\r\n            (Type == MazeEnemyTargetType.Player ||\r\n             Type == MazeEnemyTargetType.Threat)",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "有効な対象情報であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MazeEnemyTargetSnapshot",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyTargetSnapshot(\r\n            Guid id,\r\n            MazeEnemyTargetType type,\r\n            Vector2Int position,\r\n            Vector2Int direction,\r\n            float moveSpeed,\r\n            bool isActive = true)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "対象の一意識別子"
+                },
+                {
+                    "name": "type",
+                    "type": "MazeEnemyTargetType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "対象の種類"
+                },
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "現在セル座標"
+                },
+                {
+                    "name": "direction",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "現在の移動方向"
+                },
+                {
+                    "name": "moveSpeed",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "現在の移動速度"
+                },
+                {
+                    "name": "isActive",
+                    "type": "bool",
+                    "modifier": "",
+                    "defaultValue": "true",
+                    "description": "認識判定可能であるか"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "認識対象の現在情報を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentException",
+                    "description": "識別子、対象種類、移動方向が無効な場合。"
+                },
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "移動速度が無効な場合。"
+                }
+            ]
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyTargetSnapshot",
+            "fullName": "MazeEnemyTargetSnapshot",
+            "kind": "struct",
+            "accessibility": "public",
+            "modifiers": [
+                "readonly"
+            ],
+            "summary": "認識判定に使用する対象の現在情報。",
+            "remarks": "認識制御システムへの入力専用データ。 行動評価側から直接参照しないこと。",
+            "attributes": [],
+            "declaration": "public readonly struct MazeEnemyTargetSnapshot",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "Id",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Guid Id",
+                    "returnType": "",
+                    "valueType": "Guid",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "認識対象の一意識別子。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Type",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyTargetType Type",
+                    "returnType": "",
+                    "valueType": "MazeEnemyTargetType",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "認識対象の種類。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Position",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int Position",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "対象の現在セル座標。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Direction",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int Direction",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "対象の現在の移動方向。 停止中の場合はゼロベクトル。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MoveSpeed",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float MoveSpeed",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "対象の現在の移動速度。 単位はセル毎秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsActive",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsActive",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "対象が認識判定可能な状態であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsValid",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsValid =>\r\n            Id != Guid.Empty &&\r\n            (Type == MazeEnemyTargetType.Player ||\r\n             Type == MazeEnemyTargetType.Threat)",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "有効な対象情報であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MazeEnemyTargetSnapshot",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyTargetSnapshot(\r\n            Guid id,\r\n            MazeEnemyTargetType type,\r\n            Vector2Int position,\r\n            Vector2Int direction,\r\n            float moveSpeed,\r\n            bool isActive = true)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象の一意識別子"
+                        },
+                        {
+                            "name": "type",
+                            "type": "MazeEnemyTargetType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象の種類"
+                        },
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在セル座標"
+                        },
+                        {
+                            "name": "direction",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在の移動方向"
+                        },
+                        {
+                            "name": "moveSpeed",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在の移動速度"
+                        },
+                        {
+                            "name": "isActive",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": "true",
+                            "description": "認識判定可能であるか"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識対象の現在情報を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentException",
+                            "description": "識別子、対象種類、移動方向が無効な場合。"
+                        },
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "移動速度が無効な場合。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 15
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing Framework.Movement;\r\nusing UnityEngine;\r\n\r\nnamespace Game.AI.Perception\r\n{\r\n    /// <summary>\r\n    /// 認識判定に使用する対象の現在情報。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// 認識制御システムへの入力専用データ。\r\n    /// 行動評価側から直接参照しないこと。\r\n    /// </remarks>\r\n    public readonly struct MazeEnemyTargetSnapshot\r\n    {\r\n        /// <summary>\r\n        /// 認識対象の一意識別子。\r\n        /// </summary>\r\n        public Guid Id { get; }\r\n\r\n        /// <summary>\r\n        /// 認識対象の種類。\r\n        /// </summary>\r\n        public MazeEnemyTargetType Type { get; }\r\n\r\n        /// <summary>\r\n        /// 対象の現在セル座標。\r\n        /// </summary>\r\n        public Vector2Int Position { get; }\r\n\r\n        /// <summary>\r\n        /// 対象の現在の移動方向。\r\n        /// 停止中の場合はゼロベクトル。\r\n        /// </summary>\r\n        public Vector2Int Direction { get; }\r\n\r\n        /// <summary>\r\n        /// 対象の現在の移動速度。\r\n        /// 単位はセル毎秒。\r\n        /// </summary>\r\n        public float MoveSpeed { get; }\r\n\r\n        /// <summary>\r\n        /// 対象が認識判定可能な状態であるか。\r\n        /// </summary>\r\n        public bool IsActive { get; }\r\n\r\n        /// <summary>\r\n        /// 有効な対象情報であるか。\r\n        /// </summary>\r\n        public bool IsValid =>\r\n            Id != Guid.Empty &&\r\n            (Type == MazeEnemyTargetType.Player ||\r\n             Type == MazeEnemyTargetType.Threat);\r\n\r\n        /// <summary>\r\n        /// 認識対象の現在情報を生成する。\r\n        /// </summary>\r\n        /// <param name=\"id\">対象の一意識別子</param>\r\n        /// <param name=\"type\">対象の種類</param>\r\n        /// <param name=\"position\">現在セル座標</param>\r\n        /// <param name=\"direction\">現在の移動方向</param>\r\n        /// <param name=\"moveSpeed\">現在の移動速度</param>\r\n        /// <param name=\"isActive\">認識判定可能であるか</param>\r\n        /// <exception cref=\"ArgumentException\">\r\n        /// 識別子、対象種類、移動方向が無効な場合。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 移動速度が無効な場合。\r\n        /// </exception>\r\n        public MazeEnemyTargetSnapshot(\r\n            Guid id,\r\n            MazeEnemyTargetType type,\r\n            Vector2Int position,\r\n            Vector2Int direction,\r\n            float moveSpeed,\r\n            bool isActive = true)\r\n        {\r\n            if (id == Guid.Empty)\r\n            {\r\n                throw new ArgumentException(\r\n                    \"対象識別子が無効です。\",\r\n                    nameof(id));\r\n            }\r\n\r\n            if (type != MazeEnemyTargetType.Player &&\r\n                type != MazeEnemyTargetType.Threat)\r\n            {\r\n                throw new ArgumentException(\r\n                    \"認識対象の種類が無効です。\",\r\n                    nameof(type));\r\n            }\r\n\r\n            if (direction != Vector2Int.zero &&\r\n                !GridMovementController\r\n                    .IsCardinalDirection(direction))\r\n            {\r\n                throw new ArgumentException(\r\n                    \"移動方向が無効です。\",\r\n                    nameof(direction));\r\n            }\r\n\r\n            if (float.IsNaN(moveSpeed) ||\r\n                float.IsInfinity(moveSpeed) ||\r\n                moveSpeed < 0f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(moveSpeed));\r\n            }\r\n\r\n            Id = id;\r\n            Type = type;\r\n            Position = position;\r\n            Direction = direction;\r\n            MoveSpeed = moveSpeed;\r\n            IsActive = isActive;\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.727Z"
+}

@@ -1,0 +1,986 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Actions.MazeEnemyActionContext",
+    "name": "MazeEnemyActionContext",
+    "fileName": "MazeEnemyActionContext.cs",
+    "namespace": "Game.AI.Actions",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class MazeEnemyActionContext\r\n        : IDisposable",
+    "typeParameters": [],
+    "summary": "敵AIの行動実行に必要な情報と機能を管理する。",
+    "remarks": "敵AIコンテキストの所有権は持たない。 経路追従システムは本クラスが所有する。",
+    "inheritance": [
+        "IDisposable"
+    ],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "Framework.Movement",
+        "Framework.Pathfinding",
+        "Game.AI.Core",
+        "Game.AI.Parameters",
+        "UnityEngine",
+        "IDisposable"
+    ],
+    "members": [
+        {
+            "name": "Enemy",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyContext Enemy",
+            "returnType": "",
+            "valueType": "MazeEnemyContext",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "敵AIの基本コンテキスト。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "PathFollower",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridPathFollower PathFollower",
+            "returnType": "",
+            "valueType": "GridPathFollower",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "経路追従システム。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Movement",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridMovementController Movement =>\r\n            Enemy.Movement",
+            "returnType": "",
+            "valueType": "GridMovementController",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "移動コントローラー。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsDisposed",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsDisposed => isDisposed",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "破棄済みであるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsValid",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsValid =>\r\n            !isDisposed &&\r\n            Enemy.IsValid &&\r\n            !PathFollower.IsDisposed",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "行動コンテキストが有効であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CanAct",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool CanAct =>\r\n            IsValid && Enemy.CanAct",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在行動可能であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "DestinationCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int DestinationCount =>\r\n            destinations.Count",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "登録されている目的地の数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MazeEnemyActionContext",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyActionContext(\r\n            MazeEnemyContext enemy)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "enemy",
+                    "type": "MazeEnemyContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "敵AIコンテキスト"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動コンテキストを生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "敵AIコンテキストがnullの場合。"
+                },
+                {
+                    "name": "ArgumentException",
+                    "description": "敵AIコンテキストが無効な場合。"
+                }
+            ]
+        },
+        {
+            "name": "IsMovementAction",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static bool IsMovementAction(\r\n            MazeEnemyActionType action)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "action",
+                    "type": "MazeEnemyActionType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動の種類"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された行動が移動行動であるか確認する。",
+            "returns": "移動行動の場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TrySetDestination",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TrySetDestination(\r\n            MazeEnemyActionType action,\r\n            Vector2Int destination)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "action",
+                    "type": "MazeEnemyActionType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動の種類"
+                },
+                {
+                    "name": "destination",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "目的地"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動の目的地を設定する。",
+            "returns": "設定できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetDestination",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryGetDestination(\r\n            MazeEnemyActionType action,\r\n            out Vector2Int destination)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "action",
+                    "type": "MazeEnemyActionType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動の種類"
+                },
+                {
+                    "name": "destination",
+                    "type": "Vector2Int",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "取得した目的地"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動の目的地を取得する。",
+            "returns": "取得できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RemoveDestination",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool RemoveDestination(\r\n            MazeEnemyActionType action)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "action",
+                    "type": "MazeEnemyActionType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動の種類"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された行動の目的地を削除する。",
+            "returns": "削除できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ClearDestinations",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void ClearDestinations()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべての行動の目的地を削除する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetMoveSpeed",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float GetMoveSpeed(\r\n            MazeEnemyActionType action)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "action",
+                    "type": "MazeEnemyActionType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動の種類"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動に応じた移動速度を取得する。",
+            "returns": "セル毎秒の移動速度",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryMoveTo",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryMoveTo(Vector2Int destination)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "destination",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "目的地"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された目的地への経路を設定する。",
+            "returns": "経路を設定できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "StopMovement",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void StopMovement()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在の経路追従を終了する。",
+            "returns": "",
+            "remarks": "セル間を移動中の場合は次のセル中心で停止する。",
+            "exceptions": []
+        },
+        {
+            "name": "Dispose",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Dispose()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動コンテキストを破棄する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyActionContext",
+            "fullName": "MazeEnemyActionContext",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "敵AIの行動実行に必要な情報と機能を管理する。",
+            "remarks": "敵AIコンテキストの所有権は持たない。 経路追従システムは本クラスが所有する。",
+            "attributes": [],
+            "declaration": "public sealed class MazeEnemyActionContext\r\n        : IDisposable",
+            "inheritance": [
+                "IDisposable"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "destinations",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Dictionary<\r\n            MazeEnemyActionType, Vector2Int> destinations =\r\n                new Dictionary<\r\n                    MazeEnemyActionType, Vector2Int>()",
+                    "returnType": "",
+                    "valueType": "Dictionary<\r\n            MazeEnemyActionType, Vector2Int>",
+                    "value": "new Dictionary<\r\n                    MazeEnemyActionType, Vector2Int>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動ごとの目的地。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new Dictionary<\r\n                    MazeEnemyActionType, Vector2Int>()",
+                    "inspector": null
+                },
+                {
+                    "name": "isDisposed",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isDisposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "破棄済みであるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Enemy",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyContext Enemy",
+                    "returnType": "",
+                    "valueType": "MazeEnemyContext",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "敵AIの基本コンテキスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PathFollower",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public GridPathFollower PathFollower",
+                    "returnType": "",
+                    "valueType": "GridPathFollower",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "経路追従システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Movement",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public GridMovementController Movement =>\r\n            Enemy.Movement",
+                    "returnType": "",
+                    "valueType": "GridMovementController",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "移動コントローラー。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsDisposed",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsDisposed => isDisposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "破棄済みであるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsValid",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsValid =>\r\n            !isDisposed &&\r\n            Enemy.IsValid &&\r\n            !PathFollower.IsDisposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "行動コンテキストが有効であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CanAct",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool CanAct =>\r\n            IsValid && Enemy.CanAct",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在行動可能であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "DestinationCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int DestinationCount =>\r\n            destinations.Count",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "登録されている目的地の数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MazeEnemyActionContext",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyActionContext(\r\n            MazeEnemyContext enemy)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "enemy",
+                            "type": "MazeEnemyContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "敵AIコンテキスト"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動コンテキストを生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "敵AIコンテキストがnullの場合。"
+                        },
+                        {
+                            "name": "ArgumentException",
+                            "description": "敵AIコンテキストが無効な場合。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsMovementAction",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static bool IsMovementAction(\r\n            MazeEnemyActionType action)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動の種類"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された行動が移動行動であるか確認する。",
+                    "returns": "移動行動の場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TrySetDestination",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TrySetDestination(\r\n            MazeEnemyActionType action,\r\n            Vector2Int destination)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動の種類"
+                        },
+                        {
+                            "name": "destination",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "目的地"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動の目的地を設定する。",
+                    "returns": "設定できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetDestination",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetDestination(\r\n            MazeEnemyActionType action,\r\n            out Vector2Int destination)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動の種類"
+                        },
+                        {
+                            "name": "destination",
+                            "type": "Vector2Int",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得した目的地"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動の目的地を取得する。",
+                    "returns": "取得できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RemoveDestination",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool RemoveDestination(\r\n            MazeEnemyActionType action)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動の種類"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された行動の目的地を削除する。",
+                    "returns": "削除できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ClearDestinations",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void ClearDestinations()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべての行動の目的地を削除する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetMoveSpeed",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float GetMoveSpeed(\r\n            MazeEnemyActionType action)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動の種類"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動に応じた移動速度を取得する。",
+                    "returns": "セル毎秒の移動速度",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryMoveTo",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryMoveTo(Vector2Int destination)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "destination",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "目的地"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された目的地への経路を設定する。",
+                    "returns": "経路を設定できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "StopMovement",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void StopMovement()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の経路追従を終了する。",
+                    "returns": "",
+                    "remarks": "セル間を移動中の場合は次のセル中心で停止する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HandleCellReached",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void HandleCellReached(\r\n            Vector2Int position)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "到達した座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "セル到達時に訪問記憶を更新する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HandleTeleported",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void HandleTeleported(\r\n            Vector2Int previous,\r\n            Vector2Int current)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "previous",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "移動前の座標"
+                        },
+                        {
+                            "name": "current",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "移動後の座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "瞬間移動時に訪問記憶を更新する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Dispose",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Dispose()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動コンテキストを破棄する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 18
+        }
+    ],
+    "source": "using System;\r\nusing System.Collections.Generic;\r\nusing Framework.Movement;\r\nusing Framework.Pathfinding;\r\nusing Game.AI.Core;\r\nusing Game.AI.Parameters;\r\nusing UnityEngine;\r\n\r\nnamespace Game.AI.Actions\r\n{\r\n    /// <summary>\r\n    /// 敵AIの行動実行に必要な情報と機能を管理する。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// 敵AIコンテキストの所有権は持たない。\r\n    /// 経路追従システムは本クラスが所有する。\r\n    /// </remarks>\r\n    public sealed class MazeEnemyActionContext\r\n        : IDisposable\r\n    {\r\n        /// <summary>\r\n        /// 行動ごとの目的地。\r\n        /// </summary>\r\n        private readonly Dictionary<\r\n            MazeEnemyActionType, Vector2Int> destinations =\r\n                new Dictionary<\r\n                    MazeEnemyActionType, Vector2Int>();\r\n\r\n        /// <summary>\r\n        /// 破棄済みであるか。\r\n        /// </summary>\r\n        private bool isDisposed;\r\n\r\n        /// <summary>\r\n        /// 敵AIの基本コンテキスト。\r\n        /// </summary>\r\n        public MazeEnemyContext Enemy { get; }\r\n\r\n        /// <summary>\r\n        /// 経路追従システム。\r\n        /// </summary>\r\n        public GridPathFollower PathFollower { get; }\r\n\r\n        /// <summary>\r\n        /// 移動コントローラー。\r\n        /// </summary>\r\n        public GridMovementController Movement =>\r\n            Enemy.Movement;\r\n\r\n        /// <summary>\r\n        /// 破棄済みであるか。\r\n        /// </summary>\r\n        public bool IsDisposed => isDisposed;\r\n\r\n        /// <summary>\r\n        /// 行動コンテキストが有効であるか。\r\n        /// </summary>\r\n        public bool IsValid =>\r\n            !isDisposed &&\r\n            Enemy.IsValid &&\r\n            !PathFollower.IsDisposed;\r\n\r\n        /// <summary>\r\n        /// 現在行動可能であるか。\r\n        /// </summary>\r\n        public bool CanAct =>\r\n            IsValid && Enemy.CanAct;\r\n\r\n        /// <summary>\r\n        /// 登録されている目的地の数。\r\n        /// </summary>\r\n        public int DestinationCount =>\r\n            destinations.Count;\r\n\r\n        /// <summary>\r\n        /// 行動コンテキストを生成する。\r\n        /// </summary>\r\n        /// <param name=\"enemy\">敵AIコンテキスト</param>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 敵AIコンテキストがnullの場合。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentException\">\r\n        /// 敵AIコンテキストが無効な場合。\r\n        /// </exception>\r\n        public MazeEnemyActionContext(\r\n            MazeEnemyContext enemy)\r\n        {\r\n            if (enemy == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(enemy));\r\n            }\r\n\r\n            if (!enemy.IsValid)\r\n            {\r\n                throw new ArgumentException(\r\n                    \"敵AIコンテキストが無効です。\",\r\n                    nameof(enemy));\r\n            }\r\n\r\n            Enemy = enemy;\r\n\r\n            PathFollower =\r\n                new GridPathFollower(enemy.Movement);\r\n\r\n            Movement.CellReached += HandleCellReached;\r\n            Movement.Teleported += HandleTeleported;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された行動が移動行動であるか確認する。\r\n        /// </summary>\r\n        /// <param name=\"action\">行動の種類</param>\r\n        /// <returns>移動行動の場合はtrue</returns>\r\n        public static bool IsMovementAction(\r\n            MazeEnemyActionType action)\r\n        {\r\n            switch (action)\r\n            {\r\n                case MazeEnemyActionType.Patrol:\r\n                case MazeEnemyActionType.Explore:\r\n                case MazeEnemyActionType.Chase:\r\n                case MazeEnemyActionType.Intercept:\r\n                case MazeEnemyActionType.Escape:\r\n                case MazeEnemyActionType.ReturnToTerritory:\r\n                    return true;\r\n\r\n                default:\r\n                    return false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動の目的地を設定する。\r\n        /// </summary>\r\n        /// <param name=\"action\">行動の種類</param>\r\n        /// <param name=\"destination\">目的地</param>\r\n        /// <returns>設定できた場合はtrue</returns>\r\n        public bool TrySetDestination(\r\n            MazeEnemyActionType action,\r\n            Vector2Int destination)\r\n        {\r\n            if (!IsValid ||\r\n                !IsMovementAction(action) ||\r\n                !Enemy.IsWalkable(destination))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            destinations[action] = destination;\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動の目的地を取得する。\r\n        /// </summary>\r\n        /// <param name=\"action\">行動の種類</param>\r\n        /// <param name=\"destination\">取得した目的地</param>\r\n        /// <returns>取得できた場合はtrue</returns>\r\n        public bool TryGetDestination(\r\n            MazeEnemyActionType action,\r\n            out Vector2Int destination)\r\n        {\r\n            destination = default;\r\n\r\n            return IsValid &&\r\n                destinations.TryGetValue(\r\n                    action, out destination);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された行動の目的地を削除する。\r\n        /// </summary>\r\n        /// <param name=\"action\">行動の種類</param>\r\n        /// <returns>削除できた場合はtrue</returns>\r\n        public bool RemoveDestination(\r\n            MazeEnemyActionType action)\r\n        {\r\n            return !isDisposed &&\r\n                destinations.Remove(action);\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべての行動の目的地を削除する。\r\n        /// </summary>\r\n        public void ClearDestinations()\r\n        {\r\n            if (!isDisposed)\r\n            {\r\n                destinations.Clear();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動に応じた移動速度を取得する。\r\n        /// </summary>\r\n        /// <param name=\"action\">行動の種類</param>\r\n        /// <returns>セル毎秒の移動速度</returns>\r\n        public float GetMoveSpeed(\r\n            MazeEnemyActionType action)\r\n        {\r\n            if (!IsValid ||\r\n                !IsMovementAction(action))\r\n            {\r\n                return 0f;\r\n            }\r\n\r\n            float speed = Enemy.GetParameterValue(\r\n                MazeEnemyParameter.MoveSpeed);\r\n\r\n            switch (action)\r\n            {\r\n                case MazeEnemyActionType.Chase:\r\n                case MazeEnemyActionType.Intercept:\r\n                    return speed *\r\n                        Enemy.GetParameterValue(\r\n                            MazeEnemyParameter\r\n                                .ChaseSpeedMultiplier);\r\n\r\n                case MazeEnemyActionType.Escape:\r\n                    return speed *\r\n                        Enemy.GetParameterValue(\r\n                            MazeEnemyParameter\r\n                                .EscapeSpeedMultiplier);\r\n\r\n                default:\r\n                    return speed;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された目的地への経路を設定する。\r\n        /// </summary>\r\n        /// <param name=\"destination\">目的地</param>\r\n        /// <returns>経路を設定できた場合はtrue</returns>\r\n        public bool TryMoveTo(Vector2Int destination)\r\n        {\r\n            if (!CanAct ||\r\n                !Enemy.IsWalkable(destination))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 移動中は現在の区間の到達予定セルを起点にする。\r\n            Vector2Int origin =\r\n                PathFollower.PathStartCell;\r\n\r\n            if (!GridPathfinder.TryFindPath(\r\n                    Enemy.Map,\r\n                    origin,\r\n                    destination,\r\n                    Enemy.IsWalkable,\r\n                    out List<Vector2Int> path))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return PathFollower.TrySetPath(path);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在の経路追従を終了する。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// セル間を移動中の場合は次のセル中心で停止する。\r\n        /// </remarks>\r\n        public void StopMovement()\r\n        {\r\n            if (isDisposed || Movement == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            PathFollower.Cancel();\r\n\r\n            Movement.ClearRequestedDirection();\r\n            Movement.RequestStop();\r\n        }\r\n\r\n        /// <summary>\r\n        /// セル到達時に訪問記憶を更新する。\r\n        /// </summary>\r\n        /// <param name=\"position\">到達した座標</param>\r\n        private void HandleCellReached(\r\n            Vector2Int position)\r\n        {\r\n            if (IsValid)\r\n            {\r\n                Enemy.RecordVisit(position);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 瞬間移動時に訪問記憶を更新する。\r\n        /// </summary>\r\n        /// <param name=\"previous\">移動前の座標</param>\r\n        /// <param name=\"current\">移動後の座標</param>\r\n        private void HandleTeleported(\r\n            Vector2Int previous,\r\n            Vector2Int current)\r\n        {\r\n            if (IsValid)\r\n            {\r\n                Enemy.RecordVisit(current);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動コンテキストを破棄する。\r\n        /// </summary>\r\n        public void Dispose()\r\n        {\r\n            if (isDisposed)\r\n            {\r\n                return;\r\n            }\r\n\r\n            isDisposed = true;\r\n\r\n            if (Movement != null)\r\n            {\r\n                Movement.CellReached -= HandleCellReached;\r\n                Movement.Teleported -= HandleTeleported;\r\n            }\r\n\r\n            try\r\n            {\r\n                PathFollower.Dispose();\r\n            }\r\n            finally\r\n            {\r\n                destinations.Clear();\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.464Z"
+}

@@ -1,5 +1,5 @@
 {
-    "parserVersion": 2,
+    "parserVersion": 3,
     "id": "Game.Input.GameInputAction",
     "name": "GameInputAction",
     "fileName": "GameInputAction.cs",
@@ -14,11 +14,87 @@
     "inheritance": [],
     "dependencies": [],
     "members": [],
+    "types": [
+        {
+            "name": "GameInputAction",
+            "fullName": "GameInputAction",
+            "kind": "enum",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "ゲーム内で使用する操作識別子。 物理的なキーや入力デバイスとは独立して、 ゲーム内の操作を識別するために使用する。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public enum GameInputAction",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [],
+            "nestedTypes": [],
+            "enumValues": [
+                {
+                    "name": "MoveUp",
+                    "value": "101"
+                },
+                {
+                    "name": "MoveDown",
+                    "value": "102"
+                },
+                {
+                    "name": "MoveLeft",
+                    "value": "103"
+                },
+                {
+                    "name": "MoveRight",
+                    "value": "104"
+                },
+                {
+                    "name": "Summon",
+                    "value": "201"
+                },
+                {
+                    "name": "Pause",
+                    "value": "202"
+                },
+                {
+                    "name": "NavigateUp",
+                    "value": "301"
+                },
+                {
+                    "name": "NavigateDown",
+                    "value": "302"
+                },
+                {
+                    "name": "NavigateLeft",
+                    "value": "303"
+                },
+                {
+                    "name": "NavigateRight",
+                    "value": "304"
+                },
+                {
+                    "name": "Submit",
+                    "value": "305"
+                },
+                {
+                    "name": "Cancel",
+                    "value": "306"
+                },
+                {
+                    "name": "PreviousTab",
+                    "value": "307"
+                },
+                {
+                    "name": "NextTab",
+                    "value": "308\r\n\r\n        #endregion"
+                }
+            ],
+            "line": 10
+        }
+    ],
     "source": "\r\nnamespace Game.Input\r\n{\r\n    /// <summary>\r\n    /// ゲーム内で使用する操作識別子。\r\n    ///\r\n    /// 物理的なキーや入力デバイスとは独立して、\r\n    /// ゲーム内の操作を識別するために使用する。\r\n    /// </summary>\r\n    public enum GameInputAction\r\n    {\r\n        #region Common\r\n\r\n        /// <summary>\r\n        /// 操作なし。\r\n        /// </summary>\r\n        None = 0,\r\n\r\n        #endregion\r\n\r\n        #region Movement\r\n\r\n        /// <summary>\r\n        /// 上下左右をまとめた2軸移動操作。\r\n        /// </summary>\r\n        Move = 100,\r\n\r\n        /// <summary>\r\n        /// 上方向への移動。\r\n        /// </summary>\r\n        MoveUp = 101,\r\n\r\n        /// <summary>\r\n        /// 下方向への移動。\r\n        /// </summary>\r\n        MoveDown = 102,\r\n\r\n        /// <summary>\r\n        /// 左方向への移動。\r\n        /// </summary>\r\n        MoveLeft = 103,\r\n\r\n        /// <summary>\r\n        /// 右方向への移動。\r\n        /// </summary>\r\n        MoveRight = 104,\r\n\r\n        #endregion\r\n\r\n        #region Gameplay\r\n\r\n        /// <summary>\r\n        /// アイテムの使用。\r\n        /// </summary>\r\n        UseItem = 200,\r\n\r\n        /// <summary>\r\n        /// サポートキャラクターの召喚。\r\n        /// </summary>\r\n        Summon = 201,\r\n\r\n        /// <summary>\r\n        /// ゲームの一時停止。\r\n        /// </summary>\r\n        Pause = 202,\r\n\r\n        #endregion\r\n\r\n        #region User Interface\r\n\r\n        /// <summary>\r\n        /// UI選択方向を表す2軸操作。\r\n        /// </summary>\r\n        Navigate = 300,\r\n\r\n        /// <summary>\r\n        /// UIの上方向への移動。\r\n        /// </summary>\r\n        NavigateUp = 301,\r\n\r\n        /// <summary>\r\n        /// UIの下方向への移動。\r\n        /// </summary>\r\n        NavigateDown = 302,\r\n\r\n        /// <summary>\r\n        /// UIの左方向への移動。\r\n        /// </summary>\r\n        NavigateLeft = 303,\r\n\r\n        /// <summary>\r\n        /// UIの右方向への移動。\r\n        /// </summary>\r\n        NavigateRight = 304,\r\n\r\n        /// <summary>\r\n        /// 選択項目の決定。\r\n        /// </summary>\r\n        Submit = 305,\r\n\r\n        /// <summary>\r\n        /// 選択のキャンセル、前画面への移動。\r\n        /// </summary>\r\n        Cancel = 306,\r\n\r\n        /// <summary>\r\n        /// 前のタブへの切り替え。\r\n        /// </summary>\r\n        PreviousTab = 307,\r\n\r\n        /// <summary>\r\n        /// 次のタブへの切り替え。\r\n        /// </summary>\r\n        NextTab = 308\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
     "tips": [],
     "examples": [],
     "notes": [],
     "related": [],
     "tests": [],
-    "generatedAt": "2026-11-26T16:10:17.921Z"
+    "generatedAt": "2026-11-28T15:50:00.169Z"
 }

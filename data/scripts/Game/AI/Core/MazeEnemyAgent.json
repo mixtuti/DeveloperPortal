@@ -1,0 +1,1051 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Core.MazeEnemyAgent",
+    "name": "MazeEnemyAgent",
+    "fileName": "MazeEnemyAgent.cs",
+    "namespace": "Game.AI.Core",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class MazeEnemyAgent\r\n        : AgentBase<MazeEnemyParameter>",
+    "typeParameters": [],
+    "summary": "認識、評価、行動選択を統合した自律型敵AI。",
+    "remarks": "AIの思考更新を担当する。 実際のフレーム単位の移動更新は外部で行う。 敵AIコンテキストとパラメーターの所有権は持たない。",
+    "inheritance": [
+        "AgentBase<MazeEnemyParameter>"
+    ],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "Framework.AI.Actions",
+        "Framework.AI.Core",
+        "Game.AI.Actions",
+        "Game.AI.Decision",
+        "Game.AI.Parameters",
+        "Game.AI.Perception",
+        "Game.AI.Spatial",
+        "Game.AI.Tactics",
+        "UnityEngine",
+        "AgentBase<MazeEnemyParameter>"
+    ],
+    "members": [
+        {
+            "name": "EnemyContext",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyContext EnemyContext",
+            "returnType": "",
+            "valueType": "MazeEnemyContext",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "敵AIの基本コンテキスト。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Perception",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyPerceptionController Perception",
+            "returnType": "",
+            "valueType": "MazeEnemyPerceptionController",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "private set"
+            ],
+            "summary": "対象の認識システム。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Territory",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyTerritory Territory",
+            "returnType": "",
+            "valueType": "MazeEnemyTerritory",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "private set"
+            ],
+            "summary": "縄張り評価システム。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SpatialEvaluator",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemySpatialEvaluator SpatialEvaluator",
+            "returnType": "",
+            "valueType": "MazeEnemySpatialEvaluator",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "private set"
+            ],
+            "summary": "空間評価システム。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TacticalEvaluator",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyTacticalEvaluator TacticalEvaluator",
+            "returnType": "",
+            "valueType": "MazeEnemyTacticalEvaluator",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "private set"
+            ],
+            "summary": "戦術評価システム。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Utility",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyUtility Utility",
+            "returnType": "",
+            "valueType": "MazeEnemyUtility",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "private set"
+            ],
+            "summary": "行動評価システム。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ActionContext",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyActionContext ActionContext",
+            "returnType": "",
+            "valueType": "MazeEnemyActionContext",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "private set"
+            ],
+            "summary": "行動実行用コンテキスト。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ActionController",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public AgentActionController<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext> ActionController",
+            "returnType": "",
+            "valueType": "AgentActionController<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "private set"
+            ],
+            "summary": "行動管理システム。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "LastSelectedCandidate",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyUtilityCandidate LastSelectedCandidate",
+            "returnType": "",
+            "valueType": "MazeEnemyUtilityCandidate",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "private set"
+            ],
+            "summary": "最後に選択した行動候補。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CurrentAction",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyActionType CurrentAction",
+            "returnType": "",
+            "valueType": "MazeEnemyActionType",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在実行している行動。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasCurrentAction",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasCurrentAction =>\r\n            ActionController != null &&\r\n            ActionController.HasCurrentAction",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在行動を実行しているか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CanThink",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool CanThink =>\r\n            IsActive &&\r\n            EnemyContext.IsValid &&\r\n            EnemyContext.CanAct &&\r\n            Utility != null &&\r\n            Utility.IsValid",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "AIの思考処理が実行可能であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MazeEnemyAgent",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyAgent(\r\n            MazeEnemyContext enemyContext,\r\n            Func<IReadOnlyList<MazeEnemyTargetSnapshot>>\r\n                targetProvider)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "enemyContext",
+                    "type": "MazeEnemyContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "敵AIコンテキスト"
+                },
+                {
+                    "name": "targetProvider",
+                    "type": "Func<IReadOnlyList<MazeEnemyTargetSnapshot>>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "現在の認識対象候補を取得する処理"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "敵AIを生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetCurrentDestination",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryGetCurrentDestination(\r\n            out Vector2Int destination)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "destination",
+                    "type": "Vector2Int",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "現在の目的地"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在の行動目的地を取得する。",
+            "returns": "取得できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyAgent",
+            "fullName": "MazeEnemyAgent",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "認識、評価、行動選択を統合した自律型敵AI。",
+            "remarks": "AIの思考更新を担当する。 実際のフレーム単位の移動更新は外部で行う。 敵AIコンテキストとパラメーターの所有権は持たない。",
+            "attributes": [],
+            "declaration": "public sealed class MazeEnemyAgent\r\n        : AgentBase<MazeEnemyParameter>",
+            "inheritance": [
+                "AgentBase<MazeEnemyParameter>"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "targetProvider",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Func<\r\n            IReadOnlyList<MazeEnemyTargetSnapshot>>\r\n            targetProvider",
+                    "returnType": "",
+                    "valueType": "Func<\r\n            IReadOnlyList<MazeEnemyTargetSnapshot>>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識対象の情報を取得する処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "EnemyContext",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyContext EnemyContext",
+                    "returnType": "",
+                    "valueType": "MazeEnemyContext",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "敵AIの基本コンテキスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Perception",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyPerceptionController Perception",
+                    "returnType": "",
+                    "valueType": "MazeEnemyPerceptionController",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get",
+                        "private set"
+                    ],
+                    "summary": "対象の認識システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Territory",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyTerritory Territory",
+                    "returnType": "",
+                    "valueType": "MazeEnemyTerritory",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get",
+                        "private set"
+                    ],
+                    "summary": "縄張り評価システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SpatialEvaluator",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemySpatialEvaluator SpatialEvaluator",
+                    "returnType": "",
+                    "valueType": "MazeEnemySpatialEvaluator",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get",
+                        "private set"
+                    ],
+                    "summary": "空間評価システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TacticalEvaluator",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyTacticalEvaluator TacticalEvaluator",
+                    "returnType": "",
+                    "valueType": "MazeEnemyTacticalEvaluator",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get",
+                        "private set"
+                    ],
+                    "summary": "戦術評価システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Utility",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyUtility Utility",
+                    "returnType": "",
+                    "valueType": "MazeEnemyUtility",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get",
+                        "private set"
+                    ],
+                    "summary": "行動評価システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ActionContext",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyActionContext ActionContext",
+                    "returnType": "",
+                    "valueType": "MazeEnemyActionContext",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get",
+                        "private set"
+                    ],
+                    "summary": "行動実行用コンテキスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ActionController",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public AgentActionController<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext> ActionController",
+                    "returnType": "",
+                    "valueType": "AgentActionController<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get",
+                        "private set"
+                    ],
+                    "summary": "行動管理システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "LastSelectedCandidate",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyUtilityCandidate LastSelectedCandidate",
+                    "returnType": "",
+                    "valueType": "MazeEnemyUtilityCandidate",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get",
+                        "private set"
+                    ],
+                    "summary": "最後に選択した行動候補。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CurrentAction",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyActionType CurrentAction",
+                    "returnType": "",
+                    "valueType": "MazeEnemyActionType",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在実行している行動。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HasCurrentAction",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool HasCurrentAction =>\r\n            ActionController != null &&\r\n            ActionController.HasCurrentAction",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在行動を実行しているか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CanThink",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool CanThink =>\r\n            IsActive &&\r\n            EnemyContext.IsValid &&\r\n            EnemyContext.CanAct &&\r\n            Utility != null &&\r\n            Utility.IsValid",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "AIの思考処理が実行可能であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MazeEnemyAgent",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyAgent(\r\n            MazeEnemyContext enemyContext,\r\n            Func<IReadOnlyList<MazeEnemyTargetSnapshot>>\r\n                targetProvider)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "enemyContext",
+                            "type": "MazeEnemyContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "敵AIコンテキスト"
+                        },
+                        {
+                            "name": "targetProvider",
+                            "type": "Func<IReadOnlyList<MazeEnemyTargetSnapshot>>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在の認識対象候補を取得する処理"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵AIを生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetCurrentDestination",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetCurrentDestination(\r\n            out Vector2Int destination)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "destination",
+                            "type": "Vector2Int",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "現在の目的地"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の行動目的地を取得する。",
+                    "returns": "取得できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnInitialize",
+                    "kind": "method",
+                    "accessibility": "protected",
+                    "modifiers": [
+                        "override"
+                    ],
+                    "signature": "protected override void OnInitialize()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵AIの各システムを初期化する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RegisterActions",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void RegisterActions()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵AIが実行可能な行動を登録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RegisterMoveAction",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void RegisterMoveAction(\r\n            MazeEnemyActionType action,\r\n            float minimumDuration,\r\n            float cooldown)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動の種類"
+                        },
+                        {
+                            "name": "minimumDuration",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "最短継続時間"
+                        },
+                        {
+                            "name": "cooldown",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "再実行待機時間"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された移動行動を登録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnActivated",
+                    "kind": "method",
+                    "accessibility": "protected",
+                    "modifiers": [
+                        "override"
+                    ],
+                    "signature": "protected override void OnActivated()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵AIを有効化する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnTick",
+                    "kind": "method",
+                    "accessibility": "protected",
+                    "modifiers": [
+                        "override"
+                    ],
+                    "signature": "protected override void OnTick(float deltaTime)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "deltaTime",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "AI更新の経過時間"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵AIの思考と行動を更新する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SynchronizeCurrentDestination",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void SynchronizeCurrentDestination(\r\n            MazeEnemyActionType currentAction)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "currentAction",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在の行動"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "到着済みの記憶座標を認識情報から削除する。",
+                    "returns": "",
+                    "remarks": "最後に対象を見た場所へ到着しても 対象が見つからない場合に探索を再開させる。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryExecuteCandidate",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool TryExecuteCandidate(\r\n            MazeEnemyUtilityCandidate candidate)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "candidate",
+                            "type": "MazeEnemyUtilityCandidate",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動候補"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "選択された行動候補を実行する。",
+                    "returns": "実行可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HandleActionEnded",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void HandleActionEnded(\r\n            MazeEnemyActionType action,\r\n            AgentActionExitReason reason)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "終了した行動"
+                        },
+                        {
+                            "name": "reason",
+                            "type": "AgentActionExitReason",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動の終了理由"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動終了時に不要な目的地を削除する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnPaused",
+                    "kind": "method",
+                    "accessibility": "protected",
+                    "modifiers": [
+                        "override"
+                    ],
+                    "signature": "protected override void OnPaused()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵AIの思考と移動を一時停止する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnResumed",
+                    "kind": "method",
+                    "accessibility": "protected",
+                    "modifiers": [
+                        "override"
+                    ],
+                    "signature": "protected override void OnResumed()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵AIの思考と移動を再開する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnDeactivated",
+                    "kind": "method",
+                    "accessibility": "protected",
+                    "modifiers": [
+                        "override"
+                    ],
+                    "signature": "protected override void OnDeactivated()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵AIを無効化する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ReleaseSystems",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void ReleaseSystems()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵AIが所有するシステムを解放する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnDispose",
+                    "kind": "method",
+                    "accessibility": "protected",
+                    "modifiers": [
+                        "override"
+                    ],
+                    "signature": "protected override void OnDispose()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵AIを破棄する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 23
+        }
+    ],
+    "source": "using System;\r\nusing System.Collections.Generic;\r\nusing Framework.AI.Actions;\r\nusing Framework.AI.Core;\r\nusing Game.AI.Actions;\r\nusing Game.AI.Decision;\r\nusing Game.AI.Parameters;\r\nusing Game.AI.Perception;\r\nusing Game.AI.Spatial;\r\nusing Game.AI.Tactics;\r\nusing UnityEngine;\r\n\r\nnamespace Game.AI.Core\r\n{\r\n    /// <summary>\r\n    /// 認識、評価、行動選択を統合した自律型敵AI。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// AIの思考更新を担当する。\r\n    /// 実際のフレーム単位の移動更新は外部で行う。\r\n    /// 敵AIコンテキストとパラメーターの所有権は持たない。\r\n    /// </remarks>\r\n    public sealed class MazeEnemyAgent\r\n        : AgentBase<MazeEnemyParameter>\r\n    {\r\n        /// <summary>\r\n        /// 認識対象の情報を取得する処理。\r\n        /// </summary>\r\n        private readonly Func<\r\n            IReadOnlyList<MazeEnemyTargetSnapshot>>\r\n            targetProvider;\r\n\r\n        /// <summary>\r\n        /// 敵AIの基本コンテキスト。\r\n        /// </summary>\r\n        public MazeEnemyContext EnemyContext { get; }\r\n\r\n        /// <summary>\r\n        /// 対象の認識システム。\r\n        /// </summary>\r\n        public MazeEnemyPerceptionController Perception\r\n        {\r\n            get;\r\n            private set;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 縄張り評価システム。\r\n        /// </summary>\r\n        public MazeEnemyTerritory Territory\r\n        {\r\n            get;\r\n            private set;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 空間評価システム。\r\n        /// </summary>\r\n        public MazeEnemySpatialEvaluator SpatialEvaluator\r\n        {\r\n            get;\r\n            private set;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 戦術評価システム。\r\n        /// </summary>\r\n        public MazeEnemyTacticalEvaluator TacticalEvaluator\r\n        {\r\n            get;\r\n            private set;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動評価システム。\r\n        /// </summary>\r\n        public MazeEnemyUtility Utility\r\n        {\r\n            get;\r\n            private set;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動実行用コンテキスト。\r\n        /// </summary>\r\n        public MazeEnemyActionContext ActionContext\r\n        {\r\n            get;\r\n            private set;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動管理システム。\r\n        /// </summary>\r\n        public AgentActionController<\r\n            MazeEnemyActionType,\r\n            MazeEnemyActionContext> ActionController\r\n        {\r\n            get;\r\n            private set;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 最後に選択した行動候補。\r\n        /// </summary>\r\n        public MazeEnemyUtilityCandidate LastSelectedCandidate\r\n        {\r\n            get;\r\n            private set;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在実行している行動。\r\n        /// </summary>\r\n        public MazeEnemyActionType CurrentAction\r\n        {\r\n            get\r\n            {\r\n                if (ActionController != null &&\r\n                    ActionController.TryGetCurrentActionId(\r\n                        out var action))\r\n                {\r\n                    return action;\r\n                }\r\n\r\n                return MazeEnemyActionType.None;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在行動を実行しているか。\r\n        /// </summary>\r\n        public bool HasCurrentAction =>\r\n            ActionController != null &&\r\n            ActionController.HasCurrentAction;\r\n\r\n        /// <summary>\r\n        /// AIの思考処理が実行可能であるか。\r\n        /// </summary>\r\n        public bool CanThink =>\r\n            IsActive &&\r\n            EnemyContext.IsValid &&\r\n            EnemyContext.CanAct &&\r\n            Utility != null &&\r\n            Utility.IsValid;\r\n\r\n        /// <summary>\r\n        /// 敵AIを生成する。\r\n        /// </summary>\r\n        /// <param name=\"enemyContext\">敵AIコンテキスト</param>\r\n        /// <param name=\"targetProvider\">\r\n        /// 現在の認識対象候補を取得する処理\r\n        /// </param>\r\n        public MazeEnemyAgent(\r\n            MazeEnemyContext enemyContext,\r\n            Func<IReadOnlyList<MazeEnemyTargetSnapshot>>\r\n                targetProvider)\r\n        {\r\n            EnemyContext = enemyContext ??\r\n                throw new ArgumentNullException(\r\n                    nameof(enemyContext));\r\n\r\n            this.targetProvider = targetProvider ??\r\n                throw new ArgumentNullException(\r\n                    nameof(targetProvider));\r\n\r\n            if (!enemyContext.IsValid)\r\n            {\r\n                throw new ArgumentException(\r\n                    \"敵AIコンテキストが無効です。\",\r\n                    nameof(enemyContext));\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在の行動目的地を取得する。\r\n        /// </summary>\r\n        /// <param name=\"destination\">現在の目的地</param>\r\n        /// <returns>取得できた場合はtrue</returns>\r\n        public bool TryGetCurrentDestination(\r\n            out Vector2Int destination)\r\n        {\r\n            destination = default;\r\n\r\n            return ActionContext != null &&\r\n                ActionContext.TryGetDestination(\r\n                    CurrentAction,\r\n                    out destination);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 敵AIの各システムを初期化する。\r\n        /// </summary>\r\n        protected override void OnInitialize()\r\n        {\r\n            if (!ReferenceEquals(\r\n                    Context,\r\n                    EnemyContext.Agent))\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"AgentContextが一致していません。\");\r\n            }\r\n\r\n            try\r\n            {\r\n                Perception =\r\n                    new MazeEnemyPerceptionController(\r\n                        EnemyContext);\r\n\r\n                Territory =\r\n                    new MazeEnemyTerritory(\r\n                        EnemyContext);\r\n\r\n                SpatialEvaluator =\r\n                    new MazeEnemySpatialEvaluator(\r\n                        EnemyContext,\r\n                        Territory);\r\n\r\n                TacticalEvaluator =\r\n                    new MazeEnemyTacticalEvaluator(\r\n                        EnemyContext);\r\n\r\n                ActionContext =\r\n                    new MazeEnemyActionContext(\r\n                        EnemyContext);\r\n\r\n                Utility =\r\n                    new MazeEnemyUtility(\r\n                        EnemyContext,\r\n                        ActionContext,\r\n                        Perception,\r\n                        Territory,\r\n                        SpatialEvaluator,\r\n                        TacticalEvaluator);\r\n\r\n                ActionController =\r\n                    new AgentActionController<\r\n                        MazeEnemyActionType,\r\n                        MazeEnemyActionContext>();\r\n\r\n                RegisterActions();\r\n\r\n                ActionController.ActionEnded +=\r\n                    HandleActionEnded;\r\n            }\r\n            catch\r\n            {\r\n                ReleaseSystems();\r\n\r\n                throw;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 敵AIが実行可能な行動を登録する。\r\n        /// </summary>\r\n        private void RegisterActions()\r\n        {\r\n            ActionController.TryRegister(\r\n                new MazeEnemyIdleAction());\r\n\r\n            RegisterMoveAction(\r\n                MazeEnemyActionType.Patrol,\r\n                0.4f,\r\n                0.1f);\r\n\r\n            RegisterMoveAction(\r\n                MazeEnemyActionType.Explore,\r\n                0.4f,\r\n                0.1f);\r\n\r\n            RegisterMoveAction(\r\n                MazeEnemyActionType.Chase,\r\n                0.2f,\r\n                0f);\r\n\r\n            RegisterMoveAction(\r\n                MazeEnemyActionType.Intercept,\r\n                0.2f,\r\n                0.1f);\r\n\r\n            RegisterMoveAction(\r\n                MazeEnemyActionType.Escape,\r\n                0.2f,\r\n                0f);\r\n\r\n            RegisterMoveAction(\r\n                MazeEnemyActionType.ReturnToTerritory,\r\n                0.4f,\r\n                0.1f);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された移動行動を登録する。\r\n        /// </summary>\r\n        /// <param name=\"action\">行動の種類</param>\r\n        /// <param name=\"minimumDuration\">最短継続時間</param>\r\n        /// <param name=\"cooldown\">再実行待機時間</param>\r\n        private void RegisterMoveAction(\r\n            MazeEnemyActionType action,\r\n            float minimumDuration,\r\n            float cooldown)\r\n        {\r\n            var settings =\r\n                new AgentActionSettings(\r\n                    minimumDuration,\r\n                    cooldown,\r\n                    canInterrupt: true);\r\n\r\n            ActionController.TryRegister(\r\n                new MazeEnemyMoveAction(\r\n                    action,\r\n                    settings));\r\n        }\r\n\r\n        /// <summary>\r\n        /// 敵AIを有効化する。\r\n        /// </summary>\r\n        protected override void OnActivated()\r\n        {\r\n            ActionController.SetPaused(false);\r\n\r\n            EnemyContext.Movement.Resume();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 敵AIの思考と行動を更新する。\r\n        /// </summary>\r\n        /// <param name=\"deltaTime\">AI更新の経過時間</param>\r\n        protected override void OnTick(float deltaTime)\r\n        {\r\n            if (!CanThink)\r\n            {\r\n                return;\r\n            }\r\n\r\n            // 認識対象候補を取得する。\r\n            // 対象候補の情報を直接戦術判断には使用しない。\r\n            IReadOnlyList<MazeEnemyTargetSnapshot> targets =\r\n                targetProvider() ??\r\n                Array.Empty<MazeEnemyTargetSnapshot>();\r\n\r\n            if (!Perception.UpdatePerception(targets))\r\n            {\r\n                return;\r\n            }\r\n\r\n            // ForgetReachedMemory();\r\n\r\n            // 現在の行動を終了または継続できるか更新する。\r\n            ActionController.Tick(\r\n                ActionContext,\r\n                deltaTime);\r\n\r\n            MazeEnemyActionType currentAction =\r\n                CurrentAction;\r\n\r\n            if (!Utility.Evaluate(currentAction))\r\n            {\r\n                return;\r\n            }\r\n\r\n            // 現在の行動の目的地を最新の評価結果へ更新する。\r\n            SynchronizeCurrentDestination(currentAction);\r\n\r\n            if (!Utility.TrySelect(\r\n                    currentAction,\r\n                    out var candidate))\r\n            {\r\n                return;\r\n            }\r\n\r\n            LastSelectedCandidate = candidate;\r\n\r\n            TryExecuteCandidate(candidate);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 到着済みの記憶座標を認識情報から削除する。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// 最後に対象を見た場所へ到着しても\r\n        /// 対象が見つからない場合に探索を再開させる。\r\n        /// </remarks>\r\n        // private void ForgetReachedMemory()\r\n        // {\r\n        //     if (!EnemyContext.IsAtCellCenter)\r\n        //     {\r\n        //         return;\r\n        //     }\r\n\r\n        //     if (!Perception.TryGetBestObservation(\r\n        //             MazeEnemyTargetType.Player,\r\n        //             out var target))\r\n        //     {\r\n        //         return;\r\n        //     }\r\n\r\n        //     if (target.IsRemembered &&\r\n        //         target.LastKnownPosition ==\r\n        //             EnemyContext.CurrentCell)\r\n        //     {\r\n        //         Perception.Forget(target.Id);\r\n        //     }\r\n        // }\r\n\r\n        /// <summary>\r\n        /// 現在の行動の目的地を同期する。\r\n        /// </summary>\r\n        /// <param name=\"currentAction\">現在の行動</param>\r\n        private void SynchronizeCurrentDestination(\r\n            MazeEnemyActionType currentAction)\r\n        {\r\n            if (!MazeEnemyActionContext.IsMovementAction(\r\n                    currentAction))\r\n            {\r\n                return;\r\n            }\r\n\r\n            if (Utility.TryGetCandidate(\r\n                    currentAction,\r\n                    out var candidate) &&\r\n                candidate.HasDestination)\r\n            {\r\n                ActionContext.TrySetDestination(\r\n                    currentAction,\r\n                    candidate.Destination);\r\n\r\n                return;\r\n            }\r\n\r\n            // 認識消失などで行動候補が無効になった場合は\r\n            // 古い目的地を破棄して行動を終了する。\r\n            ActionController.Stop(ActionContext);\r\n\r\n            ActionContext.RemoveDestination(\r\n                currentAction);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 選択された行動候補を実行する。\r\n        /// </summary>\r\n        /// <param name=\"candidate\">行動候補</param>\r\n        /// <returns>実行可能な場合はtrue</returns>\r\n        private bool TryExecuteCandidate(\r\n            MazeEnemyUtilityCandidate candidate)\r\n        {\r\n            if (!candidate.IsValid)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (candidate.Action == CurrentAction)\r\n            {\r\n                // 同じ行動は再開始しない。\r\n                return true;\r\n            }\r\n\r\n            if (ActionController.IsOnCooldown(\r\n                    candidate.Action))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (candidate.HasDestination &&\r\n                !ActionContext.TrySetDestination(\r\n                    candidate.Action,\r\n                    candidate.Destination))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 脅威からの逃走は通常の継続時間制限を解除する。\r\n            bool forceInterrupt =\r\n                candidate.Action ==\r\n                    MazeEnemyActionType.Escape;\r\n\r\n            bool started =\r\n                ActionController.TryStartAction(\r\n                    candidate.Action,\r\n                    ActionContext,\r\n                    forceInterrupt);\r\n\r\n            if (!started &&\r\n                candidate.Action != CurrentAction)\r\n            {\r\n                ActionContext.RemoveDestination(\r\n                    candidate.Action);\r\n            }\r\n\r\n            return started;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動終了時に不要な目的地を削除する。\r\n        /// </summary>\r\n        /// <param name=\"action\">終了した行動</param>\r\n        /// <param name=\"reason\">行動の終了理由</param>\r\n        private void HandleActionEnded(\r\n            MazeEnemyActionType action,\r\n            AgentActionExitReason reason)\r\n        {\r\n            ActionContext.RemoveDestination(action);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 敵AIの思考と移動を一時停止する。\r\n        /// </summary>\r\n        protected override void OnPaused()\r\n        {\r\n            ActionController.SetPaused(true);\r\n\r\n            EnemyContext.Movement.Pause();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 敵AIの思考と移動を再開する。\r\n        /// </summary>\r\n        protected override void OnResumed()\r\n        {\r\n            ActionController.SetPaused(false);\r\n\r\n            EnemyContext.Movement.Resume();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 敵AIを無効化する。\r\n        /// </summary>\r\n        protected override void OnDeactivated()\r\n        {\r\n            ActionController.Stop(ActionContext);\r\n\r\n            ActionContext.ClearDestinations();\r\n\r\n            Utility.Clear();\r\n\r\n            LastSelectedCandidate = default;\r\n\r\n            // 無効化時は現在のセル中心へ戻して停止する。\r\n            EnemyContext.Movement.StopImmediately();\r\n            EnemyContext.Movement.Pause();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 敵AIが所有するシステムを解放する。\r\n        /// </summary>\r\n        private void ReleaseSystems()\r\n        {\r\n            if (ActionController != null)\r\n            {\r\n                ActionController.ActionEnded -=\r\n                    HandleActionEnded;\r\n\r\n                if (ActionContext != null &&\r\n                    !ActionContext.IsDisposed)\r\n                {\r\n                    ActionController.Stop(ActionContext);\r\n                }\r\n            }\r\n\r\n            ActionController = null;\r\n\r\n            Utility?.Clear();\r\n            Utility = null;\r\n\r\n            ActionContext?.Dispose();\r\n            ActionContext = null;\r\n\r\n            TacticalEvaluator?.Dispose();\r\n            TacticalEvaluator = null;\r\n\r\n            SpatialEvaluator?.Dispose();\r\n            SpatialEvaluator = null;\r\n\r\n            Territory?.Dispose();\r\n            Territory = null;\r\n\r\n            Perception?.Dispose();\r\n            Perception = null;\r\n\r\n            LastSelectedCandidate = default;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 敵AIを破棄する。\r\n        /// </summary>\r\n        protected override void OnDispose()\r\n        {\r\n            ReleaseSystems();\r\n\r\n            if (EnemyContext.IsValid)\r\n            {\r\n                EnemyContext.Movement.StopImmediately();\r\n                EnemyContext.Movement.Pause();\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.488Z"
+}

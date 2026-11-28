@@ -1,0 +1,593 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Tactics.MazeEnemyTacticalEvaluation",
+    "name": "MazeEnemyTacticalEvaluation",
+    "fileName": "MazeEnemyTacticalEvaluation.cs",
+    "namespace": "Game.AI.Tactics",
+    "type": "struct",
+    "accessibility": "public",
+    "modifiers": [
+        "readonly"
+    ],
+    "declaration": "public readonly struct MazeEnemyTacticalEvaluation",
+    "typeParameters": [],
+    "summary": "敵AIによる戦術評価の結果。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [
+        "UnityEngine"
+    ],
+    "members": [
+        {
+            "name": "Type",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyTacticalType Type",
+            "returnType": "",
+            "valueType": "MazeEnemyTacticalType",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "評価した戦術の種類。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Origin",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int Origin",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "経路探索の開始座標。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Destination",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int Destination",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "戦術によって選定された目的地。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TargetPosition",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int TargetPosition",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "最後に認識した対象の座標。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Distance",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int Distance",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "目的地までの最短経路距離。 単位はセル数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ArrivalTime",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float ArrivalTime",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "敵自身が目的地へ到達する予測時間。 単位は秒。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TargetArrivalTime",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float TargetArrivalTime",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "対象が目的地へ到達する予測時間。 対象が存在しない場合は0。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SafetyDistance",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int SafetyDistance",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "対象との安全距離。 単位はセル数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Confidence",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Confidence",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "対象の認識情報の信頼度。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Score",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Score",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "戦術の評価値。 値の範囲は0から1。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsValid",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsValid =>\r\n            Type != MazeEnemyTacticalType.None &&\r\n            Distance >= 0",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "有効な戦術評価であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyTacticalEvaluation",
+            "fullName": "MazeEnemyTacticalEvaluation",
+            "kind": "struct",
+            "accessibility": "public",
+            "modifiers": [
+                "readonly"
+            ],
+            "summary": "敵AIによる戦術評価の結果。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public readonly struct MazeEnemyTacticalEvaluation",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "Type",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyTacticalType Type",
+                    "returnType": "",
+                    "valueType": "MazeEnemyTacticalType",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "評価した戦術の種類。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Origin",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int Origin",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "経路探索の開始座標。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Destination",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int Destination",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "戦術によって選定された目的地。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TargetPosition",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int TargetPosition",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "最後に認識した対象の座標。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Distance",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int Distance",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "目的地までの最短経路距離。 単位はセル数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ArrivalTime",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float ArrivalTime",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "敵自身が目的地へ到達する予測時間。 単位は秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TargetArrivalTime",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float TargetArrivalTime",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "対象が目的地へ到達する予測時間。 対象が存在しない場合は0。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SafetyDistance",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int SafetyDistance",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "対象との安全距離。 単位はセル数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Confidence",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Confidence",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "対象の認識情報の信頼度。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Score",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Score",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "戦術の評価値。 値の範囲は0から1。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsValid",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsValid =>\r\n            Type != MazeEnemyTacticalType.None &&\r\n            Distance >= 0",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "有効な戦術評価であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MazeEnemyTacticalEvaluation",
+                    "kind": "constructor",
+                    "accessibility": "internal",
+                    "modifiers": [],
+                    "signature": "internal MazeEnemyTacticalEvaluation(\r\n            MazeEnemyTacticalType type,\r\n            Vector2Int origin,\r\n            Vector2Int destination,\r\n            Vector2Int targetPosition,\r\n            int distance,\r\n            float arrivalTime,\r\n            float targetArrivalTime,\r\n            int safetyDistance,\r\n            float confidence,\r\n            float score)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "type",
+                            "type": "MazeEnemyTacticalType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "戦術の種類"
+                        },
+                        {
+                            "name": "origin",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "探索開始座標"
+                        },
+                        {
+                            "name": "destination",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "目的地"
+                        },
+                        {
+                            "name": "targetPosition",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象の観測座標"
+                        },
+                        {
+                            "name": "distance",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "目的地までの距離"
+                        },
+                        {
+                            "name": "arrivalTime",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "自身の到達時間"
+                        },
+                        {
+                            "name": "targetArrivalTime",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象の到達時間"
+                        },
+                        {
+                            "name": "safetyDistance",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象との安全距離"
+                        },
+                        {
+                            "name": "confidence",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識信頼度"
+                        },
+                        {
+                            "name": "score",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "戦術評価値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "戦術評価の結果を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 8
+        }
+    ],
+    "source": "using UnityEngine;\r\n\r\nnamespace Game.AI.Tactics\r\n{\r\n    /// <summary>\r\n    /// 敵AIによる戦術評価の結果。\r\n    /// </summary>\r\n    public readonly struct MazeEnemyTacticalEvaluation\r\n    {\r\n        /// <summary>\r\n        /// 評価した戦術の種類。\r\n        /// </summary>\r\n        public MazeEnemyTacticalType Type { get; }\r\n\r\n        /// <summary>\r\n        /// 経路探索の開始座標。\r\n        /// </summary>\r\n        public Vector2Int Origin { get; }\r\n\r\n        /// <summary>\r\n        /// 戦術によって選定された目的地。\r\n        /// </summary>\r\n        public Vector2Int Destination { get; }\r\n\r\n        /// <summary>\r\n        /// 最後に認識した対象の座標。\r\n        /// </summary>\r\n        public Vector2Int TargetPosition { get; }\r\n\r\n        /// <summary>\r\n        /// 目的地までの最短経路距離。\r\n        /// 単位はセル数。\r\n        /// </summary>\r\n        public int Distance { get; }\r\n\r\n        /// <summary>\r\n        /// 敵自身が目的地へ到達する予測時間。\r\n        /// 単位は秒。\r\n        /// </summary>\r\n        public float ArrivalTime { get; }\r\n\r\n        /// <summary>\r\n        /// 対象が目的地へ到達する予測時間。\r\n        /// 対象が存在しない場合は0。\r\n        /// </summary>\r\n        public float TargetArrivalTime { get; }\r\n\r\n        /// <summary>\r\n        /// 対象との安全距離。\r\n        /// 単位はセル数。\r\n        /// </summary>\r\n        public int SafetyDistance { get; }\r\n\r\n        /// <summary>\r\n        /// 対象の認識情報の信頼度。\r\n        /// </summary>\r\n        public float Confidence { get; }\r\n\r\n        /// <summary>\r\n        /// 戦術の評価値。\r\n        /// 値の範囲は0から1。\r\n        /// </summary>\r\n        public float Score { get; }\r\n\r\n        /// <summary>\r\n        /// 有効な戦術評価であるか。\r\n        /// </summary>\r\n        public bool IsValid =>\r\n            Type != MazeEnemyTacticalType.None &&\r\n            Distance >= 0;\r\n\r\n        /// <summary>\r\n        /// 戦術評価の結果を生成する。\r\n        /// </summary>\r\n        /// <param name=\"type\">戦術の種類</param>\r\n        /// <param name=\"origin\">探索開始座標</param>\r\n        /// <param name=\"destination\">目的地</param>\r\n        /// <param name=\"targetPosition\">対象の観測座標</param>\r\n        /// <param name=\"distance\">目的地までの距離</param>\r\n        /// <param name=\"arrivalTime\">自身の到達時間</param>\r\n        /// <param name=\"targetArrivalTime\">対象の到達時間</param>\r\n        /// <param name=\"safetyDistance\">対象との安全距離</param>\r\n        /// <param name=\"confidence\">認識信頼度</param>\r\n        /// <param name=\"score\">戦術評価値</param>\r\n        internal MazeEnemyTacticalEvaluation(\r\n            MazeEnemyTacticalType type,\r\n            Vector2Int origin,\r\n            Vector2Int destination,\r\n            Vector2Int targetPosition,\r\n            int distance,\r\n            float arrivalTime,\r\n            float targetArrivalTime,\r\n            int safetyDistance,\r\n            float confidence,\r\n            float score)\r\n        {\r\n            Type = type;\r\n            Origin = origin;\r\n            Destination = destination;\r\n            TargetPosition = targetPosition;\r\n            Distance = distance;\r\n            ArrivalTime = arrivalTime;\r\n            TargetArrivalTime = targetArrivalTime;\r\n            SafetyDistance = safetyDistance;\r\n            Confidence = Mathf.Clamp01(confidence);\r\n            Score = Mathf.Clamp01(score);\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.676Z"
+}

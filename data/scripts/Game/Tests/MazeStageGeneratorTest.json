@@ -1,5 +1,5 @@
 {
-    "parserVersion": 2,
+    "parserVersion": 3,
     "id": "Game.Tests.MazeStageGeneratorTest",
     "name": "MazeStageGeneratorTest",
     "fileName": "MazeStageGeneratorTest.cs",
@@ -42,11 +42,988 @@
             "exceptions": []
         }
     ],
+    "types": [
+        {
+            "name": "MazeStageGeneratorTest",
+            "fullName": "MazeStageGeneratorTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "ゲーム専用ステージの生成処理と Tilemap描画を確認するテストクラス。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public class MazeStageGeneratorTest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "settings",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeStageGenerationSettings settings =\r\n            new MazeStageGenerationSettings()",
+                    "returnType": "",
+                    "valueType": "MazeStageGenerationSettings",
+                    "value": "new MazeStageGenerationSettings()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用のステージ生成設定。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "ステージ生成設定"
+                            ],
+                            "raw": "Header(\"ステージ生成設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": "new MazeStageGenerationSettings()",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Settings",
+                        "type": "MazeStageGenerationSettings",
+                        "header": "ステージ生成設定",
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "new MazeStageGenerationSettings()"
+                    }
+                },
+                {
+                    "name": "coordinateConverter",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private GridCoordinateConverter coordinateConverter",
+                    "returnType": "",
+                    "valueType": "GridCoordinateConverter",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "グリッド座標とワールド座標の変換システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "座標変換設定"
+                            ],
+                            "raw": "Header(\"座標変換設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "Gridに設定された座標変換コンポーネント"
+                            ],
+                            "raw": "Tooltip(\"Gridに設定された座標変換コンポーネント\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Coordinate Converter",
+                        "type": "GridCoordinateConverter",
+                        "header": "座標変換設定",
+                        "tooltip": "Gridに設定された座標変換コンポーネント",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "floorTilemap",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private Tilemap floorTilemap",
+                    "returnType": "",
+                    "valueType": "Tilemap",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "床の描画先Tilemap。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "Tilemap設定"
+                            ],
+                            "raw": "Header(\"Tilemap設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Floor Tilemap",
+                        "type": "Tilemap",
+                        "header": "Tilemap設定",
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "wallTilemap",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private Tilemap wallTilemap",
+                    "returnType": "",
+                    "valueType": "Tilemap",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "壁の描画先Tilemap。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Wall Tilemap",
+                        "type": "Tilemap",
+                        "header": null,
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "floorTile",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private TileBase floorTile",
+                    "returnType": "",
+                    "valueType": "TileBase",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "床の描画に使用するタイル。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "タイル設定"
+                            ],
+                            "raw": "Header(\"タイル設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Floor Tile",
+                        "type": "TileBase",
+                        "header": "タイル設定",
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "wallTile",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private TileBase wallTile",
+                    "returnType": "",
+                    "valueType": "TileBase",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "通常の壁の描画に使用するタイル。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Wall Tile",
+                        "type": "TileBase",
+                        "header": null,
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "breakableWallTile",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private TileBase breakableWallTile",
+                    "returnType": "",
+                    "valueType": "TileBase",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "破壊可能な壁の描画に使用するタイル。 未設定の場合は通常の壁タイルを使用する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Breakable Wall Tile",
+                        "type": "TileBase",
+                        "header": null,
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "generateOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool generateOnStart = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "再生開始時にステージを生成するかどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Generate On Start",
+                        "type": "bool",
+                        "header": "テスト設定",
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "runValidationTests",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runValidationTests = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ生成時に検証テストを実行するかどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Validation Tests",
+                        "type": "bool",
+                        "header": null,
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "printMap",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool printMap = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "生成したマップをConsoleへ出力するかどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Print Map",
+                        "type": "bool",
+                        "header": null,
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "showGizmos",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool showGizmos = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "配置地点をSceneビューに表示するかどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "Gizmos設定"
+                            ],
+                            "raw": "Header(\"Gizmos設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Show Gizmos",
+                        "type": "bool",
+                        "header": "Gizmos設定",
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "gizmoSize",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float gizmoSize = 0.15f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.15f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "Gizmosの基本表示サイズ。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Min",
+                            "arguments": [
+                                0.01
+                            ],
+                            "raw": "Min(0.01f)"
+                        }
+                    ],
+                    "initialValue": "0.15f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Gizmo Size",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "",
+                        "range": null,
+                        "min": 0.01,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "0.15f"
+                    }
+                },
+                {
+                    "name": "result",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeStageGenerationResult result",
+                    "returnType": "",
+                    "valueType": "MazeStageGenerationResult",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在のステージ生成結果。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "renderer",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private GridTilemapRenderer<MazeCell> renderer",
+                    "returnType": "",
+                    "valueType": "GridTilemapRenderer<MazeCell>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "マップのTilemap描画システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "成功したテスト項目数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "失敗したテスト項目数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "再生開始時の処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnDestroy",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnDestroy()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "オブジェクト破棄時に描画システムを解放する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnDrawGizmos",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnDrawGizmos()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ内の配置情報をGizmosで描画する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GenerateStage",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void GenerateStage()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージを生成してTilemapへ描画する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/ステージを生成する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/ステージを生成する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RenderStage",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void RenderStage()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "生成済みステージをTilemapへ描画する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ReleaseRenderer",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void ReleaseRenderer()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の描画システムを解放する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunValidationTests",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void RunValidationTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "生成されたステージの各種条件を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestCellRules",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestCellRules()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "各マスの配置ルールを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestEnemyDistances",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestEnemyDistances()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "プレイヤーと敵、および敵同士の 最短移動距離を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestGemAccessibility",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestGemAccessibility()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべての宝石にプレイヤーが到達可能か確認する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestSeedReproducibility",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestSeedReproducibility()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "同一設定と固定シード値で 同じステージを再現できるか確認する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(\r\n            bool condition,\r\n            string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "condition",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テストの成功条件"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト項目名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト結果を記録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValidateReferences",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool ValidateReferences()",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "Inspectorで必要な参照が設定されているか確認する。",
+                    "returns": "必要な参照が有効な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PrintGenerationResult",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void PrintGenerationResult()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ生成結果をConsoleへ出力する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PrintStageMap",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void PrintStageMap()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "生成されたマップを文字列としてConsoleへ出力する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetCellCharacter",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private char GetCellCharacter(MazeCell cell)",
+                    "returnType": "char",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "cell",
+                            "type": "MazeCell",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変換対象のマス"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "マスデータをデバッグ表示用の文字へ変換する。",
+                    "returns": "マスの状態を表す文字",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 15
+        }
+    ],
     "source": "\r\nusing UnityEngine;\r\nusing UnityEngine.Tilemaps;\r\nusing Framework.Grid;\r\nusing Framework.Tilemap;\r\nusing Game.Map;\r\nusing Game.Stage;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// ゲーム専用ステージの生成処理と\r\n    /// Tilemap描画を確認するテストクラス。\r\n    /// </summary>\r\n    public class MazeStageGeneratorTest : MonoBehaviour\r\n    {\r\n        #region Inspector Fields\r\n\r\n        [Header(\"ステージ生成設定\")]\r\n\r\n        /// <summary>\r\n        /// テスト用のステージ生成設定。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private MazeStageGenerationSettings settings =\r\n            new MazeStageGenerationSettings();\r\n\r\n        [Header(\"座標変換設定\")]\r\n\r\n        /// <summary>\r\n        /// グリッド座標とワールド座標の変換システム。\r\n        /// </summary>\r\n        [SerializeField]\r\n        [Tooltip(\"Gridに設定された座標変換コンポーネント\")]\r\n        private GridCoordinateConverter coordinateConverter;\r\n\r\n        [Header(\"Tilemap設定\")]\r\n\r\n        /// <summary>\r\n        /// 床の描画先Tilemap。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private Tilemap floorTilemap;\r\n\r\n        /// <summary>\r\n        /// 壁の描画先Tilemap。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private Tilemap wallTilemap;\r\n\r\n        [Header(\"タイル設定\")]\r\n\r\n        /// <summary>\r\n        /// 床の描画に使用するタイル。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private TileBase floorTile;\r\n\r\n        /// <summary>\r\n        /// 通常の壁の描画に使用するタイル。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private TileBase wallTile;\r\n\r\n        /// <summary>\r\n        /// 破壊可能な壁の描画に使用するタイル。\r\n        /// 未設定の場合は通常の壁タイルを使用する。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private TileBase breakableWallTile;\r\n\r\n        [Header(\"テスト設定\")]\r\n\r\n        /// <summary>\r\n        /// 再生開始時にステージを生成するかどうか。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private bool generateOnStart = true;\r\n\r\n        /// <summary>\r\n        /// ステージ生成時に検証テストを実行するかどうか。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private bool runValidationTests = true;\r\n\r\n        /// <summary>\r\n        /// 生成したマップをConsoleへ出力するかどうか。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private bool printMap = true;\r\n\r\n        [Header(\"Gizmos設定\")]\r\n\r\n        /// <summary>\r\n        /// 配置地点をSceneビューに表示するかどうか。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private bool showGizmos = true;\r\n\r\n        /// <summary>\r\n        /// Gizmosの基本表示サイズ。\r\n        /// </summary>\r\n        [SerializeField]\r\n        [Min(0.01f)]\r\n        private float gizmoSize = 0.15f;\r\n\r\n        #endregion\r\n\r\n        #region Runtime Fields\r\n\r\n        /// <summary>\r\n        /// 現在のステージ生成結果。\r\n        /// </summary>\r\n        private MazeStageGenerationResult result;\r\n\r\n        /// <summary>\r\n        /// マップのTilemap描画システム。\r\n        /// </summary>\r\n        private GridTilemapRenderer<MazeCell> renderer;\r\n\r\n        /// <summary>\r\n        /// 成功したテスト項目数。\r\n        /// </summary>\r\n        private int passedCount;\r\n\r\n        /// <summary>\r\n        /// 失敗したテスト項目数。\r\n        /// </summary>\r\n        private int failedCount;\r\n\r\n        #endregion\r\n\r\n        #region Unity Methods\r\n\r\n        /// <summary>\r\n        /// 再生開始時の処理。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            if (generateOnStart)\r\n            {\r\n                GenerateStage();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// オブジェクト破棄時に描画システムを解放する。\r\n        /// </summary>\r\n        private void OnDestroy()\r\n        {\r\n            ReleaseRenderer();\r\n        }\r\n\r\n        /// <summary>\r\n        /// ステージ内の配置情報をGizmosで描画する。\r\n        /// </summary>\r\n        private void OnDrawGizmos()\r\n        {\r\n            if (!showGizmos ||\r\n                result == null ||\r\n                coordinateConverter == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            foreach (Vector2Int position\r\n                     in result.Map.GetPositions())\r\n            {\r\n                MazeCell cell =\r\n                    result.Map.GetCell(position);\r\n\r\n                Vector3 worldPosition =\r\n                    coordinateConverter.GetCellCenterWorld(\r\n                        position);\r\n\r\n                // Tilemapより手前に表示する。\r\n                worldPosition.z -= 0.1f;\r\n\r\n                // プレイヤーの出現地点を描画する。\r\n                if (cell.IsPlayerSpawn)\r\n                {\r\n                    Gizmos.color = Color.blue;\r\n\r\n                    Gizmos.DrawSphere(\r\n                        worldPosition,\r\n                        gizmoSize * 2f);\r\n                }\r\n\r\n                // 敵の出現地点を描画する。\r\n                if (cell.IsEnemySpawn)\r\n                {\r\n                    Gizmos.color = Color.red;\r\n\r\n                    Gizmos.DrawSphere(\r\n                        worldPosition,\r\n                        gizmoSize * 1.8f);\r\n                }\r\n\r\n                // 宝石の配置地点を描画する。\r\n                if (cell.HasGem)\r\n                {\r\n                    Gizmos.color = Color.cyan;\r\n\r\n                    Gizmos.DrawSphere(\r\n                        worldPosition,\r\n                        gizmoSize * 0.7f);\r\n                }\r\n\r\n                // アイテムの配置地点を描画する。\r\n                if (cell.HasItem)\r\n                {\r\n                    Gizmos.color = Color.yellow;\r\n\r\n                    Gizmos.DrawCube(\r\n                        worldPosition,\r\n                        Vector3.one * gizmoSize * 2f);\r\n                }\r\n\r\n                // アイテムの配置候補地点を描画する。\r\n                if (cell.IsItemSpawn)\r\n                {\r\n                    Gizmos.color = Color.green;\r\n\r\n                    Gizmos.DrawWireCube(\r\n                        worldPosition,\r\n                        Vector3.one * gizmoSize * 4f);\r\n                }\r\n\r\n                // 破壊可能な壁を描画する。\r\n                if (cell.IsBreakable)\r\n                {\r\n                    Gizmos.color =\r\n                        new Color(1f, 0.5f, 0f);\r\n\r\n                    Gizmos.DrawWireCube(\r\n                        worldPosition,\r\n                        Vector3.one * gizmoSize * 5f);\r\n                }\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Generation Methods\r\n\r\n        /// <summary>\r\n        /// ステージを生成してTilemapへ描画する。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/ステージを生成する\")]\r\n        public void GenerateStage()\r\n        {\r\n            // 編集モードでの意図しないTilemap変更を防止する。\r\n            if (!Application.isPlaying)\r\n            {\r\n                Debug.LogWarning(\r\n                    \"再生モードで実行してください。\",\r\n                    this);\r\n\r\n                return;\r\n            }\r\n\r\n            if (!ValidateReferences())\r\n            {\r\n                return;\r\n            }\r\n\r\n            // 新しいステージを生成する。\r\n            MazeStageGenerationResult newResult =\r\n                MazeStageGenerator.Generate(settings);\r\n\r\n            // 以前の描画システムを解放する。\r\n            ReleaseRenderer();\r\n\r\n            // 新しい生成結果を保持する。\r\n            result = newResult;\r\n\r\n            // 以前のステージのタイルを消去する。\r\n            floorTilemap.ClearAllTiles();\r\n            wallTilemap.ClearAllTiles();\r\n\r\n            // 新しいマップを描画する。\r\n            RenderStage();\r\n\r\n            // 生成結果をConsoleへ出力する。\r\n            PrintGenerationResult();\r\n\r\n            if (printMap)\r\n            {\r\n                PrintStageMap();\r\n            }\r\n\r\n            if (runValidationTests)\r\n            {\r\n                RunValidationTests();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 生成済みステージをTilemapへ描画する。\r\n        /// </summary>\r\n        private void RenderStage()\r\n        {\r\n            renderer =\r\n                new GridTilemapRenderer<MazeCell>(\r\n                    result.Map);\r\n\r\n            // 床は壁の下を含めて全面に描画する。\r\n            renderer.AddLayer(\r\n                floorTilemap,\r\n                (position, cell) => floorTile);\r\n\r\n            // 地形情報に応じて壁タイルを選択する。\r\n            renderer.AddLayer(\r\n                wallTilemap,\r\n                (position, cell) =>\r\n                {\r\n                    if (cell.IsBreakable)\r\n                    {\r\n                        return breakableWallTile != null\r\n                            ? breakableWallTile\r\n                            : wallTile;\r\n                    }\r\n\r\n                    return cell.IsWall\r\n                        ? wallTile\r\n                        : null;\r\n                });\r\n\r\n            renderer.RenderAll();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在の描画システムを解放する。\r\n        /// </summary>\r\n        private void ReleaseRenderer()\r\n        {\r\n            if (renderer == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            renderer.Dispose();\r\n            renderer = null;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Validation Tests\r\n\r\n        /// <summary>\r\n        /// 生成されたステージの各種条件を検証する。\r\n        /// </summary>\r\n        private void RunValidationTests()\r\n        {\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n            GridMap<MazeCell> map = result.Map;\r\n\r\n            // プレイヤー出現地点の数を確認する。\r\n            Check(\r\n                map.CountCells(\r\n                    cell => cell.IsPlayerSpawn) == 1,\r\n                \"プレイヤー出現地点が1か所\");\r\n\r\n            Check(\r\n                map.GetCell(\r\n                    result.PlayerSpawnPosition).IsPlayerSpawn,\r\n                \"プレイヤー出現座標とマップ情報の一致\");\r\n\r\n            // 敵出現地点の数を確認する。\r\n            Check(\r\n                map.CountCells(\r\n                    cell => cell.IsEnemySpawn) ==\r\n                result.EnemySpawnPositions.Count,\r\n                \"敵出現地点数とマップ情報の一致\");\r\n\r\n            Check(\r\n                result.EnemySpawnPositions.Count <=\r\n                settings.EnemyCount,\r\n                \"敵の要求配置数を超えていない\");\r\n\r\n            // アイテム配置候補地点数を確認する。\r\n            Check(\r\n                map.CountCells(\r\n                    cell => cell.IsItemSpawn) ==\r\n                result.ItemSpawnPositions.Count,\r\n                \"アイテム配置候補数の一致\");\r\n\r\n            Check(\r\n                result.InitialItemCount <=\r\n                settings.InitialItemCount,\r\n                \"アイテムの要求配置数を超えていない\");\r\n\r\n            // 宝石の配置数を確認する。\r\n            Check(\r\n                result.InitialGemCount ==\r\n                result.RemainingGemCount,\r\n                \"初期宝石数と現在の宝石数の一致\");\r\n\r\n            Check(\r\n                result.InitialItemCount ==\r\n                result.RemainingItemCount,\r\n                \"初期アイテム数と現在の配置数の一致\");\r\n\r\n            // マスごとの配置ルールを確認する。\r\n            TestCellRules();\r\n\r\n            // 敵の出現地点間の距離を確認する。\r\n            TestEnemyDistances();\r\n\r\n            // 宝石への到達可能性を確認する。\r\n            TestGemAccessibility();\r\n\r\n            // 同一シード値で生成結果を再現できるか確認する。\r\n            TestSeedReproducibility();\r\n\r\n            string message =\r\n                \"【MazeStageGenerator テスト結果】\\n\" +\r\n                $\"成功：{passedCount}\\n\" +\r\n                $\"失敗：{failedCount}\";\r\n\r\n            if (failedCount == 0)\r\n            {\r\n                Debug.Log(\r\n                    message +\r\n                    \"\\nすべてのテストに成功しました。\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                Debug.LogError(message, this);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 各マスの配置ルールを検証する。\r\n        /// </summary>\r\n        private void TestCellRules()\r\n        {\r\n            bool validWalls = true;\r\n            bool validCollectibles = true;\r\n            bool validSpawns = true;\r\n            bool validBoundary = true;\r\n            bool validItems = true;\r\n\r\n            GridMap<MazeCell> map = result.Map;\r\n\r\n            foreach (Vector2Int position in map.GetPositions())\r\n            {\r\n                MazeCell cell = map.GetCell(position);\r\n\r\n                // 壁に配置物や出現地点がないことを確認する。\r\n                if (cell.IsWall &&\r\n                    cell.Flags != MazeCellFlags.None)\r\n                {\r\n                    validWalls = false;\r\n                }\r\n\r\n                // 宝石とアイテムの重複を確認する。\r\n                if (cell.HasGem && cell.HasItem)\r\n                {\r\n                    validCollectibles = false;\r\n                }\r\n\r\n                // 出現地点同士や配置物との重複を確認する。\r\n                if ((cell.IsPlayerSpawn && cell.IsEnemySpawn) ||\r\n                    ((cell.IsPlayerSpawn || cell.IsEnemySpawn) &&\r\n                     cell.HasCollectible))\r\n                {\r\n                    validSpawns = false;\r\n                }\r\n\r\n                // アイテムが候補地点に配置されているか確認する。\r\n                if (cell.HasItem && !cell.IsItemSpawn)\r\n                {\r\n                    validItems = false;\r\n                }\r\n\r\n                bool isBoundary =\r\n                    position.x == 0 ||\r\n                    position.y == 0 ||\r\n                    position.x == map.Width - 1 ||\r\n                    position.y == map.Height - 1;\r\n\r\n                // 外周が通常の壁であることを確認する。\r\n                if (isBoundary &&\r\n                    cell.Terrain != MazeTerrainType.Wall)\r\n                {\r\n                    validBoundary = false;\r\n                }\r\n            }\r\n\r\n            Check(validWalls, \"壁に配置物が存在しない\");\r\n\r\n            Check(\r\n                validCollectibles,\r\n                \"宝石とアイテムの重複がない\");\r\n\r\n            Check(\r\n                validSpawns,\r\n                \"出現地点の配置ルールを満たしている\");\r\n\r\n            Check(\r\n                validItems,\r\n                \"アイテムが配置候補地点に存在する\");\r\n\r\n            Check(\r\n                validBoundary,\r\n                \"外周が破壊不可能な壁である\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// プレイヤーと敵、および敵同士の\r\n        /// 最短移動距離を検証する。\r\n        /// </summary>\r\n        private void TestEnemyDistances()\r\n        {\r\n            bool validPlayerDistance = true;\r\n            bool validEnemyDistance = true;\r\n\r\n            for (int i = 0;\r\n                 i < result.EnemySpawnPositions.Count;\r\n                 i++)\r\n            {\r\n                Vector2Int enemyPosition =\r\n                    result.EnemySpawnPositions[i];\r\n\r\n                int distance =\r\n                    MazeStageGenerator.GetShortestDistance(\r\n                        result.Map,\r\n                        result.PlayerSpawnPosition,\r\n                        enemyPosition);\r\n\r\n                if (distance < settings.MinPlayerEnemyDistance)\r\n                {\r\n                    validPlayerDistance = false;\r\n                }\r\n\r\n                Debug.Log(\r\n                    $\"敵{i + 1}の初期位置：{enemyPosition}\\n\" +\r\n                    $\"プレイヤーからの距離：{distance}\",\r\n                    this);\r\n\r\n                // 他の敵との距離を確認する。\r\n                for (int j = i + 1;\r\n                     j < result.EnemySpawnPositions.Count;\r\n                     j++)\r\n                {\r\n                    int enemyDistance =\r\n                        MazeStageGenerator.GetShortestDistance(\r\n                            result.Map,\r\n                            enemyPosition,\r\n                            result.EnemySpawnPositions[j]);\r\n\r\n                    if (enemyDistance <\r\n                        settings.MinEnemyDistance)\r\n                    {\r\n                        validEnemyDistance = false;\r\n                    }\r\n                }\r\n            }\r\n\r\n            Check(\r\n                validPlayerDistance,\r\n                \"プレイヤーと敵の距離条件\");\r\n\r\n            Check(\r\n                validEnemyDistance,\r\n                \"敵同士の距離条件\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべての宝石にプレイヤーが到達可能か確認する。\r\n        /// </summary>\r\n        private void TestGemAccessibility()\r\n        {\r\n            bool allAccessible = true;\r\n\r\n            foreach (Vector2Int position\r\n                     in result.Map.FindPositions(\r\n                         cell => cell.HasGem))\r\n            {\r\n                int distance =\r\n                    MazeStageGenerator.GetShortestDistance(\r\n                        result.Map,\r\n                        result.PlayerSpawnPosition,\r\n                        position);\r\n\r\n                if (distance < 0)\r\n                {\r\n                    allAccessible = false;\r\n                    break;\r\n                }\r\n            }\r\n\r\n            Check(\r\n                allAccessible,\r\n                \"すべての宝石に到達可能\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 同一設定と固定シード値で\r\n        /// 同じステージを再現できるか確認する。\r\n        /// </summary>\r\n        private void TestSeedReproducibility()\r\n        {\r\n            // ランダムシード設定の場合は検証を省略する。\r\n            if (!settings.MazeSettings.UseFixedSeed)\r\n            {\r\n                Debug.Log(\r\n                    \"ランダムシードのため再現性テストを省略。\",\r\n                    this);\r\n\r\n                return;\r\n            }\r\n\r\n            MazeStageGenerationResult secondResult =\r\n                MazeStageGenerator.Generate(settings);\r\n\r\n            bool isSame =\r\n                result.Width == secondResult.Width &&\r\n                result.Height == secondResult.Height &&\r\n                result.Seed == secondResult.Seed;\r\n\r\n            if (isSame)\r\n            {\r\n                foreach (Vector2Int position\r\n                         in result.Map.GetPositions())\r\n                {\r\n                    if (result.Map.GetCell(position) !=\r\n                        secondResult.Map.GetCell(position))\r\n                    {\r\n                        isSame = false;\r\n                        break;\r\n                    }\r\n                }\r\n            }\r\n\r\n            Check(\r\n                isSame,\r\n                \"固定シードによるステージの再現\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト結果を記録する。\r\n        /// </summary>\r\n        /// <param name=\"condition\">テストの成功条件</param>\r\n        /// <param name=\"testName\">テスト項目名</param>\r\n        private void Check(\r\n            bool condition,\r\n            string testName)\r\n        {\r\n            if (condition)\r\n            {\r\n                passedCount++;\r\n\r\n                Debug.Log(\r\n                    $\"[成功] {testName}\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogError(\r\n                    $\"[失敗] {testName}\",\r\n                    this);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// Inspectorで必要な参照が設定されているか確認する。\r\n        /// </summary>\r\n        /// <returns>必要な参照が有効な場合はtrue</returns>\r\n        private bool ValidateReferences()\r\n        {\r\n            if (coordinateConverter == null ||\r\n                floorTilemap == null ||\r\n                wallTilemap == null ||\r\n                floorTile == null ||\r\n                wallTile == null)\r\n            {\r\n                Debug.LogError(\r\n                    \"必要な参照が設定されていません。\",\r\n                    this);\r\n\r\n                return false;\r\n            }\r\n\r\n            if (floorTilemap == wallTilemap)\r\n            {\r\n                Debug.LogError(\r\n                    \"床と壁には別々のTilemapを設定してください。\",\r\n                    this);\r\n\r\n                return false;\r\n            }\r\n\r\n            return true;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Debug Methods\r\n\r\n        /// <summary>\r\n        /// ステージ生成結果をConsoleへ出力する。\r\n        /// </summary>\r\n        private void PrintGenerationResult()\r\n        {\r\n            Debug.Log(\r\n                \"【ステージ生成結果】\\n\" +\r\n                $\"シード値：{result.Seed}\\n\" +\r\n                $\"サイズ：{result.Width} × {result.Height}\\n\" +\r\n                $\"プレイヤー位置：{result.PlayerSpawnPosition}\\n\" +\r\n                $\"敵出現地点数：{result.EnemySpawnPositions.Count}\\n\" +\r\n                $\"宝石数：{result.InitialGemCount}\\n\" +\r\n                $\"アイテム数：{result.InitialItemCount}\\n\" +\r\n                $\"アイテム候補数：{result.ItemSpawnPositions.Count}\\n\" +\r\n                $\"破壊可能な壁数：{result.InitialBreakableWallCount}\",\r\n                this);\r\n\r\n            if (result.EnemySpawnPositions.Count <\r\n                settings.EnemyCount)\r\n            {\r\n                Debug.LogWarning(\r\n                    \"距離条件を満たす敵出現地点が不足しています。\",\r\n                    this);\r\n            }\r\n\r\n            if (result.InitialItemCount <\r\n                settings.InitialItemCount)\r\n            {\r\n                Debug.LogWarning(\r\n                    \"アイテムの配置可能地点が不足しています。\",\r\n                    this);\r\n            }\r\n\r\n            if (result.ItemSpawnPositions.Count <\r\n                Mathf.Max(\r\n                    settings.ItemSpawnCount,\r\n                    settings.InitialItemCount))\r\n            {\r\n                Debug.LogWarning(\r\n                    \"アイテム配置候補地点が不足しています。\",\r\n                    this);\r\n            }\r\n\r\n            if (result.InitialGemCount == 0)\r\n            {\r\n                Debug.LogWarning(\r\n                    \"宝石が配置されていません。\",\r\n                    this);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 生成されたマップを文字列としてConsoleへ出力する。\r\n        /// </summary>\r\n        private void PrintStageMap()\r\n        {\r\n            System.Text.StringBuilder builder =\r\n                new System.Text.StringBuilder();\r\n\r\n            builder.AppendLine(\"【生成ステージ】\");\r\n\r\n            // UnityのY座標に合わせて上から下へ出力する。\r\n            for (int y = result.Height - 1; y >= 0; y--)\r\n            {\r\n                for (int x = 0; x < result.Width; x++)\r\n                {\r\n                    MazeCell cell =\r\n                        result.Map.GetCell(x, y);\r\n\r\n                    builder.Append(\r\n                        GetCellCharacter(cell));\r\n                }\r\n\r\n                builder.AppendLine();\r\n            }\r\n\r\n            builder.AppendLine(\r\n                \"#：壁  X：破壊可能な壁  P：プレイヤー\");\r\n\r\n            builder.AppendLine(\r\n                \"E：敵  G：宝石  I：アイテム\");\r\n\r\n            builder.AppendLine(\r\n                \"S：アイテム候補  .：床\");\r\n\r\n            Debug.Log(builder.ToString(), this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// マスデータをデバッグ表示用の文字へ変換する。\r\n        /// </summary>\r\n        /// <param name=\"cell\">変換対象のマス</param>\r\n        /// <returns>マスの状態を表す文字</returns>\r\n        private char GetCellCharacter(MazeCell cell)\r\n        {\r\n            if (cell.IsBreakable) return 'X';\r\n            if (cell.IsWall) return '#';\r\n            if (cell.IsPlayerSpawn) return 'P';\r\n            if (cell.IsEnemySpawn) return 'E';\r\n            if (cell.HasItem) return 'I';\r\n            if (cell.HasGem) return 'G';\r\n            if (cell.IsItemSpawn) return 'S';\r\n\r\n            return '.';\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
     "tips": [],
     "examples": [],
     "notes": [],
     "related": [],
     "tests": [],
-    "generatedAt": "2026-11-26T16:10:18.017Z"
+    "generatedAt": "2026-11-28T15:50:00.892Z"
 }

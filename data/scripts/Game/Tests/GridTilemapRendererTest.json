@@ -1,5 +1,5 @@
 {
-    "parserVersion": 2,
+    "parserVersion": 3,
     "id": "Game.Tests.GridTilemapRendererTest",
     "name": "GridTilemapRendererTest",
     "fileName": "GridTilemapRendererTest.cs",
@@ -74,11 +74,665 @@
             "exceptions": []
         }
     ],
+    "types": [
+        {
+            "name": "GridTilemapRendererTest",
+            "fullName": "GridTilemapRendererTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "汎用Tilemapレンダラーの動作確認用クラス。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public class GridTilemapRendererTest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "width",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int width = 15",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "15",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "マップの横方向のマス数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "マップ設定"
+                            ],
+                            "raw": "Header(\"マップ設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Min",
+                            "arguments": [
+                                3
+                            ],
+                            "raw": "Min(3)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "マップの横方向のマス数"
+                            ],
+                            "raw": "Tooltip(\"マップの横方向のマス数\")"
+                        }
+                    ],
+                    "initialValue": "15",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Width",
+                        "type": "int",
+                        "header": "マップ設定",
+                        "tooltip": "マップの横方向のマス数",
+                        "range": null,
+                        "min": 3,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "15"
+                    }
+                },
+                {
+                    "name": "height",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int height = 11",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "11",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "マップの縦方向のマス数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Min",
+                            "arguments": [
+                                3
+                            ],
+                            "raw": "Min(3)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "マップの縦方向のマス数"
+                            ],
+                            "raw": "Tooltip(\"マップの縦方向のマス数\")"
+                        }
+                    ],
+                    "initialValue": "11",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Height",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "マップの縦方向のマス数",
+                        "range": null,
+                        "min": 3,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "11"
+                    }
+                },
+                {
+                    "name": "floorTilemap",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private Tilemap floorTilemap",
+                    "returnType": "",
+                    "valueType": "Tilemap",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "床を描画するTilemap。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "Tilemap設定"
+                            ],
+                            "raw": "Header(\"Tilemap設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "床を描画するTilemap"
+                            ],
+                            "raw": "Tooltip(\"床を描画するTilemap\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Floor Tilemap",
+                        "type": "Tilemap",
+                        "header": "Tilemap設定",
+                        "tooltip": "床を描画するTilemap",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "wallTilemap",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private Tilemap wallTilemap",
+                    "returnType": "",
+                    "valueType": "Tilemap",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "壁を描画するTilemap。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "壁を描画するTilemap"
+                            ],
+                            "raw": "Tooltip(\"壁を描画するTilemap\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Wall Tilemap",
+                        "type": "Tilemap",
+                        "header": null,
+                        "tooltip": "壁を描画するTilemap",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "floorTile",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private TileBase floorTile",
+                    "returnType": "",
+                    "valueType": "TileBase",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "床として使用するタイル。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "タイル設定"
+                            ],
+                            "raw": "Header(\"タイル設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "床として使用するTileアセット"
+                            ],
+                            "raw": "Tooltip(\"床として使用するTileアセット\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Floor Tile",
+                        "type": "TileBase",
+                        "header": "タイル設定",
+                        "tooltip": "床として使用するTileアセット",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "wallTile",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private TileBase wallTile",
+                    "returnType": "",
+                    "valueType": "TileBase",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "壁として使用するタイル。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "壁として使用するTileアセット"
+                            ],
+                            "raw": "Tooltip(\"壁として使用するTileアセット\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Wall Tile",
+                        "type": "TileBase",
+                        "header": null,
+                        "tooltip": "壁として使用するTileアセット",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "testPosition",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private Vector2Int testPosition =\r\n            new Vector2Int(1, 1)",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "new Vector2Int(1, 1)",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "壁の切り替えテストを行うマス。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "壁の生成・消去を確認するマスの座標"
+                            ],
+                            "raw": "Tooltip(\"壁の生成・消去を確認するマスの座標\")"
+                        }
+                    ],
+                    "initialValue": "new Vector2Int(1, 1)",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Test Position",
+                        "type": "Vector2Int",
+                        "header": "テスト設定",
+                        "tooltip": "壁の生成・消去を確認するマスの座標",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "new Vector2Int(1, 1)"
+                    }
+                },
+                {
+                    "name": "Floor",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const int Floor = 0",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "0",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "床を表すマスデータ。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "0",
+                    "inspector": null
+                },
+                {
+                    "name": "Wall",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const int Wall = 1",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "1",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "壁を表すマスデータ。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "1",
+                    "inspector": null
+                },
+                {
+                    "name": "map",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private GridMap<int> map",
+                    "returnType": "",
+                    "valueType": "GridMap<int>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "動作確認用のマップデータ。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "mapRenderer",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private GridTilemapRenderer<int> mapRenderer",
+                    "returnType": "",
+                    "valueType": "GridTilemapRenderer<int>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "動作確認用のTilemapレンダラー。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "マップ生成と初期描画を実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnDestroy",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnDestroy()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "コンポーネント破棄時の終了処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValidateSettings",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool ValidateSettings()",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "Inspectorの設定内容が有効か確認する。",
+                    "returns": "設定が有効な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateMap",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void CreateMap()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "外周と内部の一部に壁を持つマップを生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateRenderer",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void CreateRenderer()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "描画システムを生成してレイヤーを登録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ToggleTestCell",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void ToggleTestCell()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたマスの床と壁を切り替える。 マップ変更時の自動描画を確認するために使用する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/指定マスの壁を切り替える"
+                            ],
+                            "raw": "ContextMenu(\"テスト/指定マスの壁を切り替える\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RedrawMap",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void RedrawMap()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "マップ全体を再描画する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/マップを再描画する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/マップを再描画する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ClearMap",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void ClearMap()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "マップの描画内容を消去する。 マップデータ自体は変更しない。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/マップの描画を消去する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/マップの描画を消去する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 12
+        }
+    ],
     "source": "\r\nusing UnityEngine;\r\nusing UnityEngine.Tilemaps;\r\nusing Framework.Grid;\r\nusing Framework.Tilemap;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// 汎用Tilemapレンダラーの動作確認用クラス。\r\n    /// </summary>\r\n    public class GridTilemapRendererTest : MonoBehaviour\r\n    {\r\n        #region Fields\r\n\r\n        [Header(\"マップ設定\")]\r\n\r\n        /// <summary>マップの横方向のマス数。</summary>\r\n        [SerializeField]\r\n        [Min(3)]\r\n        [Tooltip(\"マップの横方向のマス数\")]\r\n        private int width = 15;\r\n\r\n        /// <summary>マップの縦方向のマス数。</summary>\r\n        [SerializeField]\r\n        [Min(3)]\r\n        [Tooltip(\"マップの縦方向のマス数\")]\r\n        private int height = 11;\r\n\r\n        [Header(\"Tilemap設定\")]\r\n\r\n        /// <summary>床を描画するTilemap。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"床を描画するTilemap\")]\r\n        private Tilemap floorTilemap;\r\n\r\n        /// <summary>壁を描画するTilemap。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"壁を描画するTilemap\")]\r\n        private Tilemap wallTilemap;\r\n\r\n        [Header(\"タイル設定\")]\r\n\r\n        /// <summary>床として使用するタイル。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"床として使用するTileアセット\")]\r\n        private TileBase floorTile;\r\n\r\n        /// <summary>壁として使用するタイル。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"壁として使用するTileアセット\")]\r\n        private TileBase wallTile;\r\n\r\n        [Header(\"テスト設定\")]\r\n\r\n        /// <summary>壁の切り替えテストを行うマス。</summary>\r\n        [SerializeField]\r\n        [Tooltip(\"壁の生成・消去を確認するマスの座標\")]\r\n        private Vector2Int testPosition =\r\n            new Vector2Int(1, 1);\r\n\r\n        /// <summary>床を表すマスデータ。</summary>\r\n        private const int Floor = 0;\r\n\r\n        /// <summary>壁を表すマスデータ。</summary>\r\n        private const int Wall = 1;\r\n\r\n        /// <summary>動作確認用のマップデータ。</summary>\r\n        private GridMap<int> map;\r\n\r\n        /// <summary>動作確認用のTilemapレンダラー。</summary>\r\n        private GridTilemapRenderer<int> mapRenderer;\r\n\r\n        #endregion\r\n\r\n        #region Unity Methods\r\n\r\n        /// <summary>\r\n        /// マップ生成と初期描画を実行する。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            if (!ValidateSettings())\r\n            {\r\n                return;\r\n            }\r\n\r\n            CreateMap();\r\n\r\n            CreateRenderer();\r\n\r\n            mapRenderer.RenderAll();\r\n\r\n            Debug.Log(\r\n                $\"マップ描画完了：{map.Width} × {map.Height}\\n\" +\r\n                $\"登録レイヤー数：{mapRenderer.LayerCount}\",\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// コンポーネント破棄時の終了処理。\r\n        /// </summary>\r\n        private void OnDestroy()\r\n        {\r\n            // イベント登録と内部参照を解除する。\r\n            mapRenderer?.Dispose();\r\n\r\n            mapRenderer = null;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Initialization\r\n\r\n        /// <summary>\r\n        /// Inspectorの設定内容が有効か確認する。\r\n        /// </summary>\r\n        /// <returns>設定が有効な場合はtrue</returns>\r\n        private bool ValidateSettings()\r\n        {\r\n            if (floorTilemap == null || wallTilemap == null)\r\n            {\r\n                Debug.LogError(\r\n                    \"Tilemapが設定されていません。\",\r\n                    this);\r\n\r\n                return false;\r\n            }\r\n\r\n            if (floorTilemap == wallTilemap)\r\n            {\r\n                Debug.LogError(\r\n                    \"床と壁には異なるTilemapを指定してください。\",\r\n                    this);\r\n\r\n                return false;\r\n            }\r\n\r\n            if (floorTile == null || wallTile == null)\r\n            {\r\n                Debug.LogError(\r\n                    \"床または壁のタイルが設定されていません。\",\r\n                    this);\r\n\r\n                return false;\r\n            }\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 外周と内部の一部に壁を持つマップを生成する。\r\n        /// </summary>\r\n        private void CreateMap()\r\n        {\r\n            map = new GridMap<int>(\r\n                width,\r\n                height,\r\n                position =>\r\n                {\r\n                    // マップの外周に位置するか判定する。\r\n                    bool isBorder =\r\n                        position.x == 0 ||\r\n                        position.y == 0 ||\r\n                        position.x == width - 1 ||\r\n                        position.y == height - 1;\r\n\r\n                    // 外周は壁として設定する。\r\n                    if (isBorder)\r\n                    {\r\n                        return Wall;\r\n                    }\r\n\r\n                    // 内部に一定間隔で壁を配置する。\r\n                    bool isInnerWall =\r\n                        position.x % 2 == 0 &&\r\n                        position.y % 2 == 0;\r\n\r\n                    return isInnerWall ? Wall : Floor;\r\n                });\r\n        }\r\n\r\n        /// <summary>\r\n        /// 描画システムを生成してレイヤーを登録する。\r\n        /// </summary>\r\n        private void CreateRenderer()\r\n        {\r\n            // 自動更新を有効にしてレンダラーを生成する。\r\n            mapRenderer =\r\n                new GridTilemapRenderer<int>(map, true);\r\n\r\n            // 床はすべてのマスに描画する。\r\n            mapRenderer.AddLayer(\r\n                floorTilemap,\r\n                (position, cellData) => floorTile);\r\n\r\n            // 壁は壁データを持つマスにだけ描画する。\r\n            mapRenderer.AddLayer(\r\n                wallTilemap,\r\n                (position, cellData) =>\r\n                    cellData == Wall ? wallTile : null);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Test Methods\r\n\r\n        /// <summary>\r\n        /// 指定されたマスの床と壁を切り替える。\r\n        /// マップ変更時の自動描画を確認するために使用する。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/指定マスの壁を切り替える\")]\r\n        public void ToggleTestCell()\r\n        {\r\n            if (map == null)\r\n            {\r\n                Debug.LogWarning(\r\n                    \"再生モードで実行してください。\",\r\n                    this);\r\n\r\n                return;\r\n            }\r\n\r\n            // 現在のマスデータを取得する。\r\n            if (!map.TryGetCell(\r\n                testPosition,\r\n                out int currentValue))\r\n            {\r\n                Debug.LogWarning(\r\n                    \"テスト座標がマップの範囲外です。\",\r\n                    this);\r\n\r\n                return;\r\n            }\r\n\r\n            // 床と壁を切り替える。\r\n            int newValue =\r\n                currentValue == Wall ? Floor : Wall;\r\n\r\n            // マップデータを変更する。\r\n            // 描画はCellChangedイベントによって更新される。\r\n            map.SetCell(testPosition, newValue);\r\n\r\n            Debug.Log(\r\n                $\"マス変更：{testPosition}\\n\" +\r\n                $\"{currentValue} → {newValue}\",\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// マップ全体を再描画する。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/マップを再描画する\")]\r\n        public void RedrawMap()\r\n        {\r\n            if (mapRenderer == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            mapRenderer.RenderAll();\r\n\r\n            Debug.Log(\"マップを再描画しました。\", this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// マップの描画内容を消去する。\r\n        /// マップデータ自体は変更しない。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/マップの描画を消去する\")]\r\n        public void ClearMap()\r\n        {\r\n            if (mapRenderer == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            mapRenderer.Clear();\r\n\r\n            Debug.Log(\"マップの描画を消去しました。\", this);\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
     "tips": [],
     "examples": [],
     "notes": [],
     "related": [],
     "tests": [],
-    "generatedAt": "2026-11-26T16:10:17.952Z"
+    "generatedAt": "2026-11-28T15:50:00.347Z"
 }

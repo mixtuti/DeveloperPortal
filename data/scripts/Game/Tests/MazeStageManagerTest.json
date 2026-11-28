@@ -1,5 +1,5 @@
 {
-    "parserVersion": 2,
+    "parserVersion": 3,
     "id": "Game.Tests.MazeStageManagerTest",
     "name": "MazeStageManagerTest",
     "fileName": "MazeStageManagerTest.cs",
@@ -23,11 +23,716 @@
         "MonoBehaviour"
     ],
     "members": [],
+    "types": [
+        {
+            "name": "MazeStageManagerTest",
+            "fullName": "MazeStageManagerTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "ステージ管理システムの生成、進行、 宝石取得、壁破壊などを検証するテストクラス。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public class MazeStageManagerTest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "stageManager",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeStageManager stageManager",
+                    "returnType": "",
+                    "valueType": "MazeStageManager",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト対象のステージ管理システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト対象"
+                            ],
+                            "raw": "Header(\"テスト対象\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Stage Manager",
+                        "type": "MazeStageManager",
+                        "header": "テスト対象",
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "runTestsOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runTestsOnStart = false",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "false",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "シーン開始時に自動テストを実行するか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        }
+                    ],
+                    "initialValue": "false",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Tests On Start",
+                        "type": "bool",
+                        "header": "テスト設定",
+                        "tooltip": "",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "false"
+                    }
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "成功したテスト項目数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "失敗したテスト項目数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "isTesting",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isTesting",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "自動テストの実行状態。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private IEnumerator Start()",
+                    "returnType": "IEnumerator",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "シーン開始時の処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GenerateStage",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void GenerateStage()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージを再生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/ステージを生成する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/ステージを生成する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "StartStage",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void StartStage()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージを開始する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/ステージを開始する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/ステージを開始する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PauseStage",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void PauseStage()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージを一時停止する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/一時停止する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/一時停止する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ResumeStage",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void ResumeStage()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージを再開する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/再開する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/再開する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CollectGem",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void CollectGem()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "マップ上の宝石を1個取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/宝石を1個取得する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/宝石を1個取得する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CollectItem",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void CollectItem()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "マップ上のアイテムを1個取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/アイテムを1個取得する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/アイテムを1個取得する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "DestroyWall",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void DestroyWall()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "破壊可能な壁を1個破壊する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/壁を1個破壊する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/壁を1個破壊する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CollectAllGems",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void CollectAllGems()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべての宝石を取得してクリアする。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/すべての宝石を取得する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/すべての宝石を取得する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "FailStage",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void FailStage()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージを失敗状態にする。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/ステージを失敗させる"
+                            ],
+                            "raw": "ContextMenu(\"テスト/ステージを失敗させる\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ClearStage",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void ClearStage()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在のステージを消去する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/ステージを消去する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/ステージを消去する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PrintStatus",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void PrintStatus()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在のステージ状態をConsoleへ出力する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/現在の状態を表示する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/現在の状態を表示する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunAllTests",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void RunAllTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージ管理の自動テストを開始する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "テスト/全自動テストを実行する"
+                            ],
+                            "raw": "ContextMenu(\"テスト/全自動テストを実行する\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestRoutine",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private IEnumerator TestRoutine()",
+                    "returnType": "IEnumerator",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ステージの生成からクリアまでを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestGemCollection",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestGemCollection()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "宝石取得と二重取得防止を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestItemCollection",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestItemCollection()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "アイテム取得と候補属性の維持を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestWallDestruction",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestWallDestruction()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "壁の破壊と移動可能状態への変化を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CollectAllGemsInternal",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void CollectAllGemsInternal()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在のマップに存在する宝石をすべて取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CanTest",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool CanTest()",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テストを実行可能な状態か確認する。",
+                    "returns": "実行可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(\r\n            bool condition,\r\n            string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "condition",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "成功条件"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト項目名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト結果を記録する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PrintTestResult",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void PrintTestResult()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "自動テストの集計結果を出力する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 14
+        }
+    ],
     "source": "\r\nusing System.Collections;\r\nusing System.Collections.Generic;\r\nusing UnityEngine;\r\nusing Game.Map;\r\nusing Game.Stage;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// ステージ管理システムの生成、進行、\r\n    /// 宝石取得、壁破壊などを検証するテストクラス。\r\n    /// </summary>\r\n    public class MazeStageManagerTest : MonoBehaviour\r\n    {\r\n        #region Inspector Fields\r\n\r\n        [Header(\"テスト対象\")]\r\n\r\n        /// <summary>\r\n        /// テスト対象のステージ管理システム。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private MazeStageManager stageManager;\r\n\r\n        [Header(\"テスト設定\")]\r\n\r\n        /// <summary>\r\n        /// シーン開始時に自動テストを実行するか。\r\n        /// </summary>\r\n        [SerializeField]\r\n        private bool runTestsOnStart = false;\r\n\r\n        #endregion\r\n\r\n        #region Runtime Fields\r\n\r\n        /// <summary>\r\n        /// 成功したテスト項目数。\r\n        /// </summary>\r\n        private int passedCount;\r\n\r\n        /// <summary>\r\n        /// 失敗したテスト項目数。\r\n        /// </summary>\r\n        private int failedCount;\r\n\r\n        /// <summary>\r\n        /// 自動テストの実行状態。\r\n        /// </summary>\r\n        private bool isTesting;\r\n\r\n        #endregion\r\n\r\n        #region Unity Methods\r\n\r\n        /// <summary>\r\n        /// シーン開始時の処理。\r\n        /// </summary>\r\n        private IEnumerator Start()\r\n        {\r\n            // StageManagerのStart処理が完了するまで待つ。\r\n            yield return null;\r\n\r\n            if (runTestsOnStart)\r\n            {\r\n                RunAllTests();\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Manual Tests\r\n\r\n        /// <summary>\r\n        /// ステージを再生成する。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/ステージを生成する\")]\r\n        private void GenerateStage()\r\n        {\r\n            if (!CanTest()) return;\r\n\r\n            Debug.Log(\r\n                $\"生成結果：{stageManager.GenerateStage()}\",\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// ステージを開始する。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/ステージを開始する\")]\r\n        private void StartStage()\r\n        {\r\n            if (!CanTest()) return;\r\n\r\n            Debug.Log(\r\n                $\"開始結果：{stageManager.StartStage()}\",\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// ステージを一時停止する。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/一時停止する\")]\r\n        private void PauseStage()\r\n        {\r\n            if (!CanTest()) return;\r\n\r\n            Debug.Log(\r\n                $\"一時停止結果：{stageManager.PauseStage()}\",\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// ステージを再開する。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/再開する\")]\r\n        private void ResumeStage()\r\n        {\r\n            if (!CanTest()) return;\r\n\r\n            Debug.Log(\r\n                $\"再開結果：{stageManager.ResumeStage()}\",\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// マップ上の宝石を1個取得する。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/宝石を1個取得する\")]\r\n        private void CollectGem()\r\n        {\r\n            if (!CanTest() || !stageManager.HasStage)\r\n            {\r\n                return;\r\n            }\r\n\r\n            foreach (Vector2Int position in\r\n                stageManager.Map.FindPositions(\r\n                    cell => cell.HasGem))\r\n            {\r\n                bool success =\r\n                    stageManager.TryCollectGem(position);\r\n\r\n                Debug.Log(\r\n                    $\"取得結果：{success}\\n\" +\r\n                    $\"残り宝石数：{stageManager.RemainingGemCount}\",\r\n                    this);\r\n\r\n                return;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// マップ上のアイテムを1個取得する。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/アイテムを1個取得する\")]\r\n        private void CollectItem()\r\n        {\r\n            if (!CanTest() || !stageManager.HasStage)\r\n            {\r\n                return;\r\n            }\r\n\r\n            foreach (Vector2Int position in\r\n                stageManager.Map.FindPositions(\r\n                    cell => cell.HasItem))\r\n            {\r\n                bool success =\r\n                    stageManager.TryCollectItem(position);\r\n\r\n                Debug.Log(\r\n                    $\"取得結果：{success}\\n\" +\r\n                    $\"残りアイテム数：{stageManager.RemainingItemCount}\",\r\n                    this);\r\n\r\n                return;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 破壊可能な壁を1個破壊する。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/壁を1個破壊する\")]\r\n        private void DestroyWall()\r\n        {\r\n            if (!CanTest() || !stageManager.HasStage)\r\n            {\r\n                return;\r\n            }\r\n\r\n            foreach (Vector2Int position in\r\n                stageManager.Map.FindPositions(\r\n                    cell => cell.IsBreakable))\r\n            {\r\n                bool success =\r\n                    stageManager.TryDestroyWall(position);\r\n\r\n                Debug.Log(\r\n                    $\"壁破壊結果：{success}\\n\" +\r\n                    $\"破壊座標：{position}\",\r\n                    this);\r\n\r\n                return;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべての宝石を取得してクリアする。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/すべての宝石を取得する\")]\r\n        private void CollectAllGems()\r\n        {\r\n            if (!CanTest() || !stageManager.HasStage)\r\n            {\r\n                return;\r\n            }\r\n\r\n            CollectAllGemsInternal();\r\n\r\n            PrintStatus();\r\n        }\r\n\r\n        /// <summary>\r\n        /// ステージを失敗状態にする。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/ステージを失敗させる\")]\r\n        private void FailStage()\r\n        {\r\n            if (!CanTest()) return;\r\n\r\n            Debug.Log(\r\n                $\"失敗状態への変更：{stageManager.FailStage()}\",\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在のステージを消去する。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/ステージを消去する\")]\r\n        private void ClearStage()\r\n        {\r\n            if (!CanTest()) return;\r\n\r\n            stageManager.ClearStage();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在のステージ状態をConsoleへ出力する。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/現在の状態を表示する\")]\r\n        private void PrintStatus()\r\n        {\r\n            if (!CanTest()) return;\r\n\r\n            Debug.Log(\r\n                \"【ステージ状態】\\n\" +\r\n                $\"状態：{stageManager.State}\\n\" +\r\n                $\"初期宝石数：{stageManager.InitialGemCount}\\n\" +\r\n                $\"残り宝石数：{stageManager.RemainingGemCount}\\n\" +\r\n                $\"取得宝石数：{stageManager.CollectedGemCount}\\n\" +\r\n                $\"残りアイテム数：{stageManager.RemainingItemCount}\\n\" +\r\n                $\"経過時間：{stageManager.ElapsedTime:F2}秒\\n\" +\r\n                $\"進捗率：{stageManager.Progress:P1}\",\r\n                this);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Automated Tests\r\n\r\n        /// <summary>\r\n        /// ステージ管理の自動テストを開始する。\r\n        /// </summary>\r\n        [ContextMenu(\"テスト/全自動テストを実行する\")]\r\n        private void RunAllTests()\r\n        {\r\n            if (!CanTest() || isTesting)\r\n            {\r\n                return;\r\n            }\r\n\r\n            StartCoroutine(TestRoutine());\r\n        }\r\n\r\n        /// <summary>\r\n        /// ステージの生成からクリアまでを検証する。\r\n        /// </summary>\r\n        private IEnumerator TestRoutine()\r\n        {\r\n            isTesting = true;\r\n\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n            try\r\n            {\r\n                // ステージ生成を検証する。\r\n                bool generated =\r\n                    stageManager.GenerateStage();\r\n\r\n                Check(generated, \"ステージ生成\");\r\n\r\n                if (!generated)\r\n                {\r\n                    yield break;\r\n                }\r\n\r\n                Check(\r\n                    stageManager.HasStage,\r\n                    \"生成済みマップの存在\");\r\n\r\n                Check(\r\n                    stageManager.State == MazeStageState.Ready,\r\n                    \"開始待機状態への移行\");\r\n\r\n                Check(\r\n                    stageManager.RemainingGemCount ==\r\n                    stageManager.Map.CountCells(\r\n                        cell => cell.HasGem),\r\n                    \"初期宝石数の一致\");\r\n\r\n                Check(\r\n                    stageManager.RemainingItemCount ==\r\n                    stageManager.Map.CountCells(\r\n                        cell => cell.HasItem),\r\n                    \"初期アイテム数の一致\");\r\n\r\n                // 開始前の取得禁止を確認する。\r\n                Check(\r\n                    !stageManager.TryCollectGem(\r\n                        stageManager.StageResult.PlayerSpawnPosition),\r\n                    \"開始前の宝石取得禁止\");\r\n\r\n                Check(\r\n                    stageManager.StartStage(),\r\n                    \"ステージ開始\");\r\n\r\n                Check(\r\n                    stageManager.IsPlaying,\r\n                    \"プレイ中状態への移行\");\r\n\r\n                // 時間が進むことを確認する。\r\n                float startTime =\r\n                    stageManager.ElapsedTime;\r\n\r\n                yield return new WaitForSecondsRealtime(0.2f);\r\n\r\n                Check(\r\n                    stageManager.ElapsedTime > startTime,\r\n                    \"プレイ時間の計測\");\r\n\r\n                // 一時停止と時間停止を確認する。\r\n                Check(\r\n                    stageManager.PauseStage(),\r\n                    \"一時停止\");\r\n\r\n                Check(\r\n                    stageManager.State == MazeStageState.Paused,\r\n                    \"一時停止状態への移行\");\r\n\r\n                float pausedTime =\r\n                    stageManager.ElapsedTime;\r\n\r\n                yield return new WaitForSecondsRealtime(0.2f);\r\n\r\n                Check(\r\n                    Mathf.Approximately(\r\n                        pausedTime,\r\n                        stageManager.ElapsedTime),\r\n                    \"一時停止中の時間停止\");\r\n\r\n                Check(\r\n                    stageManager.ResumeStage(),\r\n                    \"ステージ再開\");\r\n\r\n                Check(\r\n                    stageManager.IsPlaying,\r\n                    \"プレイ中状態への復帰\");\r\n\r\n                // 宝石の取得処理を確認する。\r\n                TestGemCollection();\r\n\r\n                // アイテムの取得処理を確認する。\r\n                TestItemCollection();\r\n\r\n                // 壁の破壊処理を確認する。\r\n                TestWallDestruction();\r\n\r\n                // すべての宝石を取得する。\r\n                CollectAllGemsInternal();\r\n\r\n                Check(\r\n                    stageManager.RemainingGemCount == 0,\r\n                    \"すべての宝石を取得\");\r\n\r\n                Check(\r\n                    stageManager.State == MazeStageState.Cleared,\r\n                    \"ステージクリア判定\");\r\n\r\n                Check(\r\n                    Mathf.Approximately(\r\n                        stageManager.Progress, 1f),\r\n                    \"クリア時の進捗率\");\r\n\r\n                // クリア後の時間停止を確認する。\r\n                float clearedTime =\r\n                    stageManager.ElapsedTime;\r\n\r\n                yield return new WaitForSecondsRealtime(0.2f);\r\n\r\n                Check(\r\n                    Mathf.Approximately(\r\n                        clearedTime,\r\n                        stageManager.ElapsedTime),\r\n                    \"クリア後の時間停止\");\r\n\r\n                // 再生成と初期化を確認する。\r\n                Check(\r\n                    stageManager.GenerateStage(),\r\n                    \"ステージ再生成\");\r\n\r\n                Check(\r\n                    stageManager.State == MazeStageState.Ready,\r\n                    \"再生成後の開始待機状態\");\r\n\r\n                Check(\r\n                    Mathf.Approximately(\r\n                        stageManager.ElapsedTime, 0f),\r\n                    \"再生成後の時間初期化\");\r\n\r\n                Check(\r\n                    stageManager.RemainingGemCount ==\r\n                    stageManager.InitialGemCount,\r\n                    \"再生成後の宝石数初期化\");\r\n\r\n                // 失敗状態への移行を確認する。\r\n                Check(\r\n                    stageManager.StartStage(),\r\n                    \"再生成後のステージ開始\");\r\n\r\n                Check(\r\n                    stageManager.FailStage(),\r\n                    \"ステージ失敗処理\");\r\n\r\n                Check(\r\n                    stageManager.State == MazeStageState.Failed,\r\n                    \"失敗状態への移行\");\r\n\r\n                // ステージ消去を確認する。\r\n                stageManager.ClearStage();\r\n\r\n                Check(\r\n                    !stageManager.HasStage,\r\n                    \"ステージデータの消去\");\r\n\r\n                Check(\r\n                    stageManager.State == MazeStageState.None,\r\n                    \"未生成状態への移行\");\r\n            }\r\n            finally\r\n            {\r\n                isTesting = false;\r\n\r\n                PrintTestResult();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 宝石取得と二重取得防止を検証する。\r\n        /// </summary>\r\n        private void TestGemCollection()\r\n        {\r\n            foreach (Vector2Int position in\r\n                stageManager.Map.FindPositions(\r\n                    cell => cell.HasGem))\r\n            {\r\n                int previousCount =\r\n                    stageManager.RemainingGemCount;\r\n\r\n                Check(\r\n                    stageManager.TryCollectGem(position),\r\n                    \"宝石取得処理\");\r\n\r\n                Check(\r\n                    stageManager.RemainingGemCount ==\r\n                    previousCount - 1,\r\n                    \"宝石残数の減算\");\r\n\r\n                Check(\r\n                    !stageManager.Map.GetCell(position).HasGem,\r\n                    \"マップ上の宝石消去\");\r\n\r\n                Check(\r\n                    !stageManager.TryCollectGem(position),\r\n                    \"宝石の二重取得防止\");\r\n\r\n                return;\r\n            }\r\n\r\n            Debug.LogWarning(\r\n                \"宝石がないため取得テストを省略します。\",\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// アイテム取得と候補属性の維持を検証する。\r\n        /// </summary>\r\n        private void TestItemCollection()\r\n        {\r\n            foreach (Vector2Int position in\r\n                stageManager.Map.FindPositions(\r\n                    cell => cell.HasItem))\r\n            {\r\n                int previousCount =\r\n                    stageManager.RemainingItemCount;\r\n\r\n                Check(\r\n                    stageManager.TryCollectItem(position),\r\n                    \"アイテム取得処理\");\r\n\r\n                Check(\r\n                    stageManager.RemainingItemCount ==\r\n                    previousCount - 1,\r\n                    \"アイテム残数の減算\");\r\n\r\n                Check(\r\n                    !stageManager.Map.GetCell(position).HasItem,\r\n                    \"マップ上のアイテム消去\");\r\n\r\n                Check(\r\n                    stageManager.Map.GetCell(position).IsItemSpawn,\r\n                    \"アイテム配置候補属性の維持\");\r\n\r\n                Check(\r\n                    !stageManager.TryCollectItem(position),\r\n                    \"アイテムの二重取得防止\");\r\n\r\n                return;\r\n            }\r\n\r\n            Debug.LogWarning(\r\n                \"アイテムがないため取得テストを省略します。\",\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 壁の破壊と移動可能状態への変化を検証する。\r\n        /// </summary>\r\n        private void TestWallDestruction()\r\n        {\r\n            foreach (Vector2Int position in\r\n                stageManager.Map.FindPositions(\r\n                    cell => cell.IsBreakable))\r\n            {\r\n                Check(\r\n                    !stageManager.IsWalkable(position),\r\n                    \"破壊前の壁への移動禁止\");\r\n\r\n                Check(\r\n                    stageManager.TryDestroyWall(position),\r\n                    \"壁破壊処理\");\r\n\r\n                Check(\r\n                    stageManager.IsWalkable(position),\r\n                    \"壁破壊後の移動許可\");\r\n\r\n                Check(\r\n                    !stageManager.TryDestroyWall(position),\r\n                    \"壁の二重破壊防止\");\r\n\r\n                Check(\r\n                    !stageManager.TryDestroyWall(\r\n                        Vector2Int.zero),\r\n                    \"外周の壁の破壊禁止\");\r\n\r\n                return;\r\n            }\r\n\r\n            Debug.LogWarning(\r\n                \"破壊可能な壁がないためテストを省略します。\",\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在のマップに存在する宝石をすべて取得する。\r\n        /// </summary>\r\n        private void CollectAllGemsInternal()\r\n        {\r\n            // 取得処理前に座標一覧を確定する。\r\n            List<Vector2Int> positions =\r\n                new List<Vector2Int>(\r\n                    stageManager.Map.FindPositions(\r\n                        cell => cell.HasGem));\r\n\r\n            foreach (Vector2Int position in positions)\r\n            {\r\n                stageManager.TryCollectGem(position);\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Utility Methods\r\n\r\n        /// <summary>\r\n        /// テストを実行可能な状態か確認する。\r\n        /// </summary>\r\n        /// <returns>実行可能な場合はtrue</returns>\r\n        private bool CanTest()\r\n        {\r\n            if (!Application.isPlaying)\r\n            {\r\n                Debug.LogWarning(\r\n                    \"再生モードで実行してください。\",\r\n                    this);\r\n\r\n                return false;\r\n            }\r\n\r\n            if (stageManager == null)\r\n            {\r\n                Debug.LogError(\r\n                    \"StageManagerが設定されていません。\",\r\n                    this);\r\n\r\n                return false;\r\n            }\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト結果を記録する。\r\n        /// </summary>\r\n        /// <param name=\"condition\">成功条件</param>\r\n        /// <param name=\"testName\">テスト項目名</param>\r\n        private void Check(\r\n            bool condition,\r\n            string testName)\r\n        {\r\n            if (condition)\r\n            {\r\n                passedCount++;\r\n\r\n                Debug.Log(\r\n                    $\"[成功] {testName}\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogError(\r\n                    $\"[失敗] {testName}\",\r\n                    this);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 自動テストの集計結果を出力する。\r\n        /// </summary>\r\n        private void PrintTestResult()\r\n        {\r\n            string message =\r\n                \"【MazeStageManager テスト結果】\\n\" +\r\n                $\"成功：{passedCount}\\n\" +\r\n                $\"失敗：{failedCount}\";\r\n\r\n            if (failedCount == 0)\r\n            {\r\n                Debug.Log(\r\n                    message +\r\n                    \"\\nすべての実行済みテストに成功しました。\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                Debug.LogError(message, this);\r\n            }\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
     "tips": [],
     "examples": [],
     "notes": [],
     "related": [],
     "tests": [],
-    "generatedAt": "2026-11-26T16:10:18.028Z"
+    "generatedAt": "2026-11-28T15:50:00.915Z"
 }

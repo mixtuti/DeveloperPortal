@@ -1,0 +1,890 @@
+{
+    "parserVersion": 3,
+    "id": "Game.Tests.MazeEnemyPerceptionControllerTest",
+    "name": "MazeEnemyPerceptionControllerTest",
+    "fileName": "MazeEnemyPerceptionControllerTest.cs",
+    "namespace": "Game.Tests",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class MazeEnemyPerceptionControllerTest\r\n        : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "敵AIの認識制御システムを検証する。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "Framework.AI.Core",
+        "Framework.Movement",
+        "Framework.Parameters",
+        "Game.AI.Core",
+        "Game.AI.Parameters",
+        "Game.AI.Perception",
+        "Game.Map",
+        "Game.Stage",
+        "UnityEngine",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "RunAllTests",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void RunAllTests()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべてのテストを実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyPerceptionControllerTest",
+            "fullName": "MazeEnemyPerceptionControllerTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "敵AIの認識制御システムを検証する。",
+            "remarks": "",
+            "attributes": [
+                {
+                    "name": "DisallowMultipleComponent",
+                    "arguments": [],
+                    "raw": "DisallowMultipleComponent"
+                }
+            ],
+            "declaration": "public sealed class MazeEnemyPerceptionControllerTest\r\n        : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "stageManagerPrefab",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeStageManager stageManagerPrefab",
+                    "returnType": "",
+                    "valueType": "MazeStageManager",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "テスト用ステージ管理Prefab。"
+                            ],
+                            "raw": "Tooltip(\"テスト用ステージ管理Prefab。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Stage Manager Prefab",
+                        "type": "MazeStageManager",
+                        "header": "テスト設定",
+                        "tooltip": "テスト用ステージ管理Prefab。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "runTestsOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runTestsOnStart = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "開始時にテストを実行する。"
+                            ],
+                            "raw": "Tooltip(\"開始時にテストを実行する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Tests On Start",
+                        "type": "bool",
+                        "header": null,
+                        "tooltip": "開始時にテストを実行する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト結果"
+                            ],
+                            "raw": "Header(\"テスト結果\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "成功したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"成功したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Passed Count",
+                        "type": "int",
+                        "header": "テスト結果",
+                        "tooltip": "成功したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "失敗したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"失敗したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Failed Count",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "失敗したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "ExpectedTestCount",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const int ExpectedTestCount = 48",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "48",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "予定されているテスト件数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "48",
+                    "inspector": null
+                },
+                {
+                    "name": "Origin",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static",
+                        "readonly"
+                    ],
+                    "signature": "private static readonly Vector2Int Origin =\r\n            new Vector2Int(1, 1)",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "new Vector2Int(1, 1)",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵AIの初期座標。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new Vector2Int(1, 1)",
+                    "inspector": null
+                },
+                {
+                    "name": "playerId",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Guid playerId = Guid.NewGuid()",
+                    "returnType": "",
+                    "valueType": "Guid",
+                    "value": "Guid.NewGuid()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用プレイヤーの識別子。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "Guid.NewGuid()",
+                    "inspector": null
+                },
+                {
+                    "name": "threatId",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Guid threatId = Guid.NewGuid()",
+                    "returnType": "",
+                    "valueType": "Guid",
+                    "value": "Guid.NewGuid()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用脅威対象の識別子。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "Guid.NewGuid()",
+                    "inspector": null
+                },
+                {
+                    "name": "stageManager",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeStageManager stageManager",
+                    "returnType": "",
+                    "valueType": "MazeStageManager",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用ステージ管理インスタンス。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "movementObject",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private GameObject movementObject",
+                    "returnType": "",
+                    "valueType": "GameObject",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用移動オブジェクト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "movement",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private GridMovementController movement",
+                    "returnType": "",
+                    "valueType": "GridMovementController",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用移動コントローラー。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "parameters",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private ParameterSet<MazeEnemyParameter> parameters",
+                    "returnType": "",
+                    "valueType": "ParameterSet<MazeEnemyParameter>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用パラメーターセット。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "context",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeEnemyContext context",
+                    "returnType": "",
+                    "valueType": "MazeEnemyContext",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用敵AIコンテキスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "controller",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeEnemyPerceptionController controller",
+                    "returnType": "",
+                    "valueType": "MazeEnemyPerceptionController",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト対象の認識制御システム。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "開始時にテストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunAllTests",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void RunAllTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべてのテストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "すべてのテストを実行"
+                            ],
+                            "raw": "ContextMenu(\"すべてのテストを実行\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Prepare",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Prepare()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト環境を初期化する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreatePlayer",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeEnemyTargetSnapshot CreatePlayer(\r\n            Vector2Int position,\r\n            Vector2Int direction = default,\r\n            bool isActive = true)",
+                    "returnType": "MazeEnemyTargetSnapshot",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "プレイヤーの座標"
+                        },
+                        {
+                            "name": "direction",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": "default",
+                            "description": "移動方向"
+                        },
+                        {
+                            "name": "isActive",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": "true",
+                            "description": "有効状態"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用プレイヤー情報を生成する。",
+                    "returns": "プレイヤーの現在情報",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateThreat",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private MazeEnemyTargetSnapshot CreateThreat(\r\n            Vector2Int position)",
+                    "returnType": "MazeEnemyTargetSnapshot",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "脅威対象の座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用脅威対象情報を生成する。",
+                    "returns": "脅威対象の現在情報",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "UpdateTargets",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void UpdateTargets(\r\n            params MazeEnemyTargetSnapshot[] targets)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "targets",
+                            "type": "MazeEnemyTargetSnapshot[]",
+                            "modifier": "params",
+                            "defaultValue": null,
+                            "description": "認識対象一覧"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定対象を使用して認識情報を更新する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestInitialization",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestInitialization()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "初期状態と入力情報の検証を行う。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestVisibility",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestVisibility()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "視認距離と遮蔽物の判定を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestMemory",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestMemory()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "観測情報の記憶と再発見を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestMultipleTargets",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestMultipleTargets()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "複数対象と優先対象の選定を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestEvents",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestEvents()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識イベントと状態遷移を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestLifecycle",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestLifecycle()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "停止状態と破棄処理を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Throws",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool Throws<TException>(Action action)\r\n            where TException : Exception",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "実行する処理"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "TException",
+                            "description": "期待する例外型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定された型の例外が発生するか確認する。",
+                    "returns": "期待する例外が発生した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Cleanup",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Cleanup()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト環境を破棄する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnDestroy",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnDestroy()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "オブジェクト破棄時にテスト環境を解放する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(bool passed, string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "passed",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "成功判定"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個別のテスト結果を出力して集計する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 19
+        }
+    ],
+    "source": "using System;\r\nusing System.Collections.Generic;\r\nusing Framework.AI.Core;\r\nusing Framework.Movement;\r\nusing Framework.Parameters;\r\nusing Game.AI.Core;\r\nusing Game.AI.Parameters;\r\nusing Game.AI.Perception;\r\nusing Game.Map;\r\nusing Game.Stage;\r\nusing UnityEngine;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// 敵AIの認識制御システムを検証する。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    public sealed class MazeEnemyPerceptionControllerTest\r\n        : MonoBehaviour\r\n    {\r\n        [Header(\"テスト設定\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"テスト用ステージ管理Prefab。\")]\r\n        private MazeStageManager stageManagerPrefab;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"開始時にテストを実行する。\")]\r\n        private bool runTestsOnStart = true;\r\n\r\n        [Header(\"テスト結果\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"成功したテスト件数。\")]\r\n        private int passedCount;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"失敗したテスト件数。\")]\r\n        private int failedCount;\r\n\r\n        /// <summary>\r\n        /// 予定されているテスト件数。\r\n        /// </summary>\r\n        private const int ExpectedTestCount = 48;\r\n\r\n        /// <summary>\r\n        /// 敵AIの初期座標。\r\n        /// </summary>\r\n        private static readonly Vector2Int Origin =\r\n            new Vector2Int(1, 1);\r\n\r\n        /// <summary>\r\n        /// テスト用プレイヤーの識別子。\r\n        /// </summary>\r\n        private readonly Guid playerId = Guid.NewGuid();\r\n\r\n        /// <summary>\r\n        /// テスト用脅威対象の識別子。\r\n        /// </summary>\r\n        private readonly Guid threatId = Guid.NewGuid();\r\n\r\n        /// <summary>\r\n        /// テスト用ステージ管理インスタンス。\r\n        /// </summary>\r\n        private MazeStageManager stageManager;\r\n\r\n        /// <summary>\r\n        /// テスト用移動オブジェクト。\r\n        /// </summary>\r\n        private GameObject movementObject;\r\n\r\n        /// <summary>\r\n        /// テスト用移動コントローラー。\r\n        /// </summary>\r\n        private GridMovementController movement;\r\n\r\n        /// <summary>\r\n        /// テスト用パラメーターセット。\r\n        /// </summary>\r\n        private ParameterSet<MazeEnemyParameter> parameters;\r\n\r\n        /// <summary>\r\n        /// テスト用敵AIコンテキスト。\r\n        /// </summary>\r\n        private MazeEnemyContext context;\r\n\r\n        /// <summary>\r\n        /// テスト対象の認識制御システム。\r\n        /// </summary>\r\n        private MazeEnemyPerceptionController controller;\r\n\r\n        /// <summary>\r\n        /// 開始時にテストを実行する。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            if (runTestsOnStart)\r\n            {\r\n                RunAllTests();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべてのテストを実行する。\r\n        /// </summary>\r\n        [ContextMenu(\"すべてのテストを実行\")]\r\n        public void RunAllTests()\r\n        {\r\n            if (!Application.isPlaying)\r\n            {\r\n                Debug.LogWarning(\r\n                    \"Play Modeで実行してください。\",\r\n                    this);\r\n\r\n                return;\r\n            }\r\n\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n            try\r\n            {\r\n                Prepare();\r\n                TestInitialization();\r\n\r\n                Prepare();\r\n                TestVisibility();\r\n\r\n                Prepare();\r\n                TestMemory();\r\n\r\n                Prepare();\r\n                TestMultipleTargets();\r\n\r\n                Prepare();\r\n                TestEvents();\r\n\r\n                Prepare();\r\n                TestLifecycle();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogException(exception, this);\r\n            }\r\n            finally\r\n            {\r\n                Cleanup();\r\n            }\r\n\r\n            Debug.Log(\r\n                $\"【MazeEnemyPerceptionController テスト結果】\\n\" +\r\n                $\"成功：{passedCount}\\n\" +\r\n                $\"失敗：{failedCount}\\n\" +\r\n                (passedCount == ExpectedTestCount &&\r\n                 failedCount == 0\r\n                    ? \"すべてのテストに成功しました。\"\r\n                    : \"失敗または未実行のテストがあります。\"),\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト環境を初期化する。\r\n        /// </summary>\r\n        private void Prepare()\r\n        {\r\n            Cleanup();\r\n\r\n            if (stageManagerPrefab == null)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"テスト用ステージPrefabが未設定です。\");\r\n            }\r\n\r\n            stageManager = Instantiate(stageManagerPrefab);\r\n\r\n            if (!stageManager.GenerateStage())\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"ステージ生成に失敗しました。\");\r\n            }\r\n\r\n            if (stageManager.Map.Width < 10 ||\r\n                stageManager.Map.Height < 5)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"テスト用グリッドは10×5以上が必要です。\");\r\n            }\r\n\r\n            // 視認判定を固定条件で検証する。\r\n            stageManager.Map.Fill(MazeCell.CreateFloor());\r\n\r\n            // ステージ開始直後のクリアを防止する。\r\n            stageManager.Map.SetCell(\r\n                new Vector2Int(0, 0),\r\n                MazeCell.CreateFloor(MazeCellFlags.Gem));\r\n\r\n            movementObject =\r\n                new GameObject(\"PerceptionTest_Movement\");\r\n\r\n            movement = movementObject\r\n                .AddComponent<GridMovementController>();\r\n\r\n            movement.AutoUpdate = false;\r\n\r\n            movement.Initialize(\r\n                stageManager.CoordinateConverter,\r\n                stageManager.IsWalkable,\r\n                Origin);\r\n\r\n            parameters =\r\n                MazeEnemyParameterCatalog.CreateParameterSet();\r\n\r\n            parameters.SetBaseValue(\r\n                MazeEnemyParameter.DetectionRange,\r\n                4f);\r\n\r\n            parameters.SetBaseValue(\r\n                MazeEnemyParameter.ThreatDetectionRange,\r\n                7f);\r\n\r\n            parameters.SetBaseValue(\r\n                MazeEnemyParameter.MemoryDuration,\r\n                5f);\r\n\r\n            var agentContext =\r\n                new AgentContext<MazeEnemyParameter>(\r\n                    \"PerceptionTest\",\r\n                    parameters);\r\n\r\n            context = new MazeEnemyContext(\r\n                agentContext,\r\n                stageManager,\r\n                movement,\r\n                Origin);\r\n\r\n            controller =\r\n                new MazeEnemyPerceptionController(context);\r\n\r\n            if (!stageManager.StartStage() ||\r\n                !context.CanAct)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"テスト用ステージを開始できません。\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト用プレイヤー情報を生成する。\r\n        /// </summary>\r\n        /// <param name=\"position\">プレイヤーの座標</param>\r\n        /// <param name=\"direction\">移動方向</param>\r\n        /// <param name=\"isActive\">有効状態</param>\r\n        /// <returns>プレイヤーの現在情報</returns>\r\n        private MazeEnemyTargetSnapshot CreatePlayer(\r\n            Vector2Int position,\r\n            Vector2Int direction = default,\r\n            bool isActive = true)\r\n        {\r\n            return new MazeEnemyTargetSnapshot(\r\n                playerId,\r\n                MazeEnemyTargetType.Player,\r\n                position,\r\n                direction,\r\n                4f,\r\n                isActive);\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト用脅威対象情報を生成する。\r\n        /// </summary>\r\n        /// <param name=\"position\">脅威対象の座標</param>\r\n        /// <returns>脅威対象の現在情報</returns>\r\n        private MazeEnemyTargetSnapshot CreateThreat(\r\n            Vector2Int position)\r\n        {\r\n            return new MazeEnemyTargetSnapshot(\r\n                threatId,\r\n                MazeEnemyTargetType.Threat,\r\n                position,\r\n                Vector2Int.left,\r\n                5f);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定対象を使用して認識情報を更新する。\r\n        /// </summary>\r\n        /// <param name=\"targets\">認識対象一覧</param>\r\n        private void UpdateTargets(\r\n            params MazeEnemyTargetSnapshot[] targets)\r\n        {\r\n            if (!controller.UpdatePerception(targets))\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"認識情報の更新に失敗しました。\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 初期状態と入力情報の検証を行う。\r\n        /// </summary>\r\n        private void TestInitialization()\r\n        {\r\n            bool contextPassed =\r\n                ReferenceEquals(\r\n                    controller.Context,\r\n                    context);\r\n\r\n            Debug.Assert(contextPassed, \"コンテキスト参照\", this);\r\n            Check(contextPassed, \"コンテキスト参照\");\r\n\r\n            bool validPassed =\r\n                controller.IsValid &&\r\n                !controller.IsDisposed;\r\n\r\n            Debug.Assert(validPassed, \"初期有効状態\", this);\r\n            Check(validPassed, \"初期有効状態\");\r\n\r\n            bool countPassed =\r\n                controller.Count == 0 &&\r\n                controller.VisibleCount == 0 &&\r\n                controller.RememberedCount == 0;\r\n\r\n            Debug.Assert(countPassed, \"初期認識件数\", this);\r\n            Check(countPassed, \"初期認識件数\");\r\n\r\n            bool unknownPassed =\r\n                controller.GetState(playerId) ==\r\n                    MazeEnemyTargetState.Unknown &&\r\n                !controller.TryGetObservation(\r\n                    playerId,\r\n                    out var unknown) &&\r\n                !unknown.IsValid;\r\n\r\n            Debug.Assert(unknownPassed, \"未認識対象の取得\", this);\r\n            Check(unknownPassed, \"未認識対象の取得\");\r\n\r\n            bool nullPassed =\r\n                Throws<ArgumentNullException>(() =>\r\n                {\r\n                    new MazeEnemyPerceptionController(null);\r\n                });\r\n\r\n            Debug.Assert(nullPassed, \"nullコンテキストの拒否\", this);\r\n            Check(nullPassed, \"nullコンテキストの拒否\");\r\n\r\n            bool snapshotPassed =\r\n                CreatePlayer(Origin).IsValid &&\r\n                !default(MazeEnemyTargetSnapshot).IsValid;\r\n\r\n            Debug.Assert(snapshotPassed, \"対象情報の有効判定\", this);\r\n            Check(snapshotPassed, \"対象情報の有効判定\");\r\n\r\n            bool idPassed =\r\n                Throws<ArgumentException>(() =>\r\n                {\r\n                    new MazeEnemyTargetSnapshot(\r\n                        Guid.Empty,\r\n                        MazeEnemyTargetType.Player,\r\n                        Origin,\r\n                        Vector2Int.zero,\r\n                        1f);\r\n                });\r\n\r\n            Debug.Assert(idPassed, \"無効な識別子の拒否\", this);\r\n            Check(idPassed, \"無効な識別子の拒否\");\r\n\r\n            bool invalidInputPassed =\r\n                Throws<ArgumentException>(() =>\r\n                {\r\n                    new MazeEnemyTargetSnapshot(\r\n                        playerId,\r\n                        MazeEnemyTargetType.None,\r\n                        Origin,\r\n                        Vector2Int.zero,\r\n                        1f);\r\n                }) &&\r\n                Throws<ArgumentException>(() =>\r\n                {\r\n                    new MazeEnemyTargetSnapshot(\r\n                        playerId,\r\n                        MazeEnemyTargetType.Player,\r\n                        Origin,\r\n                        Vector2Int.one,\r\n                        1f);\r\n                }) &&\r\n                Throws<ArgumentOutOfRangeException>(() =>\r\n                {\r\n                    new MazeEnemyTargetSnapshot(\r\n                        playerId,\r\n                        MazeEnemyTargetType.Player,\r\n                        Origin,\r\n                        Vector2Int.zero,\r\n                        -1f);\r\n                });\r\n\r\n            Debug.Assert(invalidInputPassed, \"無効な対象情報の拒否\", this);\r\n            Check(invalidInputPassed, \"無効な対象情報の拒否\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 視認距離と遮蔽物の判定を検証する。\r\n        /// </summary>\r\n        private void TestVisibility()\r\n        {\r\n            UpdateTargets(\r\n                CreatePlayer(\r\n                    new Vector2Int(3, 1),\r\n                    Vector2Int.right));\r\n\r\n            bool detectedPassed =\r\n                controller.TryGetObservation(\r\n                    playerId,\r\n                    out var detected) &&\r\n                detected.IsVisible &&\r\n                detected.Confidence == 1f;\r\n\r\n            Debug.Assert(detectedPassed, \"プレイヤーの視認\", this);\r\n            Check(detectedPassed, \"プレイヤーの視認\");\r\n\r\n            bool informationPassed =\r\n                detected.LastKnownPosition ==\r\n                    new Vector2Int(3, 1) &&\r\n                detected.LastKnownDirection ==\r\n                    Vector2Int.right &&\r\n                detected.LastKnownMoveSpeed == 4f;\r\n\r\n            Debug.Assert(informationPassed, \"観測情報の反映\", this);\r\n            Check(informationPassed, \"観測情報の反映\");\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(new Vector2Int(5, 1)));\r\n\r\n            bool boundaryPassed =\r\n                controller.GetState(playerId) ==\r\n                    MazeEnemyTargetState.Visible;\r\n\r\n            Debug.Assert(boundaryPassed, \"認識距離境界の視認\", this);\r\n            Check(boundaryPassed, \"認識距離境界の視認\");\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(new Vector2Int(6, 1)));\r\n\r\n            bool rangePassed =\r\n                controller.GetState(playerId) ==\r\n                    MazeEnemyTargetState.Remembered;\r\n\r\n            Debug.Assert(rangePassed, \"認識距離外の判定\", this);\r\n            Check(rangePassed, \"認識距離外の判定\");\r\n\r\n            UpdateTargets(\r\n                CreateThreat(new Vector2Int(7, 1)));\r\n\r\n            bool threatPassed =\r\n                controller.GetState(threatId) ==\r\n                    MazeEnemyTargetState.Visible;\r\n\r\n            Debug.Assert(threatPassed, \"脅威専用認識距離\", this);\r\n            Check(threatPassed, \"脅威専用認識距離\");\r\n\r\n            stageManager.Map.SetCell(\r\n                new Vector2Int(2, 1),\r\n                MazeCell.CreateWall());\r\n\r\n            controller.Clear();\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(new Vector2Int(3, 1)));\r\n\r\n            bool wallPassed =\r\n                controller.GetState(playerId) ==\r\n                    MazeEnemyTargetState.Unknown;\r\n\r\n            Debug.Assert(wallPassed, \"壁による視線遮断\", this);\r\n            Check(wallPassed, \"壁による視線遮断\");\r\n\r\n            stageManager.Map.SetCell(\r\n                new Vector2Int(2, 1),\r\n                MazeCell.CreateFloor());\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(new Vector2Int(3, 1)));\r\n\r\n            bool recoveryPassed =\r\n                controller.GetState(playerId) ==\r\n                    MazeEnemyTargetState.Visible;\r\n\r\n            Debug.Assert(recoveryPassed, \"遮蔽物除去後の視認\", this);\r\n            Check(recoveryPassed, \"遮蔽物除去後の視認\");\r\n\r\n            controller.Clear();\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(\r\n                    new Vector2Int(3, 1),\r\n                    isActive: false),\r\n                CreateThreat(new Vector2Int(-1, 1)));\r\n\r\n            bool inactivePassed =\r\n                controller.Count == 0;\r\n\r\n            Debug.Assert(inactivePassed, \"無効対象と範囲外対象の除外\", this);\r\n            Check(inactivePassed, \"無効対象と範囲外対象の除外\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 観測情報の記憶と再発見を検証する。\r\n        /// </summary>\r\n        private void TestMemory()\r\n        {\r\n            UpdateTargets(\r\n                CreatePlayer(\r\n                    new Vector2Int(3, 1),\r\n                    Vector2Int.right));\r\n\r\n            bool memoryPassed =\r\n                context.TryRecallObservation(\r\n                    playerId,\r\n                    out var stimulus,\r\n                    out float confidence) &&\r\n                stimulus.Position ==\r\n                    new Vector2Int(3, 1) &&\r\n                confidence == 1f;\r\n\r\n            Debug.Assert(memoryPassed, \"認識記憶への保存\", this);\r\n            Check(memoryPassed, \"認識記憶への保存\");\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(\r\n                    new Vector2Int(8, 1),\r\n                    Vector2Int.up));\r\n\r\n            bool rememberedPassed =\r\n                controller.TryGetObservation(\r\n                    playerId,\r\n                    out var remembered) &&\r\n                remembered.IsRemembered &&\r\n                controller.VisibleCount == 0 &&\r\n                controller.RememberedCount == 1;\r\n\r\n            Debug.Assert(rememberedPassed, \"見失った対象の記憶\", this);\r\n            Check(rememberedPassed, \"見失った対象の記憶\");\r\n\r\n            bool positionPassed =\r\n                remembered.LastKnownPosition ==\r\n                    new Vector2Int(3, 1);\r\n\r\n            Debug.Assert(positionPassed, \"最後の観測座標の維持\", this);\r\n            Check(positionPassed, \"最後の観測座標の維持\");\r\n\r\n            bool directionPassed =\r\n                remembered.LastKnownDirection ==\r\n                    Vector2Int.right;\r\n\r\n            Debug.Assert(directionPassed, \"未視認方向の漏洩防止\", this);\r\n            Check(directionPassed, \"未視認方向の漏洩防止\");\r\n\r\n            UpdateTargets();\r\n\r\n            bool absentPassed =\r\n                controller.GetState(playerId) ==\r\n                    MazeEnemyTargetState.Remembered;\r\n\r\n            Debug.Assert(absentPassed, \"一覧から消えた対象の記憶維持\", this);\r\n            Check(absentPassed, \"一覧から消えた対象の記憶維持\");\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(\r\n                    new Vector2Int(2, 1),\r\n                    Vector2Int.left));\r\n\r\n            bool rediscoveredPassed =\r\n                controller.TryGetObservation(\r\n                    playerId,\r\n                    out var rediscovered) &&\r\n                rediscovered.IsVisible &&\r\n                rediscovered.LastKnownPosition ==\r\n                    new Vector2Int(2, 1) &&\r\n                rediscovered.LastKnownDirection ==\r\n                    Vector2Int.left;\r\n\r\n            Debug.Assert(rediscoveredPassed, \"再発見時の情報更新\", this);\r\n            Check(rediscoveredPassed, \"再発見時の情報更新\");\r\n\r\n            parameters.SetBaseValue(\r\n                MazeEnemyParameter.MemoryDuration,\r\n                0f);\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(new Vector2Int(2, 1)));\r\n\r\n            bool disabledVisiblePassed =\r\n                controller.GetState(playerId) ==\r\n                    MazeEnemyTargetState.Visible &&\r\n                !context.TryRecallObservation(\r\n                    playerId,\r\n                    out _,\r\n                    out _);\r\n\r\n            Debug.Assert(disabledVisiblePassed, \"記憶無効時の視認維持\", this);\r\n            Check(disabledVisiblePassed, \"記憶無効時の視認維持\");\r\n\r\n            UpdateTargets();\r\n\r\n            bool disabledLostPassed =\r\n                controller.Count == 0 &&\r\n                controller.GetState(playerId) ==\r\n                    MazeEnemyTargetState.Unknown;\r\n\r\n            Debug.Assert(disabledLostPassed, \"記憶無効時の即時消失\", this);\r\n            Check(disabledLostPassed, \"記憶無効時の即時消失\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 複数対象と優先対象の選定を検証する。\r\n        /// </summary>\r\n        private void TestMultipleTargets()\r\n        {\r\n            UpdateTargets(\r\n                CreatePlayer(new Vector2Int(3, 1)),\r\n                CreateThreat(new Vector2Int(6, 1)));\r\n\r\n            bool multiplePassed =\r\n                controller.Count == 2 &&\r\n                controller.VisibleCount == 2;\r\n\r\n            Debug.Assert(multiplePassed, \"複数対象の同時認識\", this);\r\n            Check(multiplePassed, \"複数対象の同時認識\");\r\n\r\n            bool playerPassed =\r\n                controller.TryGetBestObservation(\r\n                    MazeEnemyTargetType.Player,\r\n                    out var player) &&\r\n                player.Id == playerId;\r\n\r\n            Debug.Assert(playerPassed, \"プレイヤー種類別取得\", this);\r\n            Check(playerPassed, \"プレイヤー種類別取得\");\r\n\r\n            bool threatPassed =\r\n                controller.TryGetBestObservation(\r\n                    MazeEnemyTargetType.Threat,\r\n                    out var threat) &&\r\n                threat.Id == threatId;\r\n\r\n            Debug.Assert(threatPassed, \"脅威種類別取得\", this);\r\n            Check(threatPassed, \"脅威種類別取得\");\r\n\r\n            Guid secondPlayerId = Guid.NewGuid();\r\n\r\n            var secondPlayer =\r\n                new MazeEnemyTargetSnapshot(\r\n                    secondPlayerId,\r\n                    MazeEnemyTargetType.Player,\r\n                    new Vector2Int(2, 1),\r\n                    Vector2Int.zero,\r\n                    4f);\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(new Vector2Int(3, 1)),\r\n                secondPlayer,\r\n                CreateThreat(new Vector2Int(6, 1)));\r\n\r\n            bool nearestPassed =\r\n                controller.TryGetBestObservation(\r\n                    MazeEnemyTargetType.Player,\r\n                    out var nearest) &&\r\n                nearest.Id == secondPlayerId;\r\n\r\n            Debug.Assert(nearestPassed, \"近い対象の優先選定\", this);\r\n            Check(nearestPassed, \"近い対象の優先選定\");\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(new Vector2Int(3, 1)));\r\n\r\n            bool visiblePriorityPassed =\r\n                controller.TryGetBestObservation(\r\n                    MazeEnemyTargetType.Player,\r\n                    out var visible) &&\r\n                visible.Id == playerId &&\r\n                visible.IsVisible;\r\n\r\n            Debug.Assert(visiblePriorityPassed, \"視認対象の優先選定\", this);\r\n            Check(visiblePriorityPassed, \"視認対象の優先選定\");\r\n\r\n            var results =\r\n                new List<MazeEnemyTargetObservation>();\r\n\r\n            bool listPassed =\r\n                controller.GetObservations(results) == 3 &&\r\n                results.Count == 3 &&\r\n                controller.VisibleCount == 1 &&\r\n                controller.RememberedCount == 2;\r\n\r\n            Debug.Assert(listPassed, \"観測情報一覧の取得\", this);\r\n            Check(listPassed, \"観測情報一覧の取得\");\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(new Vector2Int(2, 1)),\r\n                CreatePlayer(new Vector2Int(4, 1)));\r\n\r\n            bool duplicatePassed =\r\n                controller.TryGetObservation(\r\n                    playerId,\r\n                    out var duplicate) &&\r\n                duplicate.LastKnownPosition ==\r\n                    new Vector2Int(2, 1) &&\r\n                controller.Count == 3;\r\n\r\n            Debug.Assert(duplicatePassed, \"重複識別子の処理\", this);\r\n            Check(duplicatePassed, \"重複識別子の処理\");\r\n\r\n            controller.Clear();\r\n\r\n            bool emptyPassed =\r\n                controller.GetObservations(results) == 0 &&\r\n                results.Count == 0 &&\r\n                !controller.TryGetBestObservation(\r\n                    MazeEnemyTargetType.Player,\r\n                    out var empty) &&\r\n                !empty.IsValid;\r\n\r\n            Debug.Assert(emptyPassed, \"空の観測情報一覧\", this);\r\n            Check(emptyPassed, \"空の観測情報一覧\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 認識イベントと状態遷移を検証する。\r\n        /// </summary>\r\n        private void TestEvents()\r\n        {\r\n            int detectedCount = 0;\r\n            int lostCount = 0;\r\n            int forgottenCount = 0;\r\n            int stateChangedCount = 0;\r\n\r\n            bool callbackStateValid = true;\r\n            bool reentryRejected = false;\r\n\r\n            controller.TargetDetected += observation =>\r\n            {\r\n                detectedCount++;\r\n\r\n                callbackStateValid &=\r\n                    controller.GetState(observation.Id) ==\r\n                        MazeEnemyTargetState.Visible;\r\n\r\n                reentryRejected =\r\n                    !controller.Forget(observation.Id);\r\n            };\r\n\r\n            controller.TargetLost += observation =>\r\n            {\r\n                lostCount++;\r\n            };\r\n\r\n            controller.TargetForgotten += id =>\r\n            {\r\n                forgottenCount++;\r\n\r\n                callbackStateValid &=\r\n                    controller.GetState(id) ==\r\n                        MazeEnemyTargetState.Unknown;\r\n            };\r\n\r\n            controller.TargetStateChanged +=\r\n                (id, previous, next) =>\r\n                {\r\n                    stateChangedCount++;\r\n\r\n                    callbackStateValid &=\r\n                        controller.GetState(id) == next;\r\n                };\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(new Vector2Int(3, 1)));\r\n\r\n            bool detectionPassed =\r\n                detectedCount == 1 &&\r\n                stateChangedCount == 1;\r\n\r\n            Debug.Assert(detectionPassed, \"発見イベント\", this);\r\n            Check(detectionPassed, \"発見イベント\");\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(new Vector2Int(2, 1)));\r\n\r\n            bool repeatedPassed =\r\n                detectedCount == 1 &&\r\n                stateChangedCount == 1;\r\n\r\n            Debug.Assert(repeatedPassed, \"視認継続時の重複通知抑制\", this);\r\n            Check(repeatedPassed, \"視認継続時の重複通知抑制\");\r\n\r\n            UpdateTargets();\r\n\r\n            bool lostPassed =\r\n                lostCount == 1 &&\r\n                stateChangedCount == 2;\r\n\r\n            Debug.Assert(lostPassed, \"視認喪失イベント\", this);\r\n            Check(lostPassed, \"視認喪失イベント\");\r\n\r\n            UpdateTargets();\r\n\r\n            bool repeatedLostPassed =\r\n                lostCount == 1 &&\r\n                stateChangedCount == 2;\r\n\r\n            Debug.Assert(repeatedLostPassed, \"記憶継続時の重複通知抑制\", this);\r\n            Check(repeatedLostPassed, \"記憶継続時の重複通知抑制\");\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(new Vector2Int(3, 1)));\r\n\r\n            bool rediscoveredPassed =\r\n                detectedCount == 2 &&\r\n                stateChangedCount == 3;\r\n\r\n            Debug.Assert(rediscoveredPassed, \"再発見イベント\", this);\r\n            Check(rediscoveredPassed, \"再発見イベント\");\r\n\r\n            bool forgottenPassed =\r\n                controller.Forget(playerId) &&\r\n                forgottenCount == 1 &&\r\n                stateChangedCount == 4 &&\r\n                !controller.Forget(playerId);\r\n\r\n            Debug.Assert(forgottenPassed, \"記憶削除イベント\", this);\r\n            Check(forgottenPassed, \"記憶削除イベント\");\r\n\r\n            Debug.Assert(callbackStateValid, \"イベント通知時の状態整合性\", this);\r\n            Check(callbackStateValid, \"イベント通知時の状態整合性\");\r\n\r\n            Debug.Assert(reentryRejected, \"イベント内の再入変更拒否\", this);\r\n            Check(reentryRejected, \"イベント内の再入変更拒否\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 停止状態と破棄処理を検証する。\r\n        /// </summary>\r\n        private void TestLifecycle()\r\n        {\r\n            bool nullPassed =\r\n                !controller.UpdatePerception(null) &&\r\n                Throws<ArgumentNullException>(() =>\r\n                {\r\n                    controller.GetObservations(null);\r\n                });\r\n\r\n            Debug.Assert(nullPassed, \"null入力への対応\", this);\r\n            Check(nullPassed, \"null入力への対応\");\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(new Vector2Int(3, 1)));\r\n\r\n            stageManager.PauseStage();\r\n\r\n            bool pausePassed =\r\n                !controller.UpdatePerception(\r\n                    Array.Empty<MazeEnemyTargetSnapshot>()) &&\r\n                controller.GetState(playerId) ==\r\n                    MazeEnemyTargetState.Visible;\r\n\r\n            Debug.Assert(pausePassed, \"停止中の認識更新抑制\", this);\r\n            Check(pausePassed, \"停止中の認識更新抑制\");\r\n\r\n            stageManager.ResumeStage();\r\n\r\n            UpdateTargets();\r\n\r\n            bool resumePassed =\r\n                controller.GetState(playerId) ==\r\n                    MazeEnemyTargetState.Remembered;\r\n\r\n            Debug.Assert(resumePassed, \"再開後の認識更新\", this);\r\n            Check(resumePassed, \"再開後の認識更新\");\r\n\r\n            bool forgetPassed =\r\n                controller.Forget(playerId) &&\r\n                !context.TryRecallObservation(\r\n                    playerId,\r\n                    out _,\r\n                    out _);\r\n\r\n            Debug.Assert(forgetPassed, \"認識記憶との連動削除\", this);\r\n            Check(forgetPassed, \"認識記憶との連動削除\");\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(new Vector2Int(3, 1)),\r\n                CreateThreat(new Vector2Int(6, 1)));\r\n\r\n            bool clearPassed =\r\n                controller.Clear() &&\r\n                controller.Count == 0 &&\r\n                controller.VisibleCount == 0 &&\r\n                context.PerceptionMemory.Count == 0;\r\n\r\n            Debug.Assert(clearPassed, \"全認識情報の削除\", this);\r\n            Check(clearPassed, \"全認識情報の削除\");\r\n\r\n            UpdateTargets(\r\n                CreatePlayer(new Vector2Int(3, 1)));\r\n\r\n            controller.Dispose();\r\n            controller.Dispose();\r\n\r\n            bool disposedPassed =\r\n                controller.IsDisposed &&\r\n                !controller.IsValid &&\r\n                controller.Count == 0 &&\r\n                context.PerceptionMemory.Count == 0;\r\n\r\n            Debug.Assert(disposedPassed, \"重複破棄と記憶解放\", this);\r\n            Check(disposedPassed, \"重複破棄と記憶解放\");\r\n\r\n            bool ownershipPassed =\r\n                context.IsValid &&\r\n                !parameters.IsDisposed &&\r\n                !controller.Clear() &&\r\n                !controller.Forget(playerId) &&\r\n                !controller.UpdatePerception(\r\n                    Array.Empty<MazeEnemyTargetSnapshot>());\r\n\r\n            Debug.Assert(ownershipPassed, \"外部所有権維持と破棄後の変更拒否\", this);\r\n            Check(ownershipPassed, \"外部所有権維持と破棄後の変更拒否\");\r\n\r\n            controller =\r\n                new MazeEnemyPerceptionController(context);\r\n\r\n            context.Dispose();\r\n\r\n            bool dependencyPassed =\r\n                !controller.IsValid &&\r\n                !controller.TryGetObservation(\r\n                    playerId,\r\n                    out _) &&\r\n                !controller.UpdatePerception(\r\n                    Array.Empty<MazeEnemyTargetSnapshot>());\r\n\r\n            Debug.Assert(dependencyPassed, \"依存コンテキスト破棄への対応\", this);\r\n            Check(dependencyPassed, \"依存コンテキスト破棄への対応\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された型の例外が発生するか確認する。\r\n        /// </summary>\r\n        /// <typeparam name=\"TException\">期待する例外型</typeparam>\r\n        /// <param name=\"action\">実行する処理</param>\r\n        /// <returns>期待する例外が発生した場合はtrue</returns>\r\n        private bool Throws<TException>(Action action)\r\n            where TException : Exception\r\n        {\r\n            try\r\n            {\r\n                action();\r\n\r\n                return false;\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                return exception.GetType() ==\r\n                    typeof(TException);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト環境を破棄する。\r\n        /// </summary>\r\n        private void Cleanup()\r\n        {\r\n            controller?.Dispose();\r\n            controller = null;\r\n\r\n            context?.Dispose();\r\n            context = null;\r\n\r\n            parameters?.Dispose();\r\n            parameters = null;\r\n\r\n            if (movementObject != null)\r\n            {\r\n                movementObject.SetActive(false);\r\n                Destroy(movementObject);\r\n\r\n                movementObject = null;\r\n            }\r\n\r\n            movement = null;\r\n\r\n            if (stageManager != null)\r\n            {\r\n                stageManager.gameObject.SetActive(false);\r\n                Destroy(stageManager.gameObject);\r\n\r\n                stageManager = null;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// オブジェクト破棄時にテスト環境を解放する。\r\n        /// </summary>\r\n        private void OnDestroy()\r\n        {\r\n            Cleanup();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個別のテスト結果を出力して集計する。\r\n        /// </summary>\r\n        /// <param name=\"passed\">成功判定</param>\r\n        /// <param name=\"testName\">テスト名</param>\r\n        private void Check(bool passed, string testName)\r\n        {\r\n            if (passed)\r\n            {\r\n                passedCount++;\r\n\r\n                Debug.Log(\r\n                    $\"<color=#00CC66>【成功】</color> {testName}\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogError(\r\n                    $\"【失敗】{testName}\",\r\n                    this);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.603Z"
+}

@@ -1,0 +1,1081 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Tactics.MazeEnemyTacticalEvaluator",
+    "name": "MazeEnemyTacticalEvaluator",
+    "fileName": "MazeEnemyTacticalEvaluator.cs",
+    "namespace": "Game.AI.Tactics",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class MazeEnemyTacticalEvaluator\r\n        : IDisposable",
+    "typeParameters": [],
+    "summary": "敵AIの追跡、迎撃、逃走、帰還戦術を評価する。",
+    "remarks": "本クラスは目的地の評価のみを担当する。 行動選択や実際の移動処理は行わない。",
+    "inheritance": [
+        "IDisposable"
+    ],
+    "dependencies": [
+        "System",
+        "Framework.Pathfinding",
+        "Game.AI.Core",
+        "Game.AI.Parameters",
+        "Game.AI.Perception",
+        "Game.Map",
+        "UnityEngine",
+        "IDisposable"
+    ],
+    "members": [
+        {
+            "name": "Context",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyContext Context => context",
+            "returnType": "",
+            "valueType": "MazeEnemyContext",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "戦術評価に使用するコンテキスト。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsValid",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsValid =>\r\n            !isDisposed && context.IsValid",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "戦術評価システムが利用可能であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsDisposed",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsDisposed => isDisposed",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "破棄済みであるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Origin",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int Origin =>\r\n            context.IsTraversing\r\n                ? context.TargetCell\r\n                : context.CurrentCell",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の経路探索開始座標。",
+            "returns": "",
+            "remarks": "セル間を移動中の場合は到達予定セルを使用する。",
+            "exceptions": []
+        },
+        {
+            "name": "MazeEnemyTacticalEvaluator",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyTacticalEvaluator(\r\n            MazeEnemyContext context)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "MazeEnemyContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "敵AIコンテキスト"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "戦術評価システムを生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "コンテキストが指定されていない場合。"
+                },
+                {
+                    "name": "ArgumentException",
+                    "description": "コンテキストが無効な場合。"
+                }
+            ]
+        },
+        {
+            "name": "Refresh",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Refresh()",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "距離情報を必要に応じて更新する。",
+            "returns": "更新可能な場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Invalidate",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Invalidate()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "保持している距離情報を無効化する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryEvaluateChase",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryEvaluateChase(\r\n            MazeEnemyTargetObservation target,\r\n            out MazeEnemyTacticalEvaluation evaluation)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "target",
+                    "type": "MazeEnemyTargetObservation",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "対象の観測情報"
+                },
+                {
+                    "name": "evaluation",
+                    "type": "MazeEnemyTacticalEvaluation",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "戦術評価結果"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "認識対象への直接追跡を評価する。",
+            "returns": "追跡可能な場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryPredictPosition",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryPredictPosition(\r\n            MazeEnemyTargetObservation target,\r\n            float predictionTime,\r\n            out Vector2Int position,\r\n            out int distance)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "target",
+                    "type": "MazeEnemyTargetObservation",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "対象の観測情報"
+                },
+                {
+                    "name": "predictionTime",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "予測時間"
+                },
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "予測座標"
+                },
+                {
+                    "name": "distance",
+                    "type": "int",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "予測移動距離"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "観測情報から対象の進行先を予測する。",
+            "returns": "予測可能な場合はtrue",
+            "remarks": "現在の移動方向へ直進すると仮定する。 壁やマップ境界に到達した場合は予測を停止する。",
+            "exceptions": []
+        },
+        {
+            "name": "TryEvaluateIntercept",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryEvaluateIntercept(\r\n            MazeEnemyTargetObservation target,\r\n            out MazeEnemyTacticalEvaluation evaluation)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "target",
+                    "type": "MazeEnemyTargetObservation",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "対象の観測情報"
+                },
+                {
+                    "name": "evaluation",
+                    "type": "MazeEnemyTacticalEvaluation",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "戦術評価結果"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "対象への先回り地点を評価する。",
+            "returns": "迎撃可能な場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryEvaluateEscape",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryEvaluateEscape(\r\n            MazeEnemyTargetObservation threat,\r\n            int maxTravelDistance,\r\n            out MazeEnemyTacticalEvaluation evaluation)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "threat",
+                    "type": "MazeEnemyTargetObservation",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "脅威の観測情報"
+                },
+                {
+                    "name": "maxTravelDistance",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "逃走候補の最大経路距離"
+                },
+                {
+                    "name": "evaluation",
+                    "type": "MazeEnemyTacticalEvaluation",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "戦術評価結果"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "脅威から離れるための逃走地点を評価する。",
+            "returns": "逃走候補が存在する場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryEvaluateReturn",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryEvaluateReturn(\r\n            out MazeEnemyTacticalEvaluation evaluation)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "evaluation",
+                    "type": "MazeEnemyTacticalEvaluation",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "戦術評価結果"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "縄張り内への帰還地点を評価する。",
+            "returns": "帰還が必要かつ可能な場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Dispose",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Dispose()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "戦術評価システムを破棄する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyTacticalEvaluator",
+            "fullName": "MazeEnemyTacticalEvaluator",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "敵AIの追跡、迎撃、逃走、帰還戦術を評価する。",
+            "remarks": "本クラスは目的地の評価のみを担当する。 行動選択や実際の移動処理は行わない。",
+            "attributes": [],
+            "declaration": "public sealed class MazeEnemyTacticalEvaluator\r\n        : IDisposable",
+            "inheritance": [
+                "IDisposable"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "context",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly MazeEnemyContext context",
+                    "returnType": "",
+                    "valueType": "MazeEnemyContext",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "戦術評価に使用する敵AIコンテキスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "selfDistanceMap",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly GridDistanceMap<MazeCell>\r\n            selfDistanceMap",
+                    "returnType": "",
+                    "valueType": "GridDistanceMap<MazeCell>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "敵自身を起点とする経路距離情報。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "threatDistanceMap",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly GridDistanceMap<MazeCell>\r\n            threatDistanceMap",
+                    "returnType": "",
+                    "valueType": "GridDistanceMap<MazeCell>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "脅威を起点とする経路距離情報。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "territoryDistanceMap",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly GridDistanceMap<MazeCell>\r\n            territoryDistanceMap",
+                    "returnType": "",
+                    "valueType": "GridDistanceMap<MazeCell>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "縄張り中心を起点とする経路距離情報。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "isDirty",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isDirty = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "地形変更などによる距離情報の無効状態。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "true",
+                    "inspector": null
+                },
+                {
+                    "name": "isDisposed",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isDisposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "破棄済みであるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Context",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyContext Context => context",
+                    "returnType": "",
+                    "valueType": "MazeEnemyContext",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "戦術評価に使用するコンテキスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsValid",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsValid =>\r\n            !isDisposed && context.IsValid",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "戦術評価システムが利用可能であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsDisposed",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsDisposed => isDisposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "破棄済みであるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Origin",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int Origin =>\r\n            context.IsTraversing\r\n                ? context.TargetCell\r\n                : context.CurrentCell",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の経路探索開始座標。",
+                    "returns": "",
+                    "remarks": "セル間を移動中の場合は到達予定セルを使用する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MazeEnemyTacticalEvaluator",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyTacticalEvaluator(\r\n            MazeEnemyContext context)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "MazeEnemyContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "敵AIコンテキスト"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "戦術評価システムを生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "コンテキストが指定されていない場合。"
+                        },
+                        {
+                            "name": "ArgumentException",
+                            "description": "コンテキストが無効な場合。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Refresh",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool Refresh()",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "距離情報を必要に応じて更新する。",
+                    "returns": "更新可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Invalidate",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Invalidate()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "保持している距離情報を無効化する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryEvaluateChase",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryEvaluateChase(\r\n            MazeEnemyTargetObservation target,\r\n            out MazeEnemyTacticalEvaluation evaluation)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "target",
+                            "type": "MazeEnemyTargetObservation",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象の観測情報"
+                        },
+                        {
+                            "name": "evaluation",
+                            "type": "MazeEnemyTacticalEvaluation",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "戦術評価結果"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識対象への直接追跡を評価する。",
+                    "returns": "追跡可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryPredictPosition",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryPredictPosition(\r\n            MazeEnemyTargetObservation target,\r\n            float predictionTime,\r\n            out Vector2Int position,\r\n            out int distance)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "target",
+                            "type": "MazeEnemyTargetObservation",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象の観測情報"
+                        },
+                        {
+                            "name": "predictionTime",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "予測時間"
+                        },
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "予測座標"
+                        },
+                        {
+                            "name": "distance",
+                            "type": "int",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "予測移動距離"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "観測情報から対象の進行先を予測する。",
+                    "returns": "予測可能な場合はtrue",
+                    "remarks": "現在の移動方向へ直進すると仮定する。 壁やマップ境界に到達した場合は予測を停止する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryEvaluateIntercept",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryEvaluateIntercept(\r\n            MazeEnemyTargetObservation target,\r\n            out MazeEnemyTacticalEvaluation evaluation)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "target",
+                            "type": "MazeEnemyTargetObservation",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象の観測情報"
+                        },
+                        {
+                            "name": "evaluation",
+                            "type": "MazeEnemyTacticalEvaluation",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "戦術評価結果"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "対象への先回り地点を評価する。",
+                    "returns": "迎撃可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryEvaluateEscape",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryEvaluateEscape(\r\n            MazeEnemyTargetObservation threat,\r\n            int maxTravelDistance,\r\n            out MazeEnemyTacticalEvaluation evaluation)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "threat",
+                            "type": "MazeEnemyTargetObservation",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "脅威の観測情報"
+                        },
+                        {
+                            "name": "maxTravelDistance",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "逃走候補の最大経路距離"
+                        },
+                        {
+                            "name": "evaluation",
+                            "type": "MazeEnemyTacticalEvaluation",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "戦術評価結果"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "脅威から離れるための逃走地点を評価する。",
+                    "returns": "逃走候補が存在する場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryEvaluateReturn",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryEvaluateReturn(\r\n            out MazeEnemyTacticalEvaluation evaluation)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "evaluation",
+                            "type": "MazeEnemyTacticalEvaluation",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "戦術評価結果"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "縄張り内への帰還地点を評価する。",
+                    "returns": "帰還が必要かつ可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CanEvaluateTarget",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool CanEvaluateTarget(\r\n            MazeEnemyTargetObservation target,\r\n            MazeEnemyTargetType type)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "target",
+                            "type": "MazeEnemyTargetObservation",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象の観測情報"
+                        },
+                        {
+                            "name": "type",
+                            "type": "MazeEnemyTargetType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "必要な対象種類"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定対象が戦術評価可能であるか確認する。",
+                    "returns": "評価可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetChaseSpeed",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float GetChaseSpeed()",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "追跡時の移動速度を取得する。",
+                    "returns": "セル毎秒の移動速度",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetEscapeSpeed",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float GetEscapeSpeed()",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "逃走時の移動速度を取得する。",
+                    "returns": "セル毎秒の移動速度",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetArrivalTime",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float GetArrivalTime(\r\n            int distance,\r\n            float speed)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "distance",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "経路距離"
+                        },
+                        {
+                            "name": "speed",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "移動速度"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "目的地までの到達時間を計算する。",
+                    "returns": "到達予測時間",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsFiniteNonNegative",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static bool IsFiniteNonNegative(\r\n            float value)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "確認対象の数値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "数値が有限かつ非負であるか確認する。",
+                    "returns": "有効な数値である場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HandleCellChanged",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void HandleCellChanged(\r\n            Vector2Int position,\r\n            MazeCell previous,\r\n            MazeCell current)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更された座標"
+                        },
+                        {
+                            "name": "previous",
+                            "type": "MazeCell",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更前のセル"
+                        },
+                        {
+                            "name": "current",
+                            "type": "MazeCell",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更後のセル"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "マップのセル変更を処理する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Dispose",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Dispose()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "戦術評価システムを破棄する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 18
+        }
+    ],
+    "source": "using System;\r\nusing Framework.Pathfinding;\r\nusing Game.AI.Core;\r\nusing Game.AI.Parameters;\r\nusing Game.AI.Perception;\r\nusing Game.Map;\r\nusing UnityEngine;\r\n\r\nnamespace Game.AI.Tactics\r\n{\r\n    /// <summary>\r\n    /// 敵AIの追跡、迎撃、逃走、帰還戦術を評価する。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// 本クラスは目的地の評価のみを担当する。\r\n    /// 行動選択や実際の移動処理は行わない。\r\n    /// </remarks>\r\n    public sealed class MazeEnemyTacticalEvaluator\r\n        : IDisposable\r\n    {\r\n        /// <summary>\r\n        /// 戦術評価に使用する敵AIコンテキスト。\r\n        /// </summary>\r\n        private readonly MazeEnemyContext context;\r\n\r\n        /// <summary>\r\n        /// 敵自身を起点とする経路距離情報。\r\n        /// </summary>\r\n        private readonly GridDistanceMap<MazeCell>\r\n            selfDistanceMap;\r\n\r\n        /// <summary>\r\n        /// 脅威を起点とする経路距離情報。\r\n        /// </summary>\r\n        private readonly GridDistanceMap<MazeCell>\r\n            threatDistanceMap;\r\n\r\n        /// <summary>\r\n        /// 縄張り中心を起点とする経路距離情報。\r\n        /// </summary>\r\n        private readonly GridDistanceMap<MazeCell>\r\n            territoryDistanceMap;\r\n\r\n        /// <summary>\r\n        /// 地形変更などによる距離情報の無効状態。\r\n        /// </summary>\r\n        private bool isDirty = true;\r\n\r\n        /// <summary>\r\n        /// 破棄済みであるか。\r\n        /// </summary>\r\n        private bool isDisposed;\r\n\r\n        /// <summary>\r\n        /// 戦術評価に使用するコンテキスト。\r\n        /// </summary>\r\n        public MazeEnemyContext Context => context;\r\n\r\n        /// <summary>\r\n        /// 戦術評価システムが利用可能であるか。\r\n        /// </summary>\r\n        public bool IsValid =>\r\n            !isDisposed && context.IsValid;\r\n\r\n        /// <summary>\r\n        /// 破棄済みであるか。\r\n        /// </summary>\r\n        public bool IsDisposed => isDisposed;\r\n\r\n        /// <summary>\r\n        /// 現在の経路探索開始座標。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// セル間を移動中の場合は到達予定セルを使用する。\r\n        /// </remarks>\r\n        public Vector2Int Origin =>\r\n            context.IsTraversing\r\n                ? context.TargetCell\r\n                : context.CurrentCell;\r\n\r\n        /// <summary>\r\n        /// 戦術評価システムを生成する。\r\n        /// </summary>\r\n        /// <param name=\"context\">敵AIコンテキスト</param>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// コンテキストが指定されていない場合。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentException\">\r\n        /// コンテキストが無効な場合。\r\n        /// </exception>\r\n        public MazeEnemyTacticalEvaluator(\r\n            MazeEnemyContext context)\r\n        {\r\n            if (context == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(context));\r\n            }\r\n\r\n            if (!context.IsValid)\r\n            {\r\n                throw new ArgumentException(\r\n                    \"敵AIコンテキストが無効です。\",\r\n                    nameof(context));\r\n            }\r\n\r\n            this.context = context;\r\n\r\n            selfDistanceMap =\r\n                new GridDistanceMap<MazeCell>(\r\n                    context.Map,\r\n                    context.IsWalkable);\r\n\r\n            threatDistanceMap =\r\n                new GridDistanceMap<MazeCell>(\r\n                    context.Map,\r\n                    context.IsWalkable);\r\n\r\n            territoryDistanceMap =\r\n                new GridDistanceMap<MazeCell>(\r\n                    context.Map,\r\n                    context.IsWalkable);\r\n\r\n            context.Map.CellChanged += HandleCellChanged;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 距離情報を必要に応じて更新する。\r\n        /// </summary>\r\n        /// <returns>更新可能な場合はtrue</returns>\r\n        public bool Refresh()\r\n        {\r\n            if (!IsValid)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (isDirty)\r\n            {\r\n                selfDistanceMap.Clear();\r\n                threatDistanceMap.Clear();\r\n                territoryDistanceMap.Clear();\r\n\r\n                isDirty = false;\r\n            }\r\n\r\n            if (!selfDistanceMap.IsCalculated ||\r\n                selfDistanceMap.Origin != Origin)\r\n            {\r\n                if (!selfDistanceMap.Calculate(Origin))\r\n                {\r\n                    return false;\r\n                }\r\n            }\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 保持している距離情報を無効化する。\r\n        /// </summary>\r\n        public void Invalidate()\r\n        {\r\n            if (!isDisposed)\r\n            {\r\n                isDirty = true;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 認識対象への直接追跡を評価する。\r\n        /// </summary>\r\n        /// <param name=\"target\">対象の観測情報</param>\r\n        /// <param name=\"evaluation\">戦術評価結果</param>\r\n        /// <returns>追跡可能な場合はtrue</returns>\r\n        public bool TryEvaluateChase(\r\n            MazeEnemyTargetObservation target,\r\n            out MazeEnemyTacticalEvaluation evaluation)\r\n        {\r\n            evaluation = default;\r\n\r\n            if (!CanEvaluateTarget(\r\n                    target,\r\n                    MazeEnemyTargetType.Player) ||\r\n                !Refresh())\r\n            {\r\n                return false;\r\n            }\r\n\r\n            float speed = GetChaseSpeed();\r\n\r\n            if (speed <= 0f)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            int distance = selfDistanceMap.GetDistance(\r\n                target.LastKnownPosition);\r\n\r\n            if (distance < 0)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            float arrivalTime = GetArrivalTime(\r\n                distance,\r\n                speed);\r\n\r\n            float distanceScore =\r\n                1f / (1f + arrivalTime);\r\n\r\n            float score =\r\n                target.Confidence * distanceScore;\r\n\r\n            evaluation =\r\n                new MazeEnemyTacticalEvaluation(\r\n                    MazeEnemyTacticalType.Chase,\r\n                    Origin,\r\n                    target.LastKnownPosition,\r\n                    target.LastKnownPosition,\r\n                    distance,\r\n                    arrivalTime,\r\n                    0f,\r\n                    0,\r\n                    target.Confidence,\r\n                    score);\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 観測情報から対象の進行先を予測する。\r\n        /// </summary>\r\n        /// <param name=\"target\">対象の観測情報</param>\r\n        /// <param name=\"predictionTime\">予測時間</param>\r\n        /// <param name=\"position\">予測座標</param>\r\n        /// <param name=\"distance\">予測移動距離</param>\r\n        /// <returns>予測可能な場合はtrue</returns>\r\n        /// <remarks>\r\n        /// 現在の移動方向へ直進すると仮定する。\r\n        /// 壁やマップ境界に到達した場合は予測を停止する。\r\n        /// </remarks>\r\n        public bool TryPredictPosition(\r\n            MazeEnemyTargetObservation target,\r\n            float predictionTime,\r\n            out Vector2Int position,\r\n            out int distance)\r\n        {\r\n            position = default;\r\n            distance = 0;\r\n\r\n            if (!IsValid ||\r\n                !target.IsValid ||\r\n                target.Confidence <= 0f ||\r\n                !IsFiniteNonNegative(predictionTime) ||\r\n                !context.IsWalkable(\r\n                    target.LastKnownPosition))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            position = target.LastKnownPosition;\r\n\r\n            if (target.LastKnownDirection ==\r\n                    Vector2Int.zero ||\r\n                target.LastKnownMoveSpeed <= 0f ||\r\n                predictionTime == 0f)\r\n            {\r\n                return true;\r\n            }\r\n\r\n            // マップ寸法を上限として過剰な反復を防ぐ。\r\n            int maxSteps = Mathf.Max(\r\n                context.Map.Width,\r\n                context.Map.Height);\r\n\r\n            double predictedDistance =\r\n                (double)target.LastKnownMoveSpeed *\r\n                predictionTime;\r\n\r\n            int steps = (int)Math.Min(\r\n                Math.Floor(predictedDistance),\r\n                maxSteps);\r\n\r\n            for (int i = 0; i < steps; i++)\r\n            {\r\n                Vector2Int next =\r\n                    position +\r\n                    target.LastKnownDirection;\r\n\r\n                if (!context.IsWalkable(next))\r\n                {\r\n                    break;\r\n                }\r\n\r\n                position = next;\r\n                distance++;\r\n            }\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 対象への先回り地点を評価する。\r\n        /// </summary>\r\n        /// <param name=\"target\">対象の観測情報</param>\r\n        /// <param name=\"evaluation\">戦術評価結果</param>\r\n        /// <returns>迎撃可能な場合はtrue</returns>\r\n        public bool TryEvaluateIntercept(\r\n            MazeEnemyTargetObservation target,\r\n            out MazeEnemyTacticalEvaluation evaluation)\r\n        {\r\n            evaluation = default;\r\n\r\n            if (!CanEvaluateTarget(\r\n                    target,\r\n                    MazeEnemyTargetType.Player) ||\r\n                !target.IsVisible ||\r\n                !Refresh())\r\n            {\r\n                return false;\r\n            }\r\n\r\n            float intelligence =\r\n                context.GetParameterValue(\r\n                    MazeEnemyParameter.TacticalIntelligence);\r\n\r\n            float predictionTime =\r\n                context.GetParameterValue(\r\n                    MazeEnemyParameter.PredictionTime);\r\n\r\n            float speed = GetChaseSpeed();\r\n\r\n            if (intelligence <= 0f ||\r\n                speed <= 0f ||\r\n                target.LastKnownMoveSpeed <= 0f)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (!TryPredictPosition(\r\n                    target,\r\n                    predictionTime,\r\n                    out _,\r\n                    out int predictedDistance) ||\r\n                predictedDistance <= 0)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            bool found = false;\r\n            float bestScore = -1f;\r\n\r\n            Vector2Int candidate =\r\n                target.LastKnownPosition;\r\n\r\n            // 予測経路上の各セルを迎撃候補として評価する。\r\n            for (int i = 1; i <= predictedDistance; i++)\r\n            {\r\n                candidate += target.LastKnownDirection;\r\n\r\n                int distance =\r\n                    selfDistanceMap.GetDistance(candidate);\r\n\r\n                if (distance < 0)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                float enemyTime = GetArrivalTime(\r\n                    distance,\r\n                    speed);\r\n\r\n                float targetTime =\r\n                    i / target.LastKnownMoveSpeed;\r\n\r\n                // プレイヤーより遅く到着する候補を除外する。\r\n                if (enemyTime > targetTime)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                float timeAdvantage =\r\n                    Mathf.Clamp01(\r\n                        (targetTime - enemyTime) /\r\n                        Mathf.Max(targetTime, 0.001f));\r\n\r\n                float progressScore =\r\n                    (float)i / predictedDistance;\r\n\r\n                float score =\r\n                    intelligence *\r\n                    target.Confidence *\r\n                    (0.5f +\r\n                     timeAdvantage * 0.3f +\r\n                     progressScore * 0.2f);\r\n\r\n                if (found && score <= bestScore)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                found = true;\r\n                bestScore = score;\r\n\r\n                evaluation =\r\n                    new MazeEnemyTacticalEvaluation(\r\n                        MazeEnemyTacticalType.Intercept,\r\n                        Origin,\r\n                        candidate,\r\n                        target.LastKnownPosition,\r\n                        distance,\r\n                        enemyTime,\r\n                        targetTime,\r\n                        0,\r\n                        target.Confidence,\r\n                        score);\r\n            }\r\n\r\n            return found;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 脅威から離れるための逃走地点を評価する。\r\n        /// </summary>\r\n        /// <param name=\"threat\">脅威の観測情報</param>\r\n        /// <param name=\"maxTravelDistance\">\r\n        /// 逃走候補の最大経路距離\r\n        /// </param>\r\n        /// <param name=\"evaluation\">戦術評価結果</param>\r\n        /// <returns>逃走候補が存在する場合はtrue</returns>\r\n        public bool TryEvaluateEscape(\r\n            MazeEnemyTargetObservation threat,\r\n            int maxTravelDistance,\r\n            out MazeEnemyTacticalEvaluation evaluation)\r\n        {\r\n            evaluation = default;\r\n\r\n            if (maxTravelDistance <= 0 ||\r\n                !CanEvaluateTarget(\r\n                    threat,\r\n                    MazeEnemyTargetType.Threat) ||\r\n                !Refresh())\r\n            {\r\n                return false;\r\n            }\r\n\r\n            float speed = GetEscapeSpeed();\r\n\r\n            if (speed <= 0f)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (!threatDistanceMap.IsCalculated ||\r\n                threatDistanceMap.Origin !=\r\n                    threat.LastKnownPosition)\r\n            {\r\n                if (!threatDistanceMap.Calculate(\r\n                    threat.LastKnownPosition))\r\n                {\r\n                    return false;\r\n                }\r\n            }\r\n\r\n            int currentSafety =\r\n                threatDistanceMap.GetDistance(Origin);\r\n\r\n            // 脅威と経路が接続していない場合は逃走不要。\r\n            if (currentSafety < 0)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            bool found = false;\r\n            float bestScore = -1f;\r\n\r\n            foreach (Vector2Int candidate in\r\n                selfDistanceMap.GetPositionsWithinDistance(\r\n                    maxTravelDistance))\r\n            {\r\n                int distance =\r\n                    selfDistanceMap.GetDistance(candidate);\r\n\r\n                if (distance <= 0)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                int safetyDistance =\r\n                    threatDistanceMap.GetDistance(candidate);\r\n\r\n                if (safetyDistance <= currentSafety)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                int safetyGain =\r\n                    safetyDistance - currentSafety;\r\n\r\n                float safetyScore = Mathf.Clamp01(\r\n                    (float)safetyGain /\r\n                    maxTravelDistance);\r\n\r\n                float arrivalTime =\r\n                    GetArrivalTime(distance, speed);\r\n\r\n                float travelScore =\r\n                    1f / (1f + arrivalTime);\r\n\r\n                float score =\r\n                    threat.Confidence *\r\n                    (safetyScore * 0.8f +\r\n                     travelScore * 0.2f);\r\n\r\n                if (found &&\r\n                    (score < bestScore ||\r\n                     (score == bestScore &&\r\n                      distance >= evaluation.Distance)))\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                found = true;\r\n                bestScore = score;\r\n\r\n                evaluation =\r\n                    new MazeEnemyTacticalEvaluation(\r\n                        MazeEnemyTacticalType.Escape,\r\n                        Origin,\r\n                        candidate,\r\n                        threat.LastKnownPosition,\r\n                        distance,\r\n                        arrivalTime,\r\n                        0f,\r\n                        safetyDistance,\r\n                        threat.Confidence,\r\n                        score);\r\n            }\r\n\r\n            return found;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 縄張り内への帰還地点を評価する。\r\n        /// </summary>\r\n        /// <param name=\"evaluation\">戦術評価結果</param>\r\n        /// <returns>帰還が必要かつ可能な場合はtrue</returns>\r\n        public bool TryEvaluateReturn(\r\n            out MazeEnemyTacticalEvaluation evaluation)\r\n        {\r\n            evaluation = default;\r\n\r\n            if (!Refresh())\r\n            {\r\n                return false;\r\n            }\r\n\r\n            float radius =\r\n                context.GetParameterValue(\r\n                    MazeEnemyParameter.TerritoryRadius);\r\n\r\n            float territoriality =\r\n                context.GetParameterValue(\r\n                    MazeEnemyParameter.Territoriality);\r\n\r\n            float speed =\r\n                context.GetParameterValue(\r\n                    MazeEnemyParameter.MoveSpeed);\r\n\r\n            if (territoriality <= 0f || speed <= 0f)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            Vector2Int center =\r\n                context.TerritoryCenter;\r\n\r\n            if (!territoryDistanceMap.IsCalculated ||\r\n                territoryDistanceMap.Origin != center)\r\n            {\r\n                if (!territoryDistanceMap.Calculate(center))\r\n                {\r\n                    return false;\r\n                }\r\n            }\r\n\r\n            int currentDistance =\r\n                territoryDistanceMap.GetDistance(Origin);\r\n\r\n            if (currentDistance < 0 ||\r\n                currentDistance <= radius)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            bool found = false;\r\n            int bestDistance = int.MaxValue;\r\n            int bestCenterDistance = int.MaxValue;\r\n\r\n            Vector2Int bestPosition = default;\r\n\r\n            // 縄張り内の到達可能な最寄り地点を探す。\r\n            foreach (Vector2Int candidate in\r\n                territoryDistanceMap.GetPositionsWithinDistance(\r\n                    Mathf.FloorToInt(radius)))\r\n            {\r\n                int distance =\r\n                    selfDistanceMap.GetDistance(candidate);\r\n\r\n                if (distance < 0)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                int centerDistance =\r\n                    territoryDistanceMap.GetDistance(candidate);\r\n\r\n                if (distance > bestDistance ||\r\n                    (distance == bestDistance &&\r\n                     centerDistance >= bestCenterDistance))\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                found = true;\r\n                bestDistance = distance;\r\n                bestCenterDistance = centerDistance;\r\n                bestPosition = candidate;\r\n            }\r\n\r\n            if (!found)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            float outsideDistance =\r\n                currentDistance - radius;\r\n\r\n            float returnPressure =\r\n                Mathf.Clamp01(\r\n                    outsideDistance /\r\n                    Mathf.Max(radius, 1f));\r\n\r\n            evaluation =\r\n                new MazeEnemyTacticalEvaluation(\r\n                    MazeEnemyTacticalType.ReturnToTerritory,\r\n                    Origin,\r\n                    bestPosition,\r\n                    center,\r\n                    bestDistance,\r\n                    GetArrivalTime(bestDistance, speed),\r\n                    0f,\r\n                    0,\r\n                    1f,\r\n                    territoriality * returnPressure);\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定対象が戦術評価可能であるか確認する。\r\n        /// </summary>\r\n        /// <param name=\"target\">対象の観測情報</param>\r\n        /// <param name=\"type\">必要な対象種類</param>\r\n        /// <returns>評価可能な場合はtrue</returns>\r\n        private bool CanEvaluateTarget(\r\n            MazeEnemyTargetObservation target,\r\n            MazeEnemyTargetType type)\r\n        {\r\n            return IsValid &&\r\n                target.IsValid &&\r\n                target.Type == type &&\r\n                target.Confidence > 0f &&\r\n                context.IsWalkable(\r\n                    target.LastKnownPosition);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 追跡時の移動速度を取得する。\r\n        /// </summary>\r\n        /// <returns>セル毎秒の移動速度</returns>\r\n        private float GetChaseSpeed()\r\n        {\r\n            return context.GetParameterValue(\r\n                       MazeEnemyParameter.MoveSpeed) *\r\n                   context.GetParameterValue(\r\n                       MazeEnemyParameter.ChaseSpeedMultiplier);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 逃走時の移動速度を取得する。\r\n        /// </summary>\r\n        /// <returns>セル毎秒の移動速度</returns>\r\n        private float GetEscapeSpeed()\r\n        {\r\n            return context.GetParameterValue(\r\n                       MazeEnemyParameter.MoveSpeed) *\r\n                   context.GetParameterValue(\r\n                       MazeEnemyParameter.EscapeSpeedMultiplier);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 目的地までの到達時間を計算する。\r\n        /// </summary>\r\n        /// <param name=\"distance\">経路距離</param>\r\n        /// <param name=\"speed\">移動速度</param>\r\n        /// <returns>到達予測時間</returns>\r\n        private float GetArrivalTime(\r\n            int distance,\r\n            float speed)\r\n        {\r\n            if (speed <= 0f)\r\n            {\r\n                return float.PositiveInfinity;\r\n            }\r\n\r\n            float remainingDistance = distance;\r\n\r\n            // 移動中の場合は現在の区間の残り距離を加える。\r\n            if (context.IsTraversing)\r\n            {\r\n                remainingDistance += Mathf.Clamp01(\r\n                    1f - context.Movement.SegmentProgress);\r\n            }\r\n\r\n            return remainingDistance / speed;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 数値が有限かつ非負であるか確認する。\r\n        /// </summary>\r\n        /// <param name=\"value\">確認対象の数値</param>\r\n        /// <returns>有効な数値である場合はtrue</returns>\r\n        private static bool IsFiniteNonNegative(\r\n            float value)\r\n        {\r\n            return !float.IsNaN(value) &&\r\n                !float.IsInfinity(value) &&\r\n                value >= 0f;\r\n        }\r\n\r\n        /// <summary>\r\n        /// マップのセル変更を処理する。\r\n        /// </summary>\r\n        /// <param name=\"position\">変更された座標</param>\r\n        /// <param name=\"previous\">変更前のセル</param>\r\n        /// <param name=\"current\">変更後のセル</param>\r\n        private void HandleCellChanged(\r\n            Vector2Int position,\r\n            MazeCell previous,\r\n            MazeCell current)\r\n        {\r\n            // 宝石やアイテムの変更では再計算しない。\r\n            if (previous.IsWalkable != current.IsWalkable)\r\n            {\r\n                Invalidate();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 戦術評価システムを破棄する。\r\n        /// </summary>\r\n        public void Dispose()\r\n        {\r\n            if (isDisposed)\r\n            {\r\n                return;\r\n            }\r\n\r\n            isDisposed = true;\r\n\r\n            context.Map.CellChanged -= HandleCellChanged;\r\n\r\n            selfDistanceMap.Clear();\r\n            threatDistanceMap.Clear();\r\n            territoryDistanceMap.Clear();\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.686Z"
+}

@@ -1,0 +1,584 @@
+{
+    "parserVersion": 3,
+    "id": "Game.Tests.GridDistanceMapTest",
+    "name": "GridDistanceMapTest",
+    "fileName": "GridDistanceMapTest.cs",
+    "namespace": "Game.Tests",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class GridDistanceMapTest : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "グリッド距離マップの動作を検証する。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "Framework.Grid",
+        "Framework.Pathfinding",
+        "UnityEngine",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "RunAllTests",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void RunAllTests()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべてのテストを実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "GridDistanceMapTest",
+            "fullName": "GridDistanceMapTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "グリッド距離マップの動作を検証する。",
+            "remarks": "",
+            "attributes": [
+                {
+                    "name": "DisallowMultipleComponent",
+                    "arguments": [],
+                    "raw": "DisallowMultipleComponent"
+                }
+            ],
+            "declaration": "public sealed class GridDistanceMapTest : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "runTestsOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runTestsOnStart = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "開始時にテストを実行する。"
+                            ],
+                            "raw": "Tooltip(\"開始時にテストを実行する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Tests On Start",
+                        "type": "bool",
+                        "header": "テスト設定",
+                        "tooltip": "開始時にテストを実行する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト結果"
+                            ],
+                            "raw": "Header(\"テスト結果\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "成功したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"成功したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Passed Count",
+                        "type": "int",
+                        "header": "テスト結果",
+                        "tooltip": "成功したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "失敗したテスト件数。"
+                            ],
+                            "raw": "Tooltip(\"失敗したテスト件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Failed Count",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "失敗したテスト件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "ExpectedTestCount",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const int ExpectedTestCount = 48",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "48",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "予定されているテスト件数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "48",
+                    "inspector": null
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "開始時にテストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunAllTests",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void RunAllTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべてのテストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "すべてのテストを実行"
+                            ],
+                            "raw": "ContextMenu(\"すべてのテストを実行\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateMap",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private GridMap<bool> CreateMap(\r\n            int width = 5,\r\n            int height = 5)",
+                    "returnType": "GridMap<bool>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "width",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": "5",
+                            "description": "グリッドの幅"
+                        },
+                        {
+                            "name": "height",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": "5",
+                            "description": "グリッドの高さ"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定サイズのテスト用グリッドを生成する。",
+                    "returns": "すべて通行可能なグリッド",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateDistanceMap",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private GridDistanceMap<bool> CreateDistanceMap(\r\n            GridMap<bool> map)",
+                    "returnType": "GridDistanceMap<bool>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "map",
+                            "type": "GridMap<bool>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "計算対象のグリッド"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト用距離マップを生成する。",
+                    "returns": "未計算の距離マップ",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestInitialization",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestInitialization()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "初期状態と引数検証を確認する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestBasicDistance",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestBasicDistance()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "基本的な距離計算を確認する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestObstacles",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestObstacles()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "障害物と到達不可能なセルを確認する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestDistanceQueries",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestDistanceQueries()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "距離取得と範囲判定を確認する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestPositionQueries",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestPositionQueries()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "セル列挙と最遠セル取得を確認する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestRecalculation",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestRecalculation()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "再計算、初期化、安全性を確認する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CountPositions",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int CountPositions(\r\n            IEnumerable<Vector2Int> positions)",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "positions",
+                            "type": "IEnumerable<Vector2Int>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象のセル座標列挙"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "列挙されたセルの件数を取得する。",
+                    "returns": "セルの総数",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Throws",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool Throws<TException>(Action action)\r\n            where TException : Exception",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "Action",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "実行する処理"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "TException",
+                            "description": "期待する例外型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定された型の例外が発生するか確認する。",
+                    "returns": "期待する例外が発生した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(bool passed, string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "passed",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "成功判定"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個別のテスト結果を出力して集計する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 13
+        }
+    ],
+    "source": "using System;\r\nusing System.Collections.Generic;\r\nusing Framework.Grid;\r\nusing Framework.Pathfinding;\r\nusing UnityEngine;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// グリッド距離マップの動作を検証する。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    public sealed class GridDistanceMapTest : MonoBehaviour\r\n    {\r\n        [Header(\"テスト設定\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"開始時にテストを実行する。\")]\r\n        private bool runTestsOnStart = true;\r\n\r\n        [Header(\"テスト結果\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"成功したテスト件数。\")]\r\n        private int passedCount;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"失敗したテスト件数。\")]\r\n        private int failedCount;\r\n\r\n        /// <summary>\r\n        /// 予定されているテスト件数。\r\n        /// </summary>\r\n        private const int ExpectedTestCount = 48;\r\n\r\n        /// <summary>\r\n        /// 開始時にテストを実行する。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            if (runTestsOnStart)\r\n            {\r\n                RunAllTests();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべてのテストを実行する。\r\n        /// </summary>\r\n        [ContextMenu(\"すべてのテストを実行\")]\r\n        public void RunAllTests()\r\n        {\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n            try\r\n            {\r\n                TestInitialization();\r\n                TestBasicDistance();\r\n                TestObstacles();\r\n                TestDistanceQueries();\r\n                TestPositionQueries();\r\n                TestRecalculation();\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogException(exception, this);\r\n            }\r\n\r\n            Debug.Log(\r\n                $\"【GridDistanceMap テスト結果】\\n\" +\r\n                $\"成功：{passedCount}\\n\" +\r\n                $\"失敗：{failedCount}\\n\" +\r\n                (passedCount == ExpectedTestCount &&\r\n                 failedCount == 0\r\n                    ? \"すべてのテストに成功しました。\"\r\n                    : \"失敗または未実行のテストがあります。\"),\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定サイズのテスト用グリッドを生成する。\r\n        /// </summary>\r\n        /// <param name=\"width\">グリッドの幅</param>\r\n        /// <param name=\"height\">グリッドの高さ</param>\r\n        /// <returns>すべて通行可能なグリッド</returns>\r\n        private GridMap<bool> CreateMap(\r\n            int width = 5,\r\n            int height = 5)\r\n        {\r\n            return new GridMap<bool>(\r\n                width,\r\n                height,\r\n                position => true);\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト用距離マップを生成する。\r\n        /// </summary>\r\n        /// <param name=\"map\">計算対象のグリッド</param>\r\n        /// <returns>未計算の距離マップ</returns>\r\n        private GridDistanceMap<bool> CreateDistanceMap(\r\n            GridMap<bool> map)\r\n        {\r\n            return new GridDistanceMap<bool>(\r\n                map,\r\n                position => map.GetCell(position));\r\n        }\r\n\r\n        /// <summary>\r\n        /// 初期状態と引数検証を確認する。\r\n        /// </summary>\r\n        private void TestInitialization()\r\n        {\r\n            var map = CreateMap();\r\n\r\n            var distanceMap = CreateDistanceMap(map);\r\n\r\n            bool mapPassed =\r\n                ReferenceEquals(distanceMap.Map, map);\r\n            Debug.Assert(mapPassed, \"グリッド参照\", this);\r\n            Check(mapPassed, \"グリッド参照\");\r\n\r\n            bool calculatedPassed =\r\n                !distanceMap.IsCalculated;\r\n            Debug.Assert(calculatedPassed, \"初期未計算状態\", this);\r\n            Check(calculatedPassed, \"初期未計算状態\");\r\n\r\n            bool countPassed =\r\n                distanceMap.ReachableCount == 0;\r\n            Debug.Assert(countPassed, \"初期到達可能セル数\", this);\r\n            Check(countPassed, \"初期到達可能セル数\");\r\n\r\n            bool maxPassed =\r\n                distanceMap.MaxDistance == -1;\r\n            Debug.Assert(maxPassed, \"初期最大距離\", this);\r\n            Check(maxPassed, \"初期最大距離\");\r\n\r\n            bool distancePassed =\r\n                distanceMap.GetDistance(Vector2Int.zero) == -1;\r\n            Debug.Assert(distancePassed, \"未計算時の距離取得\", this);\r\n            Check(distancePassed, \"未計算時の距離取得\");\r\n\r\n            bool farthestPassed =\r\n                !distanceMap.TryGetFarthestPosition(\r\n                    out var unusedPosition,\r\n                    out int unusedDistance) &&\r\n                unusedPosition == default &&\r\n                unusedDistance == -1;\r\n            Debug.Assert(farthestPassed, \"未計算時の最遠セル取得\", this);\r\n            Check(farthestPassed, \"未計算時の最遠セル取得\");\r\n\r\n            bool nullMapPassed =\r\n                Throws<ArgumentNullException>(() =>\r\n                {\r\n                    new GridDistanceMap<bool>(\r\n                        null,\r\n                        position => true);\r\n                });\r\n            Debug.Assert(nullMapPassed, \"nullグリッドの拒否\", this);\r\n            Check(nullMapPassed, \"nullグリッドの拒否\");\r\n\r\n            bool nullPredicatePassed =\r\n                Throws<ArgumentNullException>(() =>\r\n                {\r\n                    new GridDistanceMap<bool>(map, null);\r\n                });\r\n            Debug.Assert(nullPredicatePassed, \"null判定関数の拒否\", this);\r\n            Check(nullPredicatePassed, \"null判定関数の拒否\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 基本的な距離計算を確認する。\r\n        /// </summary>\r\n        private void TestBasicDistance()\r\n        {\r\n            var map = CreateMap();\r\n\r\n            var distanceMap = CreateDistanceMap(map);\r\n\r\n            Vector2Int origin = new Vector2Int(2, 2);\r\n\r\n            bool calculatePassed =\r\n                distanceMap.Calculate(origin) &&\r\n                distanceMap.IsCalculated;\r\n            Debug.Assert(calculatePassed, \"距離計算の成功\", this);\r\n            Check(calculatePassed, \"距離計算の成功\");\r\n\r\n            bool originPassed =\r\n                distanceMap.Origin == origin;\r\n            Debug.Assert(originPassed, \"起点の保持\", this);\r\n            Check(originPassed, \"起点の保持\");\r\n\r\n            bool zeroPassed =\r\n                distanceMap.GetDistance(origin) == 0;\r\n            Debug.Assert(zeroPassed, \"起点の距離\", this);\r\n            Check(zeroPassed, \"起点の距離\");\r\n\r\n            bool neighborPassed =\r\n                distanceMap.GetDistance(\r\n                    origin + Vector2Int.up) == 1 &&\r\n                distanceMap.GetDistance(\r\n                    origin + Vector2Int.down) == 1 &&\r\n                distanceMap.GetDistance(\r\n                    origin + Vector2Int.left) == 1 &&\r\n                distanceMap.GetDistance(\r\n                    origin + Vector2Int.right) == 1;\r\n            Debug.Assert(neighborPassed, \"上下左右の距離\", this);\r\n            Check(neighborPassed, \"上下左右の距離\");\r\n\r\n            bool diagonalPassed =\r\n                distanceMap.GetDistance(\r\n                    new Vector2Int(3, 3)) == 2;\r\n            Debug.Assert(diagonalPassed, \"斜め位置の移動距離\", this);\r\n            Check(diagonalPassed, \"斜め位置の移動距離\");\r\n\r\n            bool cornerPassed =\r\n                distanceMap.GetDistance(\r\n                    new Vector2Int(0, 0)) == 4 &&\r\n                distanceMap.GetDistance(\r\n                    new Vector2Int(4, 4)) == 4;\r\n            Debug.Assert(cornerPassed, \"グリッド端への距離\", this);\r\n            Check(cornerPassed, \"グリッド端への距離\");\r\n\r\n            bool countPassed =\r\n                distanceMap.ReachableCount == 25;\r\n            Debug.Assert(countPassed, \"全セルへの到達\", this);\r\n            Check(countPassed, \"全セルへの到達\");\r\n\r\n            bool maxPassed =\r\n                distanceMap.MaxDistance == 4;\r\n            Debug.Assert(maxPassed, \"最大距離の計算\", this);\r\n            Check(maxPassed, \"最大距離の計算\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 障害物と到達不可能なセルを確認する。\r\n        /// </summary>\r\n        private void TestObstacles()\r\n        {\r\n            var map = CreateMap();\r\n\r\n            // X座標2に壁を作り、Y座標4のみ通行可能とする。\r\n            for (int y = 0; y < 4; y++)\r\n            {\r\n                map.SetCell(new Vector2Int(2, y), false);\r\n            }\r\n\r\n            var distanceMap = CreateDistanceMap(map);\r\n\r\n            Vector2Int origin = new Vector2Int(1, 1);\r\n\r\n            Vector2Int destination = new Vector2Int(3, 1);\r\n\r\n            bool calculatePassed =\r\n                distanceMap.Calculate(origin);\r\n            Debug.Assert(calculatePassed, \"障害物を含む距離計算\", this);\r\n            Check(calculatePassed, \"障害物を含む距離計算\");\r\n\r\n            bool wallPassed =\r\n                distanceMap.GetDistance(\r\n                    new Vector2Int(2, 1)) == -1;\r\n            Debug.Assert(wallPassed, \"壁への到達拒否\", this);\r\n            Check(wallPassed, \"壁への到達拒否\");\r\n\r\n            bool detourPassed =\r\n                distanceMap.GetDistance(destination) == 8;\r\n            Debug.Assert(detourPassed, \"壁を迂回した最短距離\", this);\r\n            Check(detourPassed, \"壁を迂回した最短距離\");\r\n\r\n            bool countPassed =\r\n                distanceMap.ReachableCount == 21;\r\n            Debug.Assert(countPassed, \"壁を除く到達可能セル数\", this);\r\n            Check(countPassed, \"壁を除く到達可能セル数\");\r\n\r\n            // 通路を閉鎖してグリッドを分断する。\r\n            map.SetCell(new Vector2Int(2, 4), false);\r\n\r\n            distanceMap.Calculate(origin);\r\n\r\n            bool unreachablePassed =\r\n                !distanceMap.IsReachable(destination) &&\r\n                distanceMap.GetDistance(destination) == -1;\r\n            Debug.Assert(unreachablePassed, \"分断領域への到達拒否\", this);\r\n            Check(unreachablePassed, \"分断領域への到達拒否\");\r\n\r\n            bool separatedCountPassed =\r\n                distanceMap.ReachableCount == 10;\r\n            Debug.Assert(separatedCountPassed, \"分断後の到達可能セル数\", this);\r\n            Check(separatedCountPassed, \"分断後の到達可能セル数\");\r\n\r\n            bool blockedOriginPassed =\r\n                !distanceMap.Calculate(new Vector2Int(2, 2)) &&\r\n                !distanceMap.IsCalculated;\r\n            Debug.Assert(blockedOriginPassed, \"通行不可能な起点の拒否\", this);\r\n            Check(blockedOriginPassed, \"通行不可能な起点の拒否\");\r\n\r\n            // 起点以外をすべて通行不可能にする。\r\n            map.Fill(false);\r\n\r\n            map.SetCell(origin, true);\r\n\r\n            bool isolatedPassed =\r\n                distanceMap.Calculate(origin) &&\r\n                distanceMap.ReachableCount == 1 &&\r\n                distanceMap.MaxDistance == 0;\r\n            Debug.Assert(isolatedPassed, \"孤立セルからの距離計算\", this);\r\n            Check(isolatedPassed, \"孤立セルからの距離計算\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 距離取得と範囲判定を確認する。\r\n        /// </summary>\r\n        private void TestDistanceQueries()\r\n        {\r\n            var map = CreateMap();\r\n\r\n            var distanceMap = CreateDistanceMap(map);\r\n\r\n            distanceMap.Calculate(Vector2Int.zero);\r\n\r\n            bool tryPassed =\r\n                distanceMap.TryGetDistance(\r\n                    new Vector2Int(2, 3),\r\n                    out int distance) &&\r\n                distance == 5;\r\n            Debug.Assert(tryPassed, \"最短距離の安全な取得\", this);\r\n            Check(tryPassed, \"最短距離の安全な取得\");\r\n\r\n            bool outsidePassed =\r\n                !distanceMap.TryGetDistance(\r\n                    new Vector2Int(-1, 0),\r\n                    out int outsideDistance) &&\r\n                outsideDistance == -1;\r\n            Debug.Assert(outsidePassed, \"範囲外セルの距離取得\", this);\r\n            Check(outsidePassed, \"範囲外セルの距離取得\");\r\n\r\n            bool reachablePassed =\r\n                distanceMap.IsReachable(new Vector2Int(4, 4));\r\n            Debug.Assert(reachablePassed, \"到達可能性の確認\", this);\r\n            Check(reachablePassed, \"到達可能性の確認\");\r\n\r\n            bool withinPassed =\r\n                distanceMap.IsWithinDistance(\r\n                    new Vector2Int(1, 1), 3);\r\n            Debug.Assert(withinPassed, \"指定距離以内の判定\", this);\r\n            Check(withinPassed, \"指定距離以内の判定\");\r\n\r\n            bool boundaryPassed =\r\n                distanceMap.IsWithinDistance(\r\n                    new Vector2Int(2, 1), 3);\r\n            Debug.Assert(boundaryPassed, \"距離境界の包含\", this);\r\n            Check(boundaryPassed, \"距離境界の包含\");\r\n\r\n            bool beyondPassed =\r\n                !distanceMap.IsWithinDistance(\r\n                    new Vector2Int(2, 2), 3);\r\n            Debug.Assert(beyondPassed, \"指定距離外の判定\", this);\r\n            Check(beyondPassed, \"指定距離外の判定\");\r\n\r\n            bool zeroPassed =\r\n                distanceMap.IsWithinDistance(\r\n                    Vector2Int.zero, 0) &&\r\n                !distanceMap.IsWithinDistance(\r\n                    Vector2Int.up, 0);\r\n            Debug.Assert(zeroPassed, \"距離0の範囲判定\", this);\r\n            Check(zeroPassed, \"距離0の範囲判定\");\r\n\r\n            bool invalidPassed =\r\n                !distanceMap.IsWithinDistance(\r\n                    Vector2Int.zero, -1) &&\r\n                !distanceMap.IsWithinDistance(\r\n                    new Vector2Int(5, 5), 100);\r\n            Debug.Assert(invalidPassed, \"無効な範囲判定の拒否\", this);\r\n            Check(invalidPassed, \"無効な範囲判定の拒否\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// セル列挙と最遠セル取得を確認する。\r\n        /// </summary>\r\n        private void TestPositionQueries()\r\n        {\r\n            var map = CreateMap();\r\n\r\n            var distanceMap = CreateDistanceMap(map);\r\n\r\n            bool emptyPassed =\r\n                CountPositions(\r\n                    distanceMap.GetReachablePositions()) == 0;\r\n            Debug.Assert(emptyPassed, \"未計算時の空列挙\", this);\r\n            Check(emptyPassed, \"未計算時の空列挙\");\r\n\r\n            distanceMap.Calculate(new Vector2Int(2, 2));\r\n\r\n            var allPositions = new List<Vector2Int>(\r\n                distanceMap.GetReachablePositions());\r\n\r\n            bool allPassed =\r\n                allPositions.Count == 25 &&\r\n                new HashSet<Vector2Int>(\r\n                    allPositions).Count == 25;\r\n            Debug.Assert(allPassed, \"全到達可能セルの重複なし列挙\", this);\r\n            Check(allPassed, \"全到達可能セルの重複なし列挙\");\r\n\r\n            bool orderPassed =\r\n                allPositions.Count == 25 &&\r\n                allPositions[0] == Vector2Int.zero &&\r\n                allPositions[1] == Vector2Int.right &&\r\n                allPositions[5] == Vector2Int.up;\r\n            Debug.Assert(orderPassed, \"セル列挙の順序\", this);\r\n            Check(orderPassed, \"セル列挙の順序\");\r\n\r\n            bool radiusOnePassed =\r\n                CountPositions(\r\n                    distanceMap.GetPositionsWithinDistance(1)) == 5;\r\n            Debug.Assert(radiusOnePassed, \"距離1以内のセル列挙\", this);\r\n            Check(radiusOnePassed, \"距離1以内のセル列挙\");\r\n\r\n            bool radiusTwoPassed =\r\n                CountPositions(\r\n                    distanceMap.GetPositionsWithinDistance(2)) == 13;\r\n            Debug.Assert(radiusTwoPassed, \"距離2以内のセル列挙\", this);\r\n            Check(radiusTwoPassed, \"距離2以内のセル列挙\");\r\n\r\n            bool zeroPassed =\r\n                CountPositions(\r\n                    distanceMap.GetPositionsWithinDistance(0)) == 1 &&\r\n                CountPositions(\r\n                    distanceMap.GetPositionsWithinDistance(-1)) == 0;\r\n            Debug.Assert(zeroPassed, \"距離0と負の距離の列挙\", this);\r\n            Check(zeroPassed, \"距離0と負の距離の列挙\");\r\n\r\n            bool farthestPassed =\r\n                distanceMap.TryGetFarthestPosition(\r\n                    out Vector2Int position,\r\n                    out int distance) &&\r\n                distance == 4 &&\r\n                distanceMap.GetDistance(position) == 4 &&\r\n                position == new Vector2Int(0, 4);\r\n            Debug.Assert(farthestPassed, \"最遠セルと同距離時の選択順序\", this);\r\n            Check(farthestPassed, \"最遠セルと同距離時の選択順序\");\r\n\r\n            // 列挙途中で計算結果を変更する。\r\n            bool enumerationPassed = false;\r\n\r\n            using (var enumerator =\r\n                distanceMap.GetReachablePositions().GetEnumerator())\r\n            {\r\n                if (enumerator.MoveNext())\r\n                {\r\n                    distanceMap.Clear();\r\n\r\n                    enumerationPassed =\r\n                        Throws<InvalidOperationException>(() =>\r\n                        {\r\n                            enumerator.MoveNext();\r\n                        });\r\n                }\r\n            }\r\n\r\n            Debug.Assert(enumerationPassed, \"列挙中の結果変更検知\", this);\r\n            Check(enumerationPassed, \"列挙中の結果変更検知\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 再計算、初期化、安全性を確認する。\r\n        /// </summary>\r\n        private void TestRecalculation()\r\n        {\r\n            var map = CreateMap();\r\n\r\n            var distanceMap = CreateDistanceMap(map);\r\n\r\n            distanceMap.Calculate(Vector2Int.zero);\r\n\r\n            bool originChangePassed =\r\n                distanceMap.Calculate(new Vector2Int(4, 4)) &&\r\n                distanceMap.GetDistance(Vector2Int.zero) == 8 &&\r\n                distanceMap.GetDistance(new Vector2Int(4, 4)) == 0;\r\n            Debug.Assert(originChangePassed, \"起点変更による再計算\", this);\r\n            Check(originChangePassed, \"起点変更による再計算\");\r\n\r\n            map.SetCell(new Vector2Int(3, 4), false);\r\n\r\n            bool snapshotPassed =\r\n                distanceMap.GetDistance(new Vector2Int(3, 4)) == 1;\r\n            Debug.Assert(snapshotPassed, \"再計算前の計算結果維持\", this);\r\n            Check(snapshotPassed, \"再計算前の計算結果維持\");\r\n\r\n            bool wallChangePassed =\r\n                distanceMap.Calculate(distanceMap.Origin) &&\r\n                distanceMap.GetDistance(new Vector2Int(3, 4)) == -1 &&\r\n                distanceMap.ReachableCount == 24;\r\n            Debug.Assert(wallChangePassed, \"通行条件変更後の再計算\", this);\r\n            Check(wallChangePassed, \"通行条件変更後の再計算\");\r\n\r\n            bool invalidOriginPassed =\r\n                !distanceMap.Calculate(new Vector2Int(-1, 0)) &&\r\n                !distanceMap.IsCalculated &&\r\n                distanceMap.ReachableCount == 0 &&\r\n                distanceMap.MaxDistance == -1;\r\n            Debug.Assert(invalidOriginPassed, \"無効な起点と旧結果の破棄\", this);\r\n            Check(invalidOriginPassed, \"無効な起点と旧結果の破棄\");\r\n\r\n            distanceMap.Calculate(Vector2Int.zero);\r\n\r\n            distanceMap.Clear();\r\n\r\n            bool clearPassed =\r\n                !distanceMap.IsCalculated &&\r\n                distanceMap.ReachableCount == 0 &&\r\n                distanceMap.GetDistance(Vector2Int.zero) == -1;\r\n            Debug.Assert(clearPassed, \"計算結果の初期化\", this);\r\n            Check(clearPassed, \"計算結果の初期化\");\r\n\r\n            var secondMap = CreateDistanceMap(map);\r\n\r\n            distanceMap.Calculate(Vector2Int.zero);\r\n\r\n            secondMap.Calculate(new Vector2Int(4, 4));\r\n\r\n            bool independentPassed =\r\n                distanceMap.GetDistance(Vector2Int.zero) == 0 &&\r\n                secondMap.GetDistance(Vector2Int.zero) == 8;\r\n            Debug.Assert(independentPassed, \"距離マップのインスタンス独立性\", this);\r\n            Check(independentPassed, \"距離マップのインスタンス独立性\");\r\n\r\n            // 通行判定中に再計算を要求する。\r\n            GridDistanceMap<bool> recursiveMap = null;\r\n\r\n            recursiveMap = new GridDistanceMap<bool>(\r\n                map,\r\n                position =>\r\n                {\r\n                    recursiveMap.Calculate(position);\r\n\r\n                    return true;\r\n                });\r\n\r\n            bool recursivePassed =\r\n                Throws<InvalidOperationException>(() =>\r\n                {\r\n                    recursiveMap.Calculate(Vector2Int.zero);\r\n                }) &&\r\n                !recursiveMap.IsCalculated &&\r\n                recursiveMap.ReachableCount == 0;\r\n            Debug.Assert(recursivePassed, \"計算処理の再入防止\", this);\r\n            Check(recursivePassed, \"計算処理の再入防止\");\r\n\r\n            // 通行判定で例外が発生した場合の復旧を確認する。\r\n            bool throwException = true;\r\n\r\n            var exceptionMap = new GridDistanceMap<bool>(\r\n                map,\r\n                position =>\r\n                {\r\n                    if (throwException &&\r\n                        position == Vector2Int.up)\r\n                    {\r\n                        throw new InvalidOperationException(\r\n                            \"テスト用の例外\");\r\n                    }\r\n\r\n                    return map.GetCell(position);\r\n                });\r\n\r\n            bool exceptionDetected =\r\n                Throws<InvalidOperationException>(() =>\r\n                {\r\n                    exceptionMap.Calculate(Vector2Int.zero);\r\n                });\r\n\r\n            bool resultCleared =\r\n                !exceptionMap.IsCalculated &&\r\n                exceptionMap.ReachableCount == 0;\r\n\r\n            throwException = false;\r\n\r\n            bool recoveryPassed =\r\n                exceptionDetected &&\r\n                resultCleared &&\r\n                exceptionMap.Calculate(Vector2Int.zero) &&\r\n                exceptionMap.ReachableCount == 24;\r\n\r\n            Debug.Assert(recoveryPassed, \"計算例外後の正常復旧\", this);\r\n            Check(recoveryPassed, \"計算例外後の正常復旧\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 列挙されたセルの件数を取得する。\r\n        /// </summary>\r\n        /// <param name=\"positions\">対象のセル座標列挙</param>\r\n        /// <returns>セルの総数</returns>\r\n        private int CountPositions(\r\n            IEnumerable<Vector2Int> positions)\r\n        {\r\n            int count = 0;\r\n\r\n            foreach (Vector2Int position in positions)\r\n            {\r\n                count++;\r\n            }\r\n\r\n            return count;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された型の例外が発生するか確認する。\r\n        /// </summary>\r\n        /// <typeparam name=\"TException\">期待する例外型</typeparam>\r\n        /// <param name=\"action\">実行する処理</param>\r\n        /// <returns>期待する例外が発生した場合はtrue</returns>\r\n        private bool Throws<TException>(Action action)\r\n            where TException : Exception\r\n        {\r\n            try\r\n            {\r\n                action();\r\n\r\n                return false;\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                return exception.GetType() ==\r\n                    typeof(TException);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個別のテスト結果を出力して集計する。\r\n        /// </summary>\r\n        /// <param name=\"passed\">成功判定</param>\r\n        /// <param name=\"testName\">テスト名</param>\r\n        private void Check(bool passed, string testName)\r\n        {\r\n            if (passed)\r\n            {\r\n                passedCount++;\r\n\r\n                Debug.Log(\r\n                    $\"<color=#00CC66>【成功】</color> {testName}\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogError(\r\n                    $\"【失敗】{testName}\",\r\n                    this);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.236Z"
+}

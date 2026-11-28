@@ -1,0 +1,331 @@
+{
+    "parserVersion": 3,
+    "id": "Game.Tests.MazeEnemyHearingParameterTest",
+    "name": "MazeEnemyHearingParameterTest",
+    "fileName": "MazeEnemyHearingParameterTest.cs",
+    "namespace": "Game.Tests",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class MazeEnemyHearingParameterTest\r\n        : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "敵AIの聴覚パラメーターを検証する。",
+    "remarks": "",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "Framework.Parameters",
+        "Game.AI.Parameters",
+        "UnityEngine",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "RunTests",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void RunTests()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべてのテストを実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyHearingParameterTest",
+            "fullName": "MazeEnemyHearingParameterTest",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "敵AIの聴覚パラメーターを検証する。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public sealed class MazeEnemyHearingParameterTest\r\n        : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "runTestsOnStart",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool runTestsOnStart = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "テスト設定"
+                            ],
+                            "raw": "Header(\"テスト設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "開始時にテストを実行する。"
+                            ],
+                            "raw": "Tooltip(\"開始時にテストを実行する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Run Tests On Start",
+                        "type": "bool",
+                        "header": "テスト設定",
+                        "tooltip": "開始時にテストを実行する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "passedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int passedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "成功したテスト数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "failedCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int failedCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "失敗したテスト数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Start",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Start()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "開始時にテストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RunTests",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void RunTests()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべてのテストを実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "ContextMenu",
+                            "arguments": [
+                                "Run Tests"
+                            ],
+                            "raw": "ContextMenu(\"Run Tests\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestCatalog",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestCatalog()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "共通パラメーター定義を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestDefaultParameterSet",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestDefaultParameterSet()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "標準パラメーターセットを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestProfile",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestProfile()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "プロファイルからの生成を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TestRuntimeParameters",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void TestRuntimeParameters()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "実行時の聴覚能力変更を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Check",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Check(\r\n            bool condition,\r\n            string testName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "condition",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証結果"
+                        },
+                        {
+                            "name": "testName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "テスト名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "テスト結果を集計して出力する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 10
+        }
+    ],
+    "source": "using Framework.Parameters;\r\nusing Game.AI.Parameters;\r\nusing UnityEngine;\r\n\r\nnamespace Game.Tests\r\n{\r\n    /// <summary>\r\n    /// 敵AIの聴覚パラメーターを検証する。\r\n    /// </summary>\r\n    public sealed class MazeEnemyHearingParameterTest\r\n        : MonoBehaviour\r\n    {\r\n        [Header(\"テスト設定\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"開始時にテストを実行する。\")]\r\n        private bool runTestsOnStart = true;\r\n\r\n        /// <summary>\r\n        /// 成功したテスト数。\r\n        /// </summary>\r\n        private int passedCount;\r\n\r\n        /// <summary>\r\n        /// 失敗したテスト数。\r\n        /// </summary>\r\n        private int failedCount;\r\n\r\n        /// <summary>\r\n        /// 開始時にテストを実行する。\r\n        /// </summary>\r\n        private void Start()\r\n        {\r\n            if (runTestsOnStart)\r\n            {\r\n                RunTests();\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべてのテストを実行する。\r\n        /// </summary>\r\n        [ContextMenu(\"Run Tests\")]\r\n        public void RunTests()\r\n        {\r\n            passedCount = 0;\r\n            failedCount = 0;\r\n\r\n            Debug.Log(\r\n                \"===== 聴覚パラメーターテスト開始 =====\",\r\n                this);\r\n\r\n            TestCatalog();\r\n            TestDefaultParameterSet();\r\n            TestProfile();\r\n            TestRuntimeParameters();\r\n\r\n            Debug.Log(\r\n                $\"===== テスト終了：成功 {passedCount}件 / \" +\r\n                $\"失敗 {failedCount}件 =====\",\r\n                this);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 共通パラメーター定義を検証する。\r\n        /// </summary>\r\n        private void TestCatalog()\r\n        {\r\n            bool correctCount =\r\n                MazeEnemyParameterCatalog.Count == 19;\r\n\r\n            Debug.Assert(\r\n                correctCount,\r\n                \"パラメーター定義数\", this);\r\n            Check(correctCount,\r\n                \"パラメーター定義数\");\r\n\r\n            bool correctIds =\r\n                (int)MazeEnemyParameter.HearingRange == 203 &&\r\n                (int)MazeEnemyParameter.HearingSensitivity == 204 &&\r\n                (int)MazeEnemyParameter.HearingAccuracy == 205;\r\n\r\n            Debug.Assert(\r\n                correctIds,\r\n                \"聴覚パラメーター識別子\", this);\r\n            Check(correctIds,\r\n                \"聴覚パラメーター識別子\");\r\n\r\n            bool hasRange =\r\n                MazeEnemyParameterCatalog.Contains(\r\n                    MazeEnemyParameter.HearingRange);\r\n\r\n            Debug.Assert(\r\n                hasRange,\r\n                \"聴覚範囲の登録\", this);\r\n            Check(hasRange,\r\n                \"聴覚範囲の登録\");\r\n\r\n            bool hasSensitivity =\r\n                MazeEnemyParameterCatalog.Contains(\r\n                    MazeEnemyParameter.HearingSensitivity);\r\n\r\n            Debug.Assert(\r\n                hasSensitivity,\r\n                \"聴覚感度の登録\", this);\r\n            Check(hasSensitivity,\r\n                \"聴覚感度の登録\");\r\n\r\n            bool hasAccuracy =\r\n                MazeEnemyParameterCatalog.Contains(\r\n                    MazeEnemyParameter.HearingAccuracy);\r\n\r\n            Debug.Assert(\r\n                hasAccuracy,\r\n                \"聴覚精度の登録\", this);\r\n            Check(hasAccuracy,\r\n                \"聴覚精度の登録\");\r\n\r\n            var range =\r\n                MazeEnemyParameterCatalog.GetDefinition(\r\n                    MazeEnemyParameter.HearingRange);\r\n\r\n            bool correctRange =\r\n                range.DefaultValue == 8f &&\r\n                range.MinValue == 0f &&\r\n                range.MaxValue == 64f;\r\n\r\n            Debug.Assert(\r\n                correctRange,\r\n                \"聴覚範囲の定義値\", this);\r\n            Check(correctRange,\r\n                \"聴覚範囲の定義値\");\r\n\r\n            var sensitivity =\r\n                MazeEnemyParameterCatalog.GetDefinition(\r\n                    MazeEnemyParameter.HearingSensitivity);\r\n\r\n            bool correctSensitivity =\r\n                sensitivity.DefaultValue == 0.5f &&\r\n                sensitivity.MinValue == 0f &&\r\n                sensitivity.MaxValue == 1f;\r\n\r\n            Debug.Assert(\r\n                correctSensitivity,\r\n                \"聴覚感度の定義値\", this);\r\n            Check(correctSensitivity,\r\n                \"聴覚感度の定義値\");\r\n\r\n            var accuracy =\r\n                MazeEnemyParameterCatalog.GetDefinition(\r\n                    MazeEnemyParameter.HearingAccuracy);\r\n\r\n            bool correctAccuracy =\r\n                accuracy.DefaultValue == 0.5f &&\r\n                accuracy.MinValue == 0f &&\r\n                accuracy.MaxValue == 1f;\r\n\r\n            Debug.Assert(\r\n                correctAccuracy,\r\n                \"聴覚精度の定義値\", this);\r\n            Check(correctAccuracy,\r\n                \"聴覚精度の定義値\");\r\n        }\r\n\r\n        /// <summary>\r\n        /// 標準パラメーターセットを検証する。\r\n        /// </summary>\r\n        private void TestDefaultParameterSet()\r\n        {\r\n            using (var parameters =\r\n                MazeEnemyParameterCatalog.CreateParameterSet())\r\n            {\r\n                Debug.Assert(\r\n                    parameters.Count == 19,\r\n                    \"標準パラメーター数\", this);\r\n                Check(parameters.Count == 19,\r\n                    \"標準パラメーター数\");\r\n\r\n                float range = parameters.GetValue(\r\n                    MazeEnemyParameter.HearingRange);\r\n\r\n                Debug.Assert(\r\n                    range == 8f,\r\n                    \"標準聴覚範囲\", this);\r\n                Check(range == 8f,\r\n                    \"標準聴覚範囲\");\r\n\r\n                float sensitivity = parameters.GetValue(\r\n                    MazeEnemyParameter.HearingSensitivity);\r\n\r\n                Debug.Assert(\r\n                    sensitivity == 0.5f,\r\n                    \"標準聴覚感度\", this);\r\n                Check(sensitivity == 0.5f,\r\n                    \"標準聴覚感度\");\r\n\r\n                float accuracy = parameters.GetValue(\r\n                    MazeEnemyParameter.HearingAccuracy);\r\n\r\n                Debug.Assert(\r\n                    accuracy == 0.5f,\r\n                    \"標準聴覚精度\", this);\r\n                Check(accuracy == 0.5f,\r\n                    \"標準聴覚精度\");\r\n\r\n                float moveSpeed = parameters.GetValue(\r\n                    MazeEnemyParameter.MoveSpeed);\r\n\r\n                Debug.Assert(\r\n                    moveSpeed == 3.5f,\r\n                    \"既存移動速度の維持\", this);\r\n                Check(moveSpeed == 3.5f,\r\n                    \"既存移動速度の維持\");\r\n\r\n                float detectionRange = parameters.GetValue(\r\n                    MazeEnemyParameter.DetectionRange);\r\n\r\n                Debug.Assert(\r\n                    detectionRange == 6f,\r\n                    \"既存視覚範囲の維持\", this);\r\n                Check(detectionRange == 6f,\r\n                    \"既存視覚範囲の維持\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// プロファイルからの生成を検証する。\r\n        /// </summary>\r\n        private void TestProfile()\r\n        {\r\n            var profile =\r\n                ScriptableObject.CreateInstance<MazeEnemyProfile>();\r\n\r\n            try\r\n            {\r\n                float range = profile.GetInitialValue(\r\n                    MazeEnemyParameter.HearingRange);\r\n\r\n                Debug.Assert(\r\n                    range == 8f,\r\n                    \"プロファイルの聴覚範囲\", this);\r\n                Check(range == 8f,\r\n                    \"プロファイルの聴覚範囲\");\r\n\r\n                float sensitivity = profile.GetInitialValue(\r\n                    MazeEnemyParameter.HearingSensitivity);\r\n\r\n                Debug.Assert(\r\n                    sensitivity == 0.5f,\r\n                    \"プロファイルの聴覚感度\", this);\r\n                Check(sensitivity == 0.5f,\r\n                    \"プロファイルの聴覚感度\");\r\n\r\n                float accuracy = profile.GetInitialValue(\r\n                    MazeEnemyParameter.HearingAccuracy);\r\n\r\n                Debug.Assert(\r\n                    accuracy == 0.5f,\r\n                    \"プロファイルの聴覚精度\", this);\r\n                Check(accuracy == 0.5f,\r\n                    \"プロファイルの聴覚精度\");\r\n\r\n                using (var first = profile.CreateParameterSet())\r\n                using (var second = profile.CreateParameterSet())\r\n                {\r\n                    Debug.Assert(\r\n                        first.Count == 19,\r\n                        \"プロファイルの生成数\", this);\r\n                    Check(first.Count == 19,\r\n                        \"プロファイルの生成数\");\r\n\r\n                    bool correctValues =\r\n                        first.GetValue(\r\n                            MazeEnemyParameter.HearingRange) == range &&\r\n                        first.GetValue(\r\n                            MazeEnemyParameter.HearingSensitivity) ==\r\n                                sensitivity &&\r\n                        first.GetValue(\r\n                            MazeEnemyParameter.HearingAccuracy) ==\r\n                                accuracy;\r\n\r\n                    Debug.Assert(\r\n                        correctValues,\r\n                        \"聴覚初期値の反映\", this);\r\n                    Check(correctValues,\r\n                        \"聴覚初期値の反映\");\r\n\r\n                    // 一方の実行時能力だけを変更する。\r\n                    first.SetBaseValue(\r\n                        MazeEnemyParameter.HearingRange,\r\n                        20f);\r\n\r\n                    bool independent =\r\n                        first.GetValue(\r\n                            MazeEnemyParameter.HearingRange) == 20f &&\r\n                        second.GetValue(\r\n                            MazeEnemyParameter.HearingRange) == 8f;\r\n\r\n                    Debug.Assert(\r\n                        independent,\r\n                        \"個体ごとの聴覚能力の独立性\", this);\r\n                    Check(independent,\r\n                        \"個体ごとの聴覚能力の独立性\");\r\n\r\n                    bool profileUnchanged =\r\n                        profile.GetInitialValue(\r\n                            MazeEnemyParameter.HearingRange) == 8f;\r\n\r\n                    Debug.Assert(\r\n                        profileUnchanged,\r\n                        \"プロファイル初期値の維持\", this);\r\n                    Check(profileUnchanged,\r\n                        \"プロファイル初期値の維持\");\r\n                }\r\n            }\r\n            finally\r\n            {\r\n                // テスト用の一時アセットを解放する。\r\n                if (Application.isPlaying)\r\n                {\r\n                    Destroy(profile);\r\n                }\r\n                else\r\n                {\r\n                    DestroyImmediate(profile);\r\n                }\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 実行時の聴覚能力変更を検証する。\r\n        /// </summary>\r\n        private void TestRuntimeParameters()\r\n        {\r\n            using (var parameters =\r\n                MazeEnemyParameterCatalog.CreateParameterSet())\r\n            {\r\n                var rangeId =\r\n                    MazeEnemyParameter.HearingRange;\r\n\r\n                var sensitivityId =\r\n                    MazeEnemyParameter.HearingSensitivity;\r\n\r\n                var accuracyId =\r\n                    MazeEnemyParameter.HearingAccuracy;\r\n\r\n                parameters.SetBaseValue(rangeId, 12f);\r\n\r\n                bool changed =\r\n                    parameters.GetValue(rangeId) == 12f;\r\n\r\n                Debug.Assert(\r\n                    changed,\r\n                    \"実行時の聴覚範囲変更\", this);\r\n                Check(changed,\r\n                    \"実行時の聴覚範囲変更\");\r\n\r\n                parameters.SetBaseValue(rangeId, -5f);\r\n\r\n                bool minimum =\r\n                    parameters.GetValue(rangeId) == 0f;\r\n\r\n                Debug.Assert(\r\n                    minimum,\r\n                    \"聴覚範囲の下限補正\", this);\r\n                Check(minimum,\r\n                    \"聴覚範囲の下限補正\");\r\n\r\n                parameters.SetBaseValue(rangeId, 100f);\r\n\r\n                bool maximum =\r\n                    parameters.GetValue(rangeId) == 64f;\r\n\r\n                Debug.Assert(\r\n                    maximum,\r\n                    \"聴覚範囲の上限補正\", this);\r\n                Check(maximum,\r\n                    \"聴覚範囲の上限補正\");\r\n\r\n                parameters.SetBaseValue(sensitivityId, -1f);\r\n\r\n                bool sensitivityMin =\r\n                    parameters.GetValue(sensitivityId) == 0f;\r\n\r\n                Debug.Assert(\r\n                    sensitivityMin,\r\n                    \"聴覚感度の下限補正\", this);\r\n                Check(sensitivityMin,\r\n                    \"聴覚感度の下限補正\");\r\n\r\n                parameters.SetBaseValue(sensitivityId, 2f);\r\n\r\n                bool sensitivityMax =\r\n                    parameters.GetValue(sensitivityId) == 1f;\r\n\r\n                Debug.Assert(\r\n                    sensitivityMax,\r\n                    \"聴覚感度の上限補正\", this);\r\n                Check(sensitivityMax,\r\n                    \"聴覚感度の上限補正\");\r\n\r\n                parameters.SetBaseValue(accuracyId, -1f);\r\n\r\n                bool accuracyMin =\r\n                    parameters.GetValue(accuracyId) == 0f;\r\n\r\n                Debug.Assert(\r\n                    accuracyMin,\r\n                    \"聴覚精度の下限補正\", this);\r\n                Check(accuracyMin,\r\n                    \"聴覚精度の下限補正\");\r\n\r\n                parameters.SetBaseValue(accuracyId, 2f);\r\n\r\n                bool accuracyMax =\r\n                    parameters.GetValue(accuracyId) == 1f;\r\n\r\n                Debug.Assert(\r\n                    accuracyMax,\r\n                    \"聴覚精度の上限補正\", this);\r\n                Check(accuracyMax,\r\n                    \"聴覚精度の上限補正\");\r\n\r\n                parameters.ResetAll();\r\n\r\n                bool reset =\r\n                    parameters.GetValue(rangeId) == 8f &&\r\n                    parameters.GetValue(sensitivityId) == 0.5f &&\r\n                    parameters.GetValue(accuracyId) == 0.5f;\r\n\r\n                Debug.Assert(\r\n                    reset,\r\n                    \"聴覚能力の初期化\", this);\r\n                Check(reset,\r\n                    \"聴覚能力の初期化\");\r\n\r\n                // 聴覚範囲を一時的に強化する。\r\n                var modifier =\r\n                    ParameterModifier.CreateAdditive(4f);\r\n\r\n                parameters.TryAddModifier(\r\n                    rangeId, modifier);\r\n\r\n                bool modified =\r\n                    parameters.GetValue(rangeId) == 12f;\r\n\r\n                Debug.Assert(\r\n                    modified,\r\n                    \"聴覚範囲へのModifier適用\", this);\r\n                Check(modified,\r\n                    \"聴覚範囲へのModifier適用\");\r\n\r\n                parameters.TryRemoveModifier(\r\n                    rangeId, modifier.Id);\r\n\r\n                bool removed =\r\n                    parameters.GetValue(rangeId) == 8f;\r\n\r\n                Debug.Assert(\r\n                    removed,\r\n                    \"聴覚Modifierの解除\", this);\r\n                Check(removed,\r\n                    \"聴覚Modifierの解除\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// テスト結果を集計して出力する。\r\n        /// </summary>\r\n        /// <param name=\"condition\">検証結果</param>\r\n        /// <param name=\"testName\">テスト名</param>\r\n        private void Check(\r\n            bool condition,\r\n            string testName)\r\n        {\r\n            if (condition)\r\n            {\r\n                passedCount++;\r\n\r\n                Debug.Log(\r\n                    $\"<color=#00CC66>【成功】</color> {testName}\",\r\n                    this);\r\n            }\r\n            else\r\n            {\r\n                failedCount++;\r\n\r\n                Debug.LogError(\r\n                    $\"【失敗】 {testName}\",\r\n                    this);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.540Z"
+}

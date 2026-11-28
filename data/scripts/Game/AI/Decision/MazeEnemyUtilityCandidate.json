@@ -1,0 +1,352 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Decision.MazeEnemyUtilityCandidate",
+    "name": "MazeEnemyUtilityCandidate",
+    "fileName": "MazeEnemyUtilityCandidate.cs",
+    "namespace": "Game.AI.Decision",
+    "type": "struct",
+    "accessibility": "public",
+    "modifiers": [
+        "readonly"
+    ],
+    "declaration": "public readonly struct MazeEnemyUtilityCandidate",
+    "typeParameters": [],
+    "summary": "敵AIの行動候補と評価結果を保持する。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [
+        "Game.AI.Actions",
+        "UnityEngine"
+    ],
+    "members": [
+        {
+            "name": "Action",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyActionType Action",
+            "returnType": "",
+            "valueType": "MazeEnemyActionType",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "行動の種類。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Destination",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int Destination",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "行動の目的地。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasDestination",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasDestination",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "移動目的地を持つ行動であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Score",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Score",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "行動の評価値。 値の範囲は0から1。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsValid",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsValid =>\r\n            Action != MazeEnemyActionType.None &&\r\n            Score > 0f",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "選択可能な行動候補であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MazeEnemyUtilityCandidate",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public MazeEnemyUtilityCandidate(\r\n            MazeEnemyActionType action,\r\n            Vector2Int destination,\r\n            bool hasDestination,\r\n            float score)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "action",
+                    "type": "MazeEnemyActionType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動の種類"
+                },
+                {
+                    "name": "destination",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "目的地"
+                },
+                {
+                    "name": "hasDestination",
+                    "type": "bool",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "目的地の有無"
+                },
+                {
+                    "name": "score",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "評価値"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動候補を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyUtilityCandidate",
+            "fullName": "MazeEnemyUtilityCandidate",
+            "kind": "struct",
+            "accessibility": "public",
+            "modifiers": [
+                "readonly"
+            ],
+            "summary": "敵AIの行動候補と評価結果を保持する。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public readonly struct MazeEnemyUtilityCandidate",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "Action",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyActionType Action",
+                    "returnType": "",
+                    "valueType": "MazeEnemyActionType",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "行動の種類。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Destination",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int Destination",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "行動の目的地。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HasDestination",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool HasDestination",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "移動目的地を持つ行動であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Score",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Score",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "行動の評価値。 値の範囲は0から1。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsValid",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsValid =>\r\n            Action != MazeEnemyActionType.None &&\r\n            Score > 0f",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "選択可能な行動候補であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MazeEnemyUtilityCandidate",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public MazeEnemyUtilityCandidate(\r\n            MazeEnemyActionType action,\r\n            Vector2Int destination,\r\n            bool hasDestination,\r\n            float score)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "MazeEnemyActionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動の種類"
+                        },
+                        {
+                            "name": "destination",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "目的地"
+                        },
+                        {
+                            "name": "hasDestination",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "目的地の有無"
+                        },
+                        {
+                            "name": "score",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動候補を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 9
+        }
+    ],
+    "source": "using Game.AI.Actions;\r\nusing UnityEngine;\r\n\r\nnamespace Game.AI.Decision\r\n{\r\n    /// <summary>\r\n    /// 敵AIの行動候補と評価結果を保持する。\r\n    /// </summary>\r\n    public readonly struct MazeEnemyUtilityCandidate\r\n    {\r\n        /// <summary>\r\n        /// 行動の種類。\r\n        /// </summary>\r\n        public MazeEnemyActionType Action { get; }\r\n\r\n        /// <summary>\r\n        /// 行動の目的地。\r\n        /// </summary>\r\n        public Vector2Int Destination { get; }\r\n\r\n        /// <summary>\r\n        /// 移動目的地を持つ行動であるか。\r\n        /// </summary>\r\n        public bool HasDestination { get; }\r\n\r\n        /// <summary>\r\n        /// 行動の評価値。\r\n        /// 値の範囲は0から1。\r\n        /// </summary>\r\n        public float Score { get; }\r\n\r\n        /// <summary>\r\n        /// 選択可能な行動候補であるか。\r\n        /// </summary>\r\n        public bool IsValid =>\r\n            Action != MazeEnemyActionType.None &&\r\n            Score > 0f;\r\n\r\n        /// <summary>\r\n        /// 行動候補を生成する。\r\n        /// </summary>\r\n        /// <param name=\"action\">行動の種類</param>\r\n        /// <param name=\"destination\">目的地</param>\r\n        /// <param name=\"hasDestination\">目的地の有無</param>\r\n        /// <param name=\"score\">評価値</param>\r\n        public MazeEnemyUtilityCandidate(\r\n            MazeEnemyActionType action,\r\n            Vector2Int destination,\r\n            bool hasDestination,\r\n            float score)\r\n        {\r\n            Action = action;\r\n            Destination = destination;\r\n            HasDestination = hasDestination;\r\n\r\n            Score = float.IsNaN(score)\r\n                ? 0f\r\n                : Mathf.Clamp01(score);\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.799Z"
+}

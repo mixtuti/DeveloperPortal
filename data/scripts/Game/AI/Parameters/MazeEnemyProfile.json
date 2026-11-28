@@ -1,0 +1,1454 @@
+{
+    "parserVersion": 3,
+    "id": "Game.AI.Parameters.MazeEnemyProfile",
+    "name": "MazeEnemyProfile",
+    "fileName": "MazeEnemyProfile.cs",
+    "namespace": "Game.AI.Parameters",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class MazeEnemyProfile : ScriptableObject",
+    "typeParameters": [],
+    "summary": "",
+    "remarks": "",
+    "inheritance": [
+        "ScriptableObject"
+    ],
+    "dependencies": [
+        "Framework.Parameters",
+        "UnityEngine",
+        "ScriptableObject"
+    ],
+    "members": [
+        {
+            "name": "DisplayName",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public string DisplayName => displayName",
+            "returnType": "",
+            "valueType": "string",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "プロファイルの表示名。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Description",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public string Description => description",
+            "returnType": "",
+            "valueType": "string",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "プロファイルの説明。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetInitialValue",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float GetInitialValue(MazeEnemyParameter id)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "MazeEnemyParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "パラメーター識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターの初期値を取得する。",
+            "returns": "定義範囲内に補正された初期値",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CreateParameterSet",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public ParameterSet<MazeEnemyParameter>\r\n            CreateParameterSet()",
+            "returnType": "ParameterSet<MazeEnemyParameter>",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "このプロファイルを使用した 独立した実行時パラメーターセットを生成する。",
+            "returns": "生成した実行時パラメーターセット",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "MazeEnemyProfile",
+            "fullName": "MazeEnemyProfile",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public sealed class MazeEnemyProfile : ScriptableObject",
+            "inheritance": [
+                "ScriptableObject"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "displayName",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private string displayName = \"標準型\"",
+                    "returnType": "",
+                    "valueType": "string",
+                    "value": "\"標準型\"",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "基本情報"
+                            ],
+                            "raw": "Header(\"基本情報\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "敵プロファイルの表示名。"
+                            ],
+                            "raw": "Tooltip(\"敵プロファイルの表示名。\")"
+                        }
+                    ],
+                    "initialValue": "\"標準型\"",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Display Name",
+                        "type": "string",
+                        "header": "基本情報",
+                        "tooltip": "敵プロファイルの表示名。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "\"標準型\""
+                    }
+                },
+                {
+                    "name": "description",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private string description = \"\"",
+                    "returnType": "",
+                    "valueType": "string",
+                    "value": "\"\"",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "TextArea",
+                            "arguments": [
+                                2,
+                                5
+                            ],
+                            "raw": "TextArea(2, 5)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "敵の性格や特徴に関する説明。"
+                            ],
+                            "raw": "Tooltip(\"敵の性格や特徴に関する説明。\")"
+                        }
+                    ],
+                    "initialValue": "\"\"",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Description",
+                        "type": "string",
+                        "header": null,
+                        "tooltip": "敵の性格や特徴に関する説明。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": true,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "\"\""
+                    }
+                },
+                {
+                    "name": "moveSpeed",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float moveSpeed = 3.5f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "3.5f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "基本能力"
+                            ],
+                            "raw": "Header(\"基本能力\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                12
+                            ],
+                            "raw": "Range(0f, 12f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "基本移動速度。セル毎秒。"
+                            ],
+                            "raw": "Tooltip(\"基本移動速度。セル毎秒。\")"
+                        }
+                    ],
+                    "initialValue": "3.5f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Move Speed",
+                        "type": "float",
+                        "header": "基本能力",
+                        "tooltip": "基本移動速度。セル毎秒。",
+                        "range": {
+                            "min": 0,
+                            "max": 12
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "3.5f"
+                    }
+                },
+                {
+                    "name": "chaseSpeedMultiplier",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float chaseSpeedMultiplier = 1.15f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "1.15f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                3
+                            ],
+                            "raw": "Range(0f, 3f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "追跡時の移動速度倍率。"
+                            ],
+                            "raw": "Tooltip(\"追跡時の移動速度倍率。\")"
+                        }
+                    ],
+                    "initialValue": "1.15f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Chase Speed Multiplier",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "追跡時の移動速度倍率。",
+                        "range": {
+                            "min": 0,
+                            "max": 3
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "1.15f"
+                    }
+                },
+                {
+                    "name": "escapeSpeedMultiplier",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float escapeSpeedMultiplier = 1.3f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "1.3f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                3
+                            ],
+                            "raw": "Range(0f, 3f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "逃走時の移動速度倍率。"
+                            ],
+                            "raw": "Tooltip(\"逃走時の移動速度倍率。\")"
+                        }
+                    ],
+                    "initialValue": "1.3f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Escape Speed Multiplier",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "逃走時の移動速度倍率。",
+                        "range": {
+                            "min": 0,
+                            "max": 3
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "1.3f"
+                    }
+                },
+                {
+                    "name": "detectionRange",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float detectionRange = 6f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "6f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "認識能力"
+                            ],
+                            "raw": "Header(\"認識能力\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                64
+                            ],
+                            "raw": "Range(0f, 64f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "プレイヤーを認識する距離。セル単位。"
+                            ],
+                            "raw": "Tooltip(\"プレイヤーを認識する距離。セル単位。\")"
+                        }
+                    ],
+                    "initialValue": "6f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Detection Range",
+                        "type": "float",
+                        "header": "認識能力",
+                        "tooltip": "プレイヤーを認識する距離。セル単位。",
+                        "range": {
+                            "min": 0,
+                            "max": 64
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "6f"
+                    }
+                },
+                {
+                    "name": "threatDetectionRange",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float threatDetectionRange = 8f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "8f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                64
+                            ],
+                            "raw": "Range(0f, 64f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "脅威を認識する距離。セル単位。"
+                            ],
+                            "raw": "Tooltip(\"脅威を認識する距離。セル単位。\")"
+                        }
+                    ],
+                    "initialValue": "8f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Threat Detection Range",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "脅威を認識する距離。セル単位。",
+                        "range": {
+                            "min": 0,
+                            "max": 64
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "8f"
+                    }
+                },
+                {
+                    "name": "memoryDuration",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float memoryDuration = 5f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "5f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                60
+                            ],
+                            "raw": "Range(0f, 60f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "認識対象を記憶する時間。秒単位。"
+                            ],
+                            "raw": "Tooltip(\"認識対象を記憶する時間。秒単位。\")"
+                        }
+                    ],
+                    "initialValue": "5f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Memory Duration",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "認識対象を記憶する時間。秒単位。",
+                        "range": {
+                            "min": 0,
+                            "max": 60
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "5f"
+                    }
+                },
+                {
+                    "name": "hearingRange",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float hearingRange = 8f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "8f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "仮想音源を認識する基準聴覚範囲。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "聴覚能力"
+                            ],
+                            "raw": "Header(\"聴覚能力\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                64
+                            ],
+                            "raw": "Range(0f, 64f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "基準聴覚範囲。セル単位。0の場合は聴覚を無効化する。"
+                            ],
+                            "raw": "Tooltip(\"基準聴覚範囲。セル単位。0の場合は聴覚を無効化する。\")"
+                        }
+                    ],
+                    "initialValue": "8f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Hearing Range",
+                        "type": "float",
+                        "header": "聴覚能力",
+                        "tooltip": "基準聴覚範囲。セル単位。0の場合は聴覚を無効化する。",
+                        "range": {
+                            "min": 0,
+                            "max": 64
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "8f"
+                    }
+                },
+                {
+                    "name": "hearingSensitivity",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float hearingSensitivity = 0.5f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.5f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "仮想音源に対する聴覚感度。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                1
+                            ],
+                            "raw": "Range(0f, 1f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "音に対する感度。高いほど遠くの音を認識できる。"
+                            ],
+                            "raw": "Tooltip(\"音に対する感度。高いほど遠くの音を認識できる。\")"
+                        }
+                    ],
+                    "initialValue": "0.5f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Hearing Sensitivity",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "音に対する感度。高いほど遠くの音を認識できる。",
+                        "range": {
+                            "min": 0,
+                            "max": 1
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "0.5f"
+                    }
+                },
+                {
+                    "name": "hearingAccuracy",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float hearingAccuracy = 0.5f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.5f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "音源の位置を推定する精度。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                1
+                            ],
+                            "raw": "Range(0f, 1f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "音源位置の推定精度。高いほど正確に位置を特定できる。"
+                            ],
+                            "raw": "Tooltip(\"音源位置の推定精度。高いほど正確に位置を特定できる。\")"
+                        }
+                    ],
+                    "initialValue": "0.5f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Hearing Accuracy",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "音源位置の推定精度。高いほど正確に位置を特定できる。",
+                        "range": {
+                            "min": 0,
+                            "max": 1
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "0.5f"
+                    }
+                },
+                {
+                    "name": "aggression",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float aggression = 0.5f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.5f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "性格"
+                            ],
+                            "raw": "Header(\"性格\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                1
+                            ],
+                            "raw": "Range(0f, 1f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "プレイヤーを積極的に追跡する傾向。"
+                            ],
+                            "raw": "Tooltip(\"プレイヤーを積極的に追跡する傾向。\")"
+                        }
+                    ],
+                    "initialValue": "0.5f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Aggression",
+                        "type": "float",
+                        "header": "性格",
+                        "tooltip": "プレイヤーを積極的に追跡する傾向。",
+                        "range": {
+                            "min": 0,
+                            "max": 1
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "0.5f"
+                    }
+                },
+                {
+                    "name": "caution",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float caution = 0.5f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.5f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                1
+                            ],
+                            "raw": "Range(0f, 1f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "危険を回避しようとする傾向。"
+                            ],
+                            "raw": "Tooltip(\"危険を回避しようとする傾向。\")"
+                        }
+                    ],
+                    "initialValue": "0.5f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Caution",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "危険を回避しようとする傾向。",
+                        "range": {
+                            "min": 0,
+                            "max": 1
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "0.5f"
+                    }
+                },
+                {
+                    "name": "persistence",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float persistence = 0.5f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.5f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                1
+                            ],
+                            "raw": "Range(0f, 1f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "対象を追い続けようとする傾向。"
+                            ],
+                            "raw": "Tooltip(\"対象を追い続けようとする傾向。\")"
+                        }
+                    ],
+                    "initialValue": "0.5f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Persistence",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "対象を追い続けようとする傾向。",
+                        "range": {
+                            "min": 0,
+                            "max": 1
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "0.5f"
+                    }
+                },
+                {
+                    "name": "tacticalIntelligence",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float tacticalIntelligence = 0.3f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.3f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                1
+                            ],
+                            "raw": "Range(0f, 1f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "回り込みや移動予測を重視する傾向。"
+                            ],
+                            "raw": "Tooltip(\"回り込みや移動予測を重視する傾向。\")"
+                        }
+                    ],
+                    "initialValue": "0.3f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Tactical Intelligence",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "回り込みや移動予測を重視する傾向。",
+                        "range": {
+                            "min": 0,
+                            "max": 1
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "0.3f"
+                    }
+                },
+                {
+                    "name": "territoriality",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float territoriality = 0.3f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.3f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                1
+                            ],
+                            "raw": "Range(0f, 1f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "自分の縄張りを重視する傾向。"
+                            ],
+                            "raw": "Tooltip(\"自分の縄張りを重視する傾向。\")"
+                        }
+                    ],
+                    "initialValue": "0.3f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Territoriality",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "自分の縄張りを重視する傾向。",
+                        "range": {
+                            "min": 0,
+                            "max": 1
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "0.3f"
+                    }
+                },
+                {
+                    "name": "exploration",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float exploration = 0.5f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.5f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "行動傾向"
+                            ],
+                            "raw": "Header(\"行動傾向\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                1
+                            ],
+                            "raw": "Range(0f, 1f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "未探索領域を優先する傾向。"
+                            ],
+                            "raw": "Tooltip(\"未探索領域を優先する傾向。\")"
+                        }
+                    ],
+                    "initialValue": "0.5f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Exploration",
+                        "type": "float",
+                        "header": "行動傾向",
+                        "tooltip": "未探索領域を優先する傾向。",
+                        "range": {
+                            "min": 0,
+                            "max": 1
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "0.5f"
+                    }
+                },
+                {
+                    "name": "patrolPreference",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float patrolPreference = 0.5f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.5f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                1
+                            ],
+                            "raw": "Range(0f, 1f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "通常巡回を選択する傾向。"
+                            ],
+                            "raw": "Tooltip(\"通常巡回を選択する傾向。\")"
+                        }
+                    ],
+                    "initialValue": "0.5f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Patrol Preference",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "通常巡回を選択する傾向。",
+                        "range": {
+                            "min": 0,
+                            "max": 1
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "0.5f"
+                    }
+                },
+                {
+                    "name": "territoryRadius",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float territoryRadius = 5f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "5f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                64
+                            ],
+                            "raw": "Range(0f, 64f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "縄張りの基準範囲。セル単位。"
+                            ],
+                            "raw": "Tooltip(\"縄張りの基準範囲。セル単位。\")"
+                        }
+                    ],
+                    "initialValue": "5f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Territory Radius",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "縄張りの基準範囲。セル単位。",
+                        "range": {
+                            "min": 0,
+                            "max": 64
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "5f"
+                    }
+                },
+                {
+                    "name": "visitMemoryDuration",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float visitMemoryDuration = 30f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "30f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                300
+                            ],
+                            "raw": "Range(0f, 300f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "訪問したセルを記憶する時間。秒単位。"
+                            ],
+                            "raw": "Tooltip(\"訪問したセルを記憶する時間。秒単位。\")"
+                        }
+                    ],
+                    "initialValue": "30f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Visit Memory Duration",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "訪問したセルを記憶する時間。秒単位。",
+                        "range": {
+                            "min": 0,
+                            "max": 300
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "30f"
+                    }
+                },
+                {
+                    "name": "predictionTime",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float predictionTime = 1f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "1f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Range",
+                            "arguments": [
+                                0,
+                                5
+                            ],
+                            "raw": "Range(0f, 5f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "対象の移動を予測する時間。秒単位。"
+                            ],
+                            "raw": "Tooltip(\"対象の移動を予測する時間。秒単位。\")"
+                        }
+                    ],
+                    "initialValue": "1f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Prediction Time",
+                        "type": "float",
+                        "header": null,
+                        "tooltip": "対象の移動を予測する時間。秒単位。",
+                        "range": {
+                            "min": 0,
+                            "max": 5
+                        },
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "1f"
+                    }
+                },
+                {
+                    "name": "DisplayName",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public string DisplayName => displayName",
+                    "returnType": "",
+                    "valueType": "string",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "プロファイルの表示名。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Description",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public string Description => description",
+                    "returnType": "",
+                    "valueType": "string",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "プロファイルの説明。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetInitialValue",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float GetInitialValue(MazeEnemyParameter id)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "MazeEnemyParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "パラメーター識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターの初期値を取得する。",
+                    "returns": "定義範囲内に補正された初期値",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateParameterSet",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public ParameterSet<MazeEnemyParameter>\r\n            CreateParameterSet()",
+                    "returnType": "ParameterSet<MazeEnemyParameter>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "このプロファイルを使用した 独立した実行時パラメーターセットを生成する。",
+                    "returns": "生成した実行時パラメーターセット",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 18
+        }
+    ],
+    "source": "\r\nusing Framework.Parameters;\r\nusing UnityEngine;\r\n\r\nnamespace Game.AI.Parameters\r\n{\r\n    /// <summary>\r\n    /// 迷路内の敵の初期能力と性格を定義する。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// 実行時の状態は保持しない。\r\n    /// 複数のエージェントで同一アセットを共有できる。\r\n    /// </remarks>\r\n    [CreateAssetMenu(\r\n        fileName = \"MazeEnemyProfile\",\r\n        menuName = \"Game/AI/Maze Enemy Profile\",\r\n        order = 100)]\r\n    public sealed class MazeEnemyProfile : ScriptableObject\r\n    {\r\n        [Header(\"基本情報\")]\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"敵プロファイルの表示名。\")]\r\n        private string displayName = \"標準型\";\r\n\r\n        [SerializeField]\r\n        [TextArea(2, 5)]\r\n        [Tooltip(\"敵の性格や特徴に関する説明。\")]\r\n        private string description = \"\";\r\n\r\n        [Header(\"基本能力\")]\r\n\r\n        [SerializeField]\r\n        [Range(0f, 12f)]\r\n        [Tooltip(\"基本移動速度。セル毎秒。\")]\r\n        private float moveSpeed = 3.5f;\r\n\r\n        [SerializeField]\r\n        [Range(0f, 3f)]\r\n        [Tooltip(\"追跡時の移動速度倍率。\")]\r\n        private float chaseSpeedMultiplier = 1.15f;\r\n\r\n        [SerializeField]\r\n        [Range(0f, 3f)]\r\n        [Tooltip(\"逃走時の移動速度倍率。\")]\r\n        private float escapeSpeedMultiplier = 1.3f;\r\n\r\n        [Header(\"認識能力\")]\r\n\r\n        [SerializeField]\r\n        [Range(0f, 64f)]\r\n        [Tooltip(\"プレイヤーを認識する距離。セル単位。\")]\r\n        private float detectionRange = 6f;\r\n\r\n        [SerializeField]\r\n        [Range(0f, 64f)]\r\n        [Tooltip(\"脅威を認識する距離。セル単位。\")]\r\n        private float threatDetectionRange = 8f;\r\n\r\n        [SerializeField]\r\n        [Range(0f, 60f)]\r\n        [Tooltip(\"認識対象を記憶する時間。秒単位。\")]\r\n        private float memoryDuration = 5f;\r\n\r\n        [Header(\"聴覚能力\")]\r\n\r\n        /// <summary>\r\n        /// 仮想音源を認識する基準聴覚範囲。\r\n        /// </summary>\r\n        [SerializeField]\r\n        [Range(0f, 64f)]\r\n        [Tooltip(\"基準聴覚範囲。セル単位。0の場合は聴覚を無効化する。\")]\r\n        private float hearingRange = 8f;\r\n\r\n        /// <summary>\r\n        /// 仮想音源に対する聴覚感度。\r\n        /// </summary>\r\n        [SerializeField]\r\n        [Range(0f, 1f)]\r\n        [Tooltip(\"音に対する感度。高いほど遠くの音を認識できる。\")]\r\n        private float hearingSensitivity = 0.5f;\r\n\r\n        /// <summary>\r\n        /// 音源の位置を推定する精度。\r\n        /// </summary>\r\n        [SerializeField]\r\n        [Range(0f, 1f)]\r\n        [Tooltip(\"音源位置の推定精度。高いほど正確に位置を特定できる。\")]\r\n        private float hearingAccuracy = 0.5f;\r\n\r\n        [Header(\"性格\")]\r\n\r\n        [SerializeField]\r\n        [Range(0f, 1f)]\r\n        [Tooltip(\"プレイヤーを積極的に追跡する傾向。\")]\r\n        private float aggression = 0.5f;\r\n\r\n        [SerializeField]\r\n        [Range(0f, 1f)]\r\n        [Tooltip(\"危険を回避しようとする傾向。\")]\r\n        private float caution = 0.5f;\r\n\r\n        [SerializeField]\r\n        [Range(0f, 1f)]\r\n        [Tooltip(\"対象を追い続けようとする傾向。\")]\r\n        private float persistence = 0.5f;\r\n\r\n        [SerializeField]\r\n        [Range(0f, 1f)]\r\n        [Tooltip(\"回り込みや移動予測を重視する傾向。\")]\r\n        private float tacticalIntelligence = 0.3f;\r\n\r\n        [SerializeField]\r\n        [Range(0f, 1f)]\r\n        [Tooltip(\"自分の縄張りを重視する傾向。\")]\r\n        private float territoriality = 0.3f;\r\n\r\n        [Header(\"行動傾向\")]\r\n\r\n        [SerializeField]\r\n        [Range(0f, 1f)]\r\n        [Tooltip(\"未探索領域を優先する傾向。\")]\r\n        private float exploration = 0.5f;\r\n\r\n        [SerializeField]\r\n        [Range(0f, 1f)]\r\n        [Tooltip(\"通常巡回を選択する傾向。\")]\r\n        private float patrolPreference = 0.5f;\r\n\r\n        [SerializeField]\r\n        [Range(0f, 64f)]\r\n        [Tooltip(\"縄張りの基準範囲。セル単位。\")]\r\n        private float territoryRadius = 5f;\r\n\r\n        [SerializeField]\r\n        [Range(0f, 300f)]\r\n        [Tooltip(\"訪問したセルを記憶する時間。秒単位。\")]\r\n        private float visitMemoryDuration = 30f;\r\n\r\n        [SerializeField]\r\n        [Range(0f, 5f)]\r\n        [Tooltip(\"対象の移動を予測する時間。秒単位。\")]\r\n        private float predictionTime = 1f;\r\n\r\n        /// <summary>\r\n        /// プロファイルの表示名。\r\n        /// </summary>\r\n        public string DisplayName => displayName;\r\n\r\n        /// <summary>\r\n        /// プロファイルの説明。\r\n        /// </summary>\r\n        public string Description => description;\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターの初期値を取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">パラメーター識別子</param>\r\n        /// <returns>定義範囲内に補正された初期値</returns>\r\n        public float GetInitialValue(MazeEnemyParameter id)\r\n        {\r\n            var definition =\r\n                MazeEnemyParameterCatalog.GetDefinition(id);\r\n\r\n            float value;\r\n\r\n            switch (id)\r\n            {\r\n                case MazeEnemyParameter.MoveSpeed:\r\n                    value = moveSpeed;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.ChaseSpeedMultiplier:\r\n                    value = chaseSpeedMultiplier;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.EscapeSpeedMultiplier:\r\n                    value = escapeSpeedMultiplier;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.DetectionRange:\r\n                    value = detectionRange;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.ThreatDetectionRange:\r\n                    value = threatDetectionRange;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.MemoryDuration:\r\n                    value = memoryDuration;\r\n                    break;\r\n                \r\n                case MazeEnemyParameter.HearingRange:\r\n                    value = hearingRange;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.HearingSensitivity:\r\n                    value = hearingSensitivity;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.HearingAccuracy:\r\n                    value = hearingAccuracy;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.Aggression:\r\n                    value = aggression;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.Caution:\r\n                    value = caution;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.Persistence:\r\n                    value = persistence;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.TacticalIntelligence:\r\n                    value = tacticalIntelligence;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.Territoriality:\r\n                    value = territoriality;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.Exploration:\r\n                    value = exploration;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.PatrolPreference:\r\n                    value = patrolPreference;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.TerritoryRadius:\r\n                    value = territoryRadius;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.VisitMemoryDuration:\r\n                    value = visitMemoryDuration;\r\n                    break;\r\n\r\n                case MazeEnemyParameter.PredictionTime:\r\n                    value = predictionTime;\r\n                    break;\r\n\r\n                default:\r\n                    value = definition.DefaultValue;\r\n                    break;\r\n            }\r\n\r\n            // 不正な数値は共通定義の初期値へ戻す。\r\n            if (float.IsNaN(value) ||\r\n                float.IsInfinity(value))\r\n            {\r\n                return definition.DefaultValue;\r\n            }\r\n\r\n            return definition.Clamp(value);\r\n        }\r\n\r\n        /// <summary>\r\n        /// このプロファイルを使用した\r\n        /// 独立した実行時パラメーターセットを生成する。\r\n        /// </summary>\r\n        /// <returns>生成した実行時パラメーターセット</returns>\r\n        public ParameterSet<MazeEnemyParameter>\r\n            CreateParameterSet()\r\n        {\r\n            var parameterSet =\r\n                new ParameterSet<MazeEnemyParameter>();\r\n\r\n            try\r\n            {\r\n                // プロファイルの値を実行時の初期値として登録する。\r\n                foreach (var definition in\r\n                    MazeEnemyParameterCatalog.Definitions)\r\n                {\r\n                    parameterSet.TryRegister(\r\n                        definition,\r\n                        GetInitialValue(definition.Id));\r\n                }\r\n\r\n                return parameterSet;\r\n            }\r\n            catch\r\n            {\r\n                // 生成途中で失敗した場合は登録内容を解放する。\r\n                parameterSet.Dispose();\r\n\r\n                throw;\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.613Z"
+}
