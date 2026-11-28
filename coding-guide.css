@@ -1,0 +1,380 @@
+
+/* ========================================
+   Coding Guide
+======================================== */
+
+.coding-guide {
+    --guide-border: #e2e8f0;
+    --guide-muted: #64748b;
+    --guide-surface: #f8fafc;
+
+    min-width: 0;
+}
+
+.coding-guide [hidden] {
+    display: none !important;
+}
+
+/* ヘッダー */
+
+.guide-header {
+    margin-bottom: 24px;
+}
+
+.guide-header h1 {
+    margin-bottom: 12px;
+}
+
+.guide-header p {
+    color: var(--guide-muted);
+    line-height: 1.8;
+}
+
+.guide-version-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.guide-version {
+    padding: 4px 10px;
+    border: 1px solid var(--guide-border);
+    border-radius: 6px;
+    background: var(--guide-surface);
+    color: #475569;
+    font-size: 12px;
+}
+
+/* 説明・警告 */
+
+.guide-notice,
+.guide-warning {
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 1px solid var(--guide-border);
+    border-radius: 8px;
+    background: var(--guide-surface);
+    line-height: 1.7;
+}
+
+.guide-notice p {
+    margin: 8px 0 0;
+}
+
+.guide-warning {
+    color: #92400e;
+    background: #fffbeb;
+    border-color: #fde68a;
+}
+
+/* 統計情報 */
+
+.guide-stats {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+    margin: 24px 0;
+}
+
+.guide-stat-card {
+    padding: 16px;
+    border: 1px solid var(--guide-border);
+    border-radius: 8px;
+    background: #fff;
+}
+
+.guide-stat-label {
+    color: var(--guide-muted);
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.guide-stat-value {
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.guide-stat-value.supported {
+    color: #15803d;
+}
+
+.guide-stat-value.partial {
+    color: #b45309;
+}
+
+.guide-stat-value.unsupported {
+    color: #64748b;
+}
+
+.guide-stat-value.recommended {
+    color: #2563eb;
+}
+
+/* 検索・フィルター */
+
+.guide-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 24px 0 12px;
+}
+
+.guide-toolbar input,
+.guide-toolbar select {
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--guide-border);
+    border-radius: 6px;
+    background: #fff;
+    color: #334155;
+    font-size: 14px;
+}
+
+.guide-toolbar input {
+    flex: 1 1 200px;
+}
+
+.guide-toolbar select {
+    flex: 0 1 180px;
+}
+
+.guide-toolbar input:focus,
+.guide-toolbar select:focus {
+    outline: 2px solid #93c5fd;
+    outline-offset: 1px;
+}
+
+/* カテゴリ */
+
+.guide-section {
+    margin-top: 36px;
+    scroll-margin-top: 90px;
+}
+
+.guide-section h2 {
+    margin-bottom: 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--guide-border);
+}
+
+.guide-section-description {
+    color: var(--guide-muted);
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.guide-rule-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ルールカード */
+
+.guide-rule {
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid var(--guide-border);
+    border-radius: 8px;
+    background: #fff;
+}
+
+.guide-rule-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.guide-rule-header h3 {
+    margin: 0;
+    font-size: 16px;
+    overflow-wrap: anywhere;
+}
+
+.guide-rule-description {
+    margin: 12px 0;
+    color: #475569;
+    line-height: 1.8;
+}
+
+/* 対応状況 */
+
+.guide-badge {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.guide-badge.supported {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.guide-badge.partial {
+    color: #92400e;
+    background: #fef3c7;
+}
+
+.guide-badge.unsupported {
+    color: #475569;
+    background: #f1f5f9;
+}
+
+.guide-badge.recommended {
+    color: #1d4ed8;
+    background: #dbeafe;
+}
+
+/* コードサンプル */
+
+.guide-code-block {
+    margin-top: 16px;
+    overflow: hidden;
+    border: 1px solid #334155;
+    border-radius: 7px;
+    background: #0f172a;
+}
+
+.guide-code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px;
+    background: #1e293b;
+    color: #cbd5e1;
+    font-size: 12px;
+}
+
+.guide-code-block pre {
+    margin: 0;
+    padding: 16px;
+    overflow-x: auto;
+    background: transparent;
+    color: #e2e8f0;
+    line-height: 1.7;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+}
+
+.guide-code-block code {
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+    font-size: inherit;
+    white-space: pre;
+}
+
+.guide-copy-button {
+    padding: 4px 10px;
+    border: 1px solid #475569;
+    border-radius: 4px;
+    background: transparent;
+    color: #cbd5e1;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.guide-copy-button:hover {
+    background: #334155;
+    color: #fff;
+}
+
+.guide-code-block.is-warning {
+    border-color: #b45309;
+}
+
+.guide-code-block.is-warning .guide-code-header {
+    background: #78350f;
+    color: #fef3c7;
+}
+
+/* 解析結果 */
+
+.guide-result {
+    margin-top: 16px;
+    padding: 14px;
+    border: 1px solid var(--guide-border);
+    border-left: 3px solid #64748b;
+    border-radius: 5px;
+    background: var(--guide-surface);
+}
+
+.guide-result-title {
+    margin-bottom: 10px;
+    color: #334155;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.guide-result-body {
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+/* 右サイドバーの目次 */
+
+.guide-outline {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.guide-outline button {
+    display: block;
+    width: 100%;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    color: #475569;
+    font-size: 13px;
+    text-align: left;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.guide-outline button:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+/* レスポンシブ対応 */
+
+@media (max-width: 600px) {
+
+    .guide-rule {
+        padding: 14px;
+    }
+
+    .guide-toolbar select {
+        flex: 1 1 100%;
+    }
+
+    .guide-stats {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .guide-code-block pre {
+        font-size: 12px;
+        padding: 12px;
+    }
+}

@@ -1,0 +1,349 @@
+/* ========================================
+   Unity Inspector Simulator
+======================================== */
+
+.unity-inspector {
+
+    --unity-background: #383838;
+    --unity-header: #303030;
+    --unity-input: #292929;
+    --unity-border: #242424;
+    --unity-text: #d2d2d2;
+    --unity-muted: #999999;
+
+    margin: 16px 0 24px;
+    border: 1px solid var(--unity-border);
+    border-radius: 5px;
+    overflow: hidden;
+
+    background: var(--unity-background);
+    color: var(--unity-text);
+
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+
+    color-scheme: dark;
+}
+
+.unity-inspector * {
+    box-sizing: border-box;
+}
+
+/* Inspector上部のタイトル */
+
+.unity-inspector-title {
+
+    padding: 9px 12px;
+
+    background: #292929;
+    border-bottom: 1px solid var(--unity-border);
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* コンポーネント */
+
+.unity-component {
+
+    margin: 0;
+    padding: 0;
+}
+
+.unity-component-header {
+
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 9px 10px;
+
+    background: var(--unity-header);
+    border-bottom: 1px solid var(--unity-border);
+
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+}
+
+.unity-component-header::-webkit-details-marker {
+    display: none;
+}
+
+.unity-component-header::before {
+
+    content: "▸";
+
+    font-size: 12px;
+    color: var(--unity-muted);
+}
+
+.unity-component[open] >
+.unity-component-header::before {
+
+    content: "▾";
+}
+
+.unity-component-name {
+
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.unity-script-icon {
+
+    flex-shrink: 0;
+
+    color: #9bc995;
+
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* コンポーネント内部 */
+
+.unity-component-body {
+
+    padding: 8px 12px 16px;
+}
+
+.unity-inspector-row {
+
+    display: grid;
+    grid-template-columns:
+        minmax(0, 42%) minmax(0, 1fr);
+
+    align-items: center;
+    gap: 8px;
+
+    min-height: 27px;
+    margin: 3px 0;
+}
+
+.unity-field-label {
+
+    color: var(--unity-text);
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+.unity-field-control {
+
+    min-width: 0;
+}
+
+.unity-disabled-label {
+
+    color: var(--unity-muted);
+}
+
+/* Header属性 */
+
+.unity-field-header {
+
+    margin-top: 18px;
+    margin-bottom: 6px;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    color: #e2e2e2;
+}
+
+/* 共通入力欄 */
+
+.unity-input,
+.unity-textarea {
+
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+
+    margin: 0;
+    padding: 3px 6px;
+
+    border: 1px solid var(--unity-border);
+    border-radius: 3px;
+
+    background: var(--unity-input);
+    color: var(--unity-text);
+
+    font-family: inherit;
+    font-size: 12px;
+
+    outline: none;
+}
+
+.unity-input {
+
+    height: 23px;
+}
+
+.unity-input:focus,
+.unity-textarea:focus {
+
+    border-color: #4b86b4;
+    box-shadow: 0 0 0 1px #4b86b4;
+}
+
+.unity-textarea {
+
+    min-height: 60px;
+    resize: vertical;
+}
+
+/* チェックボックス */
+
+.unity-checkbox {
+
+    appearance: none;
+
+    display: inline-grid;
+    place-content: center;
+
+    width: 15px;
+    height: 15px;
+
+    margin: 0;
+
+    border: 1px solid #1d1d1d;
+    border-radius: 3px;
+
+    background: var(--unity-input);
+
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.unity-checkbox:checked::after {
+
+    content: "✓";
+
+    color: #dddddd;
+
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.unity-checkbox:focus-visible {
+
+    outline: 1px solid #4b86b4;
+}
+
+/* Range属性 */
+
+.unity-range-control {
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.unity-slider {
+
+    flex: 1;
+    min-width: 0;
+
+    margin: 0;
+
+    accent-color: #a5a5a5;
+
+    cursor: pointer;
+}
+
+.unity-range-value {
+
+    flex: 0 0 64px;
+    width: 64px;
+}
+
+/* オブジェクト参照・読み取り専用欄 */
+
+.unity-object-field {
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    min-height: 23px;
+    min-width: 0;
+
+    padding: 3px 6px;
+
+    border: 1px solid var(--unity-border);
+    border-radius: 3px;
+
+    background: var(--unity-input);
+    color: var(--unity-text);
+
+    font-size: 12px;
+
+    overflow-wrap: anywhere;
+}
+
+.unity-disabled-field {
+
+    color: var(--unity-muted);
+    opacity: 0.8;
+}
+
+.unity-object-picker {
+
+    flex-shrink: 0;
+
+    margin-left: auto;
+
+    color: var(--unity-muted);
+    font-size: 13px;
+}
+
+/* フッター */
+
+.unity-inspector-footer {
+
+    display: flex;
+    justify-content: flex-end;
+
+    padding: 8px 12px;
+
+    border-top: 1px solid var(--unity-border);
+    background: var(--unity-header);
+}
+
+.unity-button {
+
+    padding: 4px 16px;
+
+    border: 1px solid #222222;
+    border-radius: 3px;
+
+    background: #505050;
+    color: #dddddd;
+
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.unity-button:hover {
+
+    background: #606060;
+}
+
+.unity-button:active {
+
+    background: #414141;
+}
+
+.unity-empty {
+
+    padding: 12px 0;
+
+    color: var(--unity-muted);
+    font-size: 12px;
+}

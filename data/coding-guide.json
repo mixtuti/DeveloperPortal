@@ -1,0 +1,463 @@
+
+{
+    "schemaVersion": 1,
+    "version": "1.0.0",
+    "parserVersion": 3,
+    "title": "Coding Guide",
+    "description": "Developer PortalにおけるC#解析仕様と推奨記述方法をまとめたガイドです。",
+    "sections": [
+        {
+            "id": "basic",
+            "title": "基本記述ルール",
+            "description": "正確なスクリプト識別と解析を行うための基本ルールです。",
+            "rules": [
+                {
+                    "title": "ファイル構成",
+                    "status": "recommended",
+                    "description": "1ファイルにつき1つの主要な型を定義し、ファイル名と主要な型名を一致させます。"
+                },
+                {
+                    "title": "名前空間",
+                    "status": "recommended",
+                    "description": "名前空間を明示し、機能や責務ごとに分離します。",
+                    "code": "namespace Framework.Save\n{\n    public class SaveManager\n    {\n    }\n}",
+                    "result": "スクリプトID：Framework.Save.SaveManager\n名前空間：Framework.Save\n型：class"
+                },
+                {
+                    "title": "アクセス修飾子",
+                    "status": "recommended",
+                    "description": "public、private、protected、internalなどを可能な限り明示します。",
+                    "code": "public int Count { get; private set; }\nprivate int currentCount;",
+                    "result": "公開API：Count\nクラス構造：Count、currentCount"
+                },
+                {
+                    "title": "命名規則",
+                    "status": "recommended",
+                    "description": "識別子は英語、コメントは日本語で記述します。クラス、メソッド、プロパティはPascalCase、非公開フィールドはcamelCaseを推奨します。"
+                },
+                {
+                    "title": "責務の分離",
+                    "status": "recommended",
+                    "description": "汎用処理とゲーム固有処理を分離し、別プロジェクトでも再利用できる構造を推奨します。"
+                }
+            ]
+        },
+        {
+            "id": "comments",
+            "title": "コメント記述仕様",
+            "description": "コメントの形式によってドキュメントへの反映方法が異なります。",
+            "rules": [
+                {
+                    "title": "通常コメント",
+                    "status": "supported",
+                    "description": "通常コメントは処理内容の説明に使用します。専用のAPI説明欄には反映されません。",
+                    "code": "// 現在のカウントを更新する。\ncurrentCount++;",
+                    "result": "ソースコード表示に反映"
+                },
+                {
+                    "title": "XMLドキュメントコメント",
+                    "status": "supported",
+                    "description": "型やメンバーの用途を説明する場合はXMLドキュメント形式を使用します。",
+                    "code": "/// <summary>\n/// 現在のカウントを取得する。\n/// </summary>\npublic int Count { get; private set; }",
+                    "result": "概要：現在のカウントを取得する。"
+                },
+                {
+                    "title": "XMLの特殊文字",
+                    "status": "recommended",
+                    "description": "XML内の特殊文字はエスケープしてください。不正なXMLは説明情報を取得できない原因になります。",
+                    "code": "/// <summary>\n/// 値が0より大きく、100未満の場合に有効。\n/// 条件：0 &lt; value &amp;&amp; value &lt; 100\n/// </summary>"
+                }
+            ]
+        },
+        {
+            "id": "xml",
+            "title": "XMLドキュメント解析仕様",
+            "description": "APIリファレンスに反映されるXMLタグの一覧です。",
+            "rules": [
+                {
+                    "title": "<summary>",
+                    "status": "supported",
+                    "description": "型やメンバーの概要を取得します。",
+                    "code": "/// <summary>\n/// データを保存する。\n/// </summary>",
+                    "result": "概要：データを保存する。"
+                },
+                {
+                    "title": "<param>",
+                    "status": "supported",
+                    "description": "引数の説明を取得します。name属性は実際の引数名と一致させます。",
+                    "code": "/// <param name=\"key\">保存キー</param>\npublic void Delete(string key)\n{\n}",
+                    "result": "引数名：key\n型：string\n説明：保存キー"
+                },
+                {
+                    "title": "<typeparam>",
+                    "status": "supported",
+                    "description": "ジェネリック型パラメータの説明を取得します。",
+                    "code": "/// <typeparam name=\"T\">保存するデータの型</typeparam>",
+                    "result": "型パラメータ：T\n説明：保存するデータの型"
+                },
+                {
+                    "title": "<returns>",
+                    "status": "supported",
+                    "description": "戻り値の説明を取得します。",
+                    "code": "/// <returns>データが存在する場合はtrue</returns>",
+                    "result": "戻り値の説明：データが存在する場合はtrue"
+                },
+                {
+                    "title": "<remarks>",
+                    "status": "supported",
+                    "description": "詳細な仕様や注意事項を取得します。",
+                    "code": "/// <remarks>\n/// 初期化後に呼び出してください。\n/// </remarks>",
+                    "result": "補足事項：初期化後に呼び出してください。"
+                },
+                {
+                    "title": "<exception>",
+                    "status": "supported",
+                    "description": "例外の型と発生条件を取得します。",
+                    "code": "/// <exception cref=\"ArgumentException\">\n/// 引数が無効な場合に発生する。\n/// </exception>",
+                    "result": "例外：ArgumentException\n発生条件：引数が無効な場合に発生する。"
+                },
+                {
+                    "title": "<see> / <seealso>",
+                    "status": "partial",
+                    "description": "対応する説明文内の参照情報を文字列化します。独立した関連リンクの生成は保証されません。",
+                    "code": "/// <summary>\n/// <see cref=\"ISaveProvider\"/>を利用する。\n/// </summary>",
+                    "result": "概要：ISaveProviderを利用する。"
+                },
+                {
+                    "title": "<paramref> / <typeparamref>",
+                    "status": "supported",
+                    "description": "説明文内の引数名や型パラメータ名を文字列化します。",
+                    "code": "/// <summary>\n/// <paramref name=\"key\"/>を検証する。\n/// </summary>",
+                    "result": "概要：keyを検証する。"
+                },
+                {
+                    "title": "<example> / <code>",
+                    "status": "unsupported",
+                    "description": "使用例やコードブロックとしての専用解析には対応していません。使用例は補完情報から登録してください。"
+                },
+                {
+                    "title": "<value>",
+                    "status": "unsupported",
+                    "description": "プロパティ値の説明としての専用取得には対応していません。"
+                },
+                {
+                    "title": "<inheritdoc/>",
+                    "status": "unsupported",
+                    "description": "継承元からXMLコメントを自動取得する機能には対応していません。"
+                }
+            ]
+        },
+        {
+            "id": "types",
+            "title": "型・メンバー解析仕様",
+            "description": "C#の型宣言とメンバー宣言の解析範囲です。",
+            "rules": [
+                {
+                    "title": "基本型宣言",
+                    "status": "supported",
+                    "description": "class、interface、struct、enumの基本的な宣言を解析します。"
+                },
+                {
+                    "title": "ネストされた型",
+                    "status": "supported",
+                    "description": "クラス内部に定義された型を階層構造として取得します。",
+                    "code": "public class SaveManager\n{\n    public class SaveData\n    {\n        public int Count;\n    }\n}",
+                    "result": "SaveManager\n  SaveData\n    Count : int"
+                },
+                {
+                    "title": "メソッド・コンストラクタ",
+                    "status": "supported",
+                    "description": "名前、アクセス修飾子、戻り値型、引数、ジェネリック型パラメータなどを取得します。"
+                },
+                {
+                    "title": "フィールド",
+                    "status": "supported",
+                    "description": "名前、型、アクセス修飾子、明示的な初期値を取得します。",
+                    "code": "private int width = 15;",
+                    "result": "名前：width\n種類：field\nアクセス：private\n型：int\n初期値：15"
+                },
+                {
+                    "title": "複数フィールドの同時宣言",
+                    "status": "partial",
+                    "description": "1つの宣言に複数の変数を含める記述は正確な個別解析が保証されません。",
+                    "code": "private int width = 15;\nprivate int height = 11;",
+                    "badCode": "private int width = 15, height = 11;"
+                },
+                {
+                    "title": "プロパティ",
+                    "status": "supported",
+                    "description": "基本的なプロパティの型とアクセサーを取得します。",
+                    "code": "public int Count { get; private set; }",
+                    "result": "名前：Count\n種類：property\n型：int\nアクセサー：get、private set"
+                },
+                {
+                    "title": "定数",
+                    "status": "supported",
+                    "description": "定数の型と定義値を取得します。",
+                    "code": "public const int MaxCount = 100;",
+                    "result": "名前：MaxCount\n種類：constant\n型：int\n定義値：100"
+                },
+                {
+                    "title": "イベント",
+                    "status": "partial",
+                    "description": "基本的なイベント宣言を解析します。複雑なアクセサー付きイベントは解析結果を確認してください。",
+                    "code": "public event Action OnCompleted;"
+                },
+                {
+                    "title": "record・partial class",
+                    "status": "partial",
+                    "description": "一部の型宣言を取得できますが、位置指定recordや複数ファイル間のpartial class統合は保証されません。"
+                },
+                {
+                    "title": "初期値の評価",
+                    "status": "unsupported",
+                    "description": "初期化式は文字列として取得します。式の評価やメソッドの実行は行いません。",
+                    "code": "private int count = GetCount();",
+                    "result": "初期値：GetCount()"
+                }
+            ]
+        },
+        {
+            "id": "attributes",
+            "title": "Unity属性解析仕様",
+            "description": "Unity属性の取得とInspector Simulatorへの反映方法です。",
+            "rules": [
+                {
+                    "title": "属性の記述形式",
+                    "status": "recommended",
+                    "description": "属性は1属性につき1行で記述することを推奨します。",
+                    "code": "[SerializeField]\n[Min(1)]\n[Tooltip(\"最大体力\")]\nprivate int maxHealth = 100;",
+                    "result": "属性：SerializeField、Min、Tooltip\n型：int\n初期値：100"
+                },
+                {
+                    "title": "SerializeField",
+                    "status": "supported",
+                    "description": "非公開フィールドをInspector表示候補にします。",
+                    "code": "[SerializeField]\nprivate int count = 10;"
+                },
+                {
+                    "title": "SerializeReference",
+                    "status": "partial",
+                    "description": "シリアライズ対象候補として取得します。参照型の展開表示は未対応です。"
+                },
+                {
+                    "title": "Header",
+                    "status": "supported",
+                    "description": "Inspector内のグループ見出しを表示します。",
+                    "code": "[Header(\"移動設定\")]\npublic float speed = 5f;",
+                    "result": "グループ見出し：移動設定"
+                },
+                {
+                    "title": "Tooltip",
+                    "status": "supported",
+                    "description": "Inspector項目の補足説明を設定します。",
+                    "code": "[Tooltip(\"1秒間に移動する距離\")]\npublic float speed = 5f;",
+                    "result": "Tooltip：1秒間に移動する距離"
+                },
+                {
+                    "title": "Range",
+                    "status": "supported",
+                    "description": "数値型フィールドを指定範囲のスライダーとして表示します。",
+                    "code": "[Range(0f, 10f)]\npublic float speed = 5f;",
+                    "result": "表示形式：スライダー\n最小値：0\n最大値：10\n初期値：5"
+                },
+                {
+                    "title": "Min",
+                    "status": "supported",
+                    "description": "数値入力欄の最小値を指定します。",
+                    "code": "[Min(1)]\npublic int maxHealth = 100;",
+                    "result": "最小値：1"
+                },
+                {
+                    "title": "Space",
+                    "status": "supported",
+                    "description": "Inspector項目の前に余白を追加します。",
+                    "code": "[Space(10)]\npublic int count;"
+                },
+                {
+                    "title": "TextArea / Multiline",
+                    "status": "supported",
+                    "description": "文字列フィールドを複数行入力欄として表示します。",
+                    "code": "[TextArea]\npublic string description;"
+                },
+                {
+                    "title": "HideInInspector / NonSerialized",
+                    "status": "supported",
+                    "description": "Inspector Simulatorの表示対象から除外します。",
+                    "code": "[HideInInspector]\npublic int internalCount;"
+                },
+                {
+                    "title": "RequireComponent",
+                    "status": "partial",
+                    "description": "クラス属性として取得します。必須コンポーネントの導入手順生成は今後対応予定です。",
+                    "code": "[RequireComponent(typeof(Rigidbody))]\npublic class PlayerController : MonoBehaviour\n{\n}"
+                },
+                {
+                    "title": "その他のクラス属性",
+                    "status": "partial",
+                    "description": "Serializable、CreateAssetMenu、DisallowMultipleComponent、DefaultExecutionOrderなどを属性情報として取得します。属性固有の動作は再現しません。"
+                },
+                {
+                    "title": "複数行の属性",
+                    "status": "partial",
+                    "description": "複数行にまたがる属性は詳細情報の取得が不完全になる場合があります。"
+                }
+            ]
+        },
+        {
+            "id": "inspector",
+            "title": "Inspector表示仕様",
+            "description": "Inspector Simulatorにおける表示条件と対応型です。",
+            "rules": [
+                {
+                    "title": "対象コンポーネント",
+                    "status": "supported",
+                    "description": "MonoBehaviourまたはScriptableObjectを直接継承する型を表示対象とします。"
+                },
+                {
+                    "title": "表示対象フィールド",
+                    "status": "supported",
+                    "description": "publicフィールド、SerializeFieldまたはSerializeReference付きフィールドを表示候補とします。"
+                },
+                {
+                    "title": "表示対象外",
+                    "status": "supported",
+                    "description": "static、const、readonly、プロパティ、HideInInspector、NonSerialized付きフィールドは表示対象外です。"
+                },
+                {
+                    "title": "基本データ型",
+                    "status": "supported",
+                    "description": "boolはチェックボックス、intやfloatなどは数値入力欄、stringは文字列入力欄として表示します。"
+                },
+                {
+                    "title": "オブジェクト参照",
+                    "status": "partial",
+                    "description": "GameObject、Transformなどは参照風の表示になります。実際のUnityオブジェクトの割り当てはできません。"
+                },
+                {
+                    "title": "複合型",
+                    "status": "unsupported",
+                    "description": "Vector2、Vector3、Color、enum、配列、List、Serializableクラスなどの専用UIには未対応です。"
+                },
+                {
+                    "title": "実行時の値",
+                    "status": "unsupported",
+                    "description": "実行時の値やScene、Prefabに保存された値は取得しません。"
+                },
+                {
+                    "title": "CustomEditor",
+                    "status": "unsupported",
+                    "description": "Unity独自のCustomEditorやPropertyDrawerは再現しません。"
+                }
+            ]
+        },
+        {
+            "id": "dependencies",
+            "title": "依存関係解析仕様",
+            "description": "スクリプト間および外部アセットへの依存関係を検出するための仕様です。",
+            "rules": [
+                {
+                    "title": "using宣言",
+                    "status": "supported",
+                    "description": "参照している名前空間を取得し、型名の解決や外部アセット検出に利用します。",
+                    "code": "using Framework.Save;\nusing UnityEngine;"
+                },
+                {
+                    "title": "継承・インターフェース",
+                    "status": "supported",
+                    "description": "継承先や実装インターフェースから依存関係を検出します。",
+                    "code": "public class EasySaveProvider : ISaveProvider\n{\n}"
+                },
+                {
+                    "title": "メンバー型",
+                    "status": "supported",
+                    "description": "公開メンバーの型、戻り値型、引数型から登録済みスクリプトへの依存を検出します。"
+                },
+                {
+                    "title": "ソースコード参照",
+                    "status": "partial",
+                    "description": "ソースコード内の型名から依存候補を検出します。コンパイラによる厳密な型解決ではありません。"
+                },
+                {
+                    "title": "外部アセット",
+                    "status": "partial",
+                    "description": "登録された名前空間や型名の検出ルールを利用して、外部アセットへの依存候補を取得します。"
+                }
+            ]
+        },
+        {
+            "id": "tests",
+            "title": "テスト解析仕様",
+            "description": "Test Analyzer Ver.1の解析範囲です。",
+            "rules": [
+                {
+                    "title": "テストスクリプトの識別",
+                    "status": "partial",
+                    "description": "スクリプト名、名前空間、NUnit属性などからテストスクリプト候補を判定します。"
+                },
+                {
+                    "title": "アサーション",
+                    "status": "partial",
+                    "description": "Debug.AssertやNUnitのAssertなど、対応する検証処理を静的に抽出します。",
+                    "code": "Debug.Assert(count == 10, \"カウントの検証\");"
+                },
+                {
+                    "title": "独自テスト関数",
+                    "status": "unsupported",
+                    "description": "独自のCheck関数などは標準アサーションとして認識されない場合があります。"
+                },
+                {
+                    "title": "テストの実行",
+                    "status": "unsupported",
+                    "description": "実際のテスト実行や成功・失敗の判定は行いません。"
+                }
+            ]
+        },
+        {
+            "id": "limitations",
+            "title": "解析上の制限事項",
+            "description": "現在の解析システムで保証されない機能です。",
+            "rules": [
+                {
+                    "title": "条件付きコンパイル",
+                    "status": "unsupported",
+                    "description": "#ifなどのコンパイル条件を評価しません。"
+                },
+                {
+                    "title": "複雑なジェネリクス",
+                    "status": "partial",
+                    "description": "複雑な型制約、タプル、ネストされたジェネリクスなどは正確な解析が保証されません。"
+                },
+                {
+                    "title": "複数名前空間",
+                    "status": "partial",
+                    "description": "1ファイル内の複数名前空間を個別に管理することは保証されません。"
+                },
+                {
+                    "title": "間接継承",
+                    "status": "partial",
+                    "description": "継承階層全体の完全な型解決は行いません。"
+                },
+                {
+                    "title": "コンパイルエラー検出",
+                    "status": "unsupported",
+                    "description": "本システムはC#コンパイラではありません。構文や実行時動作の正当性を保証しません。"
+                }
+            ]
+        },
+        {
+            "id": "template",
+            "title": "標準スクリプトテンプレート",
+            "description": "Developer Portalでの解析を考慮した記述テンプレートです。",
+            "rules": [
+                {
+                    "title": "MonoBehaviourテンプレート",
+                    "status": "recommended",
+                    "description": "名前空間、XMLコメント、Inspector属性を組み合わせた基本構成です。",
+                    "code": "using UnityEngine;\n\nnamespace Framework.Sample\n{\n    /// <summary>\n    /// サンプルコンポーネント。\n    /// </summary>\n    public class SampleController : MonoBehaviour\n    {\n        /// <summary>\n        /// 移動速度。\n        /// </summary>\n        [Header(\"移動設定\")]\n        [SerializeField]\n        [Range(0f, 10f)]\n        [Tooltip(\"移動速度を設定する\")]\n        private float moveSpeed = 5f;\n\n        /// <summary>\n        /// 現在の移動速度を取得する。\n        /// </summary>\n        public float MoveSpeed => moveSpeed;\n\n        /// <summary>\n        /// 移動速度を更新する。\n        /// </summary>\n        /// <param name=\"speed\">新しい移動速度</param>\n        public void SetSpeed(float speed)\n        {\n            moveSpeed = Mathf.Clamp(speed, 0f, 10f);\n        }\n    }\n}",
+                    "result": "名前空間：Framework.Sample\n型：SampleController\n公開API：MoveSpeed、SetSpeed\nInspector：Move Speed"
+                }
+            ]
+        }
+    ]
+}

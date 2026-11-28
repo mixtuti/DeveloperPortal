@@ -82,40 +82,254 @@ const DocsReference = {
  * @returns {string} 生成したHTML
  */
     render(script) {
-
         const groups = this.getGroups(script);
-
         const isTest =
             DocsTestAnalyzer.isTestScript(script);
 
         return `
-
         ${this.renderHeader(script)}
-
         ${this.renderOverview(script)}
-
+        ${DocsInspector.render(script)}
+        ${this.renderTypeStructure(script)}
         ${isTest
                 ? this.renderTestAnalysis(script)
                 : ""
             }
-
         ${this.renderDependencies(script)}
-
+        ${DocsAssetReference.renderScriptAssets(script)}
         ${groups.length
                 ? this.renderMemberSummary(groups)
                 : ""
             }
-
         ${groups.map(group =>
                 this.renderMemberGroup(group)
             ).join("")}
-
         ${this.renderSupplements(script)}
-
         ${this.renderSource(script)}
-
         ${this.renderMetadata(script)}
     `;
+    },
+
+    /**
+     * スクリプトの型構造を表示する。
+     * @param {Object} script スクリプト情報
+     * @returns {string} 生成したHTML
+     */
+    renderTypeStructure(script) {
+
+        // Ver.2のJSONにも対応する。
+        // 型情報がない場合は保存済みソースから解析する。
+        const types = script.types ||
+            (
+                script.source
+                    ? DocsTypeParser.parse(script.source)
+                    : []
+            );
+
+        if (!types.length) return "";
+
+        return `
+
+            <h2 id="ref-type-structure">クラス構造</h2>
+
+            ${types.map(type =>
+                this.renderTypeDetails(type)
+            ).join("")}
+        `;
+    },
+
+    /**
+     * 型の詳細情報を表示する。
+     * 内部クラスも再帰的に表示する。
+     *
+     * @param {Object} type 型情報
+     * @returns {string} 生成したHTML
+     */
+    renderTypeDetails(type) {
+        const members = type.members || [];
+        const nestedTypes = type.nestedTypes || [];
+        const attributes = type.attributes || [];
+        const inspectorFields = members.filter(
+            member => member.inspector?.visible
+        );
+
+        return `
+            <details class="card">
+                <summary style="cursor:pointer">
+                    <strong>
+                        ${this.escape(type.name)}
+                    </strong>
+                    <span class="badge">
+                        ${this.escape(type.kind)}
+                    </span>
+                    <span class="badge">
+                        ${this.escape(type.accessibility)}
+                    </span>
+                </summary>
+                <p class="document-body">
+                    ${this.escape(type.summary || "")}
+                </p>
+                <pre><code>${this.escape(type.declaration)}</code></pre>
+                ${attributes.map(attribute => `
+                    <span class="badge">
+                        ${this.escape(attribute.raw)}
+                    </span>
+                `).join("")}
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-title">
+                            メンバー数
+                        </div>
+                        <div class="card-value">
+                            ${members.length}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            内部型
+                        </div>
+                        <div class="card-value">
+                            ${nestedTypes.length}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            Inspector候補
+                        </div>
+                        <div class="card-value">
+                            ${inspectorFields.length}
+                        </div>
+                    </div>
+                </div>
+
+                ${members.length
+                    ? this.renderTypeMembers(members)
+                    : ""
+                }
+                ${type.enumValues?.length
+                    ? `
+                        <h3>enum定義値</h3>
+                        <table class="reference-table">
+                            <thead>
+                                <tr>
+                                    <th>名前</th>
+                                    <th>指定値</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${type.enumValues.map(item => `
+                                    <tr>
+                                        <td>
+                                            ${this.escape(item.name)}
+                                        </td>
+                                        <td>
+                                            ${this.escape(
+                                                item.value ?? "自動"
+                                            )}
+                                        </td>
+                                    </tr>
+                                `).join("")}
+
+                            </tbody>
+                        </table>
+                    `
+                    : ""
+                }
+                ${nestedTypes.length
+                    ? `
+                        <h3>内部クラス・内部型</h3>
+                        ${nestedTypes.map(nested =>
+                            this.renderTypeDetails(nested)
+                        ).join("")}
+                    `
+                    : ""
+                }
+            </details>
+        `;
+    },
+
+    /**
+     * 型に所属する全メンバーを表示する。
+     * @param {Array<Object>} members メンバー一覧
+     * @returns {string} 生成したHTML
+     */
+    renderTypeMembers(members) {
+
+        return `
+
+            <div class="reference-table-wrap">
+
+                <table class="reference-table">
+
+                    <thead>
+                        <tr>
+                            <th>名前</th>
+                            <th>種類</th>
+                            <th>アクセス</th>
+                            <th>型</th>
+                            <th>初期値</th>
+                            <th>属性</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        ${members.map(member => `
+
+                            <tr>
+
+                                <td>
+                                    <code>
+                                        ${this.escape(member.name)}
+                                    </code>
+                                </td>
+
+                                <td>
+                                    ${this.escape(member.kind)}
+                                </td>
+
+                                <td>
+                                    ${this.escape(member.accessibility)}
+                                </td>
+
+                                <td>
+                                    ${this.escape(
+                                        member.valueType ||
+                                        member.returnType ||
+                                        "—"
+                                    )}
+                                </td>
+
+                                <td>
+                                    ${this.escape(
+                                        member.initialValue ?? "—"
+                                    )}
+                                </td>
+
+                                <td>
+
+                                    ${(member.attributes || [])
+                                        .map(attribute => `
+
+                                            <span class="badge">
+                                                ${this.escape(attribute.raw)}
+                                            </span>
+
+                                        `).join(" ")
+                                    }
+
+                                </td>
+
+                            </tr>
+
+                        `).join("")}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        `;
     },
 
     /**
@@ -126,13 +340,9 @@ const DocsReference = {
     renderTestAnalysis(script) {
 
         const analysis = DocsTestAnalyzer.analyze(script);
-
         return `
-
         <h2 id="ref-test-analysis">テスト情報</h2>
-
         <div class="card-grid">
-
             <div class="card">
                 <div class="card-title">検証項目</div>
                 <div class="card-value">
@@ -153,57 +363,41 @@ const DocsReference = {
                     ${analysis.targets.length}
                 </div>
             </div>
-
         </div>
 
         <h3>テスト対象候補</h3>
-
         ${analysis.targets.length
                 ? `
                 <div class="dependency-list">
 
                     ${analysis.targets.map(target => `
-
                         <a class="dependency-item"
                             href="#script/${encodeURIComponent(target.id)}">
-
                             <div class="dependency-icon">
                                 ♯
                             </div>
-
                             <div class="dependency-content">
-
                                 <strong>
                                     ${this.escape(target.name)}
                                 </strong>
-
                                 <div class="muted">
                                     ${this.escape(target.namespace)}
                                 </div>
-
                             </div>
-
                             <span class="dependency-arrow">
                                 ›
                             </span>
-
                         </a>
-
                     `).join("")}
-
                 </div>
             `
                 : `<p class="muted">対象候補が見つかりません。</p>`
             }
 
         <h3>テスト項目</h3>
-
         ${this.renderTestItems(analysis.items)}
-
         <h3>その他の動作確認</h3>
-
         ${this.renderTestItems(analysis.observations)}
-
         <p class="muted">
             ソースコードから自動抽出された項目です。
             テストの実行結果は含まれません。

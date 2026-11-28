@@ -1185,3 +1185,88 @@ textarea {
         height: 450px;
     }
 }
+
+/* ========================================
+   External Assets
+======================================== */
+
+.asset-card {
+
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+
+    margin-bottom: 12px;
+}
+
+.asset-icon {
+
+    flex-shrink: 0;
+
+    width: 64px;
+    height: 64px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    object-fit: contain;
+}
+
+.asset-icon-placeholder {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eef2f7;
+
+    font-size: 28px;
+}
+
+.asset-card-content {
+
+    flex: 1;
+    min-width: 0;
+}
+
+.asset-card-content h3 {
+
+    margin-top: 0;
+    margin-bottom: 4px;
+}
+
+.asset-card-meta {
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    margin-top: 8px;
+}
+
+#asset-editor-form .card {
+
+    margin-bottom: 16px;
+}
+
+#asset-editor-form input,
+#asset-editor-form textarea {
+
+    width: 100%;
+
+    padding: 9px 12px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    background: var(--surface);
+
+    font: inherit;
+    box-sizing: border-box;
+}
+
+#asset-editor-form textarea {
+
+    resize: vertical;
+}

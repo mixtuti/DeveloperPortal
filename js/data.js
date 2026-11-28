@@ -31,6 +31,9 @@ const DocsData = {
         // 全スクリプトの依存関係を構築する。
         DocsDependency.rebuild(this.scripts);
 
+        // 検索インデックスを無効化する。
+        DocsSearchIndex.invalidate();
+
         return this.scripts;
     },
 
@@ -89,6 +92,9 @@ const DocsData = {
 
         // スクリプトの追加・更新を依存関係に反映する。
         DocsDependency.rebuild(this.scripts);
+
+        // 次回検索時に最新データを使用する。
+        DocsSearchIndex.invalidate();
     },
 
     /**
@@ -107,6 +113,9 @@ const DocsData = {
 
         // スクリプトの削除を依存関係に反映する。
         DocsDependency.rebuild(this.scripts);
+
+        // 削除したデータを検索対象から除外する。
+        DocsSearchIndex.invalidate();
 
         return true;
     },

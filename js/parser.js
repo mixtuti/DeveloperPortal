@@ -4,7 +4,7 @@
 const DocsParser = {
 
     // 解析システムのバージョン
-    version: 2,
+    version: 3,
 
     // C#の宣言に使用される修飾子
     modifiers: [
@@ -64,13 +64,16 @@ const DocsParser = {
             remarks: type.remarks,
 
             inheritance: type.inheritance,
-
+            
             dependencies: this.parseDependencies(
                 masked,
                 type
             ),
 
             members,
+
+            // スクリプト内に定義された全型の情報
+            types: DocsTypeParser.parse(source),
 
             source,
 
@@ -219,6 +222,70 @@ const DocsParser = {
     },
 
     /**
+     * メンバー宣言の先頭からコメントと属性を除去する。
+     *
+     * 連続した属性や複数行の属性にも対応する。
+     * 配列型など、宣言本体に含まれる角括弧は維持する。
+     *
+     * @param {string} source メンバー宣言
+     * @returns {string} 属性を除去した宣言
+     */
+    stripMemberPrefix(source) {
+
+        // コメントや文字列の内部を解析対象から除外する。
+        const masked = this.maskSource(source);
+
+        let index = 0;
+
+        while (index < masked.length) {
+
+            const char = masked[index];
+
+            // 空白とコメントを読み飛ばす。
+            if (/\s/.test(char)) {
+                index++;
+                continue;
+            }
+
+            // プリプロセッサ行を読み飛ばす。
+            if (char === "#") {
+
+                while (
+                    index < masked.length &&
+                    masked[index] !== "\n"
+                ) {
+                    index++;
+                }
+
+                continue;
+            }
+
+            // 属性の開始位置を検出する。
+            if (char === "[") {
+
+                const end = this.findClosing(
+                    masked,
+                    index,
+                    "[",
+                    "]"
+                );
+
+                // 閉じ括弧が見つからない場合は終了する。
+                if (end < 0) break;
+
+                index = end + 1;
+
+                continue;
+            }
+
+            // メンバー宣言本体に到達したら終了する。
+            break;
+        }
+
+        return source.slice(index).trim();
+    },
+
+    /**
      * 対応する閉じ括弧の位置を取得する。
      */
     findClosing(source, start, open, close) {
@@ -319,7 +386,7 @@ const DocsParser = {
     /**
      * 個別メンバーの宣言を解析する。
      */
-    parseMember(raw, block, type) {
+    parseMember(raw, block, type, includeAll = false) {
 
         const xml = this.parseXml(
             [...raw.matchAll(/^\s*\/\/\/(.*)$/gm)]
@@ -328,12 +395,7 @@ const DocsParser = {
         );
 
         // コメント・属性・プリプロセッサ行を除去する。
-        const signature = raw
-            .replace(/\/\*[\s\S]*?\*\//g, "")
-            .replace(/^\s*\/\/.*$/gm, "")
-            .replace(/^\s*#.*$/gm, "")
-            .replace(/^\s*\[[^\n]*\]\s*/gm, "")
-            .trim();
+        const signature = this.stripMemberPrefix(raw);
 
         if (!signature) return null;
 
@@ -346,19 +408,17 @@ const DocsParser = {
 
         const info = this.parseModifiers(prefix);
 
-        // 公開APIのみを対象とする。
-        const isPublic =
-            info.accessibility === "public" ||
-            (
-                type.kind === "interface" &&
-                !info.accessibility
-            );
+        // アクセス修飾子が省略された場合の既定値
+        const accessibility = info.accessibility ||
+            (type.kind === "interface" ? "public" : "private");
 
-        if (!isPublic) return null;
+        // 公開API解析の場合はpublicのみ取得する。
+        // 全メンバー解析の場合はprivateなども取得する。
+        if (!includeAll && accessibility !== "public") {
+            return null;
+        }
 
-        const declaration = signature
-            .slice(prefix.length)
-            .trim();
+        const declaration = signature.slice(prefix.length).trim();
 
         // ネストされた型は今回の対象外とする。
         if (/^(class|struct|interface|enum|record)\b/.test(
@@ -371,7 +431,7 @@ const DocsParser = {
             name: "",
             kind: "member",
 
-            accessibility: "public",
+            accessibility: accessibility,
             modifiers: info.modifiers,
 
             signature,

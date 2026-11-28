@@ -1,0 +1,18 @@
+{
+    "id": "incontrol",
+    "name": "InControl",
+    "version": "1.8.12",
+    "publisher": "Gallant Games",
+    "category": "入力管理",
+    "summary": "キーボードやゲームパッドなどの入力を管理するアセット。",
+    "website": "https://www.gallantgames.com/",
+    "storeUrl": "https://assetstore.unity.com/packages/tools/input-management/incontrol-input-manager-14695",
+    "icon": "https://www.gallantgames.com/img/12/incontrol-logo-1080p.webp",
+    "detection": {
+        "namespaces": [
+            "InControl"
+        ],
+        "types": []
+    },
+    "notes": "Native Input Module 1.0.6を使用。"
+}

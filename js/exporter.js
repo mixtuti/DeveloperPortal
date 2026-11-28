@@ -113,6 +113,63 @@ const DocsExporter = {
             JSON.stringify(scripts) !==
             JSON.stringify(DocsData.getAll());
 
+        // 外部アセット情報も保存する。
+        if (DocsAssetManager.isDirty) {
+            await this.exportAssets();
+        }
+
         return scripts.length;
-    }
+    },
+
+    /**
+     * 外部アセット情報をJSONとして保存する。
+     * @returns {Promise<number>} 保存したアセット数
+     */
+    async exportAssets() {
+
+        // 保存中に編集されても影響しないようにする。
+        const assets = structuredClone(
+            DocsAssetManager.getAll()
+        );
+
+        const manifest = {
+
+            schemaVersion: 1,
+
+            assets: []
+        };
+
+        for (const asset of assets) {
+
+            const fileName = `${asset.id}.json`;
+
+            await this.writeJson(
+
+                `data/assets/${fileName}`,
+
+                asset
+            );
+
+            manifest.assets.push(fileName);
+        }
+
+        // 個別JSONの保存後にmanifestを更新する。
+        await this.writeJson(
+
+            "data/assets/manifest.json",
+
+            manifest
+        );
+
+        // 保存中に変更された場合は未保存状態を維持する。
+        DocsAssetManager.isDirty =
+
+            JSON.stringify(assets) !==
+
+            JSON.stringify(
+                DocsAssetManager.getAll()
+            );
+
+        return assets.length;
+    },
 };

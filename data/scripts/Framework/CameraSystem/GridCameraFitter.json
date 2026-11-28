@@ -323,8 +323,75 @@
         }
     ],
     "source": "\r\nusing System;\r\nusing UnityEngine;\r\nusing Framework.Grid;\r\n\r\nnamespace Framework.CameraSystem\r\n{\r\n    /// <summary>\r\n    /// グリッド全体が画面内に収まるように\r\n    /// Orthographic Cameraを調整する汎用クラス。\r\n    ///\r\n    /// ゲーム固有のデータには依存せず、\r\n    /// グリッドの範囲と座標変換情報のみを使用する。\r\n    /// </summary>\r\n    public static class GridCameraFitter\r\n    {\r\n        #region Constants\r\n\r\n        /// <summary>カメラ表示サイズの最小値。</summary>\r\n        public const float MinimumOrthographicSize = 0.01f;\r\n\r\n        /// <summary>カメラ周囲の標準余白。</summary>\r\n        public const float DefaultPadding = 1f;\r\n\r\n        #endregion\r\n\r\n        #region Bounds Methods\r\n\r\n        /// <summary>\r\n        /// 指定されたグリッド範囲のワールド座標上の\r\n        /// 境界を取得する。\r\n        /// </summary>\r\n        /// <param name=\"converter\">座標変換クラス</param>\r\n        /// <param name=\"cellBounds\">対象セル範囲</param>\r\n        /// <returns>ワールド座標上の境界</returns>\r\n        public static Bounds GetWorldBounds(\r\n            GridCoordinateConverter converter,\r\n            RectInt cellBounds)\r\n        {\r\n            if (converter == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(converter));\r\n            }\r\n\r\n            if (cellBounds.width <= 0 ||\r\n                cellBounds.height <= 0)\r\n            {\r\n                throw new ArgumentException(\r\n                    \"グリッド範囲は正の大きさが必要です。\",\r\n                    nameof(cellBounds));\r\n            }\r\n\r\n            // グリッド範囲の四隅をワールド座標へ変換する。\r\n            Vector3 bottomLeft = converter.CellToWorld(\r\n                new Vector2Int(\r\n                    cellBounds.xMin,\r\n                    cellBounds.yMin));\r\n\r\n            Vector3 bottomRight = converter.CellToWorld(\r\n                new Vector2Int(\r\n                    cellBounds.xMax,\r\n                    cellBounds.yMin));\r\n\r\n            Vector3 topLeft = converter.CellToWorld(\r\n                new Vector2Int(\r\n                    cellBounds.xMin,\r\n                    cellBounds.yMax));\r\n\r\n            Vector3 topRight = converter.CellToWorld(\r\n                new Vector2Int(\r\n                    cellBounds.xMax,\r\n                    cellBounds.yMax));\r\n\r\n            // 四隅を含むワールド座標上の境界を構築する。\r\n            Bounds bounds = new Bounds(\r\n                bottomLeft,\r\n                Vector3.zero);\r\n\r\n            bounds.Encapsulate(bottomRight);\r\n            bounds.Encapsulate(topLeft);\r\n            bounds.Encapsulate(topRight);\r\n\r\n            return bounds;\r\n        }\r\n\r\n        /// <summary>\r\n        /// グリッドマップ全体のワールド境界を取得する。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">セルデータの型</typeparam>\r\n        /// <param name=\"converter\">座標変換クラス</param>\r\n        /// <param name=\"map\">対象グリッドマップ</param>\r\n        /// <returns>ワールド座標上の境界</returns>\r\n        public static Bounds GetWorldBounds<T>(\r\n            GridCoordinateConverter converter,\r\n            GridMap<T> map)\r\n        {\r\n            if (map == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(map));\r\n            }\r\n\r\n            return GetWorldBounds(\r\n                converter,\r\n                map.Bounds);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Calculation Methods\r\n\r\n        /// <summary>\r\n        /// 指定範囲を画面内に収めるために必要な\r\n        /// Orthographic Sizeを計算する。\r\n        /// </summary>\r\n        /// <param name=\"width\">対象範囲の横幅</param>\r\n        /// <param name=\"height\">対象範囲の高さ</param>\r\n        /// <param name=\"aspect\">画面の横幅と高さの比率</param>\r\n        /// <param name=\"padding\">各辺の余白</param>\r\n        /// <returns>必要なOrthographic Size</returns>\r\n        public static float CalculateOrthographicSize(\r\n            float width,\r\n            float height,\r\n            float aspect,\r\n            float padding = DefaultPadding)\r\n        {\r\n            ValidateNonNegative(width, nameof(width));\r\n            ValidateNonNegative(height, nameof(height));\r\n            ValidateNonNegative(padding, nameof(padding));\r\n\r\n            if (float.IsNaN(aspect) ||\r\n                float.IsInfinity(aspect) ||\r\n                aspect <= 0f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(aspect));\r\n            }\r\n\r\n            // 左右・上下それぞれに余白を追加する。\r\n            float paddedWidth = width + padding * 2f;\r\n            float paddedHeight = height + padding * 2f;\r\n\r\n            // 高さを基準とした表示サイズ。\r\n            float verticalSize = paddedHeight * 0.5f;\r\n\r\n            // 横幅を基準とした表示サイズ。\r\n            float horizontalSize =\r\n                paddedWidth / (2f * aspect);\r\n\r\n            // 両方の条件を満たす大きい方を採用する。\r\n            float requiredSize = Mathf.Max(\r\n                verticalSize,\r\n                horizontalSize);\r\n\r\n            return Mathf.Max(\r\n                MinimumOrthographicSize,\r\n                requiredSize);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Camera Fit Methods\r\n\r\n        /// <summary>\r\n        /// 指定されたワールド境界にカメラを合わせる。\r\n        ///\r\n        /// XY平面を正面から撮影する\r\n        /// Orthographic Cameraを対象とする。\r\n        /// カメラのZ座標と回転は維持する。\r\n        /// </summary>\r\n        /// <param name=\"targetCamera\">調整対象カメラ</param>\r\n        /// <param name=\"worldBounds\">対象ワールド境界</param>\r\n        /// <param name=\"padding\">各辺の余白</param>\r\n        public static void Fit(\r\n            Camera targetCamera,\r\n            Bounds worldBounds,\r\n            float padding = DefaultPadding)\r\n        {\r\n            if (targetCamera == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(targetCamera));\r\n            }\r\n\r\n            if (!targetCamera.orthographic)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"Orthographic Cameraが必要です。\");\r\n            }\r\n\r\n            // XY平面を正面から撮影するカメラのみ対応する。\r\n            if (Quaternion.Angle(\r\n                    targetCamera.transform.rotation,\r\n                    Quaternion.identity) > 0.01f)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"カメラのワールド回転を(0, 0, 0)にしてください。\");\r\n            }\r\n\r\n            // 横幅・高さの両方を考慮して表示サイズを計算する。\r\n            float requiredSize = CalculateOrthographicSize(\r\n                worldBounds.size.x,\r\n                worldBounds.size.y,\r\n                targetCamera.aspect,\r\n                padding);\r\n\r\n            // 現在のZ座標を維持したまま中心位置を変更する。\r\n            Vector3 cameraPosition =\r\n                targetCamera.transform.position;\r\n\r\n            cameraPosition.x = worldBounds.center.x;\r\n            cameraPosition.y = worldBounds.center.y;\r\n\r\n            targetCamera.transform.position = cameraPosition;\r\n            targetCamera.orthographicSize = requiredSize;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたセル範囲にカメラを合わせる。\r\n        /// </summary>\r\n        /// <param name=\"targetCamera\">調整対象カメラ</param>\r\n        /// <param name=\"converter\">座標変換クラス</param>\r\n        /// <param name=\"cellBounds\">対象セル範囲</param>\r\n        /// <param name=\"padding\">各辺の余白</param>\r\n        public static void Fit(\r\n            Camera targetCamera,\r\n            GridCoordinateConverter converter,\r\n            RectInt cellBounds,\r\n            float padding = DefaultPadding)\r\n        {\r\n            Bounds worldBounds = GetWorldBounds(\r\n                converter,\r\n                cellBounds);\r\n\r\n            Fit(targetCamera, worldBounds, padding);\r\n        }\r\n\r\n        /// <summary>\r\n        /// グリッドマップ全体にカメラを合わせる。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">セルデータの型</typeparam>\r\n        /// <param name=\"targetCamera\">調整対象カメラ</param>\r\n        /// <param name=\"converter\">座標変換クラス</param>\r\n        /// <param name=\"map\">対象グリッドマップ</param>\r\n        /// <param name=\"padding\">各辺の余白</param>\r\n        public static void Fit<T>(\r\n            Camera targetCamera,\r\n            GridCoordinateConverter converter,\r\n            GridMap<T> map,\r\n            float padding = DefaultPadding)\r\n        {\r\n            Bounds worldBounds = GetWorldBounds(\r\n                converter,\r\n                map);\r\n\r\n            Fit(targetCamera, worldBounds, padding);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Validation Methods\r\n\r\n        /// <summary>\r\n        /// 値が有限かつ0以上であることを検証する。\r\n        /// </summary>\r\n        /// <param name=\"value\">検証対象の値</param>\r\n        /// <param name=\"parameterName\">引数名</param>\r\n        private static void ValidateNonNegative(\r\n            float value,\r\n            string parameterName)\r\n        {\r\n            if (float.IsNaN(value) ||\r\n                float.IsInfinity(value) ||\r\n                value < 0f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    parameterName);\r\n            }\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
-    "tips": [],
-    "examples": [],
+    "tips": [
+        {
+            "id": "a41fd509-cb1c-4489-92ff-f07d0703c7ae",
+            "title": "コンポーネントへの追加は不要",
+            "body": "GridCameraFitterはstaticクラスであるため、GameObjectにコンポーネントとして追加する必要はありません。\n\nステージ管理クラスなどからGridCameraFitter.Fit()を直接呼び出すことで、カメラの表示範囲を調整できます。"
+        },
+        {
+            "id": "57edda8f-6c29-41ad-821b-ab7bc1ca5c44",
+            "title": "カメラの事前設定",
+            "body": "調整対象のCameraは以下の条件を満たす必要があります。\n\n- Projection：Orthographic\n- ワールド回転：(0, 0, 0)\n- Z座標：撮影対象が描画範囲内に収まる位置\n\nPerspective Cameraや回転したカメラを指定すると、InvalidOperationExceptionが発生します。\n\nFit()を実行しても、カメラのZ座標と回転は変更されません。"
+        },
+        {
+            "id": "0a2a2833-5bc4-482f-97ff-f4f33c9c7567",
+            "title": "グリッド生成後に実行する",
+            "body": "グリッドマップの生成や座標変換クラスの初期化が完了してからFit()を呼び出してください。\n\nステージの再生成によってグリッドサイズが変化する場合は、生成完了後に再度Fit()を呼び出すことで、新しいステージサイズに合わせてカメラを調整できます。"
+        },
+        {
+            "id": "6b6f9c36-0175-4b59-9d09-62f2bb37f18c",
+            "title": "Paddingによる余白調整",
+            "body": "padding引数を変更することで、グリッド周囲の余白を調整できます。\n\n- 0f：追加の余白なし\n- 1f：標準の余白（DefaultPadding）\n- 2f：標準より広い余白\n\npaddingはワールド座標単位で左右・上下の各辺に追加されます。負の値、NaN、Infinityは指定できません。\n\n画面のアスペクト比によっては、指定した余白よりも広い空間が生じる場合があります。"
+        },
+        {
+            "id": "961584d7-9d77-4ec6-b23b-10d8d95214c8",
+            "title": "画面サイズの変更に対応する",
+            "body": "GridCameraFitterは、Fit()を呼び出した時点のCamera.aspectを使用して表示サイズを計算します。\n\nウィンドウサイズの変更やスマートフォンの画面回転などによってアスペクト比が変化した場合は、必要に応じてFit()を再実行してください。\n\n毎フレーム実行する必要はなく、画面サイズやグリッド範囲が変化したタイミングでの実行を推奨します。"
+        },
+        {
+            "id": "069c88a9-cc56-43af-b837-a763a1532db5",
+            "title": "用途に応じたオーバーロードの選択",
+            "body": "Fit()には3種類のオーバーロードが用意されています。\n\n- Camera, Bounds, padding\n  ワールド座標上の境界が取得済みの場合に使用します。\n\n- Camera, GridCoordinateConverter, RectInt, padding\n  グリッド内の特定範囲を表示する場合に使用します。\n\n- Camera, GridCoordinateConverter, GridMap<T>, padding\n  グリッドマップ全体を表示する場合に使用します。\n\nステージ全体を表示する用途では、GridMap<T>を受け取るオーバーロードが便利です。"
+        },
+        {
+            "id": "8b2fd6ab-2572-4c74-a132-4ceedc48203c",
+            "title": "カメラを変更せずに表示サイズを計算する",
+            "body": "CalculateOrthographicSize()を使用すると、Cameraコンポーネントを直接操作せずに必要なOrthographic Sizeを計算できます。\n\nカメラのズームアニメーションや補間処理など、表示サイズを段階的に変更したい場合に利用できます。\n\n計算結果はMinimumOrthographicSize（0.01f）以上になります。"
+        }
+    ],
+    "examples": [
+        {
+            "id": "140e5110-f5f6-4adb-8498-1ba6a895ad41",
+            "title": "グリッドマップ全体の表示",
+            "body": "グリッドマップの生成完了後に実行する基本的な使用例です。マップ全体が画面内に収まるように、カメラの位置と表示サイズを自動調整します。\n// グリッドマップ全体にカメラを合わせる。\nGridCameraFitter.Fit(Camera.main, converter, map);\n\n余白には DefaultPadding（1f）が使用されます。"
+        },
+        {
+            "id": "dd160354-92ab-43db-9f45-ebbe7af75c44",
+            "title": "Paddingの指定",
+            "body": "グリッド周囲に任意の余白を設けたい場合は、padding引数を指定します。\n// グリッドの各辺に2ワールド単位の余白を追加する。\nGridCameraFitter.Fit(\n    Camera.main,\n    converter,\n    map,\n    padding: 2f);"
+        },
+        {
+            "id": "0974cd90-8109-4505-90df-34dd8c0e32b5",
+            "title": "指定セル範囲へのカメラ調整",
+            "body": "マップ全体ではなく、特定のセル範囲だけを画面内に収めたい場合に使用します。\n// セル座標(3, 2)から横5マス、縦4マスの範囲。\nRectInt cellBounds = new RectInt(3, 2, 5, 4);\n\n// 指定されたセル範囲にカメラを合わせる。\nGridCameraFitter.Fit(\n    Camera.main,\n    converter,\n    cellBounds,\n    padding: 0.5f);"
+        },
+        {
+            "id": "7133d374-a150-4241-aa1c-5c6668e3384a",
+            "title": "グリッドのワールド境界の取得",
+            "body": "カメラを操作せず、グリッドマップのワールド座標上の中心位置やサイズを取得する場合に使用します。\n// グリッドマップ全体のワールド境界を取得する。\nBounds bounds = GridCameraFitter.GetWorldBounds(\n    converter,\n    map);\n\n// 中心位置とサイズを確認する。\nDebug.Log($\"中心座標：{bounds.center}\");\nDebug.Log($\"横幅：{bounds.size.x}\");\nDebug.Log($\"縦幅：{bounds.size.y}\");"
+        },
+        {
+            "id": "324bd3be-5909-4487-83cf-ee0394b6c21d",
+            "title": "Orthographic Sizeの個別計算",
+            "body": "// 対象範囲のサイズを指定する。\nfloat width = 15f;\nfloat height = 11f;\n\n// 必要なカメラサイズを計算する。\nfloat requiredSize =\n    GridCameraFitter.CalculateOrthographicSize(\n        width,\n        height,\n        Camera.main.aspect,\n        padding: 1f);\n\n// 計算結果をカメラに反映する。\nCamera.main.orthographicSize = requiredSize;"
+        },
+        {
+            "id": "90768dcc-0bf9-46cf-9ecd-91af963f432d",
+            "title": "任意のワールド範囲へのカメラ調整",
+            "body": "グリッドマップを使用せず、任意のワールド座標上の範囲にカメラを合わせることもできます。\n// 表示範囲の中心座標。\nVector3 center = new Vector3(5f, 3f, 0f);\n\n// 表示範囲のサイズ。\nVector3 size = new Vector3(10f, 6f, 0f);\n\n// ワールド境界を生成する。\nBounds bounds = new Bounds(center, size);\n\n// 指定範囲にカメラを合わせる。\nGridCameraFitter.Fit(\n    Camera.main,\n    bounds,\n    padding: 1f);\n\nグリッドを使用しない別のゲームでも利用できる使用例です。"
+        }
+    ],
     "notes": [],
     "related": [],
     "tests": [],

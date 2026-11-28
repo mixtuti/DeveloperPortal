@@ -9,8 +9,10 @@ const DocsApp = {
     // メインナビゲーションの定義
     menus: [
         { id: "home", label: "ホーム" },
+        { id: "coding-guide", label: "コーディングガイド" },
         { id: "scripts", label: "スクリプト一覧" },
         { id: "dependencies", label: "依存関係" },
+        { id: "assets", label: "外部アセット" },
         { id: "tips", label: "Tips" },
         { id: "import", label: "解析・インポート" },
         { id: "editor", label: "補完・編集" },
@@ -24,17 +26,56 @@ const DocsApp = {
         this.renderNavigation();
 
         window.addEventListener("hashchange", () => {
+
+            // 保留中の検索処理をキャンセルする。
+            DocsSearchReference.cancelPending();
+
+            // 通常ページへ移動する際は検索状態を解除する。
+            document.getElementById("search").value = "";
+
+            DocsSearchReference.current = null;
+            DocsSearchReference.category = "all";
+
             this.renderPage();
         });
 
+        // グローバル検索の入力処理
         document.getElementById("search")
             .addEventListener("input", event => {
-                const keyword = event.target.value.trim();
 
-                if (keyword) {
-                    this.renderSearch(keyword);
-                } else {
-                    this.renderPage();
+                DocsSearchReference.schedule(
+                    event.target.value
+                );
+            });
+
+        // Enterキーで即座に検索する。
+        document.getElementById("search")
+            .addEventListener("keydown", event => {
+
+                if (
+                    event.key === "Enter" &&
+                    !event.isComposing
+                ) {
+
+                    event.preventDefault();
+
+                    const keyword =
+                        event.target.value.trim();
+
+                    if (keyword) {
+                        this.renderSearch(keyword);
+                    }
+                }
+
+                // Escapeキーで検索を終了する。
+                if (
+                    event.key === "Escape" &&
+                    !event.isComposing
+                ) {
+
+                    event.target.value = "";
+
+                    DocsSearchReference.schedule("");
                 }
             });
 
@@ -42,6 +83,23 @@ const DocsApp = {
             await DocsData.load();
         } catch (error) {
             this.notify(error.message);
+        }
+
+        // 外部アセット情報を読み込む。
+        try {
+
+            await DocsAssetManager.load();
+        }
+        catch (error) {
+
+            console.error(
+                "外部アセット情報の読み込みに失敗しました。",
+                error
+            );
+
+            this.notify(
+                "外部アセット情報を読み込めませんでした。"
+            );
         }
 
         this.refresh();
@@ -169,6 +227,30 @@ const DocsApp = {
             return;
         }
 
+        // アセット詳細ページ
+        if (route.startsWith("asset/")) {
+
+            const id = decodeURIComponent(
+                route.slice("asset/".length)
+            );
+
+            this.renderAssetDetail(id);
+
+            return;
+        }
+
+        // アセット編集ページ
+        if (route.startsWith("asset-editor/")) {
+
+            const id = decodeURIComponent(
+                route.slice("asset-editor/".length)
+            );
+
+            this.renderAssetEditor(id);
+
+            return;
+        }
+
         switch (route) {
             case "home":
                 this.renderHome();
@@ -192,6 +274,22 @@ const DocsApp = {
 
             case "dependencies":
                 this.renderDependencies();
+                break;
+
+            case "assets":
+                this.renderAssets();
+                break;
+
+            case "asset-editor":
+                this.renderAssetEditor();
+                break;
+
+            case "coding-guide":
+                DocsCodingGuide.show();
+                break;
+
+            case "tips":
+                DocsTips.show();
                 break;
 
             default:
@@ -962,6 +1060,68 @@ const DocsApp = {
     },
 
     /**
+     * 外部アセット一覧を表示する。
+     */
+    renderAssets() {
+
+        this.setMain(
+            DocsAssetReference.renderList()
+        );
+    },
+
+    /**
+     * 外部アセットの詳細を表示する。
+     * @param {string} id アセットID
+     */
+    renderAssetDetail(id) {
+
+        const asset = DocsAssetManager.getById(id);
+
+        if (!asset) {
+
+            this.setMain(
+                "<h1>アセットが見つかりません。</h1>"
+            );
+
+            return;
+        }
+
+        this.setMain(
+            DocsAssetReference.renderDetail(asset)
+        );
+    },
+
+    /**
+     * 外部アセットの編集画面を表示する。
+     * @param {string} id アセットID
+     */
+    renderAssetEditor(id = "") {
+
+        const isNew = !id;
+
+        const asset = isNew
+
+            ? DocsAssetManager.create()
+
+            : DocsAssetManager.getById(id);
+
+        if (!asset) {
+
+            this.setMain(
+                "<h1>アセットが見つかりません。</h1>"
+            );
+
+            return;
+        }
+
+        this.setMain(
+            DocsAssetReference.renderEditor(asset, isNew)
+        );
+
+        DocsAssetReference.bindEditor(asset);
+    },
+
+    /**
      * スクリプト一覧を表示する。
      */
     renderScripts() {
@@ -1007,27 +1167,18 @@ const DocsApp = {
 
         // API早見表のリンクを有効化する。
         DocsReference.bindNavigation(main);
+
+        // Inspectorシミュレーターの操作イベントを登録する。
+        DocsInspector.bind(main);
     },
 
     /**
-     * 全文検索結果を表示する。
+     * グローバル検索結果を表示する。
      * @param {string} keyword 検索キーワード
      */
     renderSearch(keyword) {
-        const results = DocsData.search(keyword);
 
-        document.getElementById("outline").replaceChildren();
-        document.getElementById("related").replaceChildren();
-
-        this.setMain(`
-            <h1>検索結果</h1>
-
-            <p>
-                「${this.escape(keyword)}」：${results.length}件
-            </p>
-
-            ${this.scriptList(results)}
-        `);
+        DocsSearchReference.show(keyword);
     },
 
     /**
@@ -1098,7 +1249,7 @@ const DocsApp = {
             <p>Tips：${stats.tips}</p>
 
             <p class="${DocsData.isDirty ? "warning" : "muted"}">
-                ${DocsData.isDirty ? "未保存の変更あり" : "未保存の変更なし"}
+                ${DocsData.isDirty || DocsAssetManager.isDirty ? "未保存の変更あり" : "未保存の変更なし"}
             </p>
         `;
     },
