@@ -1,0 +1,64 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Core.AgentState",
+    "name": "AgentState",
+    "fileName": "AgentState.cs",
+    "namespace": "Framework.AI.Core",
+    "type": "enum",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public enum AgentState",
+    "typeParameters": [],
+    "summary": "エージェントのライフサイクル上の稼働状態。",
+    "remarks": "追跡や巡回などの具体的な行動状態とは区別する。",
+    "inheritance": [],
+    "dependencies": [],
+    "members": [],
+    "types": [
+        {
+            "name": "AgentState",
+            "fullName": "AgentState",
+            "kind": "enum",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "エージェントのライフサイクル上の稼働状態。",
+            "remarks": "追跡や巡回などの具体的な行動状態とは区別する。",
+            "attributes": [],
+            "declaration": "public enum AgentState",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [],
+            "nestedTypes": [],
+            "enumValues": [
+                {
+                    "name": "Uninitialized",
+                    "value": "0"
+                },
+                {
+                    "name": "Inactive",
+                    "value": "1"
+                },
+                {
+                    "name": "Active",
+                    "value": "2"
+                },
+                {
+                    "name": "Paused",
+                    "value": "3"
+                },
+                {
+                    "name": "Disposed",
+                    "value": "4"
+                }
+            ],
+            "line": 10
+        }
+    ],
+    "source": "\r\nnamespace Framework.AI.Core\r\n{\r\n    /// <summary>\r\n    /// エージェントのライフサイクル上の稼働状態。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// 追跡や巡回などの具体的な行動状態とは区別する。\r\n    /// </remarks>\r\n    public enum AgentState\r\n    {\r\n        /// <summary>\r\n        /// 初期化されていない状態。\r\n        /// </summary>\r\n        Uninitialized = 0,\r\n\r\n        /// <summary>\r\n        /// 初期化済みだが稼働していない状態。\r\n        /// </summary>\r\n        Inactive = 1,\r\n\r\n        /// <summary>\r\n        /// エージェントが稼働している状態。\r\n        /// </summary>\r\n        Active = 2,\r\n\r\n        /// <summary>\r\n        /// 稼働を一時停止している状態。\r\n        /// </summary>\r\n        Paused = 3,\r\n\r\n        /// <summary>\r\n        /// エージェントが破棄された状態。\r\n        /// </summary>\r\n        Disposed = 4\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.125Z"
+}

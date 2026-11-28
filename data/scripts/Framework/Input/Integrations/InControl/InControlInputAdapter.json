@@ -1,5 +1,5 @@
 {
-    "parserVersion": 2,
+    "parserVersion": 3,
     "id": "Framework.Input.Integrations.InControl.InControlInputAdapter",
     "name": "InControlInputAdapter",
     "fileName": "InControlInputAdapter.cs",
@@ -513,11 +513,737 @@
             "exceptions": []
         }
     ],
+    "types": [
+        {
+            "name": "InControlInputAdapter",
+            "fullName": "InControlInputAdapter",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "InControlと汎用入力インターフェースを接続する 入力アダプター。 ゲーム内の操作識別子とInControlの操作を 関連付けることで、入力取得処理を共通化する。 ゲーム固有の操作内容やキー割り当て、 キャラクター制御には依存しない。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public sealed class InControlInputAdapter<TAction> :\r\n        IInputProvider<TAction>,\r\n        IDisposable\r\n        where TAction : struct, Enum",
+            "inheritance": [
+                "IInputProvider<TAction>",
+                "IDisposable"
+            ],
+            "typeParameters": [
+                {
+                    "name": "TAction",
+                    "description": "ゲーム内の操作を識別する列挙型。"
+                }
+            ],
+            "members": [
+                {
+                    "name": "playerActions",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Dictionary<TAction, PlayerAction>\r\n            playerActions =\r\n                new Dictionary<TAction, PlayerAction>()",
+                    "returnType": "",
+                    "valueType": "Dictionary<TAction, PlayerAction>",
+                    "value": "new Dictionary<TAction, PlayerAction>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個別操作を管理する辞書。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new Dictionary<TAction, PlayerAction>()",
+                    "inspector": null
+                },
+                {
+                    "name": "twoAxisActions",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Dictionary<TAction, PlayerTwoAxisAction>\r\n            twoAxisActions =\r\n                new Dictionary<TAction, PlayerTwoAxisAction>()",
+                    "returnType": "",
+                    "valueType": "Dictionary<TAction, PlayerTwoAxisAction>",
+                    "value": "new Dictionary<TAction, PlayerTwoAxisAction>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "2軸操作を管理する辞書。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new Dictionary<TAction, PlayerTwoAxisAction>()",
+                    "inspector": null
+                },
+                {
+                    "name": "isInitialized",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isInitialized",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "初期化が完了しているか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "isInputEnabled",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isInputEnabled",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "入力取得が有効になっているか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "disposed",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool disposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "終了処理が実行されているか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsInitialized",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsInitialized =>\r\n            isInitialized && !disposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "Adapterの初期化が完了しているか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsInputEnabled",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsInputEnabled =>\r\n            IsInitialized && isInputEnabled",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "入力を取得できる状態か。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PlayerActionCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int PlayerActionCount =>\r\n            playerActions.Count",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "登録されている個別操作の数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TwoAxisActionCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int TwoAxisActionCount =>\r\n            twoAxisActions.Count",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "登録されている2軸操作の数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ActionCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int ActionCount =>\r\n            PlayerActionCount + TwoAxisActionCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "登録されているすべての操作数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Initialize",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Initialize(bool enableInput = true)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "enableInput",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": "true",
+                            "description": "初期化後に入力を有効にするか"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "入力アダプターを初期化する。 既に初期化されている場合は何もしない。 登録済みの操作情報は維持する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RegisterAction",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool RegisterAction(\r\n            TAction action,\r\n            PlayerAction playerAction)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "登録する操作識別子"
+                        },
+                        {
+                            "name": "playerAction",
+                            "type": "PlayerAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "登録する個別操作"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "操作識別子とInControlの個別操作を関連付ける。 同じ操作識別子の重複登録は許可しない。",
+                    "returns": "登録に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RegisterTwoAxisAction",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool RegisterTwoAxisAction(\r\n            TAction action,\r\n            PlayerTwoAxisAction axisAction)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "登録する操作識別子"
+                        },
+                        {
+                            "name": "axisAction",
+                            "type": "PlayerTwoAxisAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "登録する2軸操作"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "操作識別子とInControlの2軸操作を関連付ける。",
+                    "returns": "登録に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "UnregisterAction",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool UnregisterAction(TAction action)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "解除する操作識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された操作の登録を解除する。 InControl側の操作やキー割り当ては破棄しない。",
+                    "returns": "登録解除に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ClearActions",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void ClearActions()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべての操作の登録を解除する。 InControl側の操作セットは破棄しない。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HasAction",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool HasAction(TAction action)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "確認する操作識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された操作が登録されているか確認する。 入力の有効状態には影響されない。",
+                    "returns": "登録されている場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetPlayerAction",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetPlayerAction(\r\n            TAction action,\r\n            out PlayerAction playerAction)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得する操作識別子"
+                        },
+                        {
+                            "name": "playerAction",
+                            "type": "PlayerAction",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得された個別操作"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "操作識別子に対応する個別操作を取得する。 キーコンフィグなどで利用する。 入力の有効状態には影響されない。",
+                    "returns": "取得に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetTwoAxisAction",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetTwoAxisAction(\r\n            TAction action,\r\n            out PlayerTwoAxisAction axisAction)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得する操作識別子"
+                        },
+                        {
+                            "name": "axisAction",
+                            "type": "PlayerTwoAxisAction",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得された2軸操作"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "操作識別子に対応する2軸操作を取得する。",
+                    "returns": "取得に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetButton",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool GetButton(TAction action)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得する操作識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたボタンの押下状態を取得する。",
+                    "returns": "押されている場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetButtonDown",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool GetButtonDown(TAction action)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得する操作識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたボタンが押された瞬間を取得する。",
+                    "returns": "押されたフレームの場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetButtonUp",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool GetButtonUp(TAction action)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得する操作識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたボタンが離された瞬間を取得する。",
+                    "returns": "離されたフレームの場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetAxis",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float GetAxis(TAction action)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得する操作識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された操作の1軸入力値を取得する。",
+                    "returns": "-1～1の入力値。 無効または未登録の場合は0。",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetVector2",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2 GetVector2(TAction action)",
+                    "returnType": "Vector2",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得する操作識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された操作の2軸入力値を取得する。",
+                    "returns": "各成分が-1～1の入力ベクトル。 無効または未登録の場合はVector2.zero。",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SetInputEnabled",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void SetInputEnabled(bool enabled)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "enabled",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "入力取得を有効にする場合はtrue"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "入力取得の有効状態を設定する。 操作の登録情報やキー割り当ては維持する。 InControl側の操作セットには影響を与えない。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SanitizeAxis",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static float SanitizeAxis(float value)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証する入力値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "入力値を検証し、-1～1の範囲へ制限する。",
+                    "returns": "補正された入力値",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ThrowIfDisposed",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void ThrowIfDisposed()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "終了処理済みの場合に例外を発生させる。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Dispose",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Dispose()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "入力アダプターの終了処理を行う。 登録情報を解除し、入力取得を無効にする。 InControl側の操作セットは破棄しない。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 22
+        }
+    ],
     "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing UnityEngine;\r\nusing global::InControl;\r\n\r\nnamespace Framework.Input.Integrations.InControl\r\n{\r\n    /// <summary>\r\n    /// InControlと汎用入力インターフェースを接続する\r\n    /// 入力アダプター。\r\n    ///\r\n    /// ゲーム内の操作識別子とInControlの操作を\r\n    /// 関連付けることで、入力取得処理を共通化する。\r\n    ///\r\n    /// ゲーム固有の操作内容やキー割り当て、\r\n    /// キャラクター制御には依存しない。\r\n    /// </summary>\r\n    /// <typeparam name=\"TAction\">\r\n    /// ゲーム内の操作を識別する列挙型。\r\n    /// </typeparam>\r\n    public sealed class InControlInputAdapter<TAction> :\r\n        IInputProvider<TAction>,\r\n        IDisposable\r\n        where TAction : struct, Enum\r\n    {\r\n        #region Runtime Fields\r\n\r\n        /// <summary>\r\n        /// 個別操作を管理する辞書。\r\n        /// </summary>\r\n        private readonly Dictionary<TAction, PlayerAction>\r\n            playerActions =\r\n                new Dictionary<TAction, PlayerAction>();\r\n\r\n        /// <summary>\r\n        /// 2軸操作を管理する辞書。\r\n        /// </summary>\r\n        private readonly Dictionary<TAction, PlayerTwoAxisAction>\r\n            twoAxisActions =\r\n                new Dictionary<TAction, PlayerTwoAxisAction>();\r\n\r\n        /// <summary>\r\n        /// 初期化が完了しているか。\r\n        /// </summary>\r\n        private bool isInitialized;\r\n\r\n        /// <summary>\r\n        /// 入力取得が有効になっているか。\r\n        /// </summary>\r\n        private bool isInputEnabled;\r\n\r\n        /// <summary>\r\n        /// 終了処理が実行されているか。\r\n        /// </summary>\r\n        private bool disposed;\r\n\r\n        #endregion\r\n\r\n        #region Properties\r\n\r\n        /// <summary>\r\n        /// Adapterの初期化が完了しているか。\r\n        /// </summary>\r\n        public bool IsInitialized =>\r\n            isInitialized && !disposed;\r\n\r\n        /// <summary>\r\n        /// 入力を取得できる状態か。\r\n        /// </summary>\r\n        public bool IsInputEnabled =>\r\n            IsInitialized && isInputEnabled;\r\n\r\n        /// <summary>\r\n        /// 登録されている個別操作の数。\r\n        /// </summary>\r\n        public int PlayerActionCount =>\r\n            playerActions.Count;\r\n\r\n        /// <summary>\r\n        /// 登録されている2軸操作の数。\r\n        /// </summary>\r\n        public int TwoAxisActionCount =>\r\n            twoAxisActions.Count;\r\n\r\n        /// <summary>\r\n        /// 登録されているすべての操作数。\r\n        /// </summary>\r\n        public int ActionCount =>\r\n            PlayerActionCount + TwoAxisActionCount;\r\n\r\n        #endregion\r\n\r\n        #region Initialization Methods\r\n\r\n        /// <summary>\r\n        /// 入力アダプターを初期化する。\r\n        ///\r\n        /// 既に初期化されている場合は何もしない。\r\n        /// 登録済みの操作情報は維持する。\r\n        /// </summary>\r\n        /// <param name=\"enableInput\">\r\n        /// 初期化後に入力を有効にするか\r\n        /// </param>\r\n        public void Initialize(bool enableInput = true)\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            if (isInitialized)\r\n            {\r\n                return;\r\n            }\r\n\r\n            isInitialized = true;\r\n            isInputEnabled = enableInput;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Registration Methods\r\n\r\n        /// <summary>\r\n        /// 操作識別子とInControlの個別操作を関連付ける。\r\n        ///\r\n        /// 同じ操作識別子の重複登録は許可しない。\r\n        /// </summary>\r\n        /// <param name=\"action\">登録する操作識別子</param>\r\n        /// <param name=\"playerAction\">登録する個別操作</param>\r\n        /// <returns>登録に成功した場合はtrue</returns>\r\n        public bool RegisterAction(\r\n            TAction action,\r\n            PlayerAction playerAction)\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            if (playerAction == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(playerAction));\r\n            }\r\n\r\n            // 個別操作と2軸操作の重複を防止する。\r\n            if (HasAction(action))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            playerActions.Add(action, playerAction);\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 操作識別子とInControlの2軸操作を関連付ける。\r\n        /// </summary>\r\n        /// <param name=\"action\">登録する操作識別子</param>\r\n        /// <param name=\"axisAction\">登録する2軸操作</param>\r\n        /// <returns>登録に成功した場合はtrue</returns>\r\n        public bool RegisterTwoAxisAction(\r\n            TAction action,\r\n            PlayerTwoAxisAction axisAction)\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            if (axisAction == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(axisAction));\r\n            }\r\n\r\n            // 個別操作と2軸操作の重複を防止する。\r\n            if (HasAction(action))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            twoAxisActions.Add(action, axisAction);\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された操作の登録を解除する。\r\n        ///\r\n        /// InControl側の操作やキー割り当ては破棄しない。\r\n        /// </summary>\r\n        /// <param name=\"action\">解除する操作識別子</param>\r\n        /// <returns>登録解除に成功した場合はtrue</returns>\r\n        public bool UnregisterAction(TAction action)\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            if (playerActions.Remove(action))\r\n            {\r\n                return true;\r\n            }\r\n\r\n            return twoAxisActions.Remove(action);\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべての操作の登録を解除する。\r\n        ///\r\n        /// InControl側の操作セットは破棄しない。\r\n        /// </summary>\r\n        public void ClearActions()\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            playerActions.Clear();\r\n            twoAxisActions.Clear();\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Action Lookup Methods\r\n\r\n        /// <summary>\r\n        /// 指定された操作が登録されているか確認する。\r\n        ///\r\n        /// 入力の有効状態には影響されない。\r\n        /// </summary>\r\n        /// <param name=\"action\">確認する操作識別子</param>\r\n        /// <returns>登録されている場合はtrue</returns>\r\n        public bool HasAction(TAction action)\r\n        {\r\n            if (disposed)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return playerActions.ContainsKey(action) ||\r\n                   twoAxisActions.ContainsKey(action);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 操作識別子に対応する個別操作を取得する。\r\n        ///\r\n        /// キーコンフィグなどで利用する。\r\n        /// 入力の有効状態には影響されない。\r\n        /// </summary>\r\n        /// <param name=\"action\">取得する操作識別子</param>\r\n        /// <param name=\"playerAction\">取得された個別操作</param>\r\n        /// <returns>取得に成功した場合はtrue</returns>\r\n        public bool TryGetPlayerAction(\r\n            TAction action,\r\n            out PlayerAction playerAction)\r\n        {\r\n            playerAction = null;\r\n\r\n            if (disposed)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return playerActions.TryGetValue(\r\n                action,\r\n                out playerAction);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 操作識別子に対応する2軸操作を取得する。\r\n        /// </summary>\r\n        /// <param name=\"action\">取得する操作識別子</param>\r\n        /// <param name=\"axisAction\">取得された2軸操作</param>\r\n        /// <returns>取得に成功した場合はtrue</returns>\r\n        public bool TryGetTwoAxisAction(\r\n            TAction action,\r\n            out PlayerTwoAxisAction axisAction)\r\n        {\r\n            axisAction = null;\r\n\r\n            if (disposed)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return twoAxisActions.TryGetValue(\r\n                action,\r\n                out axisAction);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Button Methods\r\n\r\n        /// <summary>\r\n        /// 指定されたボタンの押下状態を取得する。\r\n        /// </summary>\r\n        /// <param name=\"action\">取得する操作識別子</param>\r\n        /// <returns>押されている場合はtrue</returns>\r\n        public bool GetButton(TAction action)\r\n        {\r\n            if (!IsInputEnabled)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return TryGetPlayerAction(\r\n                       action,\r\n                       out PlayerAction playerAction) &&\r\n                   playerAction.IsPressed;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたボタンが押された瞬間を取得する。\r\n        /// </summary>\r\n        /// <param name=\"action\">取得する操作識別子</param>\r\n        /// <returns>押されたフレームの場合はtrue</returns>\r\n        public bool GetButtonDown(TAction action)\r\n        {\r\n            if (!IsInputEnabled)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return TryGetPlayerAction(\r\n                       action,\r\n                       out PlayerAction playerAction) &&\r\n                   playerAction.WasPressed;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたボタンが離された瞬間を取得する。\r\n        /// </summary>\r\n        /// <param name=\"action\">取得する操作識別子</param>\r\n        /// <returns>離されたフレームの場合はtrue</returns>\r\n        public bool GetButtonUp(TAction action)\r\n        {\r\n            if (!IsInputEnabled)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return TryGetPlayerAction(\r\n                       action,\r\n                       out PlayerAction playerAction) &&\r\n                   playerAction.WasReleased;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Axis Methods\r\n\r\n        /// <summary>\r\n        /// 指定された操作の1軸入力値を取得する。\r\n        /// </summary>\r\n        /// <param name=\"action\">取得する操作識別子</param>\r\n        /// <returns>\r\n        /// -1～1の入力値。\r\n        /// 無効または未登録の場合は0。\r\n        /// </returns>\r\n        public float GetAxis(TAction action)\r\n        {\r\n            if (!IsInputEnabled)\r\n            {\r\n                return 0f;\r\n            }\r\n\r\n            if (!TryGetPlayerAction(\r\n                    action,\r\n                    out PlayerAction playerAction))\r\n            {\r\n                return 0f;\r\n            }\r\n\r\n            return SanitizeAxis(playerAction.Value);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された操作の2軸入力値を取得する。\r\n        /// </summary>\r\n        /// <param name=\"action\">取得する操作識別子</param>\r\n        /// <returns>\r\n        /// 各成分が-1～1の入力ベクトル。\r\n        /// 無効または未登録の場合はVector2.zero。\r\n        /// </returns>\r\n        public Vector2 GetVector2(TAction action)\r\n        {\r\n            if (!IsInputEnabled)\r\n            {\r\n                return Vector2.zero;\r\n            }\r\n\r\n            if (!TryGetTwoAxisAction(\r\n                    action,\r\n                    out PlayerTwoAxisAction axisAction))\r\n            {\r\n                return Vector2.zero;\r\n            }\r\n\r\n            // InControlから2軸入力を取得する。\r\n            Vector2 value = axisAction.Value;\r\n\r\n            // 不正な値を除去し、入力範囲を保証する。\r\n            return new Vector2(\r\n                SanitizeAxis(value.x),\r\n                SanitizeAxis(value.y));\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Control Methods\r\n\r\n        /// <summary>\r\n        /// 入力取得の有効状態を設定する。\r\n        ///\r\n        /// 操作の登録情報やキー割り当ては維持する。\r\n        /// InControl側の操作セットには影響を与えない。\r\n        /// </summary>\r\n        /// <param name=\"enabled\">\r\n        /// 入力取得を有効にする場合はtrue\r\n        /// </param>\r\n        public void SetInputEnabled(bool enabled)\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            if (!isInitialized)\r\n            {\r\n                return;\r\n            }\r\n\r\n            isInputEnabled = enabled;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Utility Methods\r\n\r\n        /// <summary>\r\n        /// 入力値を検証し、-1～1の範囲へ制限する。\r\n        /// </summary>\r\n        /// <param name=\"value\">検証する入力値</param>\r\n        /// <returns>補正された入力値</returns>\r\n        private static float SanitizeAxis(float value)\r\n        {\r\n            if (float.IsNaN(value) ||\r\n                float.IsInfinity(value))\r\n            {\r\n                return 0f;\r\n            }\r\n\r\n            return Mathf.Clamp(value, -1f, 1f);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 終了処理済みの場合に例外を発生させる。\r\n        /// </summary>\r\n        private void ThrowIfDisposed()\r\n        {\r\n            if (disposed)\r\n            {\r\n                throw new ObjectDisposedException(\r\n                    GetType().Name);\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Dispose Methods\r\n\r\n        /// <summary>\r\n        /// 入力アダプターの終了処理を行う。\r\n        ///\r\n        /// 登録情報を解除し、入力取得を無効にする。\r\n        /// InControl側の操作セットは破棄しない。\r\n        /// </summary>\r\n        public void Dispose()\r\n        {\r\n            if (disposed)\r\n            {\r\n                return;\r\n            }\r\n\r\n            playerActions.Clear();\r\n            twoAxisActions.Clear();\r\n\r\n            isInputEnabled = false;\r\n            isInitialized = false;\r\n            disposed = true;\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
     "tips": [],
     "examples": [],
     "notes": [],
     "related": [],
     "tests": [],
-    "generatedAt": "2026-11-26T16:10:17.957Z"
+    "generatedAt": "2026-11-28T15:50:00.391Z"
 }

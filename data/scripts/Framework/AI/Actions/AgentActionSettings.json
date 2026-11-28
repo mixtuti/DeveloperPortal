@@ -1,0 +1,297 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Actions.AgentActionSettings",
+    "name": "AgentActionSettings",
+    "fileName": "AgentActionSettings.cs",
+    "namespace": "Framework.AI.Actions",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class AgentActionSettings",
+    "typeParameters": [],
+    "summary": "エージェントの行動実行に関する設定を保持する。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [
+        "System"
+    ],
+    "members": [
+        {
+            "name": "MinimumDuration",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float MinimumDuration",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "行動を切り替えられるまでの最低継続時間。 単位は秒。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Cooldown",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Cooldown",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "行動終了後に再実行できるまでの時間。 単位は秒。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CanInterrupt",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool CanInterrupt",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "通常の行動切り替えによる中断を許可するか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "AgentActionSettings",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public AgentActionSettings(\r\n            float minimumDuration = 0f,\r\n            float cooldown = 0f,\r\n            bool canInterrupt = true)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "minimumDuration",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": "0f",
+                    "description": "最低継続時間。秒"
+                },
+                {
+                    "name": "cooldown",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": "0f",
+                    "description": "クールダウン時間。秒"
+                },
+                {
+                    "name": "canInterrupt",
+                    "type": "bool",
+                    "modifier": "",
+                    "defaultValue": "true",
+                    "description": "通常中断を許可するか"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動実行設定を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "AgentActionSettings",
+            "fullName": "AgentActionSettings",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "エージェントの行動実行に関する設定を保持する。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public sealed class AgentActionSettings",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "MinimumDuration",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float MinimumDuration",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "行動を切り替えられるまでの最低継続時間。 単位は秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Cooldown",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Cooldown",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "行動終了後に再実行できるまでの時間。 単位は秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CanInterrupt",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool CanInterrupt",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "通常の行動切り替えによる中断を許可するか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "AgentActionSettings",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public AgentActionSettings(\r\n            float minimumDuration = 0f,\r\n            float cooldown = 0f,\r\n            bool canInterrupt = true)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "minimumDuration",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "0f",
+                            "description": "最低継続時間。秒"
+                        },
+                        {
+                            "name": "cooldown",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "0f",
+                            "description": "クールダウン時間。秒"
+                        },
+                        {
+                            "name": "canInterrupt",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": "true",
+                            "description": "通常中断を許可するか"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動実行設定を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValidateDuration",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static void ValidateDuration(\r\n            float value,\r\n            string parameterName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証する時間"
+                        },
+                        {
+                            "name": "parameterName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "引数名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "時間設定が有限の非負数であることを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "時間設定が不正な場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 9
+        }
+    ],
+    "source": "\r\nusing System;\r\n\r\nnamespace Framework.AI.Actions\r\n{\r\n    /// <summary>\r\n    /// エージェントの行動実行に関する設定を保持する。\r\n    /// </summary>\r\n    public sealed class AgentActionSettings\r\n    {\r\n        /// <summary>\r\n        /// 行動を切り替えられるまでの最低継続時間。\r\n        /// 単位は秒。\r\n        /// </summary>\r\n        public float MinimumDuration { get; }\r\n\r\n        /// <summary>\r\n        /// 行動終了後に再実行できるまでの時間。\r\n        /// 単位は秒。\r\n        /// </summary>\r\n        public float Cooldown { get; }\r\n\r\n        /// <summary>\r\n        /// 通常の行動切り替えによる中断を許可するか。\r\n        /// </summary>\r\n        public bool CanInterrupt { get; }\r\n\r\n        /// <summary>\r\n        /// 行動実行設定を生成する。\r\n        /// </summary>\r\n        /// <param name=\"minimumDuration\">最低継続時間。秒</param>\r\n        /// <param name=\"cooldown\">クールダウン時間。秒</param>\r\n        /// <param name=\"canInterrupt\">通常中断を許可するか</param>\r\n        public AgentActionSettings(\r\n            float minimumDuration = 0f,\r\n            float cooldown = 0f,\r\n            bool canInterrupt = true)\r\n        {\r\n            ValidateDuration(\r\n                minimumDuration,\r\n                nameof(minimumDuration));\r\n\r\n            ValidateDuration(\r\n                cooldown,\r\n                nameof(cooldown));\r\n\r\n            MinimumDuration = minimumDuration;\r\n            Cooldown = cooldown;\r\n            CanInterrupt = canInterrupt;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 時間設定が有限の非負数であることを検証する。\r\n        /// </summary>\r\n        /// <param name=\"value\">検証する時間</param>\r\n        /// <param name=\"parameterName\">引数名</param>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 時間設定が不正な場合に発生する。\r\n        /// </exception>\r\n        private static void ValidateDuration(\r\n            float value,\r\n            string parameterName)\r\n        {\r\n            if (float.IsNaN(value) ||\r\n                float.IsInfinity(value) ||\r\n                value < 0f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    parameterName);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.078Z"
+}

@@ -1,0 +1,139 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Scheduling.IAgentTickable",
+    "name": "IAgentTickable",
+    "fileName": "IAgentTickable.cs",
+    "namespace": "Framework.AI.Scheduling",
+    "type": "interface",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public interface IAgentTickable",
+    "typeParameters": [],
+    "summary": "更新管理システムによる間隔更新に対応する エージェントのインターフェース。",
+    "remarks": "エージェント固有の認識、意思決定などの処理は 実装側が担当する。",
+    "inheritance": [],
+    "dependencies": [],
+    "members": [
+        {
+            "name": "IsTickEnabled",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "bool IsTickEnabled",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在エージェントを更新可能かどうかを取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Tick",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "void Tick(float deltaTime)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "deltaTime",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "前回の更新から経過した時間。単位は秒。 初回は登録時点からの経過時間となる。"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "エージェントの更新処理を実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "IAgentTickable",
+            "fullName": "IAgentTickable",
+            "kind": "interface",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "更新管理システムによる間隔更新に対応する エージェントのインターフェース。",
+            "remarks": "エージェント固有の認識、意思決定などの処理は 実装側が担当する。",
+            "attributes": [],
+            "declaration": "public interface IAgentTickable",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "IsTickEnabled",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "bool IsTickEnabled",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在エージェントを更新可能かどうかを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Tick",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "void Tick(float deltaTime)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "deltaTime",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "前回の更新から経過した時間。単位は秒。 初回は登録時点からの経過時間となる。"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "エージェントの更新処理を実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 12
+        }
+    ],
+    "source": "\r\nnamespace Framework.AI.Scheduling\r\n{\r\n    /// <summary>\r\n    /// 更新管理システムによる間隔更新に対応する\r\n    /// エージェントのインターフェース。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// エージェント固有の認識、意思決定などの処理は\r\n    /// 実装側が担当する。\r\n    /// </remarks>\r\n    public interface IAgentTickable\r\n    {\r\n        /// <summary>\r\n        /// 現在エージェントを更新可能かどうかを取得する。\r\n        /// </summary>\r\n        bool IsTickEnabled { get; }\r\n\r\n        /// <summary>\r\n        /// エージェントの更新処理を実行する。\r\n        /// </summary>\r\n        /// <param name=\"deltaTime\">\r\n        /// 前回の更新から経過した時間。単位は秒。\r\n        /// 初回は登録時点からの経過時間となる。\r\n        /// </param>\r\n        void Tick(float deltaTime);\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.375Z"
+}

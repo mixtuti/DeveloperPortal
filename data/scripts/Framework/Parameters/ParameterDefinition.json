@@ -1,0 +1,725 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.Parameters.ParameterDefinition",
+    "name": "ParameterDefinition",
+    "fileName": "ParameterDefinition.cs",
+    "namespace": "Framework.Parameters",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class ParameterDefinition<TParameter>",
+    "typeParameters": [
+        {
+            "name": "TParameter",
+            "description": "パラメーターを識別する型。"
+        }
+    ],
+    "summary": "パラメーターの識別子、初期値および有効範囲を定義する。",
+    "remarks": "定義情報は生成後に変更できない。 実行時の値や補正情報は別のクラスで管理する。 識別子には不変の値型やenumの使用を推奨する。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic"
+    ],
+    "members": [
+        {
+            "name": "Id",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public TParameter Id",
+            "returnType": "",
+            "valueType": "TParameter",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "パラメーターの識別子を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "DefaultValue",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float DefaultValue",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "パラメーターの標準初期値を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MinValue",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float MinValue",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "パラメーターの最小許容値を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MaxValue",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float MaxValue",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "パラメーターの最大許容値を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsFixedValue",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsFixedValue => MinValue == MaxValue",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "最小値と最大値が等しい固定値の定義かどうかを取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ParameterDefinition",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public ParameterDefinition(\r\n            TParameter id,\r\n            float defaultValue,\r\n            float minValue,\r\n            float maxValue)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "パラメーターの識別子"
+                },
+                {
+                    "name": "defaultValue",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "標準初期値"
+                },
+                {
+                    "name": "minValue",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "最小許容値"
+                },
+                {
+                    "name": "maxValue",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "最大許容値"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "パラメーターの定義を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "識別子がnullの場合に発生する。"
+                },
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "数値が有限値ではない場合、 または初期値が有効範囲外の場合に発生する。"
+                },
+                {
+                    "name": "ArgumentException",
+                    "description": "最小値が最大値を上回る場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "IsInRange",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsInRange(float value)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "判定対象の値"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された値が有効範囲内に存在するか判定する。",
+            "returns": "有限値かつ有効範囲内の場合はtrue。 それ以外の場合はfalse。",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Clamp",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Clamp(float value)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "制限対象の値"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された値を有効範囲内に制限する。",
+            "returns": "有効範囲内に制限された値",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "指定された値が有限値ではない場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "Normalize",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Normalize(float value)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "正規化対象の値"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された値を有効範囲に対する0から1の値に正規化する。",
+            "returns": "0から1の正規化値。 固定値の定義の場合は0。",
+            "remarks": "有効範囲外の値は制限してから正規化する。",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "指定された値が有限値ではない場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "Denormalize",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Denormalize(float normalizedValue)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "normalizedValue",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "正規化された値"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "0から1の正規化値を実際のパラメーター値に変換する。",
+            "returns": "有効範囲に対応するパラメーター値",
+            "remarks": "0未満の値は0、1を超える値は1として扱う。",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "指定された値が有限値ではない場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "MatchesId",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool MatchesId(TParameter id)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "比較対象の識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された識別子が自身の識別子と一致するか判定する。",
+            "returns": "識別子が一致する場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "ParameterDefinition",
+            "fullName": "ParameterDefinition",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "パラメーターの識別子、初期値および有効範囲を定義する。",
+            "remarks": "定義情報は生成後に変更できない。 実行時の値や補正情報は別のクラスで管理する。 識別子には不変の値型やenumの使用を推奨する。",
+            "attributes": [],
+            "declaration": "public sealed class ParameterDefinition<TParameter>",
+            "inheritance": [],
+            "typeParameters": [
+                {
+                    "name": "TParameter",
+                    "description": "パラメーターを識別する型。"
+                }
+            ],
+            "members": [
+                {
+                    "name": "Id",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public TParameter Id",
+                    "returnType": "",
+                    "valueType": "TParameter",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "パラメーターの識別子を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "DefaultValue",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float DefaultValue",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "パラメーターの標準初期値を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MinValue",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float MinValue",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "パラメーターの最小許容値を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MaxValue",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float MaxValue",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "パラメーターの最大許容値を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsFixedValue",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsFixedValue => MinValue == MaxValue",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "最小値と最大値が等しい固定値の定義かどうかを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ParameterDefinition",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public ParameterDefinition(\r\n            TParameter id,\r\n            float defaultValue,\r\n            float minValue,\r\n            float maxValue)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "パラメーターの識別子"
+                        },
+                        {
+                            "name": "defaultValue",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "標準初期値"
+                        },
+                        {
+                            "name": "minValue",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "最小許容値"
+                        },
+                        {
+                            "name": "maxValue",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "最大許容値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "パラメーターの定義を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "識別子がnullの場合に発生する。"
+                        },
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "数値が有限値ではない場合、 または初期値が有効範囲外の場合に発生する。"
+                        },
+                        {
+                            "name": "ArgumentException",
+                            "description": "最小値が最大値を上回る場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsInRange",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsInRange(float value)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "判定対象の値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された値が有効範囲内に存在するか判定する。",
+                    "returns": "有限値かつ有効範囲内の場合はtrue。 それ以外の場合はfalse。",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Clamp",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Clamp(float value)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "制限対象の値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された値を有効範囲内に制限する。",
+                    "returns": "有効範囲内に制限された値",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "指定された値が有限値ではない場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Normalize",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Normalize(float value)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "正規化対象の値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された値を有効範囲に対する0から1の値に正規化する。",
+                    "returns": "0から1の正規化値。 固定値の定義の場合は0。",
+                    "remarks": "有効範囲外の値は制限してから正規化する。",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "指定された値が有限値ではない場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Denormalize",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Denormalize(float normalizedValue)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "normalizedValue",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "正規化された値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "0から1の正規化値を実際のパラメーター値に変換する。",
+                    "returns": "有効範囲に対応するパラメーター値",
+                    "remarks": "0未満の値は0、1を超える値は1として扱う。",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "指定された値が有限値ではない場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MatchesId",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool MatchesId(TParameter id)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "比較対象の識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された識別子が自身の識別子と一致するか判定する。",
+                    "returns": "識別子が一致する場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValidateFiniteValue",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static void ValidateFiniteValue(\r\n            float value,\r\n            string parameterName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証対象の値"
+                        },
+                        {
+                            "name": "parameterName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "引数名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された値が有限値であることを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "値がNaNまたは無限大の場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 18
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\n\r\nnamespace Framework.Parameters\r\n{\r\n    /// <summary>\r\n    /// パラメーターの識別子、初期値および有効範囲を定義する。\r\n    /// </summary>\r\n    /// <typeparam name=\"TParameter\">\r\n    /// パラメーターを識別する型。\r\n    /// </typeparam>\r\n    /// <remarks>\r\n    /// 定義情報は生成後に変更できない。\r\n    /// 実行時の値や補正情報は別のクラスで管理する。\r\n    /// 識別子には不変の値型やenumの使用を推奨する。\r\n    /// </remarks>\r\n    public sealed class ParameterDefinition<TParameter>\r\n    {\r\n        /// <summary>\r\n        /// パラメーターの識別子を取得する。\r\n        /// </summary>\r\n        public TParameter Id { get; }\r\n\r\n        /// <summary>\r\n        /// パラメーターの標準初期値を取得する。\r\n        /// </summary>\r\n        public float DefaultValue { get; }\r\n\r\n        /// <summary>\r\n        /// パラメーターの最小許容値を取得する。\r\n        /// </summary>\r\n        public float MinValue { get; }\r\n\r\n        /// <summary>\r\n        /// パラメーターの最大許容値を取得する。\r\n        /// </summary>\r\n        public float MaxValue { get; }\r\n\r\n        /// <summary>\r\n        /// 最小値と最大値が等しい固定値の定義かどうかを取得する。\r\n        /// </summary>\r\n        public bool IsFixedValue => MinValue == MaxValue;\r\n\r\n        /// <summary>\r\n        /// パラメーターの定義を生成する。\r\n        /// </summary>\r\n        /// <param name=\"id\">パラメーターの識別子</param>\r\n        /// <param name=\"defaultValue\">標準初期値</param>\r\n        /// <param name=\"minValue\">最小許容値</param>\r\n        /// <param name=\"maxValue\">最大許容値</param>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 識別子がnullの場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 数値が有限値ではない場合、\r\n        /// または初期値が有効範囲外の場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentException\">\r\n        /// 最小値が最大値を上回る場合に発生する。\r\n        /// </exception>\r\n        public ParameterDefinition(\r\n            TParameter id,\r\n            float defaultValue,\r\n            float minValue,\r\n            float maxValue)\r\n        {\r\n            // 識別子がnullでないことを確認する。\r\n            if (id is null)\r\n            {\r\n                throw new ArgumentNullException(nameof(id));\r\n            }\r\n\r\n            // 各数値が有限値であることを確認する。\r\n            ValidateFiniteValue(defaultValue, nameof(defaultValue));\r\n            ValidateFiniteValue(minValue, nameof(minValue));\r\n            ValidateFiniteValue(maxValue, nameof(maxValue));\r\n\r\n            // 有効範囲の大小関係を確認する。\r\n            if (minValue > maxValue)\r\n            {\r\n                throw new ArgumentException(\r\n                    \"最小値は最大値以下である必要があります。\",\r\n                    nameof(minValue));\r\n            }\r\n\r\n            // 初期値が有効範囲内に存在することを確認する。\r\n            if (defaultValue < minValue || defaultValue > maxValue)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(defaultValue),\r\n                    \"初期値が有効範囲外です。\");\r\n            }\r\n\r\n            Id = id;\r\n            DefaultValue = defaultValue;\r\n            MinValue = minValue;\r\n            MaxValue = maxValue;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された値が有効範囲内に存在するか判定する。\r\n        /// </summary>\r\n        /// <param name=\"value\">判定対象の値</param>\r\n        /// <returns>\r\n        /// 有限値かつ有効範囲内の場合はtrue。\r\n        /// それ以外の場合はfalse。\r\n        /// </returns>\r\n        public bool IsInRange(float value)\r\n        {\r\n            if (float.IsNaN(value) || float.IsInfinity(value))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return value >= MinValue && value <= MaxValue;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された値を有効範囲内に制限する。\r\n        /// </summary>\r\n        /// <param name=\"value\">制限対象の値</param>\r\n        /// <returns>有効範囲内に制限された値</returns>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 指定された値が有限値ではない場合に発生する。\r\n        /// </exception>\r\n        public float Clamp(float value)\r\n        {\r\n            ValidateFiniteValue(value, nameof(value));\r\n\r\n            if (value < MinValue)\r\n            {\r\n                return MinValue;\r\n            }\r\n\r\n            if (value > MaxValue)\r\n            {\r\n                return MaxValue;\r\n            }\r\n\r\n            return value;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された値を有効範囲に対する0から1の値に正規化する。\r\n        /// </summary>\r\n        /// <param name=\"value\">正規化対象の値</param>\r\n        /// <returns>\r\n        /// 0から1の正規化値。\r\n        /// 固定値の定義の場合は0。\r\n        /// </returns>\r\n        /// <remarks>\r\n        /// 有効範囲外の値は制限してから正規化する。\r\n        /// </remarks>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 指定された値が有限値ではない場合に発生する。\r\n        /// </exception>\r\n        public float Normalize(float value)\r\n        {\r\n            // 固定値の場合も不正な数値を検証する。\r\n            float clampedValue = Clamp(value);\r\n\r\n            if (IsFixedValue)\r\n            {\r\n                return 0f;\r\n            }\r\n\r\n            // 中間計算のオーバーフローを防ぐためdoubleを使用する。\r\n            double range = (double)MaxValue - MinValue;\r\n            double offset = (double)clampedValue - MinValue;\r\n\r\n            return (float)(offset / range);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 0から1の正規化値を実際のパラメーター値に変換する。\r\n        /// </summary>\r\n        /// <param name=\"normalizedValue\">正規化された値</param>\r\n        /// <returns>有効範囲に対応するパラメーター値</returns>\r\n        /// <remarks>\r\n        /// 0未満の値は0、1を超える値は1として扱う。\r\n        /// </remarks>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 指定された値が有限値ではない場合に発生する。\r\n        /// </exception>\r\n        public float Denormalize(float normalizedValue)\r\n        {\r\n            ValidateFiniteValue(\r\n                normalizedValue,\r\n                nameof(normalizedValue));\r\n\r\n            if (normalizedValue <= 0f)\r\n            {\r\n                return MinValue;\r\n            }\r\n\r\n            if (normalizedValue >= 1f)\r\n            {\r\n                return MaxValue;\r\n            }\r\n\r\n            // 有効範囲に対する線形補間を行う。\r\n            double range = (double)MaxValue - MinValue;\r\n\r\n            return (float)(MinValue + range * normalizedValue);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された識別子が自身の識別子と一致するか判定する。\r\n        /// </summary>\r\n        /// <param name=\"id\">比較対象の識別子</param>\r\n        /// <returns>識別子が一致する場合はtrue</returns>\r\n        public bool MatchesId(TParameter id)\r\n        {\r\n            return EqualityComparer<TParameter>.Default.Equals(\r\n                Id,\r\n                id);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された値が有限値であることを検証する。\r\n        /// </summary>\r\n        /// <param name=\"value\">検証対象の値</param>\r\n        /// <param name=\"parameterName\">引数名</param>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 値がNaNまたは無限大の場合に発生する。\r\n        /// </exception>\r\n        private static void ValidateFiniteValue(\r\n            float value,\r\n            string parameterName)\r\n        {\r\n            if (float.IsNaN(value) || float.IsInfinity(value))\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    parameterName,\r\n                    \"有限値を指定してください。\");\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.946Z"
+}

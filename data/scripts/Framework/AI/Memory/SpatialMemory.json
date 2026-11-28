@@ -1,0 +1,673 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Memory.SpatialMemory",
+    "name": "SpatialMemory",
+    "fileName": "SpatialMemory.cs",
+    "namespace": "Framework.AI.Memory",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class SpatialMemory<TPosition>",
+    "typeParameters": [
+        {
+            "name": "TPosition",
+            "description": "場所を識別する型"
+        }
+    ],
+    "summary": "場所ごとの訪問履歴を管理する。",
+    "remarks": "位置型には等価性とハッシュ値が変化しない型を使用する。 巡回先の選択や経路探索は行わない。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic"
+    ],
+    "members": [
+        {
+            "name": "VisitedPositionCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int VisitedPositionCount => entries.Count",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "訪問済みの場所の件数を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RecordVisit",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool RecordVisit(\r\n            TPosition position,\r\n            double timestamp)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "TPosition",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "訪問した場所"
+                },
+                {
+                    "name": "timestamp",
+                    "type": "double",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "訪問時刻。単位は秒"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された場所への訪問を記録する。",
+            "returns": "訪問記録の追加または更新に成功した場合はtrue",
+            "remarks": "同一地点の同時刻または過去の訪問記録は拒否する。 訪問回数が最大値に達した場合は最大値を維持する。",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetEntry",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryGetEntry(\r\n            TPosition position,\r\n            out SpatialMemoryEntry entry)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "TPosition",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象の場所"
+                },
+                {
+                    "name": "entry",
+                    "type": "SpatialMemoryEntry",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "取得した訪問記録"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された場所の訪問記録を取得する。",
+            "returns": "訪問記録が存在する場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasVisited",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasVisited(TPosition position)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "TPosition",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "判定対象の場所"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された場所を訪問済みか判定する。",
+            "returns": "訪問済みの場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetVisitCount",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int GetVisitCount(TPosition position)",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "TPosition",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象の場所"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された場所の訪問回数を取得する。",
+            "returns": "訪問回数。未訪問の場合は0",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetTimeSinceLastVisit",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public double GetTimeSinceLastVisit(\r\n            TPosition position,\r\n            double currentTime)",
+            "returnType": "double",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "TPosition",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象の場所"
+                },
+                {
+                    "name": "currentTime",
+                    "type": "double",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "現在時刻。単位は秒"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "最終訪問からの経過時間を取得する。",
+            "returns": "最終訪問からの経過秒数。 未訪問の場合は正の無限大。",
+            "remarks": "現在時刻が最終訪問時刻より古い場合は0を返す。",
+            "exceptions": []
+        },
+        {
+            "name": "GetUnvisitedScore",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float GetUnvisitedScore(\r\n            TPosition position,\r\n            double currentTime,\r\n            double fullScoreDuration)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "TPosition",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "評価対象の場所"
+                },
+                {
+                    "name": "currentTime",
+                    "type": "double",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "現在時刻。単位は秒"
+                },
+                {
+                    "name": "fullScoreDuration",
+                    "type": "double",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "未訪問度が1に達するまでの時間。単位は秒。"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された場所の未訪問度を取得する。",
+            "returns": "0から1の未訪問度。 未訪問または長期間未訪問の場合は1。",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Forget",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Forget(TPosition position)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "TPosition",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "削除対象の場所"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された場所の訪問記録を削除する。",
+            "returns": "削除に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Clear",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Clear()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべての訪問記録を削除する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "SpatialMemory",
+            "fullName": "SpatialMemory",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "場所ごとの訪問履歴を管理する。",
+            "remarks": "位置型には等価性とハッシュ値が変化しない型を使用する。 巡回先の選択や経路探索は行わない。",
+            "attributes": [],
+            "declaration": "public sealed class SpatialMemory<TPosition>",
+            "inheritance": [],
+            "typeParameters": [
+                {
+                    "name": "TPosition",
+                    "description": "場所を識別する型"
+                }
+            ],
+            "members": [
+                {
+                    "name": "entries",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Dictionary<TPosition,\r\n            SpatialMemoryEntry> entries =\r\n            new Dictionary<TPosition,\r\n                SpatialMemoryEntry>()",
+                    "returnType": "",
+                    "valueType": "Dictionary<TPosition,\r\n            SpatialMemoryEntry>",
+                    "value": "new Dictionary<TPosition,\r\n                SpatialMemoryEntry>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "場所ごとの訪問記録。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new Dictionary<TPosition,\r\n                SpatialMemoryEntry>()",
+                    "inspector": null
+                },
+                {
+                    "name": "VisitedPositionCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int VisitedPositionCount => entries.Count",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "訪問済みの場所の件数を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RecordVisit",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool RecordVisit(\r\n            TPosition position,\r\n            double timestamp)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "TPosition",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "訪問した場所"
+                        },
+                        {
+                            "name": "timestamp",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "訪問時刻。単位は秒"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された場所への訪問を記録する。",
+                    "returns": "訪問記録の追加または更新に成功した場合はtrue",
+                    "remarks": "同一地点の同時刻または過去の訪問記録は拒否する。 訪問回数が最大値に達した場合は最大値を維持する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetEntry",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetEntry(\r\n            TPosition position,\r\n            out SpatialMemoryEntry entry)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "TPosition",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得対象の場所"
+                        },
+                        {
+                            "name": "entry",
+                            "type": "SpatialMemoryEntry",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得した訪問記録"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された場所の訪問記録を取得する。",
+                    "returns": "訪問記録が存在する場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HasVisited",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool HasVisited(TPosition position)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "TPosition",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "判定対象の場所"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された場所を訪問済みか判定する。",
+                    "returns": "訪問済みの場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetVisitCount",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int GetVisitCount(TPosition position)",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "TPosition",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得対象の場所"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された場所の訪問回数を取得する。",
+                    "returns": "訪問回数。未訪問の場合は0",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetTimeSinceLastVisit",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public double GetTimeSinceLastVisit(\r\n            TPosition position,\r\n            double currentTime)",
+                    "returnType": "double",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "TPosition",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得対象の場所"
+                        },
+                        {
+                            "name": "currentTime",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在時刻。単位は秒"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "最終訪問からの経過時間を取得する。",
+                    "returns": "最終訪問からの経過秒数。 未訪問の場合は正の無限大。",
+                    "remarks": "現在時刻が最終訪問時刻より古い場合は0を返す。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetUnvisitedScore",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float GetUnvisitedScore(\r\n            TPosition position,\r\n            double currentTime,\r\n            double fullScoreDuration)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "TPosition",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価対象の場所"
+                        },
+                        {
+                            "name": "currentTime",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在時刻。単位は秒"
+                        },
+                        {
+                            "name": "fullScoreDuration",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "未訪問度が1に達するまでの時間。単位は秒。"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された場所の未訪問度を取得する。",
+                    "returns": "0から1の未訪問度。 未訪問または長期間未訪問の場合は1。",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Forget",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool Forget(TPosition position)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "TPosition",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "削除対象の場所"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された場所の訪問記録を削除する。",
+                    "returns": "削除に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Clear",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Clear()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべての訪問記録を削除する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValidatePosition",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static void ValidatePosition(\r\n            TPosition position)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "TPosition",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証対象の場所"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "場所の識別子が有効か検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "場所の識別子がnullの場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValidateTime",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static void ValidateTime(double time)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "time",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証対象の時刻。単位は秒"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "時刻が有効な値であることを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "時刻が有限の非負数ではない場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 15
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\n\r\nnamespace Framework.AI.Memory\r\n{\r\n    /// <summary>\r\n    /// 場所ごとの訪問履歴を管理する。\r\n    /// </summary>\r\n    /// <typeparam name=\"TPosition\">場所を識別する型</typeparam>\r\n    /// <remarks>\r\n    /// 位置型には等価性とハッシュ値が変化しない型を使用する。\r\n    /// 巡回先の選択や経路探索は行わない。\r\n    /// </remarks>\r\n    public sealed class SpatialMemory<TPosition>\r\n    {\r\n        /// <summary>\r\n        /// 場所ごとの訪問記録。\r\n        /// </summary>\r\n        private readonly Dictionary<TPosition,\r\n            SpatialMemoryEntry> entries =\r\n            new Dictionary<TPosition,\r\n                SpatialMemoryEntry>();\r\n\r\n        /// <summary>\r\n        /// 訪問済みの場所の件数を取得する。\r\n        /// </summary>\r\n        public int VisitedPositionCount => entries.Count;\r\n\r\n        /// <summary>\r\n        /// 指定された場所への訪問を記録する。\r\n        /// </summary>\r\n        /// <param name=\"position\">訪問した場所</param>\r\n        /// <param name=\"timestamp\">訪問時刻。単位は秒</param>\r\n        /// <returns>訪問記録の追加または更新に成功した場合はtrue</returns>\r\n        /// <remarks>\r\n        /// 同一地点の同時刻または過去の訪問記録は拒否する。\r\n        /// 訪問回数が最大値に達した場合は最大値を維持する。\r\n        /// </remarks>\r\n        public bool RecordVisit(\r\n            TPosition position,\r\n            double timestamp)\r\n        {\r\n            ValidatePosition(position);\r\n            ValidateTime(timestamp);\r\n\r\n            if (entries.TryGetValue(\r\n                position,\r\n                out SpatialMemoryEntry previous))\r\n            {\r\n                // 重複した訪問通知や古い通知を拒否する。\r\n                if (timestamp <= previous.LastVisitedTime)\r\n                {\r\n                    return false;\r\n                }\r\n\r\n                int visitCount =\r\n                    previous.VisitCount == int.MaxValue\r\n                    ? int.MaxValue\r\n                    : previous.VisitCount + 1;\r\n\r\n                entries[position] =\r\n                    new SpatialMemoryEntry(\r\n                        previous.FirstVisitedTime,\r\n                        timestamp,\r\n                        visitCount);\r\n\r\n                return true;\r\n            }\r\n\r\n            // 初めて訪問した場所を登録する。\r\n            entries.Add(\r\n                position,\r\n                new SpatialMemoryEntry(\r\n                    timestamp,\r\n                    timestamp,\r\n                    1));\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された場所の訪問記録を取得する。\r\n        /// </summary>\r\n        /// <param name=\"position\">取得対象の場所</param>\r\n        /// <param name=\"entry\">取得した訪問記録</param>\r\n        /// <returns>訪問記録が存在する場合はtrue</returns>\r\n        public bool TryGetEntry(\r\n            TPosition position,\r\n            out SpatialMemoryEntry entry)\r\n        {\r\n            ValidatePosition(position);\r\n\r\n            return entries.TryGetValue(\r\n                position,\r\n                out entry);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された場所を訪問済みか判定する。\r\n        /// </summary>\r\n        /// <param name=\"position\">判定対象の場所</param>\r\n        /// <returns>訪問済みの場合はtrue</returns>\r\n        public bool HasVisited(TPosition position)\r\n        {\r\n            ValidatePosition(position);\r\n\r\n            return entries.ContainsKey(position);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された場所の訪問回数を取得する。\r\n        /// </summary>\r\n        /// <param name=\"position\">取得対象の場所</param>\r\n        /// <returns>訪問回数。未訪問の場合は0</returns>\r\n        public int GetVisitCount(TPosition position)\r\n        {\r\n            if (TryGetEntry(\r\n                position,\r\n                out SpatialMemoryEntry entry))\r\n            {\r\n                return entry.VisitCount;\r\n            }\r\n\r\n            return 0;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 最終訪問からの経過時間を取得する。\r\n        /// </summary>\r\n        /// <param name=\"position\">取得対象の場所</param>\r\n        /// <param name=\"currentTime\">現在時刻。単位は秒</param>\r\n        /// <returns>\r\n        /// 最終訪問からの経過秒数。\r\n        /// 未訪問の場合は正の無限大。\r\n        /// </returns>\r\n        /// <remarks>\r\n        /// 現在時刻が最終訪問時刻より古い場合は0を返す。\r\n        /// </remarks>\r\n        public double GetTimeSinceLastVisit(\r\n            TPosition position,\r\n            double currentTime)\r\n        {\r\n            ValidateTime(currentTime);\r\n\r\n            if (!TryGetEntry(\r\n                position,\r\n                out SpatialMemoryEntry entry))\r\n            {\r\n                return double.PositiveInfinity;\r\n            }\r\n\r\n            return Math.Max(\r\n                0d,\r\n                currentTime - entry.LastVisitedTime);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された場所の未訪問度を取得する。\r\n        /// </summary>\r\n        /// <param name=\"position\">評価対象の場所</param>\r\n        /// <param name=\"currentTime\">現在時刻。単位は秒</param>\r\n        /// <param name=\"fullScoreDuration\">\r\n        /// 未訪問度が1に達するまでの時間。単位は秒。\r\n        /// </param>\r\n        /// <returns>\r\n        /// 0から1の未訪問度。\r\n        /// 未訪問または長期間未訪問の場合は1。\r\n        /// </returns>\r\n        public float GetUnvisitedScore(\r\n            TPosition position,\r\n            double currentTime,\r\n            double fullScoreDuration)\r\n        {\r\n            if (double.IsNaN(fullScoreDuration) ||\r\n                double.IsInfinity(fullScoreDuration) ||\r\n                fullScoreDuration <= 0d)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(fullScoreDuration));\r\n            }\r\n\r\n            double elapsed = GetTimeSinceLastVisit(\r\n                position,\r\n                currentTime);\r\n\r\n            // 未訪問の場所も最大評価として扱う。\r\n            if (elapsed >= fullScoreDuration)\r\n            {\r\n                return 1f;\r\n            }\r\n\r\n            return (float)(\r\n                elapsed / fullScoreDuration);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された場所の訪問記録を削除する。\r\n        /// </summary>\r\n        /// <param name=\"position\">削除対象の場所</param>\r\n        /// <returns>削除に成功した場合はtrue</returns>\r\n        public bool Forget(TPosition position)\r\n        {\r\n            ValidatePosition(position);\r\n\r\n            return entries.Remove(position);\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべての訪問記録を削除する。\r\n        /// </summary>\r\n        public void Clear()\r\n        {\r\n            entries.Clear();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 場所の識別子が有効か検証する。\r\n        /// </summary>\r\n        /// <param name=\"position\">検証対象の場所</param>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 場所の識別子がnullの場合に発生する。\r\n        /// </exception>\r\n        private static void ValidatePosition(\r\n            TPosition position)\r\n        {\r\n            if (position is null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(position));\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 時刻が有効な値であることを検証する。\r\n        /// </summary>\r\n        /// <param name=\"time\">検証対象の時刻。単位は秒</param>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 時刻が有限の非負数ではない場合に発生する。\r\n        /// </exception>\r\n        private static void ValidateTime(double time)\r\n        {\r\n            if (double.IsNaN(time) ||\r\n                double.IsInfinity(time) ||\r\n                time < 0d)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(time));\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:01.081Z"
+}

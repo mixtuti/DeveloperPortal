@@ -1,5 +1,5 @@
 {
-    "parserVersion": 2,
+    "parserVersion": 3,
     "id": "Framework.Grid.GridCoordinateConverter",
     "name": "GridCoordinateConverter",
     "fileName": "GridCoordinateConverter.cs",
@@ -352,11 +352,457 @@
             "exceptions": []
         }
     ],
+    "types": [
+        {
+            "name": "GridCoordinateConverter",
+            "fullName": "GridCoordinateConverter",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "UnityのGridを利用して、グリッド座標と ワールド座標の相互変換を行うコンポーネント。",
+            "remarks": "",
+            "attributes": [
+                {
+                    "name": "DisallowMultipleComponent",
+                    "arguments": [],
+                    "raw": "DisallowMultipleComponent"
+                },
+                {
+                    "name": "RequireComponent",
+                    "arguments": [
+                        "typeof(UnityEngine.Grid)"
+                    ],
+                    "raw": "RequireComponent(typeof(UnityEngine.Grid))"
+                }
+            ],
+            "declaration": "public class GridCoordinateConverter : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "grid",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private UnityEngine.Grid grid",
+                    "returnType": "",
+                    "valueType": "UnityEngine.Grid",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "座標変換に使用するGridコンポーネント。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GridComponent",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public UnityEngine.Grid GridComponent",
+                    "returnType": "",
+                    "valueType": "UnityEngine.Grid",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "座標変換に使用するGridコンポーネントを取得する。 未取得の場合は自動的に取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CellSize",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector3 CellSize => GridComponent.cellSize",
+                    "returnType": "",
+                    "valueType": "Vector3",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "1マス分のセルサイズを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CellGap",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector3 CellGap => GridComponent.cellGap",
+                    "returnType": "",
+                    "valueType": "Vector3",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "セル間の間隔を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Awake",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Awake()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "コンポーネントの初期化処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CellToWorld",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector3 CellToWorld(Vector3Int cellPosition)",
+                    "returnType": "Vector3",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "cellPosition",
+                            "type": "Vector3Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変換対象のグリッド座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "グリッド座標をワールド座標に変換する。 マスの原点に相当する座標を返す。",
+                    "returns": "変換後のワールド座標",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CellToWorld",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector3 CellToWorld(\r\n            Vector2Int cellPosition,\r\n            int z = 0)",
+                    "returnType": "Vector3",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "cellPosition",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変換対象の二次元グリッド座標"
+                        },
+                        {
+                            "name": "z",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": "0",
+                            "description": "グリッド上のZ座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "二次元グリッド座標をワールド座標に変換する。",
+                    "returns": "変換後のワールド座標",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "WorldToCell",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector3Int WorldToCell(Vector3 worldPosition)",
+                    "returnType": "Vector3Int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "worldPosition",
+                            "type": "Vector3",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変換対象のワールド座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ワールド座標をグリッド座標に変換する。",
+                    "returns": "変換後のグリッド座標",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "WorldToCell2D",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int WorldToCell2D(Vector3 worldPosition)",
+                    "returnType": "Vector2Int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "worldPosition",
+                            "type": "Vector3",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変換対象のワールド座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "ワールド座標を二次元グリッド座標に変換する。 Z座標は返却値に含めない。",
+                    "returns": "変換後の二次元グリッド座標",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetCellCenterWorld",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector3 GetCellCenterWorld(\r\n            Vector3Int cellPosition)",
+                    "returnType": "Vector3",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "cellPosition",
+                            "type": "Vector3Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得対象のグリッド座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたマスの中心ワールド座標を取得する。",
+                    "returns": "マスの中心ワールド座標",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetCellCenterWorld",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector3 GetCellCenterWorld(\r\n            Vector2Int cellPosition,\r\n            int z = 0)",
+                    "returnType": "Vector3",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "cellPosition",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得対象の二次元グリッド座標"
+                        },
+                        {
+                            "name": "z",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": "0",
+                            "description": "グリッド上のZ座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された二次元マスの中心ワールド座標を取得する。",
+                    "returns": "マスの中心ワールド座標",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SnapToCellCenter",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector3 SnapToCellCenter(\r\n            Vector3 worldPosition)",
+                    "returnType": "Vector3",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "worldPosition",
+                            "type": "Vector3",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "補正対象のワールド座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたワールド座標を、 所属するマスの中心座標に補正する。",
+                    "returns": "補正後のワールド座標",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SnapTransformToCellCenter",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void SnapTransformToCellCenter(\r\n            Transform target)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "target",
+                            "type": "Transform",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "移動対象のTransform"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたTransformを、 所属するマスの中心座標に移動する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ToVector3Int",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static Vector3Int ToVector3Int(\r\n            Vector2Int position,\r\n            int z = 0)",
+                    "returnType": "Vector3Int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変換対象の二次元座標"
+                        },
+                        {
+                            "name": "z",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": "0",
+                            "description": "変換後のZ座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "二次元整数座標を三次元整数座標に変換する。",
+                    "returns": "変換後の三次元整数座標",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ToVector2Int",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static Vector2Int ToVector2Int(\r\n            Vector3Int position)",
+                    "returnType": "Vector2Int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector3Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変換対象の三次元座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "三次元整数座標を二次元整数座標に変換する。",
+                    "returns": "変換後の二次元整数座標",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 12
+        }
+    ],
     "source": "\r\nusing UnityEngine;\r\n\r\nnamespace Framework.Grid\r\n{\r\n    /// <summary>\r\n    /// UnityのGridを利用して、グリッド座標と\r\n    /// ワールド座標の相互変換を行うコンポーネント。\r\n    /// </summary>\r\n    [DisallowMultipleComponent]\r\n    [RequireComponent(typeof(UnityEngine.Grid))]\r\n    public class GridCoordinateConverter : MonoBehaviour\r\n    {\r\n        #region Fields\r\n\r\n        /// <summary>\r\n        /// 座標変換に使用するGridコンポーネント。\r\n        /// </summary>\r\n        private UnityEngine.Grid grid;\r\n\r\n        #endregion\r\n\r\n        #region Properties\r\n\r\n        /// <summary>\r\n        /// 座標変換に使用するGridコンポーネントを取得する。\r\n        /// 未取得の場合は自動的に取得する。\r\n        /// </summary>\r\n        public UnityEngine.Grid GridComponent\r\n        {\r\n            get\r\n            {\r\n                if (grid == null)\r\n                {\r\n                    grid = GetComponent<UnityEngine.Grid>();\r\n                }\r\n\r\n                return grid;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 1マス分のセルサイズを取得する。\r\n        /// </summary>\r\n        public Vector3 CellSize => GridComponent.cellSize;\r\n\r\n        /// <summary>\r\n        /// セル間の間隔を取得する。\r\n        /// </summary>\r\n        public Vector3 CellGap => GridComponent.cellGap;\r\n\r\n        #endregion\r\n\r\n        #region Unity Methods\r\n\r\n        /// <summary>\r\n        /// コンポーネントの初期化処理。\r\n        /// </summary>\r\n        private void Awake()\r\n        {\r\n            // 同一GameObjectのGridを取得する。\r\n            grid = GetComponent<UnityEngine.Grid>();\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Cell To World\r\n\r\n        /// <summary>\r\n        /// グリッド座標をワールド座標に変換する。\r\n        /// マスの原点に相当する座標を返す。\r\n        /// </summary>\r\n        /// <param name=\"cellPosition\">\r\n        /// 変換対象のグリッド座標\r\n        /// </param>\r\n        /// <returns>変換後のワールド座標</returns>\r\n        public Vector3 CellToWorld(Vector3Int cellPosition)\r\n        {\r\n            return GridComponent.CellToWorld(cellPosition);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 二次元グリッド座標をワールド座標に変換する。\r\n        /// </summary>\r\n        /// <param name=\"cellPosition\">\r\n        /// 変換対象の二次元グリッド座標\r\n        /// </param>\r\n        /// <param name=\"z\">グリッド上のZ座標</param>\r\n        /// <returns>変換後のワールド座標</returns>\r\n        public Vector3 CellToWorld(\r\n            Vector2Int cellPosition,\r\n            int z = 0)\r\n        {\r\n            return CellToWorld(\r\n                ToVector3Int(cellPosition, z));\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region World To Cell\r\n\r\n        /// <summary>\r\n        /// ワールド座標をグリッド座標に変換する。\r\n        /// </summary>\r\n        /// <param name=\"worldPosition\">\r\n        /// 変換対象のワールド座標\r\n        /// </param>\r\n        /// <returns>変換後のグリッド座標</returns>\r\n        public Vector3Int WorldToCell(Vector3 worldPosition)\r\n        {\r\n            return GridComponent.WorldToCell(worldPosition);\r\n        }\r\n\r\n        /// <summary>\r\n        /// ワールド座標を二次元グリッド座標に変換する。\r\n        /// Z座標は返却値に含めない。\r\n        /// </summary>\r\n        /// <param name=\"worldPosition\">\r\n        /// 変換対象のワールド座標\r\n        /// </param>\r\n        /// <returns>変換後の二次元グリッド座標</returns>\r\n        public Vector2Int WorldToCell2D(Vector3 worldPosition)\r\n        {\r\n            // Unity標準の座標変換を行う。\r\n            Vector3Int cellPosition = WorldToCell(worldPosition);\r\n\r\n            return ToVector2Int(cellPosition);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Cell Center\r\n\r\n        /// <summary>\r\n        /// 指定されたマスの中心ワールド座標を取得する。\r\n        /// </summary>\r\n        /// <param name=\"cellPosition\">\r\n        /// 取得対象のグリッド座標\r\n        /// </param>\r\n        /// <returns>マスの中心ワールド座標</returns>\r\n        public Vector3 GetCellCenterWorld(\r\n            Vector3Int cellPosition)\r\n        {\r\n            return GridComponent.GetCellCenterWorld(\r\n                cellPosition);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された二次元マスの中心ワールド座標を取得する。\r\n        /// </summary>\r\n        /// <param name=\"cellPosition\">\r\n        /// 取得対象の二次元グリッド座標\r\n        /// </param>\r\n        /// <param name=\"z\">グリッド上のZ座標</param>\r\n        /// <returns>マスの中心ワールド座標</returns>\r\n        public Vector3 GetCellCenterWorld(\r\n            Vector2Int cellPosition,\r\n            int z = 0)\r\n        {\r\n            return GetCellCenterWorld(\r\n                ToVector3Int(cellPosition, z));\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Snap\r\n\r\n        /// <summary>\r\n        /// 指定されたワールド座標を、\r\n        /// 所属するマスの中心座標に補正する。\r\n        /// </summary>\r\n        /// <param name=\"worldPosition\">\r\n        /// 補正対象のワールド座標\r\n        /// </param>\r\n        /// <returns>補正後のワールド座標</returns>\r\n        public Vector3 SnapToCellCenter(\r\n            Vector3 worldPosition)\r\n        {\r\n            // 現在位置が所属するマスを取得する。\r\n            Vector3Int cellPosition =\r\n                WorldToCell(worldPosition);\r\n\r\n            // 所属するマスの中心座標を返す。\r\n            return GetCellCenterWorld(cellPosition);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたTransformを、\r\n        /// 所属するマスの中心座標に移動する。\r\n        /// </summary>\r\n        /// <param name=\"target\">移動対象のTransform</param>\r\n        public void SnapTransformToCellCenter(\r\n            Transform target)\r\n        {\r\n            // 移動対象が存在しない場合は処理しない。\r\n            if (target == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            target.position =\r\n                SnapToCellCenter(target.position);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Utility Methods\r\n\r\n        /// <summary>\r\n        /// 二次元整数座標を三次元整数座標に変換する。\r\n        /// </summary>\r\n        /// <param name=\"position\">変換対象の二次元座標</param>\r\n        /// <param name=\"z\">変換後のZ座標</param>\r\n        /// <returns>変換後の三次元整数座標</returns>\r\n        public static Vector3Int ToVector3Int(\r\n            Vector2Int position,\r\n            int z = 0)\r\n        {\r\n            return new Vector3Int(\r\n                position.x,\r\n                position.y,\r\n                z);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 三次元整数座標を二次元整数座標に変換する。\r\n        /// </summary>\r\n        /// <param name=\"position\">変換対象の三次元座標</param>\r\n        /// <returns>変換後の二次元整数座標</returns>\r\n        public static Vector2Int ToVector2Int(\r\n            Vector3Int position)\r\n        {\r\n            return new Vector2Int(\r\n                position.x,\r\n                position.y);\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
     "tips": [],
     "examples": [],
     "notes": [],
     "related": [],
     "tests": [],
-    "generatedAt": "2026-11-26T16:10:17.933Z"
+    "generatedAt": "2026-11-28T15:50:00.214Z"
 }

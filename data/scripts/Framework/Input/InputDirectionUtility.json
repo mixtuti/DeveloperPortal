@@ -1,5 +1,5 @@
 {
-    "parserVersion": 2,
+    "parserVersion": 3,
     "id": "Framework.Input.InputDirectionUtility",
     "name": "InputDirectionUtility",
     "fileName": "InputDirectionUtility.cs",
@@ -364,11 +364,583 @@
             "exceptions": []
         }
     ],
+    "types": [
+        {
+            "name": "DirectionPriority",
+            "fullName": "DirectionPriority",
+            "kind": "enum",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "4方向変換時に入力軸の強さが 同程度だった場合の優先方向。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public enum DirectionPriority",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [],
+            "nestedTypes": [],
+            "enumValues": [
+                {
+                    "name": "Horizontal",
+                    "value": "0"
+                },
+                {
+                    "name": "Vertical",
+                    "value": "1"
+                },
+                {
+                    "name": "PreviousDirection",
+                    "value": "2"
+                }
+            ],
+            "line": 11
+        },
+        {
+            "name": "InputDirectionUtility",
+            "fullName": "InputDirectionUtility",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "summary": "アナログ入力の方向変換を行う汎用クラス。 デッドゾーン処理、4方向・8方向変換、 方向判定などの機能を提供する。 特定の入力デバイスや入力アセットには依存しない。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public static class InputDirectionUtility",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "DefaultDeadZone",
+                    "kind": "constant",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "public const float DefaultDeadZone = 0.3f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.3f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "標準のデッドゾーン。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "0.3f",
+                    "inspector": null
+                },
+                {
+                    "name": "DefaultTieTolerance",
+                    "kind": "constant",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "public const float DefaultTieTolerance = 0.05f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.05f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "2軸の入力を同程度と判定する標準許容値。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "0.05f",
+                    "inspector": null
+                },
+                {
+                    "name": "EightDirections",
+                    "kind": "property",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static",
+                        "readonly"
+                    ],
+                    "signature": "private static readonly Vector2Int[] EightDirections =",
+                    "returnType": "",
+                    "valueType": "Vector2Int[]",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "反時計回りに並べた8方向の単位方向。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsInDeadZone",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static bool IsInDeadZone(\r\n            Vector2 input,\r\n            float deadZone = DefaultDeadZone)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "input",
+                            "type": "Vector2",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "入力ベクトル"
+                        },
+                        {
+                            "name": "deadZone",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "DefaultDeadZone",
+                            "description": "デッドゾーンの半径"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "入力がデッドゾーン内にあるか確認する。",
+                    "returns": "無視すべき入力の場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ApplyDeadZone",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static Vector2 ApplyDeadZone(\r\n            Vector2 input,\r\n            float deadZone = DefaultDeadZone)",
+                    "returnType": "Vector2",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "input",
+                            "type": "Vector2",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "入力ベクトル"
+                        },
+                        {
+                            "name": "deadZone",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "DefaultDeadZone",
+                            "description": "デッドゾーンの半径"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "円形デッドゾーンを適用する。 デッドゾーン外の入力値は変更しない。",
+                    "returns": "デッドゾーン適用後の入力値",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ApplyScaledDeadZone",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static Vector2 ApplyScaledDeadZone(\r\n            Vector2 input,\r\n            float deadZone = DefaultDeadZone)",
+                    "returnType": "Vector2",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "input",
+                            "type": "Vector2",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "入力ベクトル"
+                        },
+                        {
+                            "name": "deadZone",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "DefaultDeadZone",
+                            "description": "デッドゾーンの半径"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "円形デッドゾーンを適用し、 残りの入力範囲を0～1へ再割り当てする。 入力方向は維持する。",
+                    "returns": "補正された入力ベクトル",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ToFourDirection",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static Vector2Int ToFourDirection(\r\n            Vector2 input,\r\n            float deadZone = DefaultDeadZone,\r\n            DirectionPriority priority =\r\n                DirectionPriority.Horizontal,\r\n            Vector2Int previousDirection = default,\r\n            float tieTolerance = DefaultTieTolerance)",
+                    "returnType": "Vector2Int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "input",
+                            "type": "Vector2",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "入力ベクトル"
+                        },
+                        {
+                            "name": "deadZone",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "DefaultDeadZone",
+                            "description": "デッドゾーンの半径"
+                        },
+                        {
+                            "name": "priority",
+                            "type": "DirectionPriority",
+                            "modifier": "",
+                            "defaultValue": "DirectionPriority.Horizontal",
+                            "description": "同程度の入力時の優先方向"
+                        },
+                        {
+                            "name": "previousDirection",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": "default",
+                            "description": "前回の入力方向"
+                        },
+                        {
+                            "name": "tieTolerance",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "DefaultTieTolerance",
+                            "description": "軸の強さの許容差"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "2軸入力を上下左右の4方向へ変換する。 基本的には絶対値の大きい軸を採用する。 2軸の強さが同程度の場合は優先設定に従う。",
+                    "returns": "上下左右の単位方向。無入力時はzero",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ToEightDirection",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static Vector2Int ToEightDirection(\r\n            Vector2 input,\r\n            float deadZone = DefaultDeadZone)",
+                    "returnType": "Vector2Int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "input",
+                            "type": "Vector2",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "入力ベクトル"
+                        },
+                        {
+                            "name": "deadZone",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "DefaultDeadZone",
+                            "description": "デッドゾーンの半径"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "2軸入力を斜め方向を含む8方向へ変換する。 入力角度を45度単位に分割し、 最も近い方向を取得する。",
+                    "returns": "8方向の単位方向。無入力時はzero",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsFourDirection",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static bool IsFourDirection(\r\n            Vector2Int direction)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "direction",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "確認する方向"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定方向が上下左右の単位方向か確認する。",
+                    "returns": "4方向のいずれかの場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsEightDirection",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static bool IsEightDirection(\r\n            Vector2Int direction)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "direction",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "確認する方向"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定方向が斜めを含む8方向の単位方向か確認する。",
+                    "returns": "8方向のいずれかの場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsDiagonalDirection",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static bool IsDiagonalDirection(\r\n            Vector2Int direction)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "direction",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "確認する方向"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定方向が斜め方向か確認する。",
+                    "returns": "斜め方向の場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsOppositeDirection",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static bool IsOppositeDirection(\r\n            Vector2Int first,\r\n            Vector2Int second)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "first",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "比較元の方向"
+                        },
+                        {
+                            "name": "second",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "比較先の方向"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "2つの方向が互いに逆方向か確認する。",
+                    "returns": "互いに逆方向の場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsFinite",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static bool IsFinite(Vector2 input)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "input",
+                            "type": "Vector2",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "確認する入力値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "入力ベクトルの各成分が有限値か確認する。",
+                    "returns": "有限値の場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValidateDeadZone",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static void ValidateDeadZone(\r\n            float deadZone)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "deadZone",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "確認する設定値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "デッドゾーンの設定値を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValidateTieTolerance",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static void ValidateTieTolerance(\r\n            float tolerance)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "tolerance",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "確認する許容値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "軸の強さを比較する許容値を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValidatePriority",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static void ValidatePriority(\r\n            DirectionPriority priority)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "priority",
+                            "type": "DirectionPriority",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "確認する優先方向"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "優先方向の設定値を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 39
+        }
+    ],
     "source": "\r\nusing System;\r\nusing UnityEngine;\r\n\r\nnamespace Framework.Input\r\n{\r\n    /// <summary>\r\n    /// 4方向変換時に入力軸の強さが\r\n    /// 同程度だった場合の優先方向。\r\n    /// </summary>\r\n    public enum DirectionPriority\r\n    {\r\n        /// <summary>\r\n        /// 水平方向を優先する。\r\n        /// </summary>\r\n        Horizontal = 0,\r\n\r\n        /// <summary>\r\n        /// 垂直方向を優先する。\r\n        /// </summary>\r\n        Vertical = 1,\r\n\r\n        /// <summary>\r\n        /// 前回の方向を優先する。\r\n        /// 前回方向が候補に含まれない場合は\r\n        /// 水平方向を優先する。\r\n        /// </summary>\r\n        PreviousDirection = 2\r\n    }\r\n\r\n    /// <summary>\r\n    /// アナログ入力の方向変換を行う汎用クラス。\r\n    ///\r\n    /// デッドゾーン処理、4方向・8方向変換、\r\n    /// 方向判定などの機能を提供する。\r\n    ///\r\n    /// 特定の入力デバイスや入力アセットには依存しない。\r\n    /// </summary>\r\n    public static class InputDirectionUtility\r\n    {\r\n        #region Constants\r\n\r\n        /// <summary>\r\n        /// 標準のデッドゾーン。\r\n        /// </summary>\r\n        public const float DefaultDeadZone = 0.3f;\r\n\r\n        /// <summary>\r\n        /// 2軸の入力を同程度と判定する標準許容値。\r\n        /// </summary>\r\n        public const float DefaultTieTolerance = 0.05f;\r\n\r\n        /// <summary>\r\n        /// 反時計回りに並べた8方向の単位方向。\r\n        /// </summary>\r\n        private static readonly Vector2Int[] EightDirections =\r\n        {\r\n            Vector2Int.right,\r\n            new Vector2Int(1, 1),\r\n            Vector2Int.up,\r\n            new Vector2Int(-1, 1),\r\n            Vector2Int.left,\r\n            new Vector2Int(-1, -1),\r\n            Vector2Int.down,\r\n            new Vector2Int(1, -1)\r\n        };\r\n\r\n        #endregion\r\n\r\n        #region Dead Zone Methods\r\n\r\n        /// <summary>\r\n        /// 入力がデッドゾーン内にあるか確認する。\r\n        /// </summary>\r\n        /// <param name=\"input\">入力ベクトル</param>\r\n        /// <param name=\"deadZone\">デッドゾーンの半径</param>\r\n        /// <returns>無視すべき入力の場合はtrue</returns>\r\n        public static bool IsInDeadZone(\r\n            Vector2 input,\r\n            float deadZone = DefaultDeadZone)\r\n        {\r\n            ValidateDeadZone(deadZone);\r\n\r\n            if (!IsFinite(input))\r\n            {\r\n                return true;\r\n            }\r\n\r\n            return input.sqrMagnitude <=\r\n                   deadZone * deadZone;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 円形デッドゾーンを適用する。\r\n        ///\r\n        /// デッドゾーン外の入力値は変更しない。\r\n        /// </summary>\r\n        /// <param name=\"input\">入力ベクトル</param>\r\n        /// <param name=\"deadZone\">デッドゾーンの半径</param>\r\n        /// <returns>デッドゾーン適用後の入力値</returns>\r\n        public static Vector2 ApplyDeadZone(\r\n            Vector2 input,\r\n            float deadZone = DefaultDeadZone)\r\n        {\r\n            return IsInDeadZone(input, deadZone)\r\n                ? Vector2.zero\r\n                : input;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 円形デッドゾーンを適用し、\r\n        /// 残りの入力範囲を0～1へ再割り当てする。\r\n        ///\r\n        /// 入力方向は維持する。\r\n        /// </summary>\r\n        /// <param name=\"input\">入力ベクトル</param>\r\n        /// <param name=\"deadZone\">デッドゾーンの半径</param>\r\n        /// <returns>補正された入力ベクトル</returns>\r\n        public static Vector2 ApplyScaledDeadZone(\r\n            Vector2 input,\r\n            float deadZone = DefaultDeadZone)\r\n        {\r\n            if (IsInDeadZone(input, deadZone))\r\n            {\r\n                return Vector2.zero;\r\n            }\r\n\r\n            // 入力の大きさを最大1に制限する。\r\n            float magnitude =\r\n                Mathf.Clamp01(input.magnitude);\r\n\r\n            // デッドゾーン外の範囲を0～1に変換する。\r\n            float scaledMagnitude = Mathf.InverseLerp(\r\n                deadZone,\r\n                1f,\r\n                magnitude);\r\n\r\n            return input.normalized * scaledMagnitude;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Direction Conversion Methods\r\n\r\n        /// <summary>\r\n        /// 2軸入力を上下左右の4方向へ変換する。\r\n        ///\r\n        /// 基本的には絶対値の大きい軸を採用する。\r\n        /// 2軸の強さが同程度の場合は優先設定に従う。\r\n        /// </summary>\r\n        /// <param name=\"input\">入力ベクトル</param>\r\n        /// <param name=\"deadZone\">デッドゾーンの半径</param>\r\n        /// <param name=\"priority\">同程度の入力時の優先方向</param>\r\n        /// <param name=\"previousDirection\">前回の入力方向</param>\r\n        /// <param name=\"tieTolerance\">軸の強さの許容差</param>\r\n        /// <returns>上下左右の単位方向。無入力時はzero</returns>\r\n        public static Vector2Int ToFourDirection(\r\n            Vector2 input,\r\n            float deadZone = DefaultDeadZone,\r\n            DirectionPriority priority =\r\n                DirectionPriority.Horizontal,\r\n            Vector2Int previousDirection = default,\r\n            float tieTolerance = DefaultTieTolerance)\r\n        {\r\n            ValidateTieTolerance(tieTolerance);\r\n            ValidatePriority(priority);\r\n\r\n            input = ApplyDeadZone(input, deadZone);\r\n\r\n            if (input == Vector2.zero)\r\n            {\r\n                return Vector2Int.zero;\r\n            }\r\n\r\n            // 各入力軸の絶対値。\r\n            float absX = Mathf.Abs(input.x);\r\n            float absY = Mathf.Abs(input.y);\r\n\r\n            // 水平方向の候補。\r\n            Vector2Int horizontalDirection =\r\n                input.x > 0f\r\n                    ? Vector2Int.right\r\n                    : input.x < 0f\r\n                        ? Vector2Int.left\r\n                        : Vector2Int.zero;\r\n\r\n            // 垂直方向の候補。\r\n            Vector2Int verticalDirection =\r\n                input.y > 0f\r\n                    ? Vector2Int.up\r\n                    : input.y < 0f\r\n                        ? Vector2Int.down\r\n                        : Vector2Int.zero;\r\n\r\n            // 片方の軸にしか入力がない場合。\r\n            if (horizontalDirection == Vector2Int.zero)\r\n            {\r\n                return verticalDirection;\r\n            }\r\n\r\n            if (verticalDirection == Vector2Int.zero)\r\n            {\r\n                return horizontalDirection;\r\n            }\r\n\r\n            // 水平方向の入力が明確に強い場合。\r\n            if (absX - absY > tieTolerance)\r\n            {\r\n                return horizontalDirection;\r\n            }\r\n\r\n            // 垂直方向の入力が明確に強い場合。\r\n            if (absY - absX > tieTolerance)\r\n            {\r\n                return verticalDirection;\r\n            }\r\n\r\n            // 両軸の強さが同程度の場合。\r\n            switch (priority)\r\n            {\r\n                case DirectionPriority.Vertical:\r\n\r\n                    return verticalDirection;\r\n\r\n                case DirectionPriority.PreviousDirection:\r\n\r\n                    // 前回方向が現在の入力候補に\r\n                    // 含まれている場合は維持する。\r\n                    if (previousDirection ==\r\n                            horizontalDirection ||\r\n                        previousDirection ==\r\n                            verticalDirection)\r\n                    {\r\n                        return previousDirection;\r\n                    }\r\n\r\n                    return horizontalDirection;\r\n\r\n                default:\r\n\r\n                    return horizontalDirection;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 2軸入力を斜め方向を含む8方向へ変換する。\r\n        ///\r\n        /// 入力角度を45度単位に分割し、\r\n        /// 最も近い方向を取得する。\r\n        /// </summary>\r\n        /// <param name=\"input\">入力ベクトル</param>\r\n        /// <param name=\"deadZone\">デッドゾーンの半径</param>\r\n        /// <returns>8方向の単位方向。無入力時はzero</returns>\r\n        public static Vector2Int ToEightDirection(\r\n            Vector2 input,\r\n            float deadZone = DefaultDeadZone)\r\n        {\r\n            input = ApplyDeadZone(input, deadZone);\r\n\r\n            if (input == Vector2.zero)\r\n            {\r\n                return Vector2Int.zero;\r\n            }\r\n\r\n            // 右方向を0度とした入力角度。\r\n            float angle =\r\n                Mathf.Atan2(input.y, input.x) *\r\n                Mathf.Rad2Deg;\r\n\r\n            // 入力角度を最も近い45度単位へ変換する。\r\n            int index = Mathf.FloorToInt(\r\n                (angle + 22.5f) / 45f);\r\n\r\n            // 負のインデックスを0～7に補正する。\r\n            index = (index % 8 + 8) % 8;\r\n\r\n            return EightDirections[index];\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Direction Validation Methods\r\n\r\n        /// <summary>\r\n        /// 指定方向が上下左右の単位方向か確認する。\r\n        /// </summary>\r\n        /// <param name=\"direction\">確認する方向</param>\r\n        /// <returns>4方向のいずれかの場合はtrue</returns>\r\n        public static bool IsFourDirection(\r\n            Vector2Int direction)\r\n        {\r\n            return direction == Vector2Int.up ||\r\n                   direction == Vector2Int.down ||\r\n                   direction == Vector2Int.left ||\r\n                   direction == Vector2Int.right;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定方向が斜めを含む8方向の単位方向か確認する。\r\n        /// </summary>\r\n        /// <param name=\"direction\">確認する方向</param>\r\n        /// <returns>8方向のいずれかの場合はtrue</returns>\r\n        public static bool IsEightDirection(\r\n            Vector2Int direction)\r\n        {\r\n            return direction != Vector2Int.zero &&\r\n                   direction.x >= -1 &&\r\n                   direction.x <= 1 &&\r\n                   direction.y >= -1 &&\r\n                   direction.y <= 1;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定方向が斜め方向か確認する。\r\n        /// </summary>\r\n        /// <param name=\"direction\">確認する方向</param>\r\n        /// <returns>斜め方向の場合はtrue</returns>\r\n        public static bool IsDiagonalDirection(\r\n            Vector2Int direction)\r\n        {\r\n            return IsEightDirection(direction) &&\r\n                   direction.x != 0 &&\r\n                   direction.y != 0;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 2つの方向が互いに逆方向か確認する。\r\n        /// </summary>\r\n        /// <param name=\"first\">比較元の方向</param>\r\n        /// <param name=\"second\">比較先の方向</param>\r\n        /// <returns>互いに逆方向の場合はtrue</returns>\r\n        public static bool IsOppositeDirection(\r\n            Vector2Int first,\r\n            Vector2Int second)\r\n        {\r\n            return IsEightDirection(first) &&\r\n                   IsEightDirection(second) &&\r\n                   first == -second;\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Validation Methods\r\n\r\n        /// <summary>\r\n        /// 入力ベクトルの各成分が有限値か確認する。\r\n        /// </summary>\r\n        /// <param name=\"input\">確認する入力値</param>\r\n        /// <returns>有限値の場合はtrue</returns>\r\n        private static bool IsFinite(Vector2 input)\r\n        {\r\n            return !float.IsNaN(input.x) &&\r\n                   !float.IsInfinity(input.x) &&\r\n                   !float.IsNaN(input.y) &&\r\n                   !float.IsInfinity(input.y);\r\n        }\r\n\r\n        /// <summary>\r\n        /// デッドゾーンの設定値を検証する。\r\n        /// </summary>\r\n        /// <param name=\"deadZone\">確認する設定値</param>\r\n        private static void ValidateDeadZone(\r\n            float deadZone)\r\n        {\r\n            if (float.IsNaN(deadZone) ||\r\n                float.IsInfinity(deadZone) ||\r\n                deadZone < 0f ||\r\n                deadZone >= 1f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(deadZone),\r\n                    \"デッドゾーンは0以上1未満にしてください。\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 軸の強さを比較する許容値を検証する。\r\n        /// </summary>\r\n        /// <param name=\"tolerance\">確認する許容値</param>\r\n        private static void ValidateTieTolerance(\r\n            float tolerance)\r\n        {\r\n            if (float.IsNaN(tolerance) ||\r\n                float.IsInfinity(tolerance) ||\r\n                tolerance < 0f ||\r\n                tolerance > 1f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(tolerance),\r\n                    \"許容値は0以上1以下にしてください。\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 優先方向の設定値を検証する。\r\n        /// </summary>\r\n        /// <param name=\"priority\">確認する優先方向</param>\r\n        private static void ValidatePriority(\r\n            DirectionPriority priority)\r\n        {\r\n            switch (priority)\r\n            {\r\n                case DirectionPriority.Horizontal:\r\n                case DirectionPriority.Vertical:\r\n                case DirectionPriority.PreviousDirection:\r\n\r\n                    return;\r\n\r\n                default:\r\n\r\n                    throw new ArgumentOutOfRangeException(\r\n                        nameof(priority));\r\n            }\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
     "tips": [],
     "examples": [],
     "notes": [],
     "related": [],
     "tests": [],
-    "generatedAt": "2026-11-26T16:10:17.969Z"
+    "generatedAt": "2026-11-28T15:50:00.425Z"
 }

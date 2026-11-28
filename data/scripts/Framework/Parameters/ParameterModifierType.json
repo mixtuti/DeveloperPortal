@@ -1,0 +1,52 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.Parameters.ParameterModifierType",
+    "name": "ParameterModifierType",
+    "fileName": "ParameterModifierType.cs",
+    "namespace": "Framework.Parameters",
+    "type": "enum",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public enum ParameterModifierType",
+    "typeParameters": [],
+    "summary": "パラメーターに適用する補正方法を定義する。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [],
+    "members": [],
+    "types": [
+        {
+            "name": "ParameterModifierType",
+            "fullName": "ParameterModifierType",
+            "kind": "enum",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "パラメーターに適用する補正方法を定義する。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public enum ParameterModifierType",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [],
+            "nestedTypes": [],
+            "enumValues": [
+                {
+                    "name": "Additive",
+                    "value": "0"
+                },
+                {
+                    "name": "Multiplicative",
+                    "value": "1"
+                }
+            ],
+            "line": 6
+        }
+    ],
+    "source": "namespace Framework.Parameters\r\n{\r\n    /// <summary>\r\n    /// パラメーターに適用する補正方法を定義する。\r\n    /// </summary>\r\n    public enum ParameterModifierType\r\n    {\r\n        /// <summary>\r\n        /// 基本値に指定された数値を加算する。\r\n        /// 負数を指定した場合は減算となる。\r\n        /// </summary>\r\n        Additive = 0,\r\n\r\n        /// <summary>\r\n        /// 加算補正後の値に指定された倍率を乗算する。\r\n        /// 1は変化なし、0は値を0にする補正を表す。\r\n        /// </summary>\r\n        Multiplicative = 1\r\n    }\r\n}",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.988Z"
+}

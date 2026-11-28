@@ -1,0 +1,64 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Actions.AgentActionExitReason",
+    "name": "AgentActionExitReason",
+    "fileName": "AgentActionExitReason.cs",
+    "namespace": "Framework.AI.Actions",
+    "type": "enum",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public enum AgentActionExitReason",
+    "typeParameters": [],
+    "summary": "エージェントの行動が終了した理由を表す。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [],
+    "members": [],
+    "types": [
+        {
+            "name": "AgentActionExitReason",
+            "fullName": "AgentActionExitReason",
+            "kind": "enum",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "エージェントの行動が終了した理由を表す。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public enum AgentActionExitReason",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [],
+            "nestedTypes": [],
+            "enumValues": [
+                {
+                    "name": "Succeeded",
+                    "value": "0"
+                },
+                {
+                    "name": "Failed",
+                    "value": "1"
+                },
+                {
+                    "name": "Interrupted",
+                    "value": "2"
+                },
+                {
+                    "name": "Cancelled",
+                    "value": "3"
+                },
+                {
+                    "name": "Faulted",
+                    "value": "4"
+                }
+            ],
+            "line": 7
+        }
+    ],
+    "source": "\r\nnamespace Framework.AI.Actions\r\n{\r\n    /// <summary>\r\n    /// エージェントの行動が終了した理由を表す。\r\n    /// </summary>\r\n    public enum AgentActionExitReason\r\n    {\r\n        /// <summary>\r\n        /// 行動が正常に完了した。\r\n        /// </summary>\r\n        Succeeded = 0,\r\n\r\n        /// <summary>\r\n        /// 行動の実行に失敗した。\r\n        /// </summary>\r\n        Failed = 1,\r\n\r\n        /// <summary>\r\n        /// 別の行動への切り替えによって中断された。\r\n        /// </summary>\r\n        Interrupted = 2,\r\n\r\n        /// <summary>\r\n        /// 外部からの要求によって停止された。\r\n        /// </summary>\r\n        Cancelled = 3,\r\n\r\n        /// <summary>\r\n        /// 実行中に例外が発生した。\r\n        /// </summary>\r\n        Faulted = 4\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.073Z"
+}

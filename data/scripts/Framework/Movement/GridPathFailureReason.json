@@ -1,0 +1,68 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.Movement.GridPathFailureReason",
+    "name": "GridPathFailureReason",
+    "fileName": "GridPathFailureReason.cs",
+    "namespace": "Framework.Movement",
+    "type": "enum",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public enum GridPathFailureReason",
+    "typeParameters": [],
+    "summary": "グリッド経路追従の失敗理由を表す。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [],
+    "members": [],
+    "types": [
+        {
+            "name": "GridPathFailureReason",
+            "fullName": "GridPathFailureReason",
+            "kind": "enum",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "グリッド経路追従の失敗理由を表す。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public enum GridPathFailureReason",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [],
+            "nestedTypes": [],
+            "enumValues": [
+                {
+                    "name": "None",
+                    "value": "0"
+                },
+                {
+                    "name": "CellBlocked",
+                    "value": "1"
+                },
+                {
+                    "name": "UnexpectedCell",
+                    "value": "2"
+                },
+                {
+                    "name": "MovementStopped",
+                    "value": "3"
+                },
+                {
+                    "name": "Teleported",
+                    "value": "4"
+                },
+                {
+                    "name": "DirectionRejected",
+                    "value": "5"
+                }
+            ],
+            "line": 7
+        }
+    ],
+    "source": "\r\nnamespace Framework.Movement\r\n{\r\n    /// <summary>\r\n    /// グリッド経路追従の失敗理由を表す。\r\n    /// </summary>\r\n    public enum GridPathFailureReason\r\n    {\r\n        /// <summary>\r\n        /// 失敗が発生していない状態。\r\n        /// </summary>\r\n        None = 0,\r\n\r\n        /// <summary>\r\n        /// 次のセルへ進入できない状態。\r\n        /// </summary>\r\n        CellBlocked = 1,\r\n\r\n        /// <summary>\r\n        /// 経路上に存在しないセルへ到達した状態。\r\n        /// </summary>\r\n        UnexpectedCell = 2,\r\n\r\n        /// <summary>\r\n        /// 目的地へ到達する前に移動が停止した状態。\r\n        /// </summary>\r\n        MovementStopped = 3,\r\n\r\n        /// <summary>\r\n        /// 外部処理によって座標が変更された状態。\r\n        /// </summary>\r\n        Teleported = 4,\r\n\r\n        /// <summary>\r\n        /// 移動方向の要求が拒否された状態。\r\n        /// </summary>\r\n        DirectionRejected = 5\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.299Z"
+}

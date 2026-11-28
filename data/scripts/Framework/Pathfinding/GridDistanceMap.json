@@ -1,0 +1,1203 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.Pathfinding.GridDistanceMap",
+    "name": "GridDistanceMap",
+    "fileName": "GridDistanceMap.cs",
+    "namespace": "Framework.Pathfinding",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class GridDistanceMap<T>",
+    "typeParameters": [
+        {
+            "name": "T",
+            "description": "グリッドのセルデータ型"
+        }
+    ],
+    "summary": "グリッド上の指定された起点から、 到達可能な各セルへの最短移動距離を管理する。",
+    "remarks": "幅優先探索を使用して距離を一括計算する。 上下左右の4方向移動に対応し、 すべての移動コストを1として扱う。 グリッド変更時の再計算は呼び出し側が担当する。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "Framework.Grid",
+        "UnityEngine"
+    ],
+    "members": [
+        {
+            "name": "UnreachableDistance",
+            "kind": "constant",
+            "accessibility": "public",
+            "modifiers": [
+                "const"
+            ],
+            "signature": "public const int UnreachableDistance = -1",
+            "returnType": "",
+            "valueType": "int",
+            "value": "-1",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "到達不可能なセルを表す距離。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Map",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridMap<T> Map => map",
+            "returnType": "",
+            "valueType": "GridMap<T>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "距離計算の対象となるグリッド。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Origin",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Vector2Int Origin => origin",
+            "returnType": "",
+            "valueType": "Vector2Int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "距離計算の起点。 未計算の場合は既定値を返す。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsCalculated",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsCalculated => isCalculated",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "有効な距離マップが計算されているか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ReachableCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int ReachableCount => reachableCount",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "起点を含む到達可能セルの総数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MaxDistance",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int MaxDistance => maxDistance",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "起点から到達可能な最大距離。 未計算の場合は-1を返す。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GridDistanceMap",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridDistanceMap(\r\n            GridMap<T> map,\r\n            Func<Vector2Int, bool> canEnterCell)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "map",
+                    "type": "GridMap<T>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "計算対象のグリッド"
+                },
+                {
+                    "name": "canEnterCell",
+                    "type": "Func<Vector2Int, bool>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "セルへの進入可否を判定する処理"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "距離マップを生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "必須の引数が指定されていない場合。"
+                }
+            ]
+        },
+        {
+            "name": "Calculate",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Calculate(Vector2Int newOrigin)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "newOrigin",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "距離計算の起点"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された起点から距離マップを計算する。",
+            "returns": "有効な距離マップを計算できた場合はtrue",
+            "remarks": "起点が無効な場合は既存の計算結果を破棄する。 計算中にグリッドや通行条件を変更してはならない。",
+            "exceptions": []
+        },
+        {
+            "name": "GetDistance",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int GetDistance(Vector2Int position)",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象のセル座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたセルへの最短移動距離を取得する。",
+            "returns": "最短移動距離。 未計算、範囲外、到達不可能の場合は-1",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetDistance",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryGetDistance(\r\n            Vector2Int position,\r\n            out int distance)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象のセル座標"
+                },
+                {
+                    "name": "distance",
+                    "type": "int",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "取得した最短移動距離"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたセルへの最短移動距離を取得する。",
+            "returns": "到達可能な距離を取得できた場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsReachable",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsReachable(Vector2Int position)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "判定対象のセル座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたセルが起点から到達可能か確認する。",
+            "returns": "到達可能な場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsWithinDistance",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsWithinDistance(\r\n            Vector2Int position,\r\n            int distanceLimit)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "判定対象のセル座標"
+                },
+                {
+                    "name": "distanceLimit",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "許容する最大距離"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたセルが起点から指定距離以内にあるか確認する。",
+            "returns": "指定距離以内の場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetReachablePositions",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public IEnumerable<Vector2Int>\r\n            GetReachablePositions()",
+            "returnType": "IEnumerable<Vector2Int>",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "到達可能なすべてのセルを列挙する。",
+            "returns": "到達可能なセル座標の列挙",
+            "remarks": "Y座標、X座標の順に列挙する。 距離順には並べ替えない。 列挙中に距離マップを変更してはならない。",
+            "exceptions": []
+        },
+        {
+            "name": "GetPositionsWithinDistance",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public IEnumerable<Vector2Int>\r\n            GetPositionsWithinDistance(int distanceLimit)",
+            "returnType": "IEnumerable<Vector2Int>",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "distanceLimit",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "許容する最大距離"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "起点から指定距離以内のセルを列挙する。",
+            "returns": "指定距離以内のセル座標の列挙",
+            "remarks": "列挙中に計算結果が変更された場合は例外を発生させる。 未計算または負の距離が指定された場合は空の列挙を返す。",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetFarthestPosition",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryGetFarthestPosition(\r\n            out Vector2Int position,\r\n            out int distance)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "position",
+                    "type": "Vector2Int",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "最も遠いセルの座標"
+                },
+                {
+                    "name": "distance",
+                    "type": "int",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "起点からの最短移動距離"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "起点から最も遠い到達可能セルを取得する。",
+            "returns": "セルを取得できた場合はtrue",
+            "remarks": "同じ最大距離のセルが複数存在する場合は、 幅優先探索で最初に発見したセルを返す。",
+            "exceptions": []
+        },
+        {
+            "name": "Clear",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Clear()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "計算結果を初期化する。",
+            "returns": "",
+            "remarks": "距離配列と探索用キューは破棄せず再利用する。",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "GridDistanceMap",
+            "fullName": "GridDistanceMap",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "グリッド上の指定された起点から、 到達可能な各セルへの最短移動距離を管理する。",
+            "remarks": "幅優先探索を使用して距離を一括計算する。 上下左右の4方向移動に対応し、 すべての移動コストを1として扱う。 グリッド変更時の再計算は呼び出し側が担当する。",
+            "attributes": [],
+            "declaration": "public sealed class GridDistanceMap<T>",
+            "inheritance": [],
+            "typeParameters": [
+                {
+                    "name": "T",
+                    "description": "グリッドのセルデータ型"
+                }
+            ],
+            "members": [
+                {
+                    "name": "UnreachableDistance",
+                    "kind": "constant",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "public const int UnreachableDistance = -1",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "-1",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "到達不可能なセルを表す距離。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "-1",
+                    "inspector": null
+                },
+                {
+                    "name": "Directions",
+                    "kind": "property",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static",
+                        "readonly"
+                    ],
+                    "signature": "private static readonly Vector2Int[] Directions =",
+                    "returnType": "",
+                    "valueType": "Vector2Int[]",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "探索に使用する上下左右の移動方向。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "map",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly GridMap<T> map",
+                    "returnType": "",
+                    "valueType": "GridMap<T>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "距離計算の対象となるグリッド。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "canEnterCell",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Func<Vector2Int, bool> canEnterCell",
+                    "returnType": "",
+                    "valueType": "Func<Vector2Int, bool>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "セルへの進入可否を判定する処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "distances",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly int[,] distances",
+                    "returnType": "",
+                    "valueType": "int[,]",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "各セルへの最短移動距離。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "searchQueue",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Queue<Vector2Int> searchQueue",
+                    "returnType": "",
+                    "valueType": "Queue<Vector2Int>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "幅優先探索に使用するキュー。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "origin",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private Vector2Int origin",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "最後に計算した距離マップの起点。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "isCalculated",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isCalculated",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "有効な距離マップが計算されているか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "isCalculating",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isCalculating",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "距離計算の実行中であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "reachableCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int reachableCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "起点から到達可能なセルの総数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "maxDistance",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int maxDistance = UnreachableDistance",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "UnreachableDistance",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "起点から到達可能な最大距離。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "UnreachableDistance",
+                    "inspector": null
+                },
+                {
+                    "name": "farthestPosition",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private Vector2Int farthestPosition",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "起点から最も遠いセルの座標。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "resultVersion",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int resultVersion",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "計算結果の変更を識別するためのバージョン。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Map",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public GridMap<T> Map => map",
+                    "returnType": "",
+                    "valueType": "GridMap<T>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "距離計算の対象となるグリッド。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Origin",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Vector2Int Origin => origin",
+                    "returnType": "",
+                    "valueType": "Vector2Int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "距離計算の起点。 未計算の場合は既定値を返す。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsCalculated",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsCalculated => isCalculated",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "有効な距離マップが計算されているか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ReachableCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int ReachableCount => reachableCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "起点を含む到達可能セルの総数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MaxDistance",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int MaxDistance => maxDistance",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "起点から到達可能な最大距離。 未計算の場合は-1を返す。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GridDistanceMap",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public GridDistanceMap(\r\n            GridMap<T> map,\r\n            Func<Vector2Int, bool> canEnterCell)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "map",
+                            "type": "GridMap<T>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "計算対象のグリッド"
+                        },
+                        {
+                            "name": "canEnterCell",
+                            "type": "Func<Vector2Int, bool>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "セルへの進入可否を判定する処理"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "距離マップを生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "必須の引数が指定されていない場合。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Calculate",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool Calculate(Vector2Int newOrigin)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "newOrigin",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "距離計算の起点"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された起点から距離マップを計算する。",
+                    "returns": "有効な距離マップを計算できた場合はtrue",
+                    "remarks": "起点が無効な場合は既存の計算結果を破棄する。 計算中にグリッドや通行条件を変更してはならない。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetDistance",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int GetDistance(Vector2Int position)",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得対象のセル座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたセルへの最短移動距離を取得する。",
+                    "returns": "最短移動距離。 未計算、範囲外、到達不可能の場合は-1",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetDistance",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetDistance(\r\n            Vector2Int position,\r\n            out int distance)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得対象のセル座標"
+                        },
+                        {
+                            "name": "distance",
+                            "type": "int",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得した最短移動距離"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたセルへの最短移動距離を取得する。",
+                    "returns": "到達可能な距離を取得できた場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsReachable",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsReachable(Vector2Int position)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "判定対象のセル座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたセルが起点から到達可能か確認する。",
+                    "returns": "到達可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsWithinDistance",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsWithinDistance(\r\n            Vector2Int position,\r\n            int distanceLimit)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "判定対象のセル座標"
+                        },
+                        {
+                            "name": "distanceLimit",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "許容する最大距離"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたセルが起点から指定距離以内にあるか確認する。",
+                    "returns": "指定距離以内の場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetReachablePositions",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public IEnumerable<Vector2Int>\r\n            GetReachablePositions()",
+                    "returnType": "IEnumerable<Vector2Int>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "到達可能なすべてのセルを列挙する。",
+                    "returns": "到達可能なセル座標の列挙",
+                    "remarks": "Y座標、X座標の順に列挙する。 距離順には並べ替えない。 列挙中に距離マップを変更してはならない。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetPositionsWithinDistance",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public IEnumerable<Vector2Int>\r\n            GetPositionsWithinDistance(int distanceLimit)",
+                    "returnType": "IEnumerable<Vector2Int>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "distanceLimit",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "許容する最大距離"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "起点から指定距離以内のセルを列挙する。",
+                    "returns": "指定距離以内のセル座標の列挙",
+                    "remarks": "列挙中に計算結果が変更された場合は例外を発生させる。 未計算または負の距離が指定された場合は空の列挙を返す。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetFarthestPosition",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetFarthestPosition(\r\n            out Vector2Int position,\r\n            out int distance)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "最も遠いセルの座標"
+                        },
+                        {
+                            "name": "distance",
+                            "type": "int",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "起点からの最短移動距離"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "起点から最も遠い到達可能セルを取得する。",
+                    "returns": "セルを取得できた場合はtrue",
+                    "remarks": "同じ最大距離のセルが複数存在する場合は、 幅優先探索で最初に発見したセルを返す。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Clear",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Clear()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "計算結果を初期化する。",
+                    "returns": "",
+                    "remarks": "距離配列と探索用キューは破棄せず再利用する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ClearInternal",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void ClearInternal()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "内部の計算結果を初期化する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "EnsureNotCalculating",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void EnsureNotCalculating()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "距離計算中ではないことを確認する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "距離計算中に状態変更が要求された場合。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "EnsureResultVersion",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void EnsureResultVersion(int version)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "version",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "列挙開始時のバージョン"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "計算結果のバージョンが一致することを確認する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "列挙中に計算結果が変更された場合。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 19
+        }
+    ],
+    "source": "using System;\r\nusing System.Collections.Generic;\r\nusing Framework.Grid;\r\nusing UnityEngine;\r\n\r\nnamespace Framework.Pathfinding\r\n{\r\n    /// <summary>\r\n    /// グリッド上の指定された起点から、\r\n    /// 到達可能な各セルへの最短移動距離を管理する。\r\n    /// </summary>\r\n    /// <typeparam name=\"T\">グリッドのセルデータ型</typeparam>\r\n    /// <remarks>\r\n    /// 幅優先探索を使用して距離を一括計算する。\r\n    /// 上下左右の4方向移動に対応し、\r\n    /// すべての移動コストを1として扱う。\r\n    /// グリッド変更時の再計算は呼び出し側が担当する。\r\n    /// </remarks>\r\n    public sealed class GridDistanceMap<T>\r\n    {\r\n        /// <summary>\r\n        /// 到達不可能なセルを表す距離。\r\n        /// </summary>\r\n        public const int UnreachableDistance = -1;\r\n\r\n        /// <summary>\r\n        /// 探索に使用する上下左右の移動方向。\r\n        /// </summary>\r\n        private static readonly Vector2Int[] Directions =\r\n        {\r\n            Vector2Int.up,\r\n            Vector2Int.down,\r\n            Vector2Int.left,\r\n            Vector2Int.right\r\n        };\r\n\r\n        /// <summary>\r\n        /// 距離計算の対象となるグリッド。\r\n        /// </summary>\r\n        private readonly GridMap<T> map;\r\n\r\n        /// <summary>\r\n        /// セルへの進入可否を判定する処理。\r\n        /// </summary>\r\n        private readonly Func<Vector2Int, bool> canEnterCell;\r\n\r\n        /// <summary>\r\n        /// 各セルへの最短移動距離。\r\n        /// </summary>\r\n        private readonly int[,] distances;\r\n\r\n        /// <summary>\r\n        /// 幅優先探索に使用するキュー。\r\n        /// </summary>\r\n        private readonly Queue<Vector2Int> searchQueue;\r\n\r\n        /// <summary>\r\n        /// 最後に計算した距離マップの起点。\r\n        /// </summary>\r\n        private Vector2Int origin;\r\n\r\n        /// <summary>\r\n        /// 有効な距離マップが計算されているか。\r\n        /// </summary>\r\n        private bool isCalculated;\r\n\r\n        /// <summary>\r\n        /// 距離計算の実行中であるか。\r\n        /// </summary>\r\n        private bool isCalculating;\r\n\r\n        /// <summary>\r\n        /// 起点から到達可能なセルの総数。\r\n        /// </summary>\r\n        private int reachableCount;\r\n\r\n        /// <summary>\r\n        /// 起点から到達可能な最大距離。\r\n        /// </summary>\r\n        private int maxDistance = UnreachableDistance;\r\n\r\n        /// <summary>\r\n        /// 起点から最も遠いセルの座標。\r\n        /// </summary>\r\n        private Vector2Int farthestPosition;\r\n\r\n        /// <summary>\r\n        /// 計算結果の変更を識別するためのバージョン。\r\n        /// </summary>\r\n        private int resultVersion;\r\n\r\n        /// <summary>\r\n        /// 距離計算の対象となるグリッド。\r\n        /// </summary>\r\n        public GridMap<T> Map => map;\r\n\r\n        /// <summary>\r\n        /// 距離計算の起点。\r\n        /// 未計算の場合は既定値を返す。\r\n        /// </summary>\r\n        public Vector2Int Origin => origin;\r\n\r\n        /// <summary>\r\n        /// 有効な距離マップが計算されているか。\r\n        /// </summary>\r\n        public bool IsCalculated => isCalculated;\r\n\r\n        /// <summary>\r\n        /// 起点を含む到達可能セルの総数。\r\n        /// </summary>\r\n        public int ReachableCount => reachableCount;\r\n\r\n        /// <summary>\r\n        /// 起点から到達可能な最大距離。\r\n        /// 未計算の場合は-1を返す。\r\n        /// </summary>\r\n        public int MaxDistance => maxDistance;\r\n\r\n        /// <summary>\r\n        /// 距離マップを生成する。\r\n        /// </summary>\r\n        /// <param name=\"map\">計算対象のグリッド</param>\r\n        /// <param name=\"canEnterCell\">\r\n        /// セルへの進入可否を判定する処理\r\n        /// </param>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 必須の引数が指定されていない場合。\r\n        /// </exception>\r\n        public GridDistanceMap(\r\n            GridMap<T> map,\r\n            Func<Vector2Int, bool> canEnterCell)\r\n        {\r\n            if (map == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(map));\r\n            }\r\n\r\n            if (canEnterCell == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(canEnterCell));\r\n            }\r\n\r\n            this.map = map;\r\n            this.canEnterCell = canEnterCell;\r\n\r\n            // グリッドと同じ大きさの距離配列を確保する。\r\n            distances = new int[map.Width, map.Height];\r\n\r\n            // 探索用キューを生成し、再計算時にも使用する。\r\n            searchQueue = new Queue<Vector2Int>();\r\n\r\n            ClearInternal();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された起点から距離マップを計算する。\r\n        /// </summary>\r\n        /// <param name=\"newOrigin\">距離計算の起点</param>\r\n        /// <returns>\r\n        /// 有効な距離マップを計算できた場合はtrue\r\n        /// </returns>\r\n        /// <remarks>\r\n        /// 起点が無効な場合は既存の計算結果を破棄する。\r\n        /// 計算中にグリッドや通行条件を変更してはならない。\r\n        /// </remarks>\r\n        public bool Calculate(Vector2Int newOrigin)\r\n        {\r\n            EnsureNotCalculating();\r\n\r\n            ClearInternal();\r\n\r\n            isCalculating = true;\r\n\r\n            try\r\n            {\r\n                // グリッド外や通行不可能な起点を拒否する。\r\n                if (!map.IsInside(newOrigin) ||\r\n                    !canEnterCell(newOrigin))\r\n                {\r\n                    return false;\r\n                }\r\n\r\n                origin = newOrigin;\r\n\r\n                distances[origin.x, origin.y] = 0;\r\n\r\n                reachableCount = 1;\r\n                maxDistance = 0;\r\n\r\n                farthestPosition = origin;\r\n\r\n                searchQueue.Enqueue(origin);\r\n\r\n                // 幅優先探索によって最短距離を計算する。\r\n                while (searchQueue.Count > 0)\r\n                {\r\n                    Vector2Int current =\r\n                        searchQueue.Dequeue();\r\n\r\n                    int nextDistance =\r\n                        distances[current.x, current.y] + 1;\r\n\r\n                    for (int i = 0; i < Directions.Length; i++)\r\n                    {\r\n                        Vector2Int next =\r\n                            current + Directions[i];\r\n\r\n                        // グリッド外のセルは探索しない。\r\n                        if (!map.IsInside(next))\r\n                        {\r\n                            continue;\r\n                        }\r\n\r\n                        // 計算済みのセルは再探索しない。\r\n                        if (distances[next.x, next.y] !=\r\n                            UnreachableDistance)\r\n                        {\r\n                            continue;\r\n                        }\r\n\r\n                        // 通行不可能なセルは探索しない。\r\n                        if (!canEnterCell(next))\r\n                        {\r\n                            continue;\r\n                        }\r\n\r\n                        // キューへの追加時点で距離を確定する。\r\n                        distances[next.x, next.y] =\r\n                            nextDistance;\r\n\r\n                        reachableCount++;\r\n\r\n                        // 最も遠いセルの情報を更新する。\r\n                        if (nextDistance > maxDistance)\r\n                        {\r\n                            maxDistance = nextDistance;\r\n                            farthestPosition = next;\r\n                        }\r\n\r\n                        searchQueue.Enqueue(next);\r\n                    }\r\n                }\r\n\r\n                isCalculated = true;\r\n\r\n                return true;\r\n            }\r\n            catch\r\n            {\r\n                // 計算途中の不完全な結果を残さない。\r\n                ClearInternal();\r\n\r\n                throw;\r\n            }\r\n            finally\r\n            {\r\n                searchQueue.Clear();\r\n\r\n                isCalculating = false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたセルへの最短移動距離を取得する。\r\n        /// </summary>\r\n        /// <param name=\"position\">取得対象のセル座標</param>\r\n        /// <returns>\r\n        /// 最短移動距離。\r\n        /// 未計算、範囲外、到達不可能の場合は-1\r\n        /// </returns>\r\n        public int GetDistance(Vector2Int position)\r\n        {\r\n            if (!isCalculated || !map.IsInside(position))\r\n            {\r\n                return UnreachableDistance;\r\n            }\r\n\r\n            return distances[position.x, position.y];\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたセルへの最短移動距離を取得する。\r\n        /// </summary>\r\n        /// <param name=\"position\">取得対象のセル座標</param>\r\n        /// <param name=\"distance\">取得した最短移動距離</param>\r\n        /// <returns>\r\n        /// 到達可能な距離を取得できた場合はtrue\r\n        /// </returns>\r\n        public bool TryGetDistance(\r\n            Vector2Int position,\r\n            out int distance)\r\n        {\r\n            distance = GetDistance(position);\r\n\r\n            return distance != UnreachableDistance;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたセルが起点から到達可能か確認する。\r\n        /// </summary>\r\n        /// <param name=\"position\">判定対象のセル座標</param>\r\n        /// <returns>到達可能な場合はtrue</returns>\r\n        public bool IsReachable(Vector2Int position)\r\n        {\r\n            return GetDistance(position) !=\r\n                UnreachableDistance;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたセルが起点から指定距離以内にあるか確認する。\r\n        /// </summary>\r\n        /// <param name=\"position\">判定対象のセル座標</param>\r\n        /// <param name=\"distanceLimit\">許容する最大距離</param>\r\n        /// <returns>指定距離以内の場合はtrue</returns>\r\n        public bool IsWithinDistance(\r\n            Vector2Int position,\r\n            int distanceLimit)\r\n        {\r\n            if (distanceLimit < 0)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            int distance = GetDistance(position);\r\n\r\n            return distance != UnreachableDistance &&\r\n                distance <= distanceLimit;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 到達可能なすべてのセルを列挙する。\r\n        /// </summary>\r\n        /// <returns>到達可能なセル座標の列挙</returns>\r\n        /// <remarks>\r\n        /// Y座標、X座標の順に列挙する。\r\n        /// 距離順には並べ替えない。\r\n        /// 列挙中に距離マップを変更してはならない。\r\n        /// </remarks>\r\n        public IEnumerable<Vector2Int>\r\n            GetReachablePositions()\r\n        {\r\n            return GetPositionsWithinDistance(int.MaxValue);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 起点から指定距離以内のセルを列挙する。\r\n        /// </summary>\r\n        /// <param name=\"distanceLimit\">許容する最大距離</param>\r\n        /// <returns>指定距離以内のセル座標の列挙</returns>\r\n        /// <remarks>\r\n        /// 列挙中に計算結果が変更された場合は例外を発生させる。\r\n        /// 未計算または負の距離が指定された場合は空の列挙を返す。\r\n        /// </remarks>\r\n        public IEnumerable<Vector2Int>\r\n            GetPositionsWithinDistance(int distanceLimit)\r\n        {\r\n            if (!isCalculated || distanceLimit < 0)\r\n            {\r\n                yield break;\r\n            }\r\n\r\n            int version = resultVersion;\r\n\r\n            for (int y = 0; y < map.Height; y++)\r\n            {\r\n                for (int x = 0; x < map.Width; x++)\r\n                {\r\n                    EnsureResultVersion(version);\r\n\r\n                    int distance = distances[x, y];\r\n\r\n                    if (distance != UnreachableDistance &&\r\n                        distance <= distanceLimit)\r\n                    {\r\n                        yield return new Vector2Int(x, y);\r\n                    }\r\n                }\r\n            }\r\n\r\n            EnsureResultVersion(version);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 起点から最も遠い到達可能セルを取得する。\r\n        /// </summary>\r\n        /// <param name=\"position\">最も遠いセルの座標</param>\r\n        /// <param name=\"distance\">起点からの最短移動距離</param>\r\n        /// <returns>セルを取得できた場合はtrue</returns>\r\n        /// <remarks>\r\n        /// 同じ最大距離のセルが複数存在する場合は、\r\n        /// 幅優先探索で最初に発見したセルを返す。\r\n        /// </remarks>\r\n        public bool TryGetFarthestPosition(\r\n            out Vector2Int position,\r\n            out int distance)\r\n        {\r\n            position = default;\r\n            distance = UnreachableDistance;\r\n\r\n            if (!isCalculated)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            position = farthestPosition;\r\n            distance = maxDistance;\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 計算結果を初期化する。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// 距離配列と探索用キューは破棄せず再利用する。\r\n        /// </remarks>\r\n        public void Clear()\r\n        {\r\n            EnsureNotCalculating();\r\n\r\n            ClearInternal();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 内部の計算結果を初期化する。\r\n        /// </summary>\r\n        private void ClearInternal()\r\n        {\r\n            isCalculated = false;\r\n\r\n            origin = default;\r\n            farthestPosition = default;\r\n\r\n            reachableCount = 0;\r\n            maxDistance = UnreachableDistance;\r\n\r\n            searchQueue.Clear();\r\n\r\n            // すべてのセルを未到達状態に戻す。\r\n            for (int y = 0; y < map.Height; y++)\r\n            {\r\n                for (int x = 0; x < map.Width; x++)\r\n                {\r\n                    distances[x, y] = UnreachableDistance;\r\n                }\r\n            }\r\n\r\n            // 既存の列挙処理を無効化する。\r\n            unchecked\r\n            {\r\n                resultVersion++;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 距離計算中ではないことを確認する。\r\n        /// </summary>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 距離計算中に状態変更が要求された場合。\r\n        /// </exception>\r\n        private void EnsureNotCalculating()\r\n        {\r\n            if (isCalculating)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"距離計算中は計算結果を変更できません。\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 計算結果のバージョンが一致することを確認する。\r\n        /// </summary>\r\n        /// <param name=\"version\">列挙開始時のバージョン</param>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 列挙中に計算結果が変更された場合。\r\n        /// </exception>\r\n        private void EnsureResultVersion(int version)\r\n        {\r\n            if (version != resultVersion)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"セルの列挙中に距離マップが変更されました。\");\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.228Z"
+}

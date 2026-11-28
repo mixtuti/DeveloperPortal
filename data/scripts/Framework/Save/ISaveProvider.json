@@ -1,5 +1,5 @@
 {
-    "parserVersion": 2,
+    "parserVersion": 3,
     "id": "Framework.Save.ISaveProvider",
     "name": "ISaveProvider",
     "fileName": "ISaveProvider.cs",
@@ -210,11 +210,247 @@
             "exceptions": []
         }
     ],
+    "types": [
+        {
+            "name": "ISaveProvider",
+            "fullName": "ISaveProvider",
+            "kind": "interface",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "データ保存システムの共通インターフェース。 保存方式や外部アセットに依存せず、 データの保存・読み込み・削除を行うための 共通仕様を定義する。 実際の保存処理は、このインターフェースを 実装した各Providerが担当する。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public interface ISaveProvider",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "Save",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "void Save<T>(string key, T value)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "key",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "データを識別するキー"
+                        },
+                        {
+                            "name": "value",
+                            "type": "T",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "保存するデータ"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "T",
+                            "description": "保存するデータの型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定されたキーにデータを保存する。 同じキーのデータが存在する場合は 既存のデータを上書きする。 保存に失敗した場合は例外を発生させる。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Load",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "T Load<T>(string key, T defaultValue)",
+                    "returnType": "T",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "key",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "データを識別するキー"
+                        },
+                        {
+                            "name": "defaultValue",
+                            "type": "T",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "データが存在しない場合に返す初期値"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "T",
+                            "description": "読み込むデータの型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定されたキーのデータを読み込む。 データが存在しない場合は 指定された初期値を返す。 データの破損や型の不一致などにより 読み込みに失敗した場合は例外を発生させる。",
+                    "returns": "読み込んだデータ、または指定された初期値",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryLoad",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "bool TryLoad<T>(string key, out T value)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "key",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "データを識別するキー"
+                        },
+                        {
+                            "name": "value",
+                            "type": "T",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "読み込んだデータ。 失敗した場合は型の既定値。"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "T",
+                            "description": "読み込むデータの型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定されたキーのデータの読み込みを試みる。 データが存在しない場合や、 保存データの読み込みに失敗した場合は falseを返す。",
+                    "returns": "読み込みに成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Exists",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "bool Exists(string key)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "key",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "確認するデータのキー"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたキーの保存データが存在するか 確認する。",
+                    "returns": "データが存在する場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Delete",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "void Delete(string key)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "key",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "削除するデータのキー"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたキーの保存データを削除する。 データが存在しない場合は何も行わない。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "DeleteAll",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "void DeleteAll()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "このProviderが管理するすべての 保存データを削除する。 他のProviderが管理する保存領域には 影響を与えないことを前提とする。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Flush",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "void Flush()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "保留中の保存処理を確定する。 キャッシュ方式などを採用している場合は、 保留中のデータを実際の保存先へ書き込む。 即時保存方式の場合は何も行わない。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 13
+        }
+    ],
     "source": "namespace Framework.Save\r\n{\r\n    /// <summary>\r\n    /// データ保存システムの共通インターフェース。\r\n    ///\r\n    /// 保存方式や外部アセットに依存せず、\r\n    /// データの保存・読み込み・削除を行うための\r\n    /// 共通仕様を定義する。\r\n    ///\r\n    /// 実際の保存処理は、このインターフェースを\r\n    /// 実装した各Providerが担当する。\r\n    /// </summary>\r\n    public interface ISaveProvider\r\n    {\r\n        #region Save Methods\r\n\r\n        /// <summary>\r\n        /// 指定されたキーにデータを保存する。\r\n        ///\r\n        /// 同じキーのデータが存在する場合は\r\n        /// 既存のデータを上書きする。\r\n        ///\r\n        /// 保存に失敗した場合は例外を発生させる。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">\r\n        /// 保存するデータの型\r\n        /// </typeparam>\r\n        /// <param name=\"key\">\r\n        /// データを識別するキー\r\n        /// </param>\r\n        /// <param name=\"value\">\r\n        /// 保存するデータ\r\n        /// </param>\r\n        void Save<T>(string key, T value);\r\n\r\n        #endregion\r\n\r\n        #region Load Methods\r\n\r\n        /// <summary>\r\n        /// 指定されたキーのデータを読み込む。\r\n        ///\r\n        /// データが存在しない場合は\r\n        /// 指定された初期値を返す。\r\n        ///\r\n        /// データの破損や型の不一致などにより\r\n        /// 読み込みに失敗した場合は例外を発生させる。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">\r\n        /// 読み込むデータの型\r\n        /// </typeparam>\r\n        /// <param name=\"key\">\r\n        /// データを識別するキー\r\n        /// </param>\r\n        /// <param name=\"defaultValue\">\r\n        /// データが存在しない場合に返す初期値\r\n        /// </param>\r\n        /// <returns>\r\n        /// 読み込んだデータ、または指定された初期値\r\n        /// </returns>\r\n        T Load<T>(string key, T defaultValue);\r\n\r\n        /// <summary>\r\n        /// 指定されたキーのデータの読み込みを試みる。\r\n        ///\r\n        /// データが存在しない場合や、\r\n        /// 保存データの読み込みに失敗した場合は\r\n        /// falseを返す。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">\r\n        /// 読み込むデータの型\r\n        /// </typeparam>\r\n        /// <param name=\"key\">\r\n        /// データを識別するキー\r\n        /// </param>\r\n        /// <param name=\"value\">\r\n        /// 読み込んだデータ。\r\n        /// 失敗した場合は型の既定値。\r\n        /// </param>\r\n        /// <returns>\r\n        /// 読み込みに成功した場合はtrue\r\n        /// </returns>\r\n        bool TryLoad<T>(string key, out T value);\r\n\r\n        #endregion\r\n\r\n        #region Data Management Methods\r\n\r\n        /// <summary>\r\n        /// 指定されたキーの保存データが存在するか\r\n        /// 確認する。\r\n        /// </summary>\r\n        /// <param name=\"key\">\r\n        /// 確認するデータのキー\r\n        /// </param>\r\n        /// <returns>\r\n        /// データが存在する場合はtrue\r\n        /// </returns>\r\n        bool Exists(string key);\r\n\r\n        /// <summary>\r\n        /// 指定されたキーの保存データを削除する。\r\n        ///\r\n        /// データが存在しない場合は何も行わない。\r\n        /// </summary>\r\n        /// <param name=\"key\">\r\n        /// 削除するデータのキー\r\n        /// </param>\r\n        void Delete(string key);\r\n\r\n        /// <summary>\r\n        /// このProviderが管理するすべての\r\n        /// 保存データを削除する。\r\n        ///\r\n        /// 他のProviderが管理する保存領域には\r\n        /// 影響を与えないことを前提とする。\r\n        /// </summary>\r\n        void DeleteAll();\r\n\r\n        /// <summary>\r\n        /// 保留中の保存処理を確定する。\r\n        ///\r\n        /// キャッシュ方式などを採用している場合は、\r\n        /// 保留中のデータを実際の保存先へ書き込む。\r\n        ///\r\n        /// 即時保存方式の場合は何も行わない。\r\n        /// </summary>\r\n        void Flush();\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
     "tips": [],
     "examples": [],
     "notes": [],
     "related": [],
     "tests": [],
-    "generatedAt": "2026-11-26T16:10:17.975Z"
+    "generatedAt": "2026-11-28T15:50:00.440Z"
 }

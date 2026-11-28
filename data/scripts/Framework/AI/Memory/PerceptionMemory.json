@@ -1,0 +1,820 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Memory.PerceptionMemory",
+    "name": "PerceptionMemory",
+    "fileName": "PerceptionMemory.cs",
+    "namespace": "Framework.AI.Memory",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class PerceptionMemory<TPosition>",
+    "typeParameters": [
+        {
+            "name": "TPosition",
+            "description": "認識位置を表現する型"
+        }
+    ],
+    "summary": "対象ごとの最終認識情報を管理する。",
+    "remarks": "記憶の信頼度は取得時に計算する。 自動更新や自動削除は行わない。 すべての時刻には同一の時間基準を使用すること。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "Framework.AI.Perception"
+    ],
+    "members": [
+        {
+            "name": "Count",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int Count => memories.Count",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "保存されている記憶の件数を取得する。 期限切れの記憶も含む。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RetentionDuration",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public double RetentionDuration => retentionDuration",
+            "returnType": "",
+            "valueType": "double",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "記憶保持時間を取得する。単位は秒。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "PerceptionMemory",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public PerceptionMemory(\r\n            double retentionDuration = 10d)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "retentionDuration",
+                    "type": "double",
+                    "modifier": "",
+                    "defaultValue": "10d",
+                    "description": "記憶保持時間。単位は秒。"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "認識記憶を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SetRetentionDuration",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void SetRetentionDuration(double duration)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "duration",
+                    "type": "double",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "記憶保持時間。単位は秒"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "記憶保持時間を変更する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "保持時間が有限の正数ではない場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "Remember",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Remember(\r\n            PerceptionStimulus<TPosition> stimulus)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "stimulus",
+                    "type": "PerceptionStimulus<TPosition>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "記憶する認識情報"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "認識情報を記憶する。",
+            "returns": "記憶の保存または更新に成功した場合はtrue",
+            "remarks": "無効な情報、対象不明の情報、信頼度0の情報は保存しない。 既存情報より古い情報は保存しない。 同時刻の場合は信頼度が高い情報を優先する。",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetLastObservation",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryGetLastObservation(\r\n            Guid sourceId,\r\n            out PerceptionStimulus<TPosition> stimulus)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "sourceId",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識対象の識別子"
+                },
+                {
+                    "name": "stimulus",
+                    "type": "PerceptionStimulus<TPosition>",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "取得した認識情報"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "保存されている最終認識情報を取得する。",
+            "returns": "保存された記憶が存在する場合はtrue",
+            "remarks": "期限切れの記憶も取得対象とする。",
+            "exceptions": []
+        },
+        {
+            "name": "TryRecall",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryRecall(\r\n            Guid sourceId,\r\n            double currentTime,\r\n            out PerceptionStimulus<TPosition> stimulus,\r\n            out float confidence)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "sourceId",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識対象の識別子"
+                },
+                {
+                    "name": "currentTime",
+                    "type": "double",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "現在時刻。単位は秒"
+                },
+                {
+                    "name": "stimulus",
+                    "type": "PerceptionStimulus<TPosition>",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "取得した認識情報"
+                },
+                {
+                    "name": "confidence",
+                    "type": "float",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "現在の記憶信頼度"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在も有効な認識記憶を取得する。",
+            "returns": "有効な記憶が存在する場合はtrue",
+            "remarks": "失敗時は認識情報の既定値と信頼度0を返す。 未来の認識情報は取得対象としない。",
+            "exceptions": []
+        },
+        {
+            "name": "GetConfidence",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float GetConfidence(\r\n            Guid sourceId,\r\n            double currentTime)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "sourceId",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識対象の識別子"
+                },
+                {
+                    "name": "currentTime",
+                    "type": "double",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "現在時刻。単位は秒"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定対象に対する現在の記憶信頼度を取得する。",
+            "returns": "0から1の記憶信頼度",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RemoveExpired",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int RemoveExpired(double currentTime)",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "currentTime",
+                    "type": "double",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "現在時刻。単位は秒"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "期限切れとなった記憶を削除する。",
+            "returns": "削除した記憶の件数",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Forget",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Forget(Guid sourceId)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "sourceId",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識対象の識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定対象の記憶を削除する。",
+            "returns": "削除に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Clear",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Clear()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべての認識記憶を削除する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "PerceptionMemory",
+            "fullName": "PerceptionMemory",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "対象ごとの最終認識情報を管理する。",
+            "remarks": "記憶の信頼度は取得時に計算する。 自動更新や自動削除は行わない。 すべての時刻には同一の時間基準を使用すること。",
+            "attributes": [],
+            "declaration": "public sealed class PerceptionMemory<TPosition>",
+            "inheritance": [],
+            "typeParameters": [
+                {
+                    "name": "TPosition",
+                    "description": "認識位置を表現する型"
+                }
+            ],
+            "members": [
+                {
+                    "name": "memories",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Dictionary<Guid,\r\n            PerceptionStimulus<TPosition>> memories =\r\n            new Dictionary<Guid,\r\n                PerceptionStimulus<TPosition>>()",
+                    "returnType": "",
+                    "valueType": "Dictionary<Guid,\r\n            PerceptionStimulus<TPosition>>",
+                    "value": "new Dictionary<Guid,\r\n                PerceptionStimulus<TPosition>>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "対象ごとの最終認識情報。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new Dictionary<Guid,\r\n                PerceptionStimulus<TPosition>>()",
+                    "inspector": null
+                },
+                {
+                    "name": "removalBuffer",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly List<Guid> removalBuffer =\r\n            new List<Guid>()",
+                    "returnType": "",
+                    "valueType": "List<Guid>",
+                    "value": "new List<Guid>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "期限切れ記憶の削除に使用する作業用リスト。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new List<Guid>()",
+                    "inspector": null
+                },
+                {
+                    "name": "retentionDuration",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private double retentionDuration",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "記憶保持時間。単位は秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Count",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int Count => memories.Count",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "保存されている記憶の件数を取得する。 期限切れの記憶も含む。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RetentionDuration",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public double RetentionDuration => retentionDuration",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "記憶保持時間を取得する。単位は秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PerceptionMemory",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public PerceptionMemory(\r\n            double retentionDuration = 10d)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "retentionDuration",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": "10d",
+                            "description": "記憶保持時間。単位は秒。"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識記憶を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SetRetentionDuration",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void SetRetentionDuration(double duration)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "duration",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "記憶保持時間。単位は秒"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "記憶保持時間を変更する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "保持時間が有限の正数ではない場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Remember",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool Remember(\r\n            PerceptionStimulus<TPosition> stimulus)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "stimulus",
+                            "type": "PerceptionStimulus<TPosition>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "記憶する認識情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識情報を記憶する。",
+                    "returns": "記憶の保存または更新に成功した場合はtrue",
+                    "remarks": "無効な情報、対象不明の情報、信頼度0の情報は保存しない。 既存情報より古い情報は保存しない。 同時刻の場合は信頼度が高い情報を優先する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetLastObservation",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetLastObservation(\r\n            Guid sourceId,\r\n            out PerceptionStimulus<TPosition> stimulus)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "sourceId",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識対象の識別子"
+                        },
+                        {
+                            "name": "stimulus",
+                            "type": "PerceptionStimulus<TPosition>",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得した認識情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "保存されている最終認識情報を取得する。",
+                    "returns": "保存された記憶が存在する場合はtrue",
+                    "remarks": "期限切れの記憶も取得対象とする。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryRecall",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryRecall(\r\n            Guid sourceId,\r\n            double currentTime,\r\n            out PerceptionStimulus<TPosition> stimulus,\r\n            out float confidence)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "sourceId",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識対象の識別子"
+                        },
+                        {
+                            "name": "currentTime",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在時刻。単位は秒"
+                        },
+                        {
+                            "name": "stimulus",
+                            "type": "PerceptionStimulus<TPosition>",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得した認識情報"
+                        },
+                        {
+                            "name": "confidence",
+                            "type": "float",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "現在の記憶信頼度"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在も有効な認識記憶を取得する。",
+                    "returns": "有効な記憶が存在する場合はtrue",
+                    "remarks": "失敗時は認識情報の既定値と信頼度0を返す。 未来の認識情報は取得対象としない。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetConfidence",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float GetConfidence(\r\n            Guid sourceId,\r\n            double currentTime)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "sourceId",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識対象の識別子"
+                        },
+                        {
+                            "name": "currentTime",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在時刻。単位は秒"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定対象に対する現在の記憶信頼度を取得する。",
+                    "returns": "0から1の記憶信頼度",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RemoveExpired",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int RemoveExpired(double currentTime)",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "currentTime",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在時刻。単位は秒"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "期限切れとなった記憶を削除する。",
+                    "returns": "削除した記憶の件数",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Forget",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool Forget(Guid sourceId)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "sourceId",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識対象の識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定対象の記憶を削除する。",
+                    "returns": "削除に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Clear",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Clear()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべての認識記憶を削除する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CalculateConfidence",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float CalculateConfidence(\r\n            PerceptionStimulus<TPosition> stimulus,\r\n            double currentTime)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "stimulus",
+                            "type": "PerceptionStimulus<TPosition>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "保存された認識情報"
+                        },
+                        {
+                            "name": "currentTime",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在時刻。単位は秒"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "経過時間に応じた記憶信頼度を計算する。",
+                    "returns": "減衰後の記憶信頼度",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValidateTime",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static void ValidateTime(double time)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "time",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証対象の時刻。単位は秒"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "時刻が有効な値であることを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "時刻が有限の非負数ではない場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 17
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing Framework.AI.Perception;\r\n\r\nnamespace Framework.AI.Memory\r\n{\r\n    /// <summary>\r\n    /// 対象ごとの最終認識情報を管理する。\r\n    /// </summary>\r\n    /// <typeparam name=\"TPosition\">認識位置を表現する型</typeparam>\r\n    /// <remarks>\r\n    /// 記憶の信頼度は取得時に計算する。\r\n    /// 自動更新や自動削除は行わない。\r\n    /// すべての時刻には同一の時間基準を使用すること。\r\n    /// </remarks>\r\n    public sealed class PerceptionMemory<TPosition>\r\n    {\r\n        /// <summary>\r\n        /// 対象ごとの最終認識情報。\r\n        /// </summary>\r\n        private readonly Dictionary<Guid,\r\n            PerceptionStimulus<TPosition>> memories =\r\n            new Dictionary<Guid,\r\n                PerceptionStimulus<TPosition>>();\r\n\r\n        /// <summary>\r\n        /// 期限切れ記憶の削除に使用する作業用リスト。\r\n        /// </summary>\r\n        private readonly List<Guid> removalBuffer =\r\n            new List<Guid>();\r\n\r\n        /// <summary>\r\n        /// 記憶保持時間。単位は秒。\r\n        /// </summary>\r\n        private double retentionDuration;\r\n\r\n        /// <summary>\r\n        /// 保存されている記憶の件数を取得する。\r\n        /// 期限切れの記憶も含む。\r\n        /// </summary>\r\n        public int Count => memories.Count;\r\n\r\n        /// <summary>\r\n        /// 記憶保持時間を取得する。単位は秒。\r\n        /// </summary>\r\n        public double RetentionDuration => retentionDuration;\r\n\r\n        /// <summary>\r\n        /// 認識記憶を生成する。\r\n        /// </summary>\r\n        /// <param name=\"retentionDuration\">\r\n        /// 記憶保持時間。単位は秒。\r\n        /// </param>\r\n        public PerceptionMemory(\r\n            double retentionDuration = 10d)\r\n        {\r\n            SetRetentionDuration(retentionDuration);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 記憶保持時間を変更する。\r\n        /// </summary>\r\n        /// <param name=\"duration\">記憶保持時間。単位は秒</param>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 保持時間が有限の正数ではない場合に発生する。\r\n        /// </exception>\r\n        public void SetRetentionDuration(double duration)\r\n        {\r\n            if (double.IsNaN(duration) ||\r\n                double.IsInfinity(duration) ||\r\n                duration <= 0d)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(duration));\r\n            }\r\n\r\n            retentionDuration = duration;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 認識情報を記憶する。\r\n        /// </summary>\r\n        /// <param name=\"stimulus\">記憶する認識情報</param>\r\n        /// <returns>記憶の保存または更新に成功した場合はtrue</returns>\r\n        /// <remarks>\r\n        /// 無効な情報、対象不明の情報、信頼度0の情報は保存しない。\r\n        /// 既存情報より古い情報は保存しない。\r\n        /// 同時刻の場合は信頼度が高い情報を優先する。\r\n        /// </remarks>\r\n        public bool Remember(\r\n            PerceptionStimulus<TPosition> stimulus)\r\n        {\r\n            if (!stimulus.IsValid ||\r\n                stimulus.SourceId == Guid.Empty ||\r\n                stimulus.Confidence <= 0f)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (memories.TryGetValue(\r\n                stimulus.SourceId,\r\n                out PerceptionStimulus<TPosition> previous))\r\n            {\r\n                // 古い認識情報による上書きを防止する。\r\n                if (stimulus.Timestamp < previous.Timestamp)\r\n                {\r\n                    return false;\r\n                }\r\n\r\n                // 同時刻では信頼度が高い情報を優先する。\r\n                if (stimulus.Timestamp == previous.Timestamp &&\r\n                    stimulus.Confidence <= previous.Confidence)\r\n                {\r\n                    return false;\r\n                }\r\n            }\r\n\r\n            memories[stimulus.SourceId] = stimulus;\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 保存されている最終認識情報を取得する。\r\n        /// </summary>\r\n        /// <param name=\"sourceId\">認識対象の識別子</param>\r\n        /// <param name=\"stimulus\">取得した認識情報</param>\r\n        /// <returns>保存された記憶が存在する場合はtrue</returns>\r\n        /// <remarks>\r\n        /// 期限切れの記憶も取得対象とする。\r\n        /// </remarks>\r\n        public bool TryGetLastObservation(\r\n            Guid sourceId,\r\n            out PerceptionStimulus<TPosition> stimulus)\r\n        {\r\n            return memories.TryGetValue(\r\n                sourceId,\r\n                out stimulus);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在も有効な認識記憶を取得する。\r\n        /// </summary>\r\n        /// <param name=\"sourceId\">認識対象の識別子</param>\r\n        /// <param name=\"currentTime\">現在時刻。単位は秒</param>\r\n        /// <param name=\"stimulus\">取得した認識情報</param>\r\n        /// <param name=\"confidence\">現在の記憶信頼度</param>\r\n        /// <returns>有効な記憶が存在する場合はtrue</returns>\r\n        /// <remarks>\r\n        /// 失敗時は認識情報の既定値と信頼度0を返す。\r\n        /// 未来の認識情報は取得対象としない。\r\n        /// </remarks>\r\n        public bool TryRecall(\r\n            Guid sourceId,\r\n            double currentTime,\r\n            out PerceptionStimulus<TPosition> stimulus,\r\n            out float confidence)\r\n        {\r\n            ValidateTime(currentTime);\r\n\r\n            stimulus = default(\r\n                PerceptionStimulus<TPosition>);\r\n\r\n            confidence = 0f;\r\n\r\n            if (!memories.TryGetValue(\r\n                sourceId,\r\n                out PerceptionStimulus<TPosition> stored))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (currentTime < stored.Timestamp)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            float currentConfidence =\r\n                CalculateConfidence(stored, currentTime);\r\n\r\n            if (currentConfidence <= 0f)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            stimulus = stored;\r\n            confidence = currentConfidence;\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定対象に対する現在の記憶信頼度を取得する。\r\n        /// </summary>\r\n        /// <param name=\"sourceId\">認識対象の識別子</param>\r\n        /// <param name=\"currentTime\">現在時刻。単位は秒</param>\r\n        /// <returns>0から1の記憶信頼度</returns>\r\n        public float GetConfidence(\r\n            Guid sourceId,\r\n            double currentTime)\r\n        {\r\n            TryRecall(\r\n                sourceId,\r\n                currentTime,\r\n                out _,\r\n                out float confidence);\r\n\r\n            return confidence;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 期限切れとなった記憶を削除する。\r\n        /// </summary>\r\n        /// <param name=\"currentTime\">現在時刻。単位は秒</param>\r\n        /// <returns>削除した記憶の件数</returns>\r\n        public int RemoveExpired(double currentTime)\r\n        {\r\n            ValidateTime(currentTime);\r\n\r\n            removalBuffer.Clear();\r\n\r\n            // 列挙中のDictionary変更を避ける。\r\n            foreach (var pair in memories)\r\n            {\r\n                double elapsed =\r\n                    currentTime - pair.Value.Timestamp;\r\n\r\n                if (elapsed >= retentionDuration)\r\n                {\r\n                    removalBuffer.Add(pair.Key);\r\n                }\r\n            }\r\n\r\n            int removedCount = removalBuffer.Count;\r\n\r\n            for (int i = 0; i < removedCount; i++)\r\n            {\r\n                memories.Remove(removalBuffer[i]);\r\n            }\r\n\r\n            removalBuffer.Clear();\r\n\r\n            return removedCount;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定対象の記憶を削除する。\r\n        /// </summary>\r\n        /// <param name=\"sourceId\">認識対象の識別子</param>\r\n        /// <returns>削除に成功した場合はtrue</returns>\r\n        public bool Forget(Guid sourceId)\r\n        {\r\n            return memories.Remove(sourceId);\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべての認識記憶を削除する。\r\n        /// </summary>\r\n        public void Clear()\r\n        {\r\n            memories.Clear();\r\n            removalBuffer.Clear();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 経過時間に応じた記憶信頼度を計算する。\r\n        /// </summary>\r\n        /// <param name=\"stimulus\">保存された認識情報</param>\r\n        /// <param name=\"currentTime\">現在時刻。単位は秒</param>\r\n        /// <returns>減衰後の記憶信頼度</returns>\r\n        private float CalculateConfidence(\r\n            PerceptionStimulus<TPosition> stimulus,\r\n            double currentTime)\r\n        {\r\n            double elapsed =\r\n                currentTime - stimulus.Timestamp;\r\n\r\n            if (elapsed >= retentionDuration)\r\n            {\r\n                return 0f;\r\n            }\r\n\r\n            // 認識時の信頼度に線形減衰を適用する。\r\n            double remainingRate =\r\n                1d - elapsed / retentionDuration;\r\n\r\n            return (float)(\r\n                stimulus.Confidence * remainingRate);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 時刻が有効な値であることを検証する。\r\n        /// </summary>\r\n        /// <param name=\"time\">検証対象の時刻。単位は秒</param>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 時刻が有限の非負数ではない場合に発生する。\r\n        /// </exception>\r\n        private static void ValidateTime(double time)\r\n        {\r\n            if (double.IsNaN(time) ||\r\n                double.IsInfinity(time) ||\r\n                time < 0d)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(time));\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:01.023Z"
+}

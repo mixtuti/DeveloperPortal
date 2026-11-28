@@ -1,0 +1,656 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.Parameters.ParameterModifier",
+    "name": "ParameterModifier",
+    "fileName": "ParameterModifier.cs",
+    "namespace": "Framework.Parameters",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class ParameterModifier",
+    "typeParameters": [],
+    "summary": "パラメーターに適用する単一の補正情報を保持する。",
+    "remarks": "補正情報は生成後に変更できない。 補正値の変更は新しい補正情報への置き換えによって行う。 補正の適用、解除、有効時間は外部の管理クラスが担当する。",
+    "inheritance": [],
+    "dependencies": [
+        "System"
+    ],
+    "members": [
+        {
+            "name": "Id",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Guid Id",
+            "returnType": "",
+            "valueType": "Guid",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "補正を識別する一意のIDを取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Type",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public ParameterModifierType Type",
+            "returnType": "",
+            "valueType": "ParameterModifierType",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "補正方法を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Value",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Value",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "補正値を取得する。 加算補正の場合は加算量、 乗算補正の場合は倍率を表す。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Source",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public object Source",
+            "returnType": "",
+            "valueType": "object",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "補正の発生元となるオブジェクトを取得する。",
+            "returns": "",
+            "remarks": "発生元を指定しない場合はnullとなる。 発生元の生存期間は管理しない。",
+            "exceptions": []
+        },
+        {
+            "name": "IsNeutral",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsNeutral",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "パラメーター値に影響しない補正かどうかを取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ParameterModifier",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public ParameterModifier(\r\n            ParameterModifierType type,\r\n            float value,\r\n            object source = null)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "type",
+                    "type": "ParameterModifierType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "補正方法"
+                },
+                {
+                    "name": "value",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "加算量または乗算倍率"
+                },
+                {
+                    "name": "source",
+                    "type": "object",
+                    "modifier": "",
+                    "defaultValue": "null",
+                    "description": "補正の発生元。省略可能"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "パラメーターの補正情報を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "未対応の補正方法、不正な数値、 または負数の乗算倍率が指定された場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "CreateAdditive",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static ParameterModifier CreateAdditive(\r\n            float value,\r\n            object source = null)",
+            "returnType": "ParameterModifier",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "加算量。負数の場合は減算"
+                },
+                {
+                    "name": "source",
+                    "type": "object",
+                    "modifier": "",
+                    "defaultValue": "null",
+                    "description": "補正の発生元。省略可能"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "加算補正を生成する。",
+            "returns": "生成された加算補正",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "補正値が有限値ではない場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "CreateMultiplicative",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static ParameterModifier CreateMultiplicative(\r\n            float multiplier,\r\n            object source = null)",
+            "returnType": "ParameterModifier",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "multiplier",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "0以上の乗算倍率"
+                },
+                {
+                    "name": "source",
+                    "type": "object",
+                    "modifier": "",
+                    "defaultValue": "null",
+                    "description": "補正の発生元。省略可能"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "乗算補正を生成する。",
+            "returns": "生成された乗算補正",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "倍率が有限値ではない場合、 または負数の場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "MatchesId",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool MatchesId(Guid id)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "比較対象の補正ID"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された識別子と自身の識別子が一致するか判定する。",
+            "returns": "識別子が一致する場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsFromSource",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsFromSource(object source)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "source",
+                    "type": "object",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "比較対象のオブジェクト"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたオブジェクトが補正の発生元か判定する。",
+            "returns": "同一の発生元である場合はtrue",
+            "remarks": "値の等価性ではなく参照の一致によって判定する。 nullは有効な発生元として扱わない。",
+            "exceptions": []
+        },
+        {
+            "name": "ToString",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "override"
+            ],
+            "signature": "public override string ToString()",
+            "returnType": "string",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "補正情報を確認用の文字列に変換する。",
+            "returns": "補正方法、補正値、識別子を含む文字列",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "ParameterModifier",
+            "fullName": "ParameterModifier",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "パラメーターに適用する単一の補正情報を保持する。",
+            "remarks": "補正情報は生成後に変更できない。 補正値の変更は新しい補正情報への置き換えによって行う。 補正の適用、解除、有効時間は外部の管理クラスが担当する。",
+            "attributes": [],
+            "declaration": "public sealed class ParameterModifier",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "Id",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Guid Id",
+                    "returnType": "",
+                    "valueType": "Guid",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "補正を識別する一意のIDを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Type",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public ParameterModifierType Type",
+                    "returnType": "",
+                    "valueType": "ParameterModifierType",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "補正方法を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Value",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Value",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "補正値を取得する。 加算補正の場合は加算量、 乗算補正の場合は倍率を表す。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Source",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public object Source",
+                    "returnType": "",
+                    "valueType": "object",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "補正の発生元となるオブジェクトを取得する。",
+                    "returns": "",
+                    "remarks": "発生元を指定しない場合はnullとなる。 発生元の生存期間は管理しない。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsNeutral",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsNeutral",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "パラメーター値に影響しない補正かどうかを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ParameterModifier",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public ParameterModifier(\r\n            ParameterModifierType type,\r\n            float value,\r\n            object source = null)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "type",
+                            "type": "ParameterModifierType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "補正方法"
+                        },
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "加算量または乗算倍率"
+                        },
+                        {
+                            "name": "source",
+                            "type": "object",
+                            "modifier": "",
+                            "defaultValue": "null",
+                            "description": "補正の発生元。省略可能"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "パラメーターの補正情報を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "未対応の補正方法、不正な数値、 または負数の乗算倍率が指定された場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateAdditive",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static ParameterModifier CreateAdditive(\r\n            float value,\r\n            object source = null)",
+                    "returnType": "ParameterModifier",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "加算量。負数の場合は減算"
+                        },
+                        {
+                            "name": "source",
+                            "type": "object",
+                            "modifier": "",
+                            "defaultValue": "null",
+                            "description": "補正の発生元。省略可能"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "加算補正を生成する。",
+                    "returns": "生成された加算補正",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "補正値が有限値ではない場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CreateMultiplicative",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static ParameterModifier CreateMultiplicative(\r\n            float multiplier,\r\n            object source = null)",
+                    "returnType": "ParameterModifier",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "multiplier",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "0以上の乗算倍率"
+                        },
+                        {
+                            "name": "source",
+                            "type": "object",
+                            "modifier": "",
+                            "defaultValue": "null",
+                            "description": "補正の発生元。省略可能"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "乗算補正を生成する。",
+                    "returns": "生成された乗算補正",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "倍率が有限値ではない場合、 または負数の場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MatchesId",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool MatchesId(Guid id)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "比較対象の補正ID"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された識別子と自身の識別子が一致するか判定する。",
+                    "returns": "識別子が一致する場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsFromSource",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsFromSource(object source)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "source",
+                            "type": "object",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "比較対象のオブジェクト"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたオブジェクトが補正の発生元か判定する。",
+                    "returns": "同一の発生元である場合はtrue",
+                    "remarks": "値の等価性ではなく参照の一致によって判定する。 nullは有効な発生元として扱わない。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ToString",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "override"
+                    ],
+                    "signature": "public override string ToString()",
+                    "returnType": "string",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "補正情報を確認用の文字列に変換する。",
+                    "returns": "補正方法、補正値、識別子を含む文字列",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 14
+        }
+    ],
+    "source": "\r\nusing System;\r\n\r\nnamespace Framework.Parameters\r\n{\r\n    /// <summary>\r\n    /// パラメーターに適用する単一の補正情報を保持する。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// 補正情報は生成後に変更できない。\r\n    /// 補正値の変更は新しい補正情報への置き換えによって行う。\r\n    /// 補正の適用、解除、有効時間は外部の管理クラスが担当する。\r\n    /// </remarks>\r\n    public sealed class ParameterModifier\r\n    {\r\n        /// <summary>\r\n        /// 補正を識別する一意のIDを取得する。\r\n        /// </summary>\r\n        public Guid Id { get; }\r\n\r\n        /// <summary>\r\n        /// 補正方法を取得する。\r\n        /// </summary>\r\n        public ParameterModifierType Type { get; }\r\n\r\n        /// <summary>\r\n        /// 補正値を取得する。\r\n        /// 加算補正の場合は加算量、\r\n        /// 乗算補正の場合は倍率を表す。\r\n        /// </summary>\r\n        public float Value { get; }\r\n\r\n        /// <summary>\r\n        /// 補正の発生元となるオブジェクトを取得する。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// 発生元を指定しない場合はnullとなる。\r\n        /// 発生元の生存期間は管理しない。\r\n        /// </remarks>\r\n        public object Source { get; }\r\n\r\n        /// <summary>\r\n        /// パラメーター値に影響しない補正かどうかを取得する。\r\n        /// </summary>\r\n        public bool IsNeutral\r\n        {\r\n            get\r\n            {\r\n                if (Type == ParameterModifierType.Additive)\r\n                {\r\n                    return Value == 0f;\r\n                }\r\n\r\n                return Value == 1f;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// パラメーターの補正情報を生成する。\r\n        /// </summary>\r\n        /// <param name=\"type\">補正方法</param>\r\n        /// <param name=\"value\">加算量または乗算倍率</param>\r\n        /// <param name=\"source\">補正の発生元。省略可能</param>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 未対応の補正方法、不正な数値、\r\n        /// または負数の乗算倍率が指定された場合に発生する。\r\n        /// </exception>\r\n        public ParameterModifier(\r\n            ParameterModifierType type,\r\n            float value,\r\n            object source = null)\r\n        {\r\n            // 対応している補正方法か確認する。\r\n            if (type != ParameterModifierType.Additive &&\r\n                type != ParameterModifierType.Multiplicative)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(type),\r\n                    \"未対応の補正方法です。\");\r\n            }\r\n\r\n            // 補正値が有限値であることを確認する。\r\n            if (float.IsNaN(value) || float.IsInfinity(value))\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(value),\r\n                    \"補正値には有限値を指定してください。\");\r\n            }\r\n\r\n            // 乗算補正による符号の反転を禁止する。\r\n            if (type == ParameterModifierType.Multiplicative &&\r\n                value < 0f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(value),\r\n                    \"乗算倍率は0以上である必要があります。\");\r\n            }\r\n\r\n            // 補正ごとに独立した識別子を生成する。\r\n            Id = Guid.NewGuid();\r\n\r\n            Type = type;\r\n            Value = value;\r\n            Source = source;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 加算補正を生成する。\r\n        /// </summary>\r\n        /// <param name=\"value\">加算量。負数の場合は減算</param>\r\n        /// <param name=\"source\">補正の発生元。省略可能</param>\r\n        /// <returns>生成された加算補正</returns>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 補正値が有限値ではない場合に発生する。\r\n        /// </exception>\r\n        public static ParameterModifier CreateAdditive(\r\n            float value,\r\n            object source = null)\r\n        {\r\n            return new ParameterModifier(\r\n                ParameterModifierType.Additive,\r\n                value,\r\n                source);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 乗算補正を生成する。\r\n        /// </summary>\r\n        /// <param name=\"multiplier\">0以上の乗算倍率</param>\r\n        /// <param name=\"source\">補正の発生元。省略可能</param>\r\n        /// <returns>生成された乗算補正</returns>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 倍率が有限値ではない場合、\r\n        /// または負数の場合に発生する。\r\n        /// </exception>\r\n        public static ParameterModifier CreateMultiplicative(\r\n            float multiplier,\r\n            object source = null)\r\n        {\r\n            return new ParameterModifier(\r\n                ParameterModifierType.Multiplicative,\r\n                multiplier,\r\n                source);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された識別子と自身の識別子が一致するか判定する。\r\n        /// </summary>\r\n        /// <param name=\"id\">比較対象の補正ID</param>\r\n        /// <returns>識別子が一致する場合はtrue</returns>\r\n        public bool MatchesId(Guid id)\r\n        {\r\n            return Id == id;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたオブジェクトが補正の発生元か判定する。\r\n        /// </summary>\r\n        /// <param name=\"source\">比較対象のオブジェクト</param>\r\n        /// <returns>同一の発生元である場合はtrue</returns>\r\n        /// <remarks>\r\n        /// 値の等価性ではなく参照の一致によって判定する。\r\n        /// nullは有効な発生元として扱わない。\r\n        /// </remarks>\r\n        public bool IsFromSource(object source)\r\n        {\r\n            return source != null &&\r\n                   ReferenceEquals(Source, source);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 補正情報を確認用の文字列に変換する。\r\n        /// </summary>\r\n        /// <returns>補正方法、補正値、識別子を含む文字列</returns>\r\n        public override string ToString()\r\n        {\r\n            return $\"{Type}: {Value} (ID: {Id})\";\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.968Z"
+}

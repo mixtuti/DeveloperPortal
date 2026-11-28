@@ -1,0 +1,56 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Actions.AgentActionStatus",
+    "name": "AgentActionStatus",
+    "fileName": "AgentActionStatus.cs",
+    "namespace": "Framework.AI.Actions",
+    "type": "enum",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public enum AgentActionStatus",
+    "typeParameters": [],
+    "summary": "エージェントの行動更新結果を表す。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [],
+    "members": [],
+    "types": [
+        {
+            "name": "AgentActionStatus",
+            "fullName": "AgentActionStatus",
+            "kind": "enum",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "エージェントの行動更新結果を表す。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public enum AgentActionStatus",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [],
+            "nestedTypes": [],
+            "enumValues": [
+                {
+                    "name": "Running",
+                    "value": "0"
+                },
+                {
+                    "name": "Succeeded",
+                    "value": "1"
+                },
+                {
+                    "name": "Failed",
+                    "value": "2"
+                }
+            ],
+            "line": 7
+        }
+    ],
+    "source": "\r\nnamespace Framework.AI.Actions\r\n{\r\n    /// <summary>\r\n    /// エージェントの行動更新結果を表す。\r\n    /// </summary>\r\n    public enum AgentActionStatus\r\n    {\r\n        /// <summary>\r\n        /// 行動を継続している状態。\r\n        /// </summary>\r\n        Running = 0,\r\n\r\n        /// <summary>\r\n        /// 行動が正常に完了した状態。\r\n        /// </summary>\r\n        Succeeded = 1,\r\n\r\n        /// <summary>\r\n        /// 行動の実行に失敗した状態。\r\n        /// </summary>\r\n        Failed = 2\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.084Z"
+}

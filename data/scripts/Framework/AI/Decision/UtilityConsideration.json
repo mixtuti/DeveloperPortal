@@ -1,0 +1,262 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Decision.UtilityConsideration",
+    "name": "UtilityConsideration",
+    "fileName": "UtilityConsideration.cs",
+    "namespace": "Framework.AI.Decision",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class UtilityConsideration<TContext>",
+    "typeParameters": [
+        {
+            "name": "TContext",
+            "description": "意思決定に使用する情報の型"
+        }
+    ],
+    "summary": "行動候補を評価する個別の評価要素。",
+    "remarks": "評価処理は状態を変更しない処理とする。",
+    "inheritance": [],
+    "dependencies": [
+        "System"
+    ],
+    "members": [
+        {
+            "name": "Name",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public string Name",
+            "returnType": "",
+            "valueType": "string",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "評価要素の名前を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "UtilityConsideration",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public UtilityConsideration(\r\n            string name,\r\n            Func<TContext, float> evaluator)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "評価要素の名前"
+                },
+                {
+                    "name": "evaluator",
+                    "type": "Func<TContext, float>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "評価値を計算する処理"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "評価要素を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentException",
+                    "description": "名前が空の場合に発生する。"
+                },
+                {
+                    "name": "ArgumentNullException",
+                    "description": "評価処理がnullの場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "Evaluate",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Evaluate(TContext context)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "TContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "意思決定に使用する情報"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された情報から評価値を計算する。",
+            "returns": "0から1の評価値",
+            "remarks": "評価処理が発生させた例外は呼び出し元へ通知する。",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "UtilityConsideration",
+            "fullName": "UtilityConsideration",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "行動候補を評価する個別の評価要素。",
+            "remarks": "評価処理は状態を変更しない処理とする。",
+            "attributes": [],
+            "declaration": "public sealed class UtilityConsideration<TContext>",
+            "inheritance": [],
+            "typeParameters": [
+                {
+                    "name": "TContext",
+                    "description": "意思決定に使用する情報の型"
+                }
+            ],
+            "members": [
+                {
+                    "name": "evaluator",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Func<TContext, float> evaluator",
+                    "returnType": "",
+                    "valueType": "Func<TContext, float>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "評価値を計算する処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Name",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public string Name",
+                    "returnType": "",
+                    "valueType": "string",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "評価要素の名前を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "UtilityConsideration",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public UtilityConsideration(\r\n            string name,\r\n            Func<TContext, float> evaluator)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価要素の名前"
+                        },
+                        {
+                            "name": "evaluator",
+                            "type": "Func<TContext, float>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価値を計算する処理"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "評価要素を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentException",
+                            "description": "名前が空の場合に発生する。"
+                        },
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "評価処理がnullの場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Evaluate",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Evaluate(TContext context)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "意思決定に使用する情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された情報から評価値を計算する。",
+                    "returns": "0から1の評価値",
+                    "remarks": "評価処理が発生させた例外は呼び出し元へ通知する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 13
+        }
+    ],
+    "source": "\r\nusing System;\r\n\r\nnamespace Framework.AI.Decision\r\n{\r\n    /// <summary>\r\n    /// 行動候補を評価する個別の評価要素。\r\n    /// </summary>\r\n    /// <typeparam name=\"TContext\">意思決定に使用する情報の型</typeparam>\r\n    /// <remarks>\r\n    /// 評価処理は状態を変更しない処理とする。\r\n    /// </remarks>\r\n    public sealed class UtilityConsideration<TContext>\r\n    {\r\n        /// <summary>\r\n        /// 評価値を計算する処理。\r\n        /// </summary>\r\n        private readonly Func<TContext, float> evaluator;\r\n\r\n        /// <summary>\r\n        /// 評価要素の名前を取得する。\r\n        /// </summary>\r\n        public string Name { get; }\r\n\r\n        /// <summary>\r\n        /// 評価要素を生成する。\r\n        /// </summary>\r\n        /// <param name=\"name\">評価要素の名前</param>\r\n        /// <param name=\"evaluator\">評価値を計算する処理</param>\r\n        /// <exception cref=\"ArgumentException\">\r\n        /// 名前が空の場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 評価処理がnullの場合に発生する。\r\n        /// </exception>\r\n        public UtilityConsideration(\r\n            string name,\r\n            Func<TContext, float> evaluator)\r\n        {\r\n            if (string.IsNullOrWhiteSpace(name))\r\n            {\r\n                throw new ArgumentException(\r\n                    \"評価要素名が指定されていません。\",\r\n                    nameof(name));\r\n            }\r\n\r\n            if (evaluator == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(evaluator));\r\n            }\r\n\r\n            Name = name;\r\n            this.evaluator = evaluator;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された情報から評価値を計算する。\r\n        /// </summary>\r\n        /// <param name=\"context\">意思決定に使用する情報</param>\r\n        /// <returns>0から1の評価値</returns>\r\n        /// <remarks>\r\n        /// 評価処理が発生させた例外は呼び出し元へ通知する。\r\n        /// </remarks>\r\n        public float Evaluate(TContext context)\r\n        {\r\n            return UtilityMath.Clamp01(\r\n                evaluator(context));\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:01.126Z"
+}

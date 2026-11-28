@@ -1,0 +1,606 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Scheduling.AgentUpdateSettings",
+    "name": "AgentUpdateSettings",
+    "fileName": "AgentUpdateSettings.cs",
+    "namespace": "Framework.AI.Scheduling",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class AgentUpdateSettings",
+    "typeParameters": [],
+    "summary": "エージェントの間隔更新と負荷分散に関する設定。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "UnityEngine"
+    ],
+    "members": [
+        {
+            "name": "UpdateInterval",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float UpdateInterval => updateInterval",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "標準更新間隔を取得する。単位は秒。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "MaxUpdatesPerTick",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int MaxUpdatesPerTick => maxUpdatesPerTick",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "1回の管理更新における最大実行件数を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "StaggerInitialUpdate",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool StaggerInitialUpdate =>\r\n            staggerInitialUpdate",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "初回更新タイミングを分散するか取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "UseUnscaledTime",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool UseUnscaledTime => useUnscaledTime",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "非スケール時間を使用するか取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "AgentUpdateSettings",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public AgentUpdateSettings()",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "標準設定を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "AgentUpdateSettings",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public AgentUpdateSettings(\r\n            float updateInterval,\r\n            int maxUpdatesPerTick,\r\n            bool staggerInitialUpdate = true,\r\n            bool useUnscaledTime = false)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "updateInterval",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "更新間隔。単位は秒"
+                },
+                {
+                    "name": "maxUpdatesPerTick",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "最大実行件数"
+                },
+                {
+                    "name": "staggerInitialUpdate",
+                    "type": "bool",
+                    "modifier": "",
+                    "defaultValue": "true",
+                    "description": "初回更新の分散設定"
+                },
+                {
+                    "name": "useUnscaledTime",
+                    "type": "bool",
+                    "modifier": "",
+                    "defaultValue": "false",
+                    "description": "非スケール時間の使用設定"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された設定値を使用して生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Validate",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Validate()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "設定値が有効であることを検証する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "更新間隔または最大実行件数が不正な場合に発生する。"
+                }
+            ]
+        }
+    ],
+    "types": [
+        {
+            "name": "AgentUpdateSettings",
+            "fullName": "AgentUpdateSettings",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "エージェントの間隔更新と負荷分散に関する設定。",
+            "remarks": "",
+            "attributes": [
+                {
+                    "name": "Serializable",
+                    "arguments": [],
+                    "raw": "Serializable"
+                }
+            ],
+            "declaration": "public sealed class AgentUpdateSettings",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "updateInterval",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float updateInterval = 0.2f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.2f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "更新設定"
+                            ],
+                            "raw": "Header(\"更新設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Min",
+                            "arguments": [
+                                0.001
+                            ],
+                            "raw": "Min(0.001f)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "エージェントの標準更新間隔。単位は秒。"
+                            ],
+                            "raw": "Tooltip(\"エージェントの標準更新間隔。単位は秒。\")"
+                        }
+                    ],
+                    "initialValue": "0.2f",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Update Interval",
+                        "type": "float",
+                        "header": "更新設定",
+                        "tooltip": "エージェントの標準更新間隔。単位は秒。",
+                        "range": null,
+                        "min": 0.001,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "0.2f"
+                    }
+                },
+                {
+                    "name": "maxUpdatesPerTick",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int maxUpdatesPerTick = 8",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "8",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Min",
+                            "arguments": [
+                                1
+                            ],
+                            "raw": "Min(1)"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "1回の管理更新で実行可能な最大エージェント数。"
+                            ],
+                            "raw": "Tooltip(\"1回の管理更新で実行可能な最大エージェント数。\")"
+                        }
+                    ],
+                    "initialValue": "8",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Max Updates Per Tick",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "1回の管理更新で実行可能な最大エージェント数。",
+                        "range": null,
+                        "min": 1,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "8"
+                    }
+                },
+                {
+                    "name": "staggerInitialUpdate",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool staggerInitialUpdate = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "登録時の初回更新タイミングを分散する。"
+                            ],
+                            "raw": "Tooltip(\"登録時の初回更新タイミングを分散する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Stagger Initial Update",
+                        "type": "bool",
+                        "header": null,
+                        "tooltip": "登録時の初回更新タイミングを分散する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "useUnscaledTime",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool useUnscaledTime = false",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "false",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "Time.timeScaleの影響を受けない時間を使用する。"
+                            ],
+                            "raw": "Tooltip(\"Time.timeScaleの影響を受けない時間を使用する。\")"
+                        }
+                    ],
+                    "initialValue": "false",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Use Unscaled Time",
+                        "type": "bool",
+                        "header": null,
+                        "tooltip": "Time.timeScaleの影響を受けない時間を使用する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "false"
+                    }
+                },
+                {
+                    "name": "UpdateInterval",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float UpdateInterval => updateInterval",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "標準更新間隔を取得する。単位は秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MaxUpdatesPerTick",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int MaxUpdatesPerTick => maxUpdatesPerTick",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "1回の管理更新における最大実行件数を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "StaggerInitialUpdate",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool StaggerInitialUpdate =>\r\n            staggerInitialUpdate",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "初回更新タイミングを分散するか取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "UseUnscaledTime",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool UseUnscaledTime => useUnscaledTime",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "非スケール時間を使用するか取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "AgentUpdateSettings",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public AgentUpdateSettings()",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "標準設定を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "AgentUpdateSettings",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public AgentUpdateSettings(\r\n            float updateInterval,\r\n            int maxUpdatesPerTick,\r\n            bool staggerInitialUpdate = true,\r\n            bool useUnscaledTime = false)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "updateInterval",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "更新間隔。単位は秒"
+                        },
+                        {
+                            "name": "maxUpdatesPerTick",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "最大実行件数"
+                        },
+                        {
+                            "name": "staggerInitialUpdate",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": "true",
+                            "description": "初回更新の分散設定"
+                        },
+                        {
+                            "name": "useUnscaledTime",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": "false",
+                            "description": "非スケール時間の使用設定"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された設定値を使用して生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Validate",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Validate()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "設定値が有効であることを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "更新間隔または最大実行件数が不正な場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 11
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing UnityEngine;\r\n\r\nnamespace Framework.AI.Scheduling\r\n{\r\n    /// <summary>\r\n    /// エージェントの間隔更新と負荷分散に関する設定。\r\n    /// </summary>\r\n    [Serializable]\r\n    public sealed class AgentUpdateSettings\r\n    {\r\n        [Header(\"更新設定\")]\r\n        [SerializeField]\r\n        [Min(0.001f)]\r\n        [Tooltip(\"エージェントの標準更新間隔。単位は秒。\")]\r\n        private float updateInterval = 0.2f;\r\n\r\n        [SerializeField]\r\n        [Min(1)]\r\n        [Tooltip(\"1回の管理更新で実行可能な最大エージェント数。\")]\r\n        private int maxUpdatesPerTick = 8;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"登録時の初回更新タイミングを分散する。\")]\r\n        private bool staggerInitialUpdate = true;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"Time.timeScaleの影響を受けない時間を使用する。\")]\r\n        private bool useUnscaledTime = false;\r\n\r\n        /// <summary>\r\n        /// 標準更新間隔を取得する。単位は秒。\r\n        /// </summary>\r\n        public float UpdateInterval => updateInterval;\r\n\r\n        /// <summary>\r\n        /// 1回の管理更新における最大実行件数を取得する。\r\n        /// </summary>\r\n        public int MaxUpdatesPerTick => maxUpdatesPerTick;\r\n\r\n        /// <summary>\r\n        /// 初回更新タイミングを分散するか取得する。\r\n        /// </summary>\r\n        public bool StaggerInitialUpdate =>\r\n            staggerInitialUpdate;\r\n\r\n        /// <summary>\r\n        /// 非スケール時間を使用するか取得する。\r\n        /// </summary>\r\n        public bool UseUnscaledTime => useUnscaledTime;\r\n\r\n        /// <summary>\r\n        /// 標準設定を生成する。\r\n        /// </summary>\r\n        public AgentUpdateSettings()\r\n        {\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された設定値を使用して生成する。\r\n        /// </summary>\r\n        /// <param name=\"updateInterval\">更新間隔。単位は秒</param>\r\n        /// <param name=\"maxUpdatesPerTick\">最大実行件数</param>\r\n        /// <param name=\"staggerInitialUpdate\">初回更新の分散設定</param>\r\n        /// <param name=\"useUnscaledTime\">非スケール時間の使用設定</param>\r\n        public AgentUpdateSettings(\r\n            float updateInterval,\r\n            int maxUpdatesPerTick,\r\n            bool staggerInitialUpdate = true,\r\n            bool useUnscaledTime = false)\r\n        {\r\n            this.updateInterval = updateInterval;\r\n            this.maxUpdatesPerTick = maxUpdatesPerTick;\r\n            this.staggerInitialUpdate = staggerInitialUpdate;\r\n            this.useUnscaledTime = useUnscaledTime;\r\n\r\n            Validate();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 設定値が有効であることを検証する。\r\n        /// </summary>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 更新間隔または最大実行件数が不正な場合に発生する。\r\n        /// </exception>\r\n        public void Validate()\r\n        {\r\n            if (float.IsNaN(updateInterval) ||\r\n                float.IsInfinity(updateInterval) ||\r\n                updateInterval < 0.001f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(updateInterval),\r\n                    \"更新間隔は0.001秒以上である必要があります。\");\r\n            }\r\n\r\n            if (maxUpdatesPerTick < 1)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(maxUpdatesPerTick),\r\n                    \"最大実行件数は1以上である必要があります。\");\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.148Z"
+}

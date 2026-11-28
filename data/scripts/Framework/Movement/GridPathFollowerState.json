@@ -1,0 +1,72 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.Movement.GridPathFollowerState",
+    "name": "GridPathFollowerState",
+    "fileName": "GridPathFollowerState.cs",
+    "namespace": "Framework.Movement",
+    "type": "enum",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public enum GridPathFollowerState",
+    "typeParameters": [],
+    "summary": "グリッド経路追従の実行状態を表す。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [],
+    "members": [],
+    "types": [
+        {
+            "name": "GridPathFollowerState",
+            "fullName": "GridPathFollowerState",
+            "kind": "enum",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "グリッド経路追従の実行状態を表す。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public enum GridPathFollowerState",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [],
+            "nestedTypes": [],
+            "enumValues": [
+                {
+                    "name": "Idle",
+                    "value": "0"
+                },
+                {
+                    "name": "Following",
+                    "value": "1"
+                },
+                {
+                    "name": "Paused",
+                    "value": "2"
+                },
+                {
+                    "name": "Completed",
+                    "value": "3"
+                },
+                {
+                    "name": "Failed",
+                    "value": "4"
+                },
+                {
+                    "name": "Cancelled",
+                    "value": "5"
+                },
+                {
+                    "name": "Disposed",
+                    "value": "6"
+                }
+            ],
+            "line": 7
+        }
+    ],
+    "source": "\r\nnamespace Framework.Movement\r\n{\r\n    /// <summary>\r\n    /// グリッド経路追従の実行状態を表す。\r\n    /// </summary>\r\n    public enum GridPathFollowerState\r\n    {\r\n        /// <summary>\r\n        /// 経路が設定されていない状態。\r\n        /// </summary>\r\n        Idle = 0,\r\n\r\n        /// <summary>\r\n        /// 設定された経路を追従している状態。\r\n        /// </summary>\r\n        Following = 1,\r\n\r\n        /// <summary>\r\n        /// 経路追従を一時停止している状態。\r\n        /// </summary>\r\n        Paused = 2,\r\n\r\n        /// <summary>\r\n        /// 目的地への到達が完了した状態。\r\n        /// </summary>\r\n        Completed = 3,\r\n\r\n        /// <summary>\r\n        /// 経路追従に失敗した状態。\r\n        /// </summary>\r\n        Failed = 4,\r\n\r\n        /// <summary>\r\n        /// 経路追従が中断された状態。\r\n        /// </summary>\r\n        Cancelled = 5,\r\n\r\n        /// <summary>\r\n        /// リソースが解放された状態。\r\n        /// </summary>\r\n        Disposed = 6\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.321Z"
+}

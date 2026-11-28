@@ -1,0 +1,1100 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Perception.GridHearingSensor",
+    "name": "GridHearingSensor",
+    "fileName": "GridHearingSensor.cs",
+    "namespace": "Framework.AI.Perception",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class GridHearingSensor<T> : IDisposable",
+    "typeParameters": [
+        {
+            "name": "T",
+            "description": "グリッドのセルデータ型"
+        }
+    ],
+    "summary": "グリッド上の仮想音源を認識する聴覚センサー。",
+    "remarks": "音源までの通路距離を利用して認識判定を行う。 実際のオーディオ再生には依存しない。",
+    "inheritance": [
+        "IDisposable"
+    ],
+    "dependencies": [
+        "System",
+        "Framework.Grid",
+        "Framework.Pathfinding",
+        "UnityEngine",
+        "IDisposable"
+    ],
+    "members": [
+        {
+            "name": "Map",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridMap<T> Map",
+            "returnType": "",
+            "valueType": "GridMap<T>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "対象のグリッドマップ。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Range",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Range",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "private set"
+            ],
+            "summary": "基準聴覚範囲。単位はセル。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Sensitivity",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Sensitivity",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "private set"
+            ],
+            "summary": "聴覚感度。範囲は0から1。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsEnabled",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsEnabled =>\r\n            !IsDisposed && Range > 0f",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "聴覚センサーが有効であるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RecalculationCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public long RecalculationCount",
+            "returnType": "",
+            "valueType": "long",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "private set"
+            ],
+            "summary": "距離マップの再計算回数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsDisposed",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsDisposed",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "private set"
+            ],
+            "summary": "解放済みであるか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GridHearingSensor",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridHearingSensor(\r\n            GridMap<T> map,\r\n            Func<Vector2Int, bool> canTransmitSound,\r\n            float range = 8f,\r\n            float sensitivity = 0.5f)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "map",
+                    "type": "GridMap<T>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "対象マップ"
+                },
+                {
+                    "name": "canTransmitSound",
+                    "type": "Func<Vector2Int, bool>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "音の通過判定"
+                },
+                {
+                    "name": "range",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": "8f",
+                    "description": "基準聴覚範囲"
+                },
+                {
+                    "name": "sensitivity",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": "0.5f",
+                    "description": "聴覚感度"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "聴覚センサーを生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Configure",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Configure(\r\n            float newRange,\r\n            float newSensitivity)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "newRange",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "基準聴覚範囲"
+                },
+                {
+                    "name": "newSensitivity",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "聴覚感度"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "聴覚能力を設定する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetEffectiveRange",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float GetEffectiveRange(float volume)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "volume",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "音量。範囲は0から1"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "音量に応じた実効聴覚範囲を取得する。",
+            "returns": "実効聴覚範囲",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetDistance",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int GetDistance(\r\n            Vector2Int origin,\r\n            Vector2Int source)",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "origin",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識者の位置"
+                },
+                {
+                    "name": "source",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "音源の位置"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "音源までの通路距離を取得する。",
+            "returns": "通路距離。取得不能時は-1",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CanHear",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool CanHear(\r\n            Vector2Int origin,\r\n            Vector2Int source,\r\n            float volume)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "origin",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識者の位置"
+                },
+                {
+                    "name": "source",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "音源の位置"
+                },
+                {
+                    "name": "volume",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "音量"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "音源を認識できるか判定する。",
+            "returns": "認識可能な場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetConfidence",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float GetConfidence(\r\n            Vector2Int origin,\r\n            Vector2Int source,\r\n            float volume)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "origin",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識者の位置"
+                },
+                {
+                    "name": "source",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "音源の位置"
+                },
+                {
+                    "name": "volume",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "音量"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "音源の認識信頼度を取得する。",
+            "returns": "認識信頼度。範囲は0から1",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryObserve",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryObserve(\r\n            Guid sourceId,\r\n            Vector2Int origin,\r\n            Vector2Int source,\r\n            float volume,\r\n            double timestamp,\r\n            out PerceptionStimulus<Vector2Int> stimulus)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "sourceId",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "音源の識別子"
+                },
+                {
+                    "name": "origin",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識者の位置"
+                },
+                {
+                    "name": "source",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "音源の位置"
+                },
+                {
+                    "name": "volume",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "音量"
+                },
+                {
+                    "name": "timestamp",
+                    "type": "double",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識時刻"
+                },
+                {
+                    "name": "stimulus",
+                    "type": "PerceptionStimulus<Vector2Int>",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "生成された聴覚刺激"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "音源から聴覚刺激を生成する。",
+            "returns": "認識に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Invalidate",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Invalidate()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "音の伝播距離キャッシュを無効化する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Dispose",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Dispose()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "所有する資源とイベント購読を解放する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "GridHearingSensor",
+            "fullName": "GridHearingSensor",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "グリッド上の仮想音源を認識する聴覚センサー。",
+            "remarks": "音源までの通路距離を利用して認識判定を行う。 実際のオーディオ再生には依存しない。",
+            "attributes": [],
+            "declaration": "public sealed class GridHearingSensor<T> : IDisposable",
+            "inheritance": [
+                "IDisposable"
+            ],
+            "typeParameters": [
+                {
+                    "name": "T",
+                    "description": "グリッドのセルデータ型"
+                }
+            ],
+            "members": [
+                {
+                    "name": "distanceMap",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly GridDistanceMap<T> distanceMap",
+                    "returnType": "",
+                    "valueType": "GridDistanceMap<T>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "音の伝播距離を管理する距離マップ。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "canTransmitSound",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Func<Vector2Int, bool> canTransmitSound",
+                    "returnType": "",
+                    "valueType": "Func<Vector2Int, bool>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "音が通過可能なセルを判定する処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "isDirty",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isDirty = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "距離マップの再計算が必要であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "true",
+                    "inspector": null
+                },
+                {
+                    "name": "Map",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public GridMap<T> Map",
+                    "returnType": "",
+                    "valueType": "GridMap<T>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "対象のグリッドマップ。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Range",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Range",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get",
+                        "private set"
+                    ],
+                    "summary": "基準聴覚範囲。単位はセル。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Sensitivity",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Sensitivity",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get",
+                        "private set"
+                    ],
+                    "summary": "聴覚感度。範囲は0から1。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsEnabled",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsEnabled =>\r\n            !IsDisposed && Range > 0f",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "聴覚センサーが有効であるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RecalculationCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public long RecalculationCount",
+                    "returnType": "",
+                    "valueType": "long",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get",
+                        "private set"
+                    ],
+                    "summary": "距離マップの再計算回数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsDisposed",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsDisposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get",
+                        "private set"
+                    ],
+                    "summary": "解放済みであるか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GridHearingSensor",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public GridHearingSensor(\r\n            GridMap<T> map,\r\n            Func<Vector2Int, bool> canTransmitSound,\r\n            float range = 8f,\r\n            float sensitivity = 0.5f)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "map",
+                            "type": "GridMap<T>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象マップ"
+                        },
+                        {
+                            "name": "canTransmitSound",
+                            "type": "Func<Vector2Int, bool>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "音の通過判定"
+                        },
+                        {
+                            "name": "range",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "8f",
+                            "description": "基準聴覚範囲"
+                        },
+                        {
+                            "name": "sensitivity",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "0.5f",
+                            "description": "聴覚感度"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "聴覚センサーを生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Configure",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Configure(\r\n            float newRange,\r\n            float newSensitivity)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "newRange",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "基準聴覚範囲"
+                        },
+                        {
+                            "name": "newSensitivity",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "聴覚感度"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "聴覚能力を設定する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetEffectiveRange",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float GetEffectiveRange(float volume)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "volume",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "音量。範囲は0から1"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "音量に応じた実効聴覚範囲を取得する。",
+                    "returns": "実効聴覚範囲",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetDistance",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int GetDistance(\r\n            Vector2Int origin,\r\n            Vector2Int source)",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "origin",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識者の位置"
+                        },
+                        {
+                            "name": "source",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "音源の位置"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "音源までの通路距離を取得する。",
+                    "returns": "通路距離。取得不能時は-1",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CanHear",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool CanHear(\r\n            Vector2Int origin,\r\n            Vector2Int source,\r\n            float volume)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "origin",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識者の位置"
+                        },
+                        {
+                            "name": "source",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "音源の位置"
+                        },
+                        {
+                            "name": "volume",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "音量"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "音源を認識できるか判定する。",
+                    "returns": "認識可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetConfidence",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float GetConfidence(\r\n            Vector2Int origin,\r\n            Vector2Int source,\r\n            float volume)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "origin",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識者の位置"
+                        },
+                        {
+                            "name": "source",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "音源の位置"
+                        },
+                        {
+                            "name": "volume",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "音量"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "音源の認識信頼度を取得する。",
+                    "returns": "認識信頼度。範囲は0から1",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryObserve",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryObserve(\r\n            Guid sourceId,\r\n            Vector2Int origin,\r\n            Vector2Int source,\r\n            float volume,\r\n            double timestamp,\r\n            out PerceptionStimulus<Vector2Int> stimulus)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "sourceId",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "音源の識別子"
+                        },
+                        {
+                            "name": "origin",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識者の位置"
+                        },
+                        {
+                            "name": "source",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "音源の位置"
+                        },
+                        {
+                            "name": "volume",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "音量"
+                        },
+                        {
+                            "name": "timestamp",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識時刻"
+                        },
+                        {
+                            "name": "stimulus",
+                            "type": "PerceptionStimulus<Vector2Int>",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "生成された聴覚刺激"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "音源から聴覚刺激を生成する。",
+                    "returns": "認識に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Invalidate",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Invalidate()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "音の伝播距離キャッシュを無効化する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HandleCellChanged",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void HandleCellChanged(\r\n            Vector2Int position,\r\n            T previous,\r\n            T current)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更位置"
+                        },
+                        {
+                            "name": "previous",
+                            "type": "T",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更前の値"
+                        },
+                        {
+                            "name": "current",
+                            "type": "T",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更後の値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "マップのセル変更を処理する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsValidVolume",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static bool IsValidVolume(float volume)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "volume",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "音量"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "音量が有効な値であるか判定する。",
+                    "returns": "有効な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Dispose",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Dispose()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "所有する資源とイベント購読を解放する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 16
+        }
+    ],
+    "source": "using System;\r\nusing Framework.Grid;\r\nusing Framework.Pathfinding;\r\nusing UnityEngine;\r\n\r\nnamespace Framework.AI.Perception\r\n{\r\n    /// <summary>\r\n    /// グリッド上の仮想音源を認識する聴覚センサー。\r\n    /// </summary>\r\n    /// <typeparam name=\"T\">グリッドのセルデータ型</typeparam>\r\n    /// <remarks>\r\n    /// 音源までの通路距離を利用して認識判定を行う。\r\n    /// 実際のオーディオ再生には依存しない。\r\n    /// </remarks>\r\n    public sealed class GridHearingSensor<T> : IDisposable\r\n    {\r\n        /// <summary>\r\n        /// 音の伝播距離を管理する距離マップ。\r\n        /// </summary>\r\n        private readonly GridDistanceMap<T> distanceMap;\r\n\r\n        /// <summary>\r\n        /// 音が通過可能なセルを判定する処理。\r\n        /// </summary>\r\n        private readonly Func<Vector2Int, bool> canTransmitSound;\r\n\r\n        /// <summary>\r\n        /// 距離マップの再計算が必要であるか。\r\n        /// </summary>\r\n        private bool isDirty = true;\r\n\r\n        /// <summary>\r\n        /// 対象のグリッドマップ。\r\n        /// </summary>\r\n        public GridMap<T> Map { get; }\r\n\r\n        /// <summary>\r\n        /// 基準聴覚範囲。単位はセル。\r\n        /// </summary>\r\n        public float Range { get; private set; }\r\n\r\n        /// <summary>\r\n        /// 聴覚感度。範囲は0から1。\r\n        /// </summary>\r\n        public float Sensitivity { get; private set; }\r\n\r\n        /// <summary>\r\n        /// 聴覚センサーが有効であるか。\r\n        /// </summary>\r\n        public bool IsEnabled =>\r\n            !IsDisposed && Range > 0f;\r\n\r\n        /// <summary>\r\n        /// 距離マップの再計算回数。\r\n        /// </summary>\r\n        public long RecalculationCount { get; private set; }\r\n\r\n        /// <summary>\r\n        /// 解放済みであるか。\r\n        /// </summary>\r\n        public bool IsDisposed { get; private set; }\r\n\r\n        /// <summary>\r\n        /// 聴覚センサーを生成する。\r\n        /// </summary>\r\n        /// <param name=\"map\">対象マップ</param>\r\n        /// <param name=\"canTransmitSound\">音の通過判定</param>\r\n        /// <param name=\"range\">基準聴覚範囲</param>\r\n        /// <param name=\"sensitivity\">聴覚感度</param>\r\n        public GridHearingSensor(\r\n            GridMap<T> map,\r\n            Func<Vector2Int, bool> canTransmitSound,\r\n            float range = 8f,\r\n            float sensitivity = 0.5f)\r\n        {\r\n            Map = map ??\r\n                throw new ArgumentNullException(nameof(map));\r\n\r\n            this.canTransmitSound = canTransmitSound ??\r\n                throw new ArgumentNullException(\r\n                    nameof(canTransmitSound));\r\n\r\n            Configure(range, sensitivity);\r\n\r\n            distanceMap = new GridDistanceMap<T>(\r\n                Map,\r\n                this.canTransmitSound);\r\n\r\n            Map.CellChanged += HandleCellChanged;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 聴覚能力を設定する。\r\n        /// </summary>\r\n        /// <param name=\"newRange\">基準聴覚範囲</param>\r\n        /// <param name=\"newSensitivity\">聴覚感度</param>\r\n        public void Configure(\r\n            float newRange,\r\n            float newSensitivity)\r\n        {\r\n            if (IsDisposed)\r\n            {\r\n                throw new ObjectDisposedException(\r\n                    nameof(GridHearingSensor<T>));\r\n            }\r\n\r\n            if (float.IsNaN(newRange) ||\r\n                float.IsInfinity(newRange) ||\r\n                newRange < 0f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(newRange));\r\n            }\r\n\r\n            if (float.IsNaN(newSensitivity) ||\r\n                float.IsInfinity(newSensitivity) ||\r\n                newSensitivity < 0f ||\r\n                newSensitivity > 1f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(newSensitivity));\r\n            }\r\n\r\n            Range = newRange;\r\n            Sensitivity = newSensitivity;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 音量に応じた実効聴覚範囲を取得する。\r\n        /// </summary>\r\n        /// <param name=\"volume\">音量。範囲は0から1</param>\r\n        /// <returns>実効聴覚範囲</returns>\r\n        public float GetEffectiveRange(float volume)\r\n        {\r\n            if (!IsEnabled ||\r\n                !IsValidVolume(volume))\r\n            {\r\n                return 0f;\r\n            }\r\n\r\n            return Range *\r\n                   volume *\r\n                   (0.5f + Sensitivity);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 音源までの通路距離を取得する。\r\n        /// </summary>\r\n        /// <param name=\"origin\">認識者の位置</param>\r\n        /// <param name=\"source\">音源の位置</param>\r\n        /// <returns>通路距離。取得不能時は-1</returns>\r\n        public int GetDistance(\r\n            Vector2Int origin,\r\n            Vector2Int source)\r\n        {\r\n            if (IsDisposed ||\r\n                !Map.IsInside(origin) ||\r\n                !Map.IsInside(source) ||\r\n                !canTransmitSound(origin) ||\r\n                !canTransmitSound(source))\r\n            {\r\n                return -1;\r\n            }\r\n\r\n            // 起点または地形が変化した場合のみ再計算する。\r\n            if (isDirty ||\r\n                !distanceMap.IsCalculated ||\r\n                distanceMap.Origin != origin)\r\n            {\r\n                RecalculationCount++;\r\n\r\n                if (!distanceMap.Calculate(origin))\r\n                {\r\n                    return -1;\r\n                }\r\n\r\n                isDirty = false;\r\n            }\r\n\r\n            return distanceMap.GetDistance(source);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 音源を認識できるか判定する。\r\n        /// </summary>\r\n        /// <param name=\"origin\">認識者の位置</param>\r\n        /// <param name=\"source\">音源の位置</param>\r\n        /// <param name=\"volume\">音量</param>\r\n        /// <returns>認識可能な場合はtrue</returns>\r\n        public bool CanHear(\r\n            Vector2Int origin,\r\n            Vector2Int source,\r\n            float volume)\r\n        {\r\n            float effectiveRange =\r\n                GetEffectiveRange(volume);\r\n\r\n            if (effectiveRange <= 0f)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            int distance = GetDistance(\r\n                origin,\r\n                source);\r\n\r\n            return distance >= 0 &&\r\n                   distance <= effectiveRange;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 音源の認識信頼度を取得する。\r\n        /// </summary>\r\n        /// <param name=\"origin\">認識者の位置</param>\r\n        /// <param name=\"source\">音源の位置</param>\r\n        /// <param name=\"volume\">音量</param>\r\n        /// <returns>認識信頼度。範囲は0から1</returns>\r\n        public float GetConfidence(\r\n            Vector2Int origin,\r\n            Vector2Int source,\r\n            float volume)\r\n        {\r\n            float effectiveRange =\r\n                GetEffectiveRange(volume);\r\n\r\n            if (effectiveRange <= 0f)\r\n            {\r\n                return 0f;\r\n            }\r\n\r\n            int distance = GetDistance(\r\n                origin,\r\n                source);\r\n\r\n            if (distance < 0 ||\r\n                distance > effectiveRange)\r\n            {\r\n                return 0f;\r\n            }\r\n\r\n            // 聴覚範囲の境界でも最低限の信頼度を残す。\r\n            float distanceWeight =\r\n                1f - distance / effectiveRange;\r\n\r\n            return Mathf.Clamp01(\r\n                0.2f + distanceWeight * 0.8f);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 音源から聴覚刺激を生成する。\r\n        /// </summary>\r\n        /// <param name=\"sourceId\">音源の識別子</param>\r\n        /// <param name=\"origin\">認識者の位置</param>\r\n        /// <param name=\"source\">音源の位置</param>\r\n        /// <param name=\"volume\">音量</param>\r\n        /// <param name=\"timestamp\">認識時刻</param>\r\n        /// <param name=\"stimulus\">生成された聴覚刺激</param>\r\n        /// <returns>認識に成功した場合はtrue</returns>\r\n        public bool TryObserve(\r\n            Guid sourceId,\r\n            Vector2Int origin,\r\n            Vector2Int source,\r\n            float volume,\r\n            double timestamp,\r\n            out PerceptionStimulus<Vector2Int> stimulus)\r\n        {\r\n            stimulus = default;\r\n\r\n            if (sourceId == Guid.Empty ||\r\n                double.IsNaN(timestamp) ||\r\n                double.IsInfinity(timestamp) ||\r\n                timestamp < 0d)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            float confidence = GetConfidence(\r\n                origin,\r\n                source,\r\n                volume);\r\n\r\n            if (confidence <= 0f)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            stimulus =\r\n                new PerceptionStimulus<Vector2Int>(\r\n                    sourceId,\r\n                    PerceptionType.Hearing,\r\n                    source,\r\n                    confidence,\r\n                    timestamp);\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 音の伝播距離キャッシュを無効化する。\r\n        /// </summary>\r\n        public void Invalidate()\r\n        {\r\n            if (!IsDisposed)\r\n            {\r\n                isDirty = true;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// マップのセル変更を処理する。\r\n        /// </summary>\r\n        /// <param name=\"position\">変更位置</param>\r\n        /// <param name=\"previous\">変更前の値</param>\r\n        /// <param name=\"current\">変更後の値</param>\r\n        private void HandleCellChanged(\r\n            Vector2Int position,\r\n            T previous,\r\n            T current)\r\n        {\r\n            // 汎用セル型では地形変更とアイテム変更を\r\n            // 区別できないため、保守的に無効化する。\r\n            Invalidate();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 音量が有効な値であるか判定する。\r\n        /// </summary>\r\n        /// <param name=\"volume\">音量</param>\r\n        /// <returns>有効な場合はtrue</returns>\r\n        private static bool IsValidVolume(float volume)\r\n        {\r\n            return !float.IsNaN(volume) &&\r\n                   !float.IsInfinity(volume) &&\r\n                   volume >= 0f &&\r\n                   volume <= 1f;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 所有する資源とイベント購読を解放する。\r\n        /// </summary>\r\n        public void Dispose()\r\n        {\r\n            if (IsDisposed)\r\n            {\r\n                return;\r\n            }\r\n\r\n            Map.CellChanged -= HandleCellChanged;\r\n\r\n            distanceMap.Clear();\r\n\r\n            IsDisposed = true;\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.245Z"
+}

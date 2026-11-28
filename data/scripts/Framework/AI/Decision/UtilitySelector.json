@@ -1,0 +1,846 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Decision.UtilitySelector",
+    "name": "UtilitySelector",
+    "fileName": "UtilitySelector.cs",
+    "namespace": "Framework.AI.Decision",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class UtilitySelector<TAction, TContext>",
+    "typeParameters": [
+        {
+            "name": "TAction",
+            "description": "行動識別子の型"
+        },
+        {
+            "name": "TContext",
+            "description": "意思決定情報の型"
+        }
+    ],
+    "summary": "複数の行動候補を評価し、最適な行動を選択する。",
+    "remarks": "行動の実行状態は管理しない。 評価中に行動候補を変更することはできない。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "System.Collections.ObjectModel"
+    ],
+    "members": [
+        {
+            "name": "Count",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int Count => options.Count",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "登録された行動候補数を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ContinuationBonus",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float ContinuationBonus => continuationBonus",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の継続優遇値を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "LastEvaluations",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public IReadOnlyList<UtilityEvaluation<TAction>>\r\n            LastEvaluations => readOnlyEvaluations",
+            "returnType": "",
+            "valueType": "IReadOnlyList<UtilityEvaluation<TAction>>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "直近の評価結果を取得する。",
+            "returns": "",
+            "remarks": "次回の評価時に内容が更新される。",
+            "exceptions": []
+        },
+        {
+            "name": "UtilitySelector",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public UtilitySelector(\r\n            float continuationBonus = 0.1f)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "continuationBonus",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": "0.1f",
+                    "description": "継続優遇値"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動選択システムを生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SetContinuationBonus",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void SetContinuationBonus(float value)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "継続優遇値。0から1"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "継続優遇値を変更する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryAddOption",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryAddOption(\r\n            UtilityOption<TAction, TContext> option)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "option",
+                    "type": "UtilityOption<TAction, TContext>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "登録する行動候補"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動候補を登録する。",
+            "returns": "登録に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasOption",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasOption(TAction actionId)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "actionId",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された行動候補が登録されているか判定する。",
+            "returns": "登録されている場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryRemoveOption",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryRemoveOption(TAction actionId)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "actionId",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された行動候補を削除する。",
+            "returns": "削除に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Clear",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Clear()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべての行動候補と評価結果を削除する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TrySelect",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TrySelect(\r\n            TContext context,\r\n            out UtilityEvaluation<TAction> selected)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "TContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "意思決定情報"
+                },
+                {
+                    "name": "selected",
+                    "type": "UtilityEvaluation<TAction>",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "選択された評価結果"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在の行動が存在しない状態で行動を選択する。",
+            "returns": "有効な行動が選択された場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TrySelect",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TrySelect(\r\n            TContext context,\r\n            TAction currentActionId,\r\n            out UtilityEvaluation<TAction> selected)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "TContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "意思決定情報"
+                },
+                {
+                    "name": "currentActionId",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "現在の行動識別子"
+                },
+                {
+                    "name": "selected",
+                    "type": "UtilityEvaluation<TAction>",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "選択された評価結果"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在の行動を考慮して行動を選択する。",
+            "returns": "有効な行動が選択された場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "UtilitySelector",
+            "fullName": "UtilitySelector",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "複数の行動候補を評価し、最適な行動を選択する。",
+            "remarks": "行動の実行状態は管理しない。 評価中に行動候補を変更することはできない。",
+            "attributes": [],
+            "declaration": "public sealed class UtilitySelector<TAction, TContext>",
+            "inheritance": [],
+            "typeParameters": [
+                {
+                    "name": "TAction",
+                    "description": "行動識別子の型"
+                },
+                {
+                    "name": "TContext",
+                    "description": "意思決定情報の型"
+                }
+            ],
+            "members": [
+                {
+                    "name": "options",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly List<UtilityOption<TAction, TContext>>\r\n            options =\r\n                new List<UtilityOption<TAction, TContext>>()",
+                    "returnType": "",
+                    "valueType": "List<UtilityOption<TAction, TContext>>",
+                    "value": "new List<UtilityOption<TAction, TContext>>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "登録された行動候補。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new List<UtilityOption<TAction, TContext>>()",
+                    "inspector": null
+                },
+                {
+                    "name": "evaluations",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly List<UtilityEvaluation<TAction>>\r\n            evaluations =\r\n                new List<UtilityEvaluation<TAction>>()",
+                    "returnType": "",
+                    "valueType": "List<UtilityEvaluation<TAction>>",
+                    "value": "new List<UtilityEvaluation<TAction>>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "直近の意思決定における評価結果。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new List<UtilityEvaluation<TAction>>()",
+                    "inspector": null
+                },
+                {
+                    "name": "readOnlyEvaluations",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly ReadOnlyCollection<\r\n            UtilityEvaluation<TAction>> readOnlyEvaluations",
+                    "returnType": "",
+                    "valueType": "ReadOnlyCollection<\r\n            UtilityEvaluation<TAction>>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "評価結果の読み取り専用コレクション。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "comparer",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly EqualityComparer<TAction> comparer =\r\n            EqualityComparer<TAction>.Default",
+                    "returnType": "",
+                    "valueType": "EqualityComparer<TAction>",
+                    "value": "EqualityComparer<TAction>.Default",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動識別子の比較処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "EqualityComparer<TAction>.Default",
+                    "inspector": null
+                },
+                {
+                    "name": "isEvaluating",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isEvaluating",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在評価処理を実行しているかどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "continuationBonus",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float continuationBonus",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の行動に適用する継続優遇値。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Count",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int Count => options.Count",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "登録された行動候補数を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ContinuationBonus",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float ContinuationBonus => continuationBonus",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の継続優遇値を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "LastEvaluations",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public IReadOnlyList<UtilityEvaluation<TAction>>\r\n            LastEvaluations => readOnlyEvaluations",
+                    "returnType": "",
+                    "valueType": "IReadOnlyList<UtilityEvaluation<TAction>>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "直近の評価結果を取得する。",
+                    "returns": "",
+                    "remarks": "次回の評価時に内容が更新される。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "UtilitySelector",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public UtilitySelector(\r\n            float continuationBonus = 0.1f)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "continuationBonus",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "0.1f",
+                            "description": "継続優遇値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動選択システムを生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SetContinuationBonus",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void SetContinuationBonus(float value)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "継続優遇値。0から1"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "継続優遇値を変更する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryAddOption",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryAddOption(\r\n            UtilityOption<TAction, TContext> option)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "option",
+                            "type": "UtilityOption<TAction, TContext>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "登録する行動候補"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動候補を登録する。",
+                    "returns": "登録に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HasOption",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool HasOption(TAction actionId)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "actionId",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された行動候補が登録されているか判定する。",
+                    "returns": "登録されている場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryRemoveOption",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryRemoveOption(TAction actionId)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "actionId",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された行動候補を削除する。",
+                    "returns": "削除に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Clear",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Clear()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべての行動候補と評価結果を削除する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TrySelect",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TrySelect(\r\n            TContext context,\r\n            out UtilityEvaluation<TAction> selected)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "意思決定情報"
+                        },
+                        {
+                            "name": "selected",
+                            "type": "UtilityEvaluation<TAction>",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "選択された評価結果"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の行動が存在しない状態で行動を選択する。",
+                    "returns": "有効な行動が選択された場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TrySelect",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TrySelect(\r\n            TContext context,\r\n            TAction currentActionId,\r\n            out UtilityEvaluation<TAction> selected)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "意思決定情報"
+                        },
+                        {
+                            "name": "currentActionId",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在の行動識別子"
+                        },
+                        {
+                            "name": "selected",
+                            "type": "UtilityEvaluation<TAction>",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "選択された評価結果"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の行動を考慮して行動を選択する。",
+                    "returns": "有効な行動が選択された場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SelectInternal",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool SelectInternal(\r\n            TContext context,\r\n            bool hasCurrentAction,\r\n            TAction currentActionId,\r\n            out UtilityEvaluation<TAction> selected)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "意思決定情報"
+                        },
+                        {
+                            "name": "hasCurrentAction",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在の行動が存在するか"
+                        },
+                        {
+                            "name": "currentActionId",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在の行動識別子"
+                        },
+                        {
+                            "name": "selected",
+                            "type": "UtilityEvaluation<TAction>",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "選択された評価結果"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "登録された行動候補を評価して選択する。",
+                    "returns": "有効な行動が選択された場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "EnsureNotEvaluating",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void EnsureNotEvaluating()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "評価中の再入や構成変更を防止する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "評価処理中に呼び出された場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 17
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing System.Collections.ObjectModel;\r\n\r\nnamespace Framework.AI.Decision\r\n{\r\n    /// <summary>\r\n    /// 複数の行動候補を評価し、最適な行動を選択する。\r\n    /// </summary>\r\n    /// <typeparam name=\"TAction\">行動識別子の型</typeparam>\r\n    /// <typeparam name=\"TContext\">意思決定情報の型</typeparam>\r\n    /// <remarks>\r\n    /// 行動の実行状態は管理しない。\r\n    /// 評価中に行動候補を変更することはできない。\r\n    /// </remarks>\r\n    public sealed class UtilitySelector<TAction, TContext>\r\n    {\r\n        /// <summary>\r\n        /// 登録された行動候補。\r\n        /// </summary>\r\n        private readonly List<UtilityOption<TAction, TContext>>\r\n            options =\r\n                new List<UtilityOption<TAction, TContext>>();\r\n\r\n        /// <summary>\r\n        /// 直近の意思決定における評価結果。\r\n        /// </summary>\r\n        private readonly List<UtilityEvaluation<TAction>>\r\n            evaluations =\r\n                new List<UtilityEvaluation<TAction>>();\r\n\r\n        /// <summary>\r\n        /// 評価結果の読み取り専用コレクション。\r\n        /// </summary>\r\n        private readonly ReadOnlyCollection<\r\n            UtilityEvaluation<TAction>> readOnlyEvaluations;\r\n\r\n        /// <summary>\r\n        /// 行動識別子の比較処理。\r\n        /// </summary>\r\n        private readonly EqualityComparer<TAction> comparer =\r\n            EqualityComparer<TAction>.Default;\r\n\r\n        /// <summary>\r\n        /// 現在評価処理を実行しているかどうか。\r\n        /// </summary>\r\n        private bool isEvaluating;\r\n\r\n        /// <summary>\r\n        /// 現在の行動に適用する継続優遇値。\r\n        /// </summary>\r\n        private float continuationBonus;\r\n\r\n        /// <summary>\r\n        /// 登録された行動候補数を取得する。\r\n        /// </summary>\r\n        public int Count => options.Count;\r\n\r\n        /// <summary>\r\n        /// 現在の継続優遇値を取得する。\r\n        /// </summary>\r\n        public float ContinuationBonus => continuationBonus;\r\n\r\n        /// <summary>\r\n        /// 直近の評価結果を取得する。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// 次回の評価時に内容が更新される。\r\n        /// </remarks>\r\n        public IReadOnlyList<UtilityEvaluation<TAction>>\r\n            LastEvaluations => readOnlyEvaluations;\r\n\r\n        /// <summary>\r\n        /// 行動選択システムを生成する。\r\n        /// </summary>\r\n        /// <param name=\"continuationBonus\">継続優遇値</param>\r\n        public UtilitySelector(\r\n            float continuationBonus = 0.1f)\r\n        {\r\n            readOnlyEvaluations = evaluations.AsReadOnly();\r\n\r\n            SetContinuationBonus(continuationBonus);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 継続優遇値を変更する。\r\n        /// </summary>\r\n        /// <param name=\"value\">継続優遇値。0から1</param>\r\n        public void SetContinuationBonus(float value)\r\n        {\r\n            EnsureNotEvaluating();\r\n\r\n            if (float.IsNaN(value) ||\r\n                float.IsInfinity(value) ||\r\n                value < 0f ||\r\n                value > 1f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(value));\r\n            }\r\n\r\n            continuationBonus = value;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動候補を登録する。\r\n        /// </summary>\r\n        /// <param name=\"option\">登録する行動候補</param>\r\n        /// <returns>登録に成功した場合はtrue</returns>\r\n        public bool TryAddOption(\r\n            UtilityOption<TAction, TContext> option)\r\n        {\r\n            EnsureNotEvaluating();\r\n\r\n            if (option == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(option));\r\n            }\r\n\r\n            if (HasOption(option.Id))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            options.Add(option);\r\n\r\n            // 構成変更前の評価結果を無効化する。\r\n            evaluations.Clear();\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された行動候補が登録されているか判定する。\r\n        /// </summary>\r\n        /// <param name=\"actionId\">行動識別子</param>\r\n        /// <returns>登録されている場合はtrue</returns>\r\n        public bool HasOption(TAction actionId)\r\n        {\r\n            for (int i = 0; i < options.Count; i++)\r\n            {\r\n                if (comparer.Equals(options[i].Id, actionId))\r\n                {\r\n                    return true;\r\n                }\r\n            }\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された行動候補を削除する。\r\n        /// </summary>\r\n        /// <param name=\"actionId\">行動識別子</param>\r\n        /// <returns>削除に成功した場合はtrue</returns>\r\n        public bool TryRemoveOption(TAction actionId)\r\n        {\r\n            EnsureNotEvaluating();\r\n\r\n            for (int i = 0; i < options.Count; i++)\r\n            {\r\n                if (comparer.Equals(options[i].Id, actionId))\r\n                {\r\n                    options.RemoveAt(i);\r\n                    evaluations.Clear();\r\n\r\n                    return true;\r\n                }\r\n            }\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべての行動候補と評価結果を削除する。\r\n        /// </summary>\r\n        public void Clear()\r\n        {\r\n            EnsureNotEvaluating();\r\n\r\n            options.Clear();\r\n            evaluations.Clear();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在の行動が存在しない状態で行動を選択する。\r\n        /// </summary>\r\n        /// <param name=\"context\">意思決定情報</param>\r\n        /// <param name=\"selected\">選択された評価結果</param>\r\n        /// <returns>有効な行動が選択された場合はtrue</returns>\r\n        public bool TrySelect(\r\n            TContext context,\r\n            out UtilityEvaluation<TAction> selected)\r\n        {\r\n            return SelectInternal(\r\n                context,\r\n                false,\r\n                default(TAction),\r\n                out selected);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在の行動を考慮して行動を選択する。\r\n        /// </summary>\r\n        /// <param name=\"context\">意思決定情報</param>\r\n        /// <param name=\"currentActionId\">現在の行動識別子</param>\r\n        /// <param name=\"selected\">選択された評価結果</param>\r\n        /// <returns>有効な行動が選択された場合はtrue</returns>\r\n        public bool TrySelect(\r\n            TContext context,\r\n            TAction currentActionId,\r\n            out UtilityEvaluation<TAction> selected)\r\n        {\r\n            return SelectInternal(\r\n                context,\r\n                true,\r\n                currentActionId,\r\n                out selected);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 登録された行動候補を評価して選択する。\r\n        /// </summary>\r\n        /// <param name=\"context\">意思決定情報</param>\r\n        /// <param name=\"hasCurrentAction\">現在の行動が存在するか</param>\r\n        /// <param name=\"currentActionId\">現在の行動識別子</param>\r\n        /// <param name=\"selected\">選択された評価結果</param>\r\n        /// <returns>有効な行動が選択された場合はtrue</returns>\r\n        private bool SelectInternal(\r\n            TContext context,\r\n            bool hasCurrentAction,\r\n            TAction currentActionId,\r\n            out UtilityEvaluation<TAction> selected)\r\n        {\r\n            EnsureNotEvaluating();\r\n\r\n            selected = default(UtilityEvaluation<TAction>);\r\n\r\n            evaluations.Clear();\r\n\r\n            isEvaluating = true;\r\n\r\n            try\r\n            {\r\n                for (int i = 0; i < options.Count; i++)\r\n                {\r\n                    var option = options[i];\r\n\r\n                    bool isCurrent =\r\n                        hasCurrentAction &&\r\n                        comparer.Equals(\r\n                            option.Id,\r\n                            currentActionId);\r\n\r\n                    float score = option.Evaluate(context);\r\n\r\n                    var evaluation =\r\n                        new UtilityEvaluation<TAction>(\r\n                            option.Id,\r\n                            score,\r\n                            isCurrent,\r\n                            continuationBonus);\r\n\r\n                    // デバッグ用に評価値0の結果も保持する。\r\n                    evaluations.Add(evaluation);\r\n\r\n                    if (!evaluation.IsSelectable)\r\n                    {\r\n                        continue;\r\n                    }\r\n\r\n                    // 評価値が同じ場合は現在の行動を優先する。\r\n                    // それ以外の同点は登録順を維持する。\r\n                    if (!selected.IsValid ||\r\n                        evaluation.SelectionScore >\r\n                            selected.SelectionScore ||\r\n                        (evaluation.SelectionScore ==\r\n                            selected.SelectionScore &&\r\n                         evaluation.IsCurrentAction &&\r\n                         !selected.IsCurrentAction))\r\n                    {\r\n                        selected = evaluation;\r\n                    }\r\n                }\r\n\r\n                return selected.IsSelectable;\r\n            }\r\n            catch\r\n            {\r\n                // 不完全な評価結果を外部に残さない。\r\n                evaluations.Clear();\r\n\r\n                selected =\r\n                    default(UtilityEvaluation<TAction>);\r\n\r\n                throw;\r\n            }\r\n            finally\r\n            {\r\n                isEvaluating = false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 評価中の再入や構成変更を防止する。\r\n        /// </summary>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 評価処理中に呼び出された場合に発生する。\r\n        /// </exception>\r\n        private void EnsureNotEvaluating()\r\n        {\r\n            if (isEvaluating)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"行動評価中はこの操作を実行できません。\");\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:01.173Z"
+}

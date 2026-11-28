@@ -1,0 +1,468 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.Pathfinding.GridPathfinder",
+    "name": "GridPathfinder",
+    "fileName": "GridPathfinder.cs",
+    "namespace": "Framework.Pathfinding",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "static"
+    ],
+    "declaration": "public static class GridPathfinder",
+    "typeParameters": [],
+    "summary": "グリッドマップ上の最短経路を探索する。",
+    "remarks": "A*アルゴリズムを使用する。 上下左右の4方向移動に対応し、 各セル間の移動コストは1とする。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "Framework.Grid",
+        "UnityEngine"
+    ],
+    "members": [
+        {
+            "name": "TryFindPath",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static bool TryFindPath<T>(\r\n            GridMap<T> map,\r\n            Vector2Int start,\r\n            Vector2Int goal,\r\n            Func<Vector2Int, bool> canEnterCell,\r\n            out List<Vector2Int> path)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "map",
+                    "type": "GridMap<T>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "探索対象のグリッドマップ"
+                },
+                {
+                    "name": "start",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "開始地点"
+                },
+                {
+                    "name": "goal",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "目的地"
+                },
+                {
+                    "name": "canEnterCell",
+                    "type": "Func<Vector2Int, bool>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "セルの通行可能条件"
+                },
+                {
+                    "name": "path",
+                    "type": "List<Vector2Int>",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "探索された経路"
+                }
+            ],
+            "typeParameters": [
+                {
+                    "name": "T",
+                    "description": "セルのデータ型"
+                }
+            ],
+            "accessors": [],
+            "summary": "開始地点から目的地までの最短経路を探索する。",
+            "returns": "経路が見つかった場合はtrue",
+            "remarks": "経路には開始地点と目的地の両方を含む。 探索に失敗した場合は空のリストを返す。 探索中にマップや通行可能条件を変更しないこと。",
+            "exceptions": []
+        },
+        {
+            "name": "GetShortestDistance",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static int GetShortestDistance<T>(\r\n            GridMap<T> map,\r\n            Vector2Int start,\r\n            Vector2Int goal,\r\n            Func<Vector2Int, bool> canEnterCell)",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "map",
+                    "type": "GridMap<T>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "探索対象のマップ"
+                },
+                {
+                    "name": "start",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "開始地点"
+                },
+                {
+                    "name": "goal",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "目的地"
+                },
+                {
+                    "name": "canEnterCell",
+                    "type": "Func<Vector2Int, bool>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "セルの通行可能条件"
+                }
+            ],
+            "typeParameters": [
+                {
+                    "name": "T",
+                    "description": "セルのデータ型"
+                }
+            ],
+            "accessors": [],
+            "summary": "開始地点から目的地までの最短経路距離を取得する。",
+            "returns": "最短経路距離。到達不能の場合は-1。",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetManhattanDistance",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static int GetManhattanDistance(\r\n            Vector2Int from,\r\n            Vector2Int to)",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "from",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "開始座標"
+                },
+                {
+                    "name": "to",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "終了座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "2つの座標間のマンハッタン距離を取得する。",
+            "returns": "上下左右の移動距離",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "GridPathfinder",
+            "fullName": "GridPathfinder",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "summary": "グリッドマップ上の最短経路を探索する。",
+            "remarks": "A*アルゴリズムを使用する。 上下左右の4方向移動に対応し、 各セル間の移動コストは1とする。",
+            "attributes": [],
+            "declaration": "public static class GridPathfinder",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "Directions",
+                    "kind": "property",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static",
+                        "readonly"
+                    ],
+                    "signature": "private static readonly Vector2Int[] Directions =",
+                    "returnType": "",
+                    "valueType": "Vector2Int[]",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "経路探索で使用する移動方向。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryFindPath",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static bool TryFindPath<T>(\r\n            GridMap<T> map,\r\n            Vector2Int start,\r\n            Vector2Int goal,\r\n            Func<Vector2Int, bool> canEnterCell,\r\n            out List<Vector2Int> path)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "map",
+                            "type": "GridMap<T>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "探索対象のグリッドマップ"
+                        },
+                        {
+                            "name": "start",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "開始地点"
+                        },
+                        {
+                            "name": "goal",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "目的地"
+                        },
+                        {
+                            "name": "canEnterCell",
+                            "type": "Func<Vector2Int, bool>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "セルの通行可能条件"
+                        },
+                        {
+                            "name": "path",
+                            "type": "List<Vector2Int>",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "探索された経路"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "T",
+                            "description": "セルのデータ型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "開始地点から目的地までの最短経路を探索する。",
+                    "returns": "経路が見つかった場合はtrue",
+                    "remarks": "経路には開始地点と目的地の両方を含む。 探索に失敗した場合は空のリストを返す。 探索中にマップや通行可能条件を変更しないこと。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetShortestDistance",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static int GetShortestDistance<T>(\r\n            GridMap<T> map,\r\n            Vector2Int start,\r\n            Vector2Int goal,\r\n            Func<Vector2Int, bool> canEnterCell)",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "map",
+                            "type": "GridMap<T>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "探索対象のマップ"
+                        },
+                        {
+                            "name": "start",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "開始地点"
+                        },
+                        {
+                            "name": "goal",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "目的地"
+                        },
+                        {
+                            "name": "canEnterCell",
+                            "type": "Func<Vector2Int, bool>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "セルの通行可能条件"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "T",
+                            "description": "セルのデータ型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "開始地点から目的地までの最短経路距離を取得する。",
+                    "returns": "最短経路距離。到達不能の場合は-1。",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetManhattanDistance",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static int GetManhattanDistance(\r\n            Vector2Int from,\r\n            Vector2Int to)",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "from",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "開始座標"
+                        },
+                        {
+                            "name": "to",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "終了座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "2つの座標間のマンハッタン距離を取得する。",
+                    "returns": "上下左右の移動距離",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetBestNodeIndex",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static int GetBestNodeIndex(\r\n            List<Vector2Int> openSet,\r\n            Dictionary<Vector2Int, int> gScores,\r\n            Vector2Int goal)",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "openSet",
+                            "type": "List<Vector2Int>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "探索候補一覧"
+                        },
+                        {
+                            "name": "gScores",
+                            "type": "Dictionary<Vector2Int, int>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "各セルの移動コスト"
+                        },
+                        {
+                            "name": "goal",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "目的地"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "推定総コストが最小の探索候補を取得する。",
+                    "returns": "最適な探索候補のインデックス",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ReconstructPath",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static void ReconstructPath(\r\n            Dictionary<Vector2Int, Vector2Int> cameFrom,\r\n            Vector2Int current,\r\n            List<Vector2Int> path)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "cameFrom",
+                            "type": "Dictionary<Vector2Int, Vector2Int>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "各セルの直前座標"
+                        },
+                        {
+                            "name": "current",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "目的地の座標"
+                        },
+                        {
+                            "name": "path",
+                            "type": "List<Vector2Int>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "復元先の経路リスト"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "探索結果から開始地点までの経路を復元する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 16
+        }
+    ],
+    "source": "using System;\r\nusing System.Collections.Generic;\r\nusing Framework.Grid;\r\nusing UnityEngine;\r\n\r\nnamespace Framework.Pathfinding\r\n{\r\n    /// <summary>\r\n    /// グリッドマップ上の最短経路を探索する。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// A*アルゴリズムを使用する。\r\n    /// 上下左右の4方向移動に対応し、\r\n    /// 各セル間の移動コストは1とする。\r\n    /// </remarks>\r\n    public static class GridPathfinder\r\n    {\r\n        /// <summary>\r\n        /// 経路探索で使用する移動方向。\r\n        /// </summary>\r\n        private static readonly Vector2Int[] Directions =\r\n        {\r\n            Vector2Int.up,\r\n            Vector2Int.down,\r\n            Vector2Int.left,\r\n            Vector2Int.right\r\n        };\r\n\r\n        /// <summary>\r\n        /// 開始地点から目的地までの最短経路を探索する。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">セルのデータ型</typeparam>\r\n        /// <param name=\"map\">探索対象のグリッドマップ</param>\r\n        /// <param name=\"start\">開始地点</param>\r\n        /// <param name=\"goal\">目的地</param>\r\n        /// <param name=\"canEnterCell\">セルの通行可能条件</param>\r\n        /// <param name=\"path\">探索された経路</param>\r\n        /// <returns>経路が見つかった場合はtrue</returns>\r\n        /// <remarks>\r\n        /// 経路には開始地点と目的地の両方を含む。\r\n        /// 探索に失敗した場合は空のリストを返す。\r\n        /// 探索中にマップや通行可能条件を変更しないこと。\r\n        /// </remarks>\r\n        public static bool TryFindPath<T>(\r\n            GridMap<T> map,\r\n            Vector2Int start,\r\n            Vector2Int goal,\r\n            Func<Vector2Int, bool> canEnterCell,\r\n            out List<Vector2Int> path)\r\n        {\r\n            path = new List<Vector2Int>();\r\n\r\n            // 依存関係を検証する。\r\n            if (map == null || canEnterCell == null)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 開始地点と目的地の範囲を確認する。\r\n            if (!map.IsInside(start) ||\r\n                !map.IsInside(goal))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 開始地点と目的地が通行可能か確認する。\r\n            if (!canEnterCell(start) ||\r\n                !canEnterCell(goal))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 開始地点と目的地が同一の場合。\r\n            if (start == goal)\r\n            {\r\n                path.Add(start);\r\n\r\n                return true;\r\n            }\r\n\r\n            // 今後探索する候補セル。\r\n            var openSet = new List<Vector2Int>();\r\n\r\n            // 探索が完了したセル。\r\n            var closedSet = new HashSet<Vector2Int>();\r\n\r\n            // 各セルへ到達する直前のセル。\r\n            var cameFrom =\r\n                new Dictionary<Vector2Int, Vector2Int>();\r\n\r\n            // 開始地点から各セルまでの移動コスト。\r\n            var gScores =\r\n                new Dictionary<Vector2Int, int>();\r\n\r\n            openSet.Add(start);\r\n            gScores[start] = 0;\r\n\r\n            while (openSet.Count > 0)\r\n            {\r\n                // 推定総コストが最小のセルを選択する。\r\n                int currentIndex = GetBestNodeIndex(\r\n                    openSet,\r\n                    gScores,\r\n                    goal);\r\n\r\n                Vector2Int current =\r\n                    openSet[currentIndex];\r\n\r\n                // 目的地に到達した場合は経路を復元する。\r\n                if (current == goal)\r\n                {\r\n                    ReconstructPath(\r\n                        cameFrom,\r\n                        current,\r\n                        path);\r\n\r\n                    return true;\r\n                }\r\n\r\n                openSet.RemoveAt(currentIndex);\r\n                closedSet.Add(current);\r\n\r\n                // 隣接する4方向のセルを探索する。\r\n                foreach (Vector2Int direction in Directions)\r\n                {\r\n                    Vector2Int neighbor =\r\n                        current + direction;\r\n\r\n                    if (!map.IsInside(neighbor) ||\r\n                        closedSet.Contains(neighbor) ||\r\n                        !canEnterCell(neighbor))\r\n                    {\r\n                        continue;\r\n                    }\r\n\r\n                    // 隣接セルへの移動コストは1とする。\r\n                    int tentativeGScore =\r\n                        gScores[current] + 1;\r\n\r\n                    bool hasPreviousScore =\r\n                        gScores.TryGetValue(\r\n                            neighbor,\r\n                            out int previousGScore);\r\n\r\n                    // 既存経路より短くない場合は更新しない。\r\n                    if (hasPreviousScore &&\r\n                        tentativeGScore >= previousGScore)\r\n                    {\r\n                        continue;\r\n                    }\r\n\r\n                    cameFrom[neighbor] = current;\r\n                    gScores[neighbor] = tentativeGScore;\r\n\r\n                    // 未登録の候補セルを追加する。\r\n                    if (!hasPreviousScore)\r\n                    {\r\n                        openSet.Add(neighbor);\r\n                    }\r\n                }\r\n            }\r\n\r\n            // 目的地まで到達できなかった。\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 開始地点から目的地までの最短経路距離を取得する。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">セルのデータ型</typeparam>\r\n        /// <param name=\"map\">探索対象のマップ</param>\r\n        /// <param name=\"start\">開始地点</param>\r\n        /// <param name=\"goal\">目的地</param>\r\n        /// <param name=\"canEnterCell\">セルの通行可能条件</param>\r\n        /// <returns>\r\n        /// 最短経路距離。到達不能の場合は-1。\r\n        /// </returns>\r\n        public static int GetShortestDistance<T>(\r\n            GridMap<T> map,\r\n            Vector2Int start,\r\n            Vector2Int goal,\r\n            Func<Vector2Int, bool> canEnterCell)\r\n        {\r\n            if (!TryFindPath(\r\n                    map,\r\n                    start,\r\n                    goal,\r\n                    canEnterCell,\r\n                    out List<Vector2Int> path))\r\n            {\r\n                return -1;\r\n            }\r\n\r\n            // 開始地点を除いた移動回数を返す。\r\n            return path.Count - 1;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 2つの座標間のマンハッタン距離を取得する。\r\n        /// </summary>\r\n        /// <param name=\"from\">開始座標</param>\r\n        /// <param name=\"to\">終了座標</param>\r\n        /// <returns>上下左右の移動距離</returns>\r\n        public static int GetManhattanDistance(\r\n            Vector2Int from,\r\n            Vector2Int to)\r\n        {\r\n            return Mathf.Abs(from.x - to.x) +\r\n                   Mathf.Abs(from.y - to.y);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 推定総コストが最小の探索候補を取得する。\r\n        /// </summary>\r\n        /// <param name=\"openSet\">探索候補一覧</param>\r\n        /// <param name=\"gScores\">各セルの移動コスト</param>\r\n        /// <param name=\"goal\">目的地</param>\r\n        /// <returns>最適な探索候補のインデックス</returns>\r\n        private static int GetBestNodeIndex(\r\n            List<Vector2Int> openSet,\r\n            Dictionary<Vector2Int, int> gScores,\r\n            Vector2Int goal)\r\n        {\r\n            int bestIndex = 0;\r\n\r\n            int bestHScore = GetManhattanDistance(\r\n                openSet[0],\r\n                goal);\r\n\r\n            int bestFScore =\r\n                gScores[openSet[0]] + bestHScore;\r\n\r\n            for (int i = 1; i < openSet.Count; i++)\r\n            {\r\n                Vector2Int position = openSet[i];\r\n\r\n                int hScore = GetManhattanDistance(\r\n                    position,\r\n                    goal);\r\n\r\n                int fScore =\r\n                    gScores[position] + hScore;\r\n\r\n                // 総コストが同じ場合は目的地に近い方を優先する。\r\n                if (fScore < bestFScore ||\r\n                    (fScore == bestFScore &&\r\n                     hScore < bestHScore))\r\n                {\r\n                    bestIndex = i;\r\n                    bestFScore = fScore;\r\n                    bestHScore = hScore;\r\n                }\r\n            }\r\n\r\n            return bestIndex;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 探索結果から開始地点までの経路を復元する。\r\n        /// </summary>\r\n        /// <param name=\"cameFrom\">各セルの直前座標</param>\r\n        /// <param name=\"current\">目的地の座標</param>\r\n        /// <param name=\"path\">復元先の経路リスト</param>\r\n        private static void ReconstructPath(\r\n            Dictionary<Vector2Int, Vector2Int> cameFrom,\r\n            Vector2Int current,\r\n            List<Vector2Int> path)\r\n        {\r\n            path.Clear();\r\n            path.Add(current);\r\n\r\n            // 目的地から開始地点まで逆順にたどる。\r\n            while (cameFrom.TryGetValue(\r\n                current,\r\n                out Vector2Int previous))\r\n            {\r\n                current = previous;\r\n\r\n                path.Add(current);\r\n            }\r\n\r\n            // 開始地点から目的地への順序に変換する。\r\n            path.Reverse();\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.305Z"
+}

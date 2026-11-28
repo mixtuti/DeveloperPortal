@@ -1,0 +1,516 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Decision.UtilityMath",
+    "name": "UtilityMath",
+    "fileName": "UtilityMath.cs",
+    "namespace": "Framework.AI.Decision",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "static"
+    ],
+    "declaration": "public static class UtilityMath",
+    "typeParameters": [],
+    "summary": "Utility AIで使用する評価値の計算を提供する。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [
+        "System"
+    ],
+    "members": [
+        {
+            "name": "Clamp01",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static float Clamp01(float value)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "評価値"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "評価値を0から1の範囲に制限する。",
+            "returns": "制限後の評価値",
+            "remarks": "NaNは安全のため0として扱う。",
+            "exceptions": []
+        },
+        {
+            "name": "Normalize",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static float Normalize(\r\n            float value,\r\n            float min,\r\n            float max)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "正規化する値"
+                },
+                {
+                    "name": "min",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "最小値"
+                },
+                {
+                    "name": "max",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "最大値"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定範囲の値を0から1に正規化する。",
+            "returns": "正規化された評価値",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "範囲または入力値が不正な場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "Invert",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static float Invert(float value)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "反転する評価値"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "正規化された評価値を反転する。",
+            "returns": "反転後の評価値",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Power",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static float Power(\r\n            float value,\r\n            float exponent)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "評価値"
+                },
+                {
+                    "name": "exponent",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "正の指数"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "評価値にべき乗曲線を適用する。",
+            "returns": "曲線適用後の評価値",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "指数が有限の正数ではない場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "SmoothStep",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static float SmoothStep(float value)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "評価値"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "評価値に滑らかなS字曲線を適用する。",
+            "returns": "曲線適用後の評価値",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Compensate",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static float Compensate(\r\n            float score,\r\n            int considerationCount)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "score",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "個別の評価値"
+                },
+                {
+                    "name": "considerationCount",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "評価要素数"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "評価要素数による乗算評価の低下を緩和する。",
+            "returns": "補正後の評価値",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "評価要素数が1未満の場合に発生する。"
+                }
+            ]
+        }
+    ],
+    "types": [
+        {
+            "name": "UtilityMath",
+            "fullName": "UtilityMath",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "summary": "Utility AIで使用する評価値の計算を提供する。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public static class UtilityMath",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "Clamp01",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static float Clamp01(float value)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "評価値を0から1の範囲に制限する。",
+                    "returns": "制限後の評価値",
+                    "remarks": "NaNは安全のため0として扱う。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Normalize",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static float Normalize(\r\n            float value,\r\n            float min,\r\n            float max)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "正規化する値"
+                        },
+                        {
+                            "name": "min",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "最小値"
+                        },
+                        {
+                            "name": "max",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "最大値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定範囲の値を0から1に正規化する。",
+                    "returns": "正規化された評価値",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "範囲または入力値が不正な場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Invert",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static float Invert(float value)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "反転する評価値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "正規化された評価値を反転する。",
+                    "returns": "反転後の評価値",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Power",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static float Power(\r\n            float value,\r\n            float exponent)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価値"
+                        },
+                        {
+                            "name": "exponent",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "正の指数"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "評価値にべき乗曲線を適用する。",
+                    "returns": "曲線適用後の評価値",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "指数が有限の正数ではない場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SmoothStep",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static float SmoothStep(float value)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "評価値に滑らかなS字曲線を適用する。",
+                    "returns": "曲線適用後の評価値",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Compensate",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static float Compensate(\r\n            float score,\r\n            int considerationCount)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "score",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "個別の評価値"
+                        },
+                        {
+                            "name": "considerationCount",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価要素数"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "評価要素数による乗算評価の低下を緩和する。",
+                    "returns": "補正後の評価値",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "評価要素数が1未満の場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValidateFinite",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static void ValidateFinite(\r\n            float value,\r\n            string parameterName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証対象の値"
+                        },
+                        {
+                            "name": "parameterName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "引数名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "値が有限であることを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 9
+        }
+    ],
+    "source": "\r\nusing System;\r\n\r\nnamespace Framework.AI.Decision\r\n{\r\n    /// <summary>\r\n    /// Utility AIで使用する評価値の計算を提供する。\r\n    /// </summary>\r\n    public static class UtilityMath\r\n    {\r\n        /// <summary>\r\n        /// 評価値を0から1の範囲に制限する。\r\n        /// </summary>\r\n        /// <param name=\"value\">評価値</param>\r\n        /// <returns>制限後の評価値</returns>\r\n        /// <remarks>\r\n        /// NaNは安全のため0として扱う。\r\n        /// </remarks>\r\n        public static float Clamp01(float value)\r\n        {\r\n            if (float.IsNaN(value) || value <= 0f)\r\n            {\r\n                return 0f;\r\n            }\r\n\r\n            if (value >= 1f)\r\n            {\r\n                return 1f;\r\n            }\r\n\r\n            return value;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定範囲の値を0から1に正規化する。\r\n        /// </summary>\r\n        /// <param name=\"value\">正規化する値</param>\r\n        /// <param name=\"min\">最小値</param>\r\n        /// <param name=\"max\">最大値</param>\r\n        /// <returns>正規化された評価値</returns>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 範囲または入力値が不正な場合に発生する。\r\n        /// </exception>\r\n        public static float Normalize(\r\n            float value,\r\n            float min,\r\n            float max)\r\n        {\r\n            ValidateFinite(value, nameof(value));\r\n            ValidateFinite(min, nameof(min));\r\n            ValidateFinite(max, nameof(max));\r\n\r\n            if (min >= max)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(max));\r\n            }\r\n\r\n            // 中間計算にdoubleを使用して桁あふれを防ぐ。\r\n            double normalized =\r\n                ((double)value - min) /\r\n                ((double)max - min);\r\n\r\n            return Clamp01((float)normalized);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 正規化された評価値を反転する。\r\n        /// </summary>\r\n        /// <param name=\"value\">反転する評価値</param>\r\n        /// <returns>反転後の評価値</returns>\r\n        public static float Invert(float value)\r\n        {\r\n            return 1f - Clamp01(value);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 評価値にべき乗曲線を適用する。\r\n        /// </summary>\r\n        /// <param name=\"value\">評価値</param>\r\n        /// <param name=\"exponent\">正の指数</param>\r\n        /// <returns>曲線適用後の評価値</returns>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 指数が有限の正数ではない場合に発生する。\r\n        /// </exception>\r\n        public static float Power(\r\n            float value,\r\n            float exponent)\r\n        {\r\n            ValidateFinite(exponent, nameof(exponent));\r\n\r\n            if (exponent <= 0f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(exponent));\r\n            }\r\n\r\n            return (float)Math.Pow(\r\n                Clamp01(value),\r\n                exponent);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 評価値に滑らかなS字曲線を適用する。\r\n        /// </summary>\r\n        /// <param name=\"value\">評価値</param>\r\n        /// <returns>曲線適用後の評価値</returns>\r\n        public static float SmoothStep(float value)\r\n        {\r\n            float t = Clamp01(value);\r\n\r\n            return t * t * (3f - 2f * t);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 評価要素数による乗算評価の低下を緩和する。\r\n        /// </summary>\r\n        /// <param name=\"score\">個別の評価値</param>\r\n        /// <param name=\"considerationCount\">評価要素数</param>\r\n        /// <returns>補正後の評価値</returns>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 評価要素数が1未満の場合に発生する。\r\n        /// </exception>\r\n        public static float Compensate(\r\n            float score,\r\n            int considerationCount)\r\n        {\r\n            if (considerationCount < 1)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(considerationCount));\r\n            }\r\n\r\n            float value = Clamp01(score);\r\n\r\n            float factor =\r\n                1f - 1f / considerationCount;\r\n\r\n            return Clamp01(\r\n                value + value * (1f - value) * factor);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 値が有限であることを検証する。\r\n        /// </summary>\r\n        /// <param name=\"value\">検証対象の値</param>\r\n        /// <param name=\"parameterName\">引数名</param>\r\n        private static void ValidateFinite(\r\n            float value,\r\n            string parameterName)\r\n        {\r\n            if (float.IsNaN(value) ||\r\n                float.IsInfinity(value))\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    parameterName);\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:01.150Z"
+}

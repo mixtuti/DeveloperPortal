@@ -1,0 +1,60 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Perception.PerceptionType",
+    "name": "PerceptionType",
+    "fileName": "PerceptionType.cs",
+    "namespace": "Framework.AI.Perception",
+    "type": "enum",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public enum PerceptionType",
+    "typeParameters": [],
+    "summary": "エージェントが情報を認識した手段。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [],
+    "members": [],
+    "types": [
+        {
+            "name": "PerceptionType",
+            "fullName": "PerceptionType",
+            "kind": "enum",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "エージェントが情報を認識した手段。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public enum PerceptionType",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [],
+            "nestedTypes": [],
+            "enumValues": [
+                {
+                    "name": "Sight",
+                    "value": "0"
+                },
+                {
+                    "name": "Hearing",
+                    "value": "1"
+                },
+                {
+                    "name": "Contact",
+                    "value": "2"
+                },
+                {
+                    "name": "External",
+                    "value": "3"
+                }
+            ],
+            "line": 7
+        }
+    ],
+    "source": "\r\nnamespace Framework.AI.Perception\r\n{\r\n    /// <summary>\r\n    /// エージェントが情報を認識した手段。\r\n    /// </summary>\r\n    public enum PerceptionType\r\n    {\r\n        /// <summary>\r\n        /// 視覚による認識。\r\n        /// </summary>\r\n        Sight = 0,\r\n\r\n        /// <summary>\r\n        /// 聴覚による認識。\r\n        /// </summary>\r\n        Hearing = 1,\r\n\r\n        /// <summary>\r\n        /// 接触による認識。\r\n        /// </summary>\r\n        Contact = 2,\r\n\r\n        /// <summary>\r\n        /// 外部からの情報通知。\r\n        /// </summary>\r\n        External = 3\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:01.044Z"
+}

@@ -1,0 +1,516 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Decision.UtilityOption",
+    "name": "UtilityOption",
+    "fileName": "UtilityOption.cs",
+    "namespace": "Framework.AI.Decision",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class UtilityOption<TAction, TContext>",
+    "typeParameters": [
+        {
+            "name": "TAction",
+            "description": "行動識別子の型"
+        },
+        {
+            "name": "TContext",
+            "description": "意思決定情報の型"
+        }
+    ],
+    "summary": "Utility AIにおける行動候補を定義する。",
+    "remarks": "行動の評価のみを担当し、実際の行動は実行しない。 評価処理が状態を変更しないことを前提とする。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "System.Collections.ObjectModel"
+    ],
+    "members": [
+        {
+            "name": "Id",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public TAction Id",
+            "returnType": "",
+            "valueType": "TAction",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "行動候補の識別子を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Weight",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Weight",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "行動候補の基本重みを取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "UseCompensation",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool UseCompensation",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "評価要素数による補正を使用するか取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Considerations",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public IReadOnlyList<UtilityConsideration<TContext>>\r\n            Considerations => readOnlyConsiderations",
+            "returnType": "",
+            "valueType": "IReadOnlyList<UtilityConsideration<TContext>>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "登録されている評価要素を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "UtilityOption",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public UtilityOption(\r\n            TAction id,\r\n            IEnumerable<UtilityConsideration<TContext>>\r\n                considerations,\r\n            float weight = 1f,\r\n            bool useCompensation = true,\r\n            Func<TContext, bool> availability = null)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動識別子"
+                },
+                {
+                    "name": "considerations",
+                    "type": "IEnumerable<UtilityConsideration<TContext>>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "評価要素の一覧"
+                },
+                {
+                    "name": "weight",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": "1f",
+                    "description": "基本重み。0から1"
+                },
+                {
+                    "name": "useCompensation",
+                    "type": "bool",
+                    "modifier": "",
+                    "defaultValue": "true",
+                    "description": "補正を使用するか"
+                },
+                {
+                    "name": "availability",
+                    "type": "Func<TContext, bool>",
+                    "modifier": "",
+                    "defaultValue": "null",
+                    "description": "行動を利用できるか判定する処理。 nullの場合は常に利用可能とする。"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動候補を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsAvailable",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsAvailable(TContext context)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "TContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "意思決定情報"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動候補が利用可能か判定する。",
+            "returns": "利用可能な場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Evaluate",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Evaluate(TContext context)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "TContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "意思決定情報"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動候補の評価値を計算する。",
+            "returns": "0から1の行動評価値",
+            "remarks": "利用不可能な行動の評価値は0とする。 評価要素がない場合は基本重みを返す。",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "UtilityOption",
+            "fullName": "UtilityOption",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "Utility AIにおける行動候補を定義する。",
+            "remarks": "行動の評価のみを担当し、実際の行動は実行しない。 評価処理が状態を変更しないことを前提とする。",
+            "attributes": [],
+            "declaration": "public sealed class UtilityOption<TAction, TContext>",
+            "inheritance": [],
+            "typeParameters": [
+                {
+                    "name": "TAction",
+                    "description": "行動識別子の型"
+                },
+                {
+                    "name": "TContext",
+                    "description": "意思決定情報の型"
+                }
+            ],
+            "members": [
+                {
+                    "name": "availability",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Func<TContext, bool> availability",
+                    "returnType": "",
+                    "valueType": "Func<TContext, bool>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動候補を利用できるか判定する処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "considerations",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly UtilityConsideration<TContext>[]\r\n            considerations",
+                    "returnType": "",
+                    "valueType": "UtilityConsideration<TContext>[]",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動候補に登録された評価要素。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "readOnlyConsiderations",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly ReadOnlyCollection<\r\n            UtilityConsideration<TContext>> readOnlyConsiderations",
+                    "returnType": "",
+                    "valueType": "ReadOnlyCollection<\r\n            UtilityConsideration<TContext>>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "評価要素の読み取り専用コレクション。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Id",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public TAction Id",
+                    "returnType": "",
+                    "valueType": "TAction",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "行動候補の識別子を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Weight",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Weight",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "行動候補の基本重みを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "UseCompensation",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool UseCompensation",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "評価要素数による補正を使用するか取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Considerations",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public IReadOnlyList<UtilityConsideration<TContext>>\r\n            Considerations => readOnlyConsiderations",
+                    "returnType": "",
+                    "valueType": "IReadOnlyList<UtilityConsideration<TContext>>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "登録されている評価要素を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "UtilityOption",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public UtilityOption(\r\n            TAction id,\r\n            IEnumerable<UtilityConsideration<TContext>>\r\n                considerations,\r\n            float weight = 1f,\r\n            bool useCompensation = true,\r\n            Func<TContext, bool> availability = null)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動識別子"
+                        },
+                        {
+                            "name": "considerations",
+                            "type": "IEnumerable<UtilityConsideration<TContext>>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "評価要素の一覧"
+                        },
+                        {
+                            "name": "weight",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "1f",
+                            "description": "基本重み。0から1"
+                        },
+                        {
+                            "name": "useCompensation",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": "true",
+                            "description": "補正を使用するか"
+                        },
+                        {
+                            "name": "availability",
+                            "type": "Func<TContext, bool>",
+                            "modifier": "",
+                            "defaultValue": "null",
+                            "description": "行動を利用できるか判定する処理。 nullの場合は常に利用可能とする。"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動候補を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsAvailable",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsAvailable(TContext context)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "意思決定情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動候補が利用可能か判定する。",
+                    "returns": "利用可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Evaluate",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Evaluate(TContext context)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "意思決定情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動候補の評価値を計算する。",
+                    "returns": "0から1の行動評価値",
+                    "remarks": "利用不可能な行動の評価値は0とする。 評価要素がない場合は基本重みを返す。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 17
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing System.Collections.ObjectModel;\r\n\r\nnamespace Framework.AI.Decision\r\n{\r\n    /// <summary>\r\n    /// Utility AIにおける行動候補を定義する。\r\n    /// </summary>\r\n    /// <typeparam name=\"TAction\">行動識別子の型</typeparam>\r\n    /// <typeparam name=\"TContext\">意思決定情報の型</typeparam>\r\n    /// <remarks>\r\n    /// 行動の評価のみを担当し、実際の行動は実行しない。\r\n    /// 評価処理が状態を変更しないことを前提とする。\r\n    /// </remarks>\r\n    public sealed class UtilityOption<TAction, TContext>\r\n    {\r\n        /// <summary>\r\n        /// 行動候補を利用できるか判定する処理。\r\n        /// </summary>\r\n        private readonly Func<TContext, bool> availability;\r\n\r\n        /// <summary>\r\n        /// 行動候補に登録された評価要素。\r\n        /// </summary>\r\n        private readonly UtilityConsideration<TContext>[]\r\n            considerations;\r\n\r\n        /// <summary>\r\n        /// 評価要素の読み取り専用コレクション。\r\n        /// </summary>\r\n        private readonly ReadOnlyCollection<\r\n            UtilityConsideration<TContext>> readOnlyConsiderations;\r\n\r\n        /// <summary>\r\n        /// 行動候補の識別子を取得する。\r\n        /// </summary>\r\n        public TAction Id { get; }\r\n\r\n        /// <summary>\r\n        /// 行動候補の基本重みを取得する。\r\n        /// </summary>\r\n        public float Weight { get; }\r\n\r\n        /// <summary>\r\n        /// 評価要素数による補正を使用するか取得する。\r\n        /// </summary>\r\n        public bool UseCompensation { get; }\r\n\r\n        /// <summary>\r\n        /// 登録されている評価要素を取得する。\r\n        /// </summary>\r\n        public IReadOnlyList<UtilityConsideration<TContext>>\r\n            Considerations => readOnlyConsiderations;\r\n\r\n        /// <summary>\r\n        /// 行動候補を生成する。\r\n        /// </summary>\r\n        /// <param name=\"id\">行動識別子</param>\r\n        /// <param name=\"considerations\">評価要素の一覧</param>\r\n        /// <param name=\"weight\">基本重み。0から1</param>\r\n        /// <param name=\"useCompensation\">補正を使用するか</param>\r\n        /// <param name=\"availability\">\r\n        /// 行動を利用できるか判定する処理。\r\n        /// nullの場合は常に利用可能とする。\r\n        /// </param>\r\n        public UtilityOption(\r\n            TAction id,\r\n            IEnumerable<UtilityConsideration<TContext>>\r\n                considerations,\r\n            float weight = 1f,\r\n            bool useCompensation = true,\r\n            Func<TContext, bool> availability = null)\r\n        {\r\n            if (id is null)\r\n            {\r\n                throw new ArgumentNullException(nameof(id));\r\n            }\r\n\r\n            if (considerations == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(considerations));\r\n            }\r\n\r\n            if (float.IsNaN(weight) ||\r\n                float.IsInfinity(weight) ||\r\n                weight < 0f ||\r\n                weight > 1f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(weight));\r\n            }\r\n\r\n            // 呼び出し元のコレクション変更による影響を防ぐ。\r\n            var buffer =\r\n                new List<UtilityConsideration<TContext>>();\r\n\r\n            foreach (var consideration in considerations)\r\n            {\r\n                if (consideration == null)\r\n                {\r\n                    throw new ArgumentException(\r\n                        \"評価要素にnullが含まれています。\",\r\n                        nameof(considerations));\r\n                }\r\n\r\n                buffer.Add(consideration);\r\n            }\r\n\r\n            Id = id;\r\n            Weight = weight;\r\n            UseCompensation = useCompensation;\r\n\r\n            this.availability = availability;\r\n            this.considerations = buffer.ToArray();\r\n\r\n            readOnlyConsiderations =\r\n                Array.AsReadOnly(this.considerations);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動候補が利用可能か判定する。\r\n        /// </summary>\r\n        /// <param name=\"context\">意思決定情報</param>\r\n        /// <returns>利用可能な場合はtrue</returns>\r\n        public bool IsAvailable(TContext context)\r\n        {\r\n            return availability == null ||\r\n                   availability(context);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動候補の評価値を計算する。\r\n        /// </summary>\r\n        /// <param name=\"context\">意思決定情報</param>\r\n        /// <returns>0から1の行動評価値</returns>\r\n        /// <remarks>\r\n        /// 利用不可能な行動の評価値は0とする。\r\n        /// 評価要素がない場合は基本重みを返す。\r\n        /// </remarks>\r\n        public float Evaluate(TContext context)\r\n        {\r\n            if (Weight <= 0f || !IsAvailable(context))\r\n            {\r\n                return 0f;\r\n            }\r\n\r\n            double score = Weight;\r\n\r\n            for (int i = 0; i < considerations.Length; i++)\r\n            {\r\n                float value =\r\n                    considerations[i].Evaluate(context);\r\n\r\n                // 評価値が0の場合は残りの評価を省略する。\r\n                if (value <= 0f)\r\n                {\r\n                    return 0f;\r\n                }\r\n\r\n                if (UseCompensation)\r\n                {\r\n                    value = UtilityMath.Compensate(\r\n                        value,\r\n                        considerations.Length);\r\n                }\r\n\r\n                score *= value;\r\n            }\r\n\r\n            return UtilityMath.Clamp01((float)score);\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:01.161Z"
+}

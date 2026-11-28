@@ -1,0 +1,306 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Memory.SpatialMemoryEntry",
+    "name": "SpatialMemoryEntry",
+    "fileName": "SpatialMemoryEntry.cs",
+    "namespace": "Framework.AI.Memory",
+    "type": "struct",
+    "accessibility": "public",
+    "modifiers": [
+        "readonly"
+    ],
+    "declaration": "public readonly struct SpatialMemoryEntry",
+    "typeParameters": [],
+    "summary": "特定の場所に対する訪問記録を保持する。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [
+        "System"
+    ],
+    "members": [
+        {
+            "name": "FirstVisitedTime",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public double FirstVisitedTime",
+            "returnType": "",
+            "valueType": "double",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "最初に訪問した時刻。単位は秒。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "LastVisitedTime",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public double LastVisitedTime",
+            "returnType": "",
+            "valueType": "double",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "最後に訪問した時刻。単位は秒。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "VisitCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int VisitCount",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "累計訪問回数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsVisited",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsVisited => VisitCount > 0",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "有効な訪問記録かどうかを取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SpatialMemoryEntry",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public SpatialMemoryEntry(\r\n            double firstVisitedTime,\r\n            double lastVisitedTime,\r\n            int visitCount)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "firstVisitedTime",
+                    "type": "double",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "初回訪問時刻"
+                },
+                {
+                    "name": "lastVisitedTime",
+                    "type": "double",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "最終訪問時刻"
+                },
+                {
+                    "name": "visitCount",
+                    "type": "int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "累計訪問回数"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "訪問記録を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "時刻または訪問回数が不正な場合に発生する。"
+                }
+            ]
+        }
+    ],
+    "types": [
+        {
+            "name": "SpatialMemoryEntry",
+            "fullName": "SpatialMemoryEntry",
+            "kind": "struct",
+            "accessibility": "public",
+            "modifiers": [
+                "readonly"
+            ],
+            "summary": "特定の場所に対する訪問記録を保持する。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public readonly struct SpatialMemoryEntry",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "FirstVisitedTime",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public double FirstVisitedTime",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "最初に訪問した時刻。単位は秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "LastVisitedTime",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public double LastVisitedTime",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "最後に訪問した時刻。単位は秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "VisitCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int VisitCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "累計訪問回数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsVisited",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsVisited => VisitCount > 0",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "有効な訪問記録かどうかを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SpatialMemoryEntry",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public SpatialMemoryEntry(\r\n            double firstVisitedTime,\r\n            double lastVisitedTime,\r\n            int visitCount)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "firstVisitedTime",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "初回訪問時刻"
+                        },
+                        {
+                            "name": "lastVisitedTime",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "最終訪問時刻"
+                        },
+                        {
+                            "name": "visitCount",
+                            "type": "int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "累計訪問回数"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "訪問記録を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "時刻または訪問回数が不正な場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 9
+        }
+    ],
+    "source": "\r\nusing System;\r\n\r\nnamespace Framework.AI.Memory\r\n{\r\n    /// <summary>\r\n    /// 特定の場所に対する訪問記録を保持する。\r\n    /// </summary>\r\n    public readonly struct SpatialMemoryEntry\r\n    {\r\n        /// <summary>\r\n        /// 最初に訪問した時刻。単位は秒。\r\n        /// </summary>\r\n        public double FirstVisitedTime { get; }\r\n\r\n        /// <summary>\r\n        /// 最後に訪問した時刻。単位は秒。\r\n        /// </summary>\r\n        public double LastVisitedTime { get; }\r\n\r\n        /// <summary>\r\n        /// 累計訪問回数。\r\n        /// </summary>\r\n        public int VisitCount { get; }\r\n\r\n        /// <summary>\r\n        /// 有効な訪問記録かどうかを取得する。\r\n        /// </summary>\r\n        public bool IsVisited => VisitCount > 0;\r\n\r\n        /// <summary>\r\n        /// 訪問記録を生成する。\r\n        /// </summary>\r\n        /// <param name=\"firstVisitedTime\">初回訪問時刻</param>\r\n        /// <param name=\"lastVisitedTime\">最終訪問時刻</param>\r\n        /// <param name=\"visitCount\">累計訪問回数</param>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 時刻または訪問回数が不正な場合に発生する。\r\n        /// </exception>\r\n        public SpatialMemoryEntry(\r\n            double firstVisitedTime,\r\n            double lastVisitedTime,\r\n            int visitCount)\r\n        {\r\n            if (double.IsNaN(firstVisitedTime) ||\r\n                double.IsInfinity(firstVisitedTime) ||\r\n                firstVisitedTime < 0d)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(firstVisitedTime));\r\n            }\r\n\r\n            if (double.IsNaN(lastVisitedTime) ||\r\n                double.IsInfinity(lastVisitedTime) ||\r\n                lastVisitedTime < firstVisitedTime)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(lastVisitedTime));\r\n            }\r\n\r\n            if (visitCount <= 0)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(visitCount));\r\n            }\r\n\r\n            FirstVisitedTime = firstVisitedTime;\r\n            LastVisitedTime = lastVisitedTime;\r\n            VisitCount = visitCount;\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:01.092Z"
+}

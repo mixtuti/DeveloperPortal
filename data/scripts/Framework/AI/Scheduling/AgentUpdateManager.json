@@ -1,0 +1,1972 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Scheduling.AgentUpdateManager",
+    "name": "AgentUpdateManager",
+    "fileName": "AgentUpdateManager.cs",
+    "namespace": "Framework.AI.Scheduling",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class AgentUpdateManager : MonoBehaviour",
+    "typeParameters": [],
+    "summary": "複数のエージェントの間隔更新と処理負荷を管理する。",
+    "remarks": "エージェント固有の行動内容には関与しない。 メインスレッドからの利用を想定する。",
+    "inheritance": [
+        "MonoBehaviour"
+    ],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "UnityEngine",
+        "MonoBehaviour"
+    ],
+    "members": [
+        {
+            "name": "Settings",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public AgentUpdateSettings Settings => settings",
+            "returnType": "",
+            "valueType": "AgentUpdateSettings",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の更新設定を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RegisteredCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int RegisteredCount => registeredCount",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "登録済みエージェント数を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "LastTickUpdateCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int LastTickUpdateCount =>\r\n            lastTickUpdateCount",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "直前の管理更新における実行件数を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TotalUpdateCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public long TotalUpdateCount =>\r\n            totalUpdateCount",
+            "returnType": "",
+            "valueType": "long",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "累計更新件数を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ElapsedTime",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public double ElapsedTime => elapsedTime",
+            "returnType": "",
+            "valueType": "double",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "管理開始からの経過時間を取得する。単位は秒。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsPaused",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsPaused => isPaused",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "更新処理が一時停止中かどうかを取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "AutoUpdate",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool AutoUpdate",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get",
+                "set"
+            ],
+            "summary": "自動更新の有効状態を取得または設定する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Configure",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Configure(\r\n            AgentUpdateSettings newSettings)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "newSettings",
+                    "type": "AgentUpdateSettings",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "新しい更新設定"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "更新管理設定を変更する。",
+            "returns": "",
+            "remarks": "登録済みエージェントの個別更新間隔は維持する。 標準更新間隔は以降の登録時に使用する。",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "設定がnullの場合に発生する。"
+                },
+                {
+                    "name": "InvalidOperationException",
+                    "description": "更新処理中の場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "TryRegister",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryRegister(IAgentTickable agent)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "agent",
+                    "type": "IAgentTickable",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "登録対象"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "標準更新間隔を使用してエージェントを登録する。",
+            "returns": "登録に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryRegister",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryRegister(\r\n            IAgentTickable agent,\r\n            float interval)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "agent",
+                    "type": "IAgentTickable",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "登録対象"
+                },
+                {
+                    "name": "interval",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "更新間隔。単位は秒"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "個別の更新間隔を指定してエージェントを登録する。",
+            "returns": "登録に成功した場合はtrue。 登録済みの場合はfalse。",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "エージェントがnullの場合に発生する。"
+                },
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "更新間隔が不正な場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "Contains",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Contains(IAgentTickable agent)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "agent",
+                    "type": "IAgentTickable",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "検索対象"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "エージェントが登録されているか判定する。",
+            "returns": "登録されている場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryUnregister",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryUnregister(IAgentTickable agent)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "agent",
+                    "type": "IAgentTickable",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "登録解除対象"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたエージェントの登録を解除する。",
+            "returns": "登録解除に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TrySetInterval",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TrySetInterval(\r\n            IAgentTickable agent,\r\n            float interval)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "agent",
+                    "type": "IAgentTickable",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "変更対象"
+                },
+                {
+                    "name": "interval",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "新しい更新間隔。単位は秒"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたエージェントの更新間隔を変更する。",
+            "returns": "変更対象が登録済みの場合はtrue",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "更新間隔が不正な場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "RequestUpdate",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool RequestUpdate(IAgentTickable agent)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "agent",
+                    "type": "IAgentTickable",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "更新要求対象"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "通常の更新予定を待たずに更新するよう要求する。",
+            "returns": "要求対象が登録済みの場合はtrue",
+            "remarks": "更新処理を直接実行するものではない。 最大実行件数の制限は維持される。 複数の要求は一回の更新要求としてまとめられる。",
+            "exceptions": []
+        },
+        {
+            "name": "SetPaused",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void SetPaused(bool paused)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "paused",
+                    "type": "bool",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "一時停止する場合はtrue"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "更新処理を一時停止または再開する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Pause",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Pause()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "更新処理を一時停止する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Resume",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Resume()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "更新処理を再開する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Tick",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Tick(float deltaTime)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "deltaTime",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "経過時間。単位は秒"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "エージェントの間隔更新を実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "経過時間が不正な場合に発生する。"
+                },
+                {
+                    "name": "InvalidOperationException",
+                    "description": "更新処理中に再度呼び出された場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "Clear",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Clear()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべてのエージェントの登録を解除する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ResetStatistics",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void ResetStatistics()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "更新統計情報をリセットする。",
+            "returns": "",
+            "remarks": "登録情報と更新予定時間は維持する。",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "AgentUpdateManager",
+            "fullName": "AgentUpdateManager",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "複数のエージェントの間隔更新と処理負荷を管理する。",
+            "remarks": "エージェント固有の行動内容には関与しない。 メインスレッドからの利用を想定する。",
+            "attributes": [
+                {
+                    "name": "DisallowMultipleComponent",
+                    "arguments": [],
+                    "raw": "DisallowMultipleComponent"
+                }
+            ],
+            "declaration": "public sealed class AgentUpdateManager : MonoBehaviour",
+            "inheritance": [
+                "MonoBehaviour"
+            ],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "settings",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private AgentUpdateSettings settings =\r\n            new AgentUpdateSettings()",
+                    "returnType": "",
+                    "valueType": "AgentUpdateSettings",
+                    "value": "new AgentUpdateSettings()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "更新設定"
+                            ],
+                            "raw": "Header(\"更新設定\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "更新間隔と処理負荷分散の設定。"
+                            ],
+                            "raw": "Tooltip(\"更新間隔と処理負荷分散の設定。\")"
+                        }
+                    ],
+                    "initialValue": "new AgentUpdateSettings()",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Settings",
+                        "type": "AgentUpdateSettings",
+                        "header": "更新設定",
+                        "tooltip": "更新間隔と処理負荷分散の設定。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "new AgentUpdateSettings()"
+                    }
+                },
+                {
+                    "name": "autoUpdate",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool autoUpdate = true",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "true",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "UnityのUpdateから自動的に更新する。"
+                            ],
+                            "raw": "Tooltip(\"UnityのUpdateから自動的に更新する。\")"
+                        }
+                    ],
+                    "initialValue": "true",
+                    "inspector": {
+                        "visible": true,
+                        "label": "Auto Update",
+                        "type": "bool",
+                        "header": null,
+                        "tooltip": "UnityのUpdateから自動的に更新する。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": "true"
+                    }
+                },
+                {
+                    "name": "isPaused",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isPaused",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "Header",
+                            "arguments": [
+                                "実行状態"
+                            ],
+                            "raw": "Header(\"実行状態\")"
+                        },
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "更新処理を一時停止しているかどうか。"
+                            ],
+                            "raw": "Tooltip(\"更新処理を一時停止しているかどうか。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Is Paused",
+                        "type": "bool",
+                        "header": "実行状態",
+                        "tooltip": "更新処理を一時停止しているかどうか。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "registeredCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int registeredCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "現在登録されているエージェント数。"
+                            ],
+                            "raw": "Tooltip(\"現在登録されているエージェント数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Registered Count",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "現在登録されているエージェント数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "lastTickUpdateCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int lastTickUpdateCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "直前の管理更新で実行した件数。"
+                            ],
+                            "raw": "Tooltip(\"直前の管理更新で実行した件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Last Tick Update Count",
+                        "type": "int",
+                        "header": null,
+                        "tooltip": "直前の管理更新で実行した件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "totalUpdateCount",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private long totalUpdateCount",
+                    "returnType": "",
+                    "valueType": "long",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [
+                        {
+                            "name": "SerializeField",
+                            "arguments": [],
+                            "raw": "SerializeField"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "arguments": [
+                                "これまでの累計更新件数。"
+                            ],
+                            "raw": "Tooltip(\"これまでの累計更新件数。\")"
+                        }
+                    ],
+                    "initialValue": null,
+                    "inspector": {
+                        "visible": true,
+                        "label": "Total Update Count",
+                        "type": "long",
+                        "header": null,
+                        "tooltip": "これまでの累計更新件数。",
+                        "range": null,
+                        "min": null,
+                        "space": null,
+                        "textArea": false,
+                        "multiline": false,
+                        "serializeReference": false,
+                        "initialValue": null
+                    }
+                },
+                {
+                    "name": "entries",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly List<AgentEntry> entries =\r\n            new List<AgentEntry>()",
+                    "returnType": "",
+                    "valueType": "List<AgentEntry>",
+                    "value": "new List<AgentEntry>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "登録されたエージェントの一覧。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new List<AgentEntry>()",
+                    "inspector": null
+                },
+                {
+                    "name": "nextIndex",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private int nextIndex",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "次回の走査開始位置。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "elapsedTime",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private double elapsedTime",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "管理開始からの経過時間。単位は秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "registrationSequence",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private long registrationSequence",
+                    "returnType": "",
+                    "valueType": "long",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "初回更新の分散に使用する登録番号。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "isTicking",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isTicking",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在更新処理を実行しているかどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "hasRemovedEntries",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool hasRemovedEntries",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "削除済み登録情報が残っているかどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "StaggerFactor",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const double StaggerFactor =\r\n            0.6180339887498949d",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "0.6180339887498949d",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "初回更新の分散に使用する黄金比由来の定数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "0.6180339887498949d",
+                    "inspector": null
+                },
+                {
+                    "name": "Settings",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public AgentUpdateSettings Settings => settings",
+                    "returnType": "",
+                    "valueType": "AgentUpdateSettings",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の更新設定を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RegisteredCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int RegisteredCount => registeredCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "登録済みエージェント数を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "LastTickUpdateCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int LastTickUpdateCount =>\r\n            lastTickUpdateCount",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "直前の管理更新における実行件数を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TotalUpdateCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public long TotalUpdateCount =>\r\n            totalUpdateCount",
+                    "returnType": "",
+                    "valueType": "long",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "累計更新件数を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ElapsedTime",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public double ElapsedTime => elapsedTime",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "管理開始からの経過時間を取得する。単位は秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsPaused",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsPaused => isPaused",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "更新処理が一時停止中かどうかを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "AutoUpdate",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool AutoUpdate",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get",
+                        "set"
+                    ],
+                    "summary": "自動更新の有効状態を取得または設定する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Awake",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Awake()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "初期設定を検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Update",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void Update()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "Unityのフレーム更新から管理処理を実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "OnDestroy",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void OnDestroy()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "破棄時に登録情報を解放する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Configure",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Configure(\r\n            AgentUpdateSettings newSettings)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "newSettings",
+                            "type": "AgentUpdateSettings",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "新しい更新設定"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "更新管理設定を変更する。",
+                    "returns": "",
+                    "remarks": "登録済みエージェントの個別更新間隔は維持する。 標準更新間隔は以降の登録時に使用する。",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "設定がnullの場合に発生する。"
+                        },
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "更新処理中の場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryRegister",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryRegister(IAgentTickable agent)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "agent",
+                            "type": "IAgentTickable",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "登録対象"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "標準更新間隔を使用してエージェントを登録する。",
+                    "returns": "登録に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryRegister",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryRegister(\r\n            IAgentTickable agent,\r\n            float interval)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "agent",
+                            "type": "IAgentTickable",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "登録対象"
+                        },
+                        {
+                            "name": "interval",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "更新間隔。単位は秒"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個別の更新間隔を指定してエージェントを登録する。",
+                    "returns": "登録に成功した場合はtrue。 登録済みの場合はfalse。",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "エージェントがnullの場合に発生する。"
+                        },
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "更新間隔が不正な場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Contains",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool Contains(IAgentTickable agent)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "agent",
+                            "type": "IAgentTickable",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検索対象"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "エージェントが登録されているか判定する。",
+                    "returns": "登録されている場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryUnregister",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryUnregister(IAgentTickable agent)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "agent",
+                            "type": "IAgentTickable",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "登録解除対象"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたエージェントの登録を解除する。",
+                    "returns": "登録解除に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TrySetInterval",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TrySetInterval(\r\n            IAgentTickable agent,\r\n            float interval)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "agent",
+                            "type": "IAgentTickable",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更対象"
+                        },
+                        {
+                            "name": "interval",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "新しい更新間隔。単位は秒"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたエージェントの更新間隔を変更する。",
+                    "returns": "変更対象が登録済みの場合はtrue",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "更新間隔が不正な場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RequestUpdate",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool RequestUpdate(IAgentTickable agent)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "agent",
+                            "type": "IAgentTickable",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "更新要求対象"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "通常の更新予定を待たずに更新するよう要求する。",
+                    "returns": "要求対象が登録済みの場合はtrue",
+                    "remarks": "更新処理を直接実行するものではない。 最大実行件数の制限は維持される。 複数の要求は一回の更新要求としてまとめられる。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SetPaused",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void SetPaused(bool paused)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "paused",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "一時停止する場合はtrue"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "更新処理を一時停止または再開する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Pause",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Pause()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "更新処理を一時停止する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Resume",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Resume()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "更新処理を再開する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Tick",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Tick(float deltaTime)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "deltaTime",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "経過時間。単位は秒"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "エージェントの間隔更新を実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "経過時間が不正な場合に発生する。"
+                        },
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "更新処理中に再度呼び出された場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ExecuteScheduledUpdates",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void ExecuteScheduledUpdates()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "更新予定に到達したエージェントを分散実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ExecuteAgent",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void ExecuteAgent(AgentEntry entry)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "entry",
+                            "type": "AgentEntry",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "更新対象の管理情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "単一エージェントの更新処理を実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "FindEntry",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private AgentEntry FindEntry(IAgentTickable agent)",
+                    "returnType": "AgentEntry",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "agent",
+                            "type": "IAgentTickable",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検索対象"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたエージェントの登録情報を検索する。",
+                    "returns": "登録情報。未登録の場合はnull",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "MarkRemoved",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void MarkRemoved(AgentEntry entry)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "entry",
+                            "type": "AgentEntry",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "削除対象"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された登録情報を削除済みとして扱う。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CompactEntries",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void CompactEntries()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "削除済みの登録情報を一覧から除去する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Clear",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Clear()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべてのエージェントの登録を解除する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ResetStatistics",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void ResetStatistics()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "更新統計情報をリセットする。",
+                    "returns": "",
+                    "remarks": "登録情報と更新予定時間は維持する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsInvalidAgent",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static bool IsInvalidAgent(\r\n            IAgentTickable agent)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "agent",
+                            "type": "IAgentTickable",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "判定対象"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "エージェントが無効な参照かどうか判定する。",
+                    "returns": "無効な参照の場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValidateInterval",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static void ValidateInterval(float interval)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "interval",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "更新間隔。単位は秒"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "更新間隔が有効であることを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "更新間隔が不正な場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [
+                {
+                    "name": "AgentEntry",
+                    "fullName": "AgentUpdateManager.AgentEntry",
+                    "kind": "class",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "sealed"
+                    ],
+                    "summary": "登録されたエージェントの更新管理情報。",
+                    "remarks": "",
+                    "attributes": [],
+                    "declaration": "private sealed class AgentEntry",
+                    "inheritance": [],
+                    "typeParameters": [],
+                    "members": [
+                        {
+                            "name": "Agent",
+                            "kind": "field",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public IAgentTickable Agent",
+                            "returnType": "",
+                            "valueType": "IAgentTickable",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [],
+                            "summary": "更新対象のエージェント。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": {
+                                "visible": true,
+                                "label": "Agent",
+                                "type": "IAgentTickable",
+                                "header": null,
+                                "tooltip": "",
+                                "range": null,
+                                "min": null,
+                                "space": null,
+                                "textArea": false,
+                                "multiline": false,
+                                "serializeReference": false,
+                                "initialValue": null
+                            }
+                        },
+                        {
+                            "name": "Interval",
+                            "kind": "field",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public float Interval",
+                            "returnType": "",
+                            "valueType": "float",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [],
+                            "summary": "個体固有の更新間隔。単位は秒。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": {
+                                "visible": true,
+                                "label": "Interval",
+                                "type": "float",
+                                "header": null,
+                                "tooltip": "",
+                                "range": null,
+                                "min": null,
+                                "space": null,
+                                "textArea": false,
+                                "multiline": false,
+                                "serializeReference": false,
+                                "initialValue": null
+                            }
+                        },
+                        {
+                            "name": "LastUpdateTime",
+                            "kind": "field",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public double LastUpdateTime",
+                            "returnType": "",
+                            "valueType": "double",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [],
+                            "summary": "前回更新した管理時間。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": {
+                                "visible": true,
+                                "label": "Last Update Time",
+                                "type": "double",
+                                "header": null,
+                                "tooltip": "",
+                                "range": null,
+                                "min": null,
+                                "space": null,
+                                "textArea": false,
+                                "multiline": false,
+                                "serializeReference": false,
+                                "initialValue": null
+                            }
+                        },
+                        {
+                            "name": "NextUpdateTime",
+                            "kind": "field",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public double NextUpdateTime",
+                            "returnType": "",
+                            "valueType": "double",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [],
+                            "summary": "次回更新予定の管理時間。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": {
+                                "visible": true,
+                                "label": "Next Update Time",
+                                "type": "double",
+                                "header": null,
+                                "tooltip": "",
+                                "range": null,
+                                "min": null,
+                                "space": null,
+                                "textArea": false,
+                                "multiline": false,
+                                "serializeReference": false,
+                                "initialValue": null
+                            }
+                        },
+                        {
+                            "name": "UpdateRequested",
+                            "kind": "field",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public bool UpdateRequested",
+                            "returnType": "",
+                            "valueType": "bool",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [],
+                            "summary": "更新要求が登録されているかどうか。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": {
+                                "visible": true,
+                                "label": "Update Requested",
+                                "type": "bool",
+                                "header": null,
+                                "tooltip": "",
+                                "range": null,
+                                "min": null,
+                                "space": null,
+                                "textArea": false,
+                                "multiline": false,
+                                "serializeReference": false,
+                                "initialValue": null
+                            }
+                        },
+                        {
+                            "name": "IsRemoved",
+                            "kind": "field",
+                            "accessibility": "public",
+                            "modifiers": [],
+                            "signature": "public bool IsRemoved",
+                            "returnType": "",
+                            "valueType": "bool",
+                            "value": "",
+                            "parameters": [],
+                            "typeParameters": [],
+                            "accessors": [],
+                            "summary": "登録解除されているかどうか。",
+                            "returns": "",
+                            "remarks": "",
+                            "exceptions": [],
+                            "attributes": [],
+                            "initialValue": null,
+                            "inspector": {
+                                "visible": true,
+                                "label": "Is Removed",
+                                "type": "bool",
+                                "header": null,
+                                "tooltip": "",
+                                "range": null,
+                                "min": null,
+                                "space": null,
+                                "textArea": false,
+                                "multiline": false,
+                                "serializeReference": false,
+                                "initialValue": null
+                            }
+                        }
+                    ],
+                    "nestedTypes": [],
+                    "enumValues": [],
+                    "line": 21
+                }
+            ],
+            "enumValues": [],
+            "line": 16
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing UnityEngine;\r\n\r\nnamespace Framework.AI.Scheduling\r\n{\r\n    /// <summary>\r\n    /// 複数のエージェントの間隔更新と処理負荷を管理する。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// エージェント固有の行動内容には関与しない。\r\n    /// メインスレッドからの利用を想定する。\r\n    /// </remarks>\r\n    [DisallowMultipleComponent]\r\n    public sealed class AgentUpdateManager : MonoBehaviour\r\n    {\r\n        /// <summary>\r\n        /// 登録されたエージェントの更新管理情報。\r\n        /// </summary>\r\n        private sealed class AgentEntry\r\n        {\r\n            /// <summary>\r\n            /// 更新対象のエージェント。\r\n            /// </summary>\r\n            public IAgentTickable Agent;\r\n\r\n            /// <summary>\r\n            /// 個体固有の更新間隔。単位は秒。\r\n            /// </summary>\r\n            public float Interval;\r\n\r\n            /// <summary>\r\n            /// 前回更新した管理時間。\r\n            /// </summary>\r\n            public double LastUpdateTime;\r\n\r\n            /// <summary>\r\n            /// 次回更新予定の管理時間。\r\n            /// </summary>\r\n            public double NextUpdateTime;\r\n\r\n            /// <summary>\r\n            /// 更新要求が登録されているかどうか。\r\n            /// </summary>\r\n            public bool UpdateRequested;\r\n\r\n            /// <summary>\r\n            /// 登録解除されているかどうか。\r\n            /// </summary>\r\n            public bool IsRemoved;\r\n        }\r\n\r\n        [Header(\"更新設定\")]\r\n        [SerializeField]\r\n        [Tooltip(\"更新間隔と処理負荷分散の設定。\")]\r\n        private AgentUpdateSettings settings =\r\n            new AgentUpdateSettings();\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"UnityのUpdateから自動的に更新する。\")]\r\n        private bool autoUpdate = true;\r\n\r\n        [Header(\"実行状態\")]\r\n        [SerializeField]\r\n        [Tooltip(\"更新処理を一時停止しているかどうか。\")]\r\n        private bool isPaused;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"現在登録されているエージェント数。\")]\r\n        private int registeredCount;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"直前の管理更新で実行した件数。\")]\r\n        private int lastTickUpdateCount;\r\n\r\n        [SerializeField]\r\n        [Tooltip(\"これまでの累計更新件数。\")]\r\n        private long totalUpdateCount;\r\n\r\n        /// <summary>\r\n        /// 登録されたエージェントの一覧。\r\n        /// </summary>\r\n        private readonly List<AgentEntry> entries =\r\n            new List<AgentEntry>();\r\n\r\n        /// <summary>\r\n        /// 次回の走査開始位置。\r\n        /// </summary>\r\n        private int nextIndex;\r\n\r\n        /// <summary>\r\n        /// 管理開始からの経過時間。単位は秒。\r\n        /// </summary>\r\n        private double elapsedTime;\r\n\r\n        /// <summary>\r\n        /// 初回更新の分散に使用する登録番号。\r\n        /// </summary>\r\n        private long registrationSequence;\r\n\r\n        /// <summary>\r\n        /// 現在更新処理を実行しているかどうか。\r\n        /// </summary>\r\n        private bool isTicking;\r\n\r\n        /// <summary>\r\n        /// 削除済み登録情報が残っているかどうか。\r\n        /// </summary>\r\n        private bool hasRemovedEntries;\r\n\r\n        /// <summary>\r\n        /// 初回更新の分散に使用する黄金比由来の定数。\r\n        /// </summary>\r\n        private const double StaggerFactor =\r\n            0.6180339887498949d;\r\n\r\n        /// <summary>\r\n        /// 現在の更新設定を取得する。\r\n        /// </summary>\r\n        public AgentUpdateSettings Settings => settings;\r\n\r\n        /// <summary>\r\n        /// 登録済みエージェント数を取得する。\r\n        /// </summary>\r\n        public int RegisteredCount => registeredCount;\r\n\r\n        /// <summary>\r\n        /// 直前の管理更新における実行件数を取得する。\r\n        /// </summary>\r\n        public int LastTickUpdateCount =>\r\n            lastTickUpdateCount;\r\n\r\n        /// <summary>\r\n        /// 累計更新件数を取得する。\r\n        /// </summary>\r\n        public long TotalUpdateCount =>\r\n            totalUpdateCount;\r\n\r\n        /// <summary>\r\n        /// 管理開始からの経過時間を取得する。単位は秒。\r\n        /// </summary>\r\n        public double ElapsedTime => elapsedTime;\r\n\r\n        /// <summary>\r\n        /// 更新処理が一時停止中かどうかを取得する。\r\n        /// </summary>\r\n        public bool IsPaused => isPaused;\r\n\r\n        /// <summary>\r\n        /// 自動更新の有効状態を取得または設定する。\r\n        /// </summary>\r\n        public bool AutoUpdate\r\n        {\r\n            get => autoUpdate;\r\n            set => autoUpdate = value;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 初期設定を検証する。\r\n        /// </summary>\r\n        private void Awake()\r\n        {\r\n            if (settings == null)\r\n            {\r\n                settings = new AgentUpdateSettings();\r\n            }\r\n\r\n            settings.Validate();\r\n        }\r\n\r\n        /// <summary>\r\n        /// Unityのフレーム更新から管理処理を実行する。\r\n        /// </summary>\r\n        private void Update()\r\n        {\r\n            if (!autoUpdate)\r\n            {\r\n                return;\r\n            }\r\n\r\n            float deltaTime = settings.UseUnscaledTime\r\n                ? Time.unscaledDeltaTime\r\n                : Time.deltaTime;\r\n\r\n            Tick(deltaTime);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 破棄時に登録情報を解放する。\r\n        /// </summary>\r\n        private void OnDestroy()\r\n        {\r\n            Clear();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 更新管理設定を変更する。\r\n        /// </summary>\r\n        /// <param name=\"newSettings\">新しい更新設定</param>\r\n        /// <remarks>\r\n        /// 登録済みエージェントの個別更新間隔は維持する。\r\n        /// 標準更新間隔は以降の登録時に使用する。\r\n        /// </remarks>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 設定がnullの場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 更新処理中の場合に発生する。\r\n        /// </exception>\r\n        public void Configure(\r\n            AgentUpdateSettings newSettings)\r\n        {\r\n            if (isTicking)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"更新処理中は設定を変更できません。\");\r\n            }\r\n\r\n            if (newSettings == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(newSettings));\r\n            }\r\n\r\n            newSettings.Validate();\r\n\r\n            settings = newSettings;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 標準更新間隔を使用してエージェントを登録する。\r\n        /// </summary>\r\n        /// <param name=\"agent\">登録対象</param>\r\n        /// <returns>登録に成功した場合はtrue</returns>\r\n        public bool TryRegister(IAgentTickable agent)\r\n        {\r\n            return TryRegister(\r\n                agent,\r\n                settings.UpdateInterval);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個別の更新間隔を指定してエージェントを登録する。\r\n        /// </summary>\r\n        /// <param name=\"agent\">登録対象</param>\r\n        /// <param name=\"interval\">更新間隔。単位は秒</param>\r\n        /// <returns>\r\n        /// 登録に成功した場合はtrue。\r\n        /// 登録済みの場合はfalse。\r\n        /// </returns>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// エージェントがnullの場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 更新間隔が不正な場合に発生する。\r\n        /// </exception>\r\n        public bool TryRegister(\r\n            IAgentTickable agent,\r\n            float interval)\r\n        {\r\n            if (IsInvalidAgent(agent))\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(agent));\r\n            }\r\n\r\n            ValidateInterval(interval);\r\n\r\n            if (FindEntry(agent) != null)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 初回更新までの待機時間。\r\n            double initialDelay = interval;\r\n\r\n            if (settings.StaggerInitialUpdate)\r\n            {\r\n                // 登録順に更新タイミングが集中しないよう分散する。\r\n                double phase =\r\n                    (registrationSequence * StaggerFactor) % 1d;\r\n\r\n                initialDelay = interval * phase;\r\n            }\r\n\r\n            registrationSequence++;\r\n\r\n            var entry = new AgentEntry\r\n            {\r\n                Agent = agent,\r\n                Interval = interval,\r\n                LastUpdateTime = elapsedTime,\r\n                NextUpdateTime = elapsedTime + initialDelay,\r\n                UpdateRequested = false,\r\n                IsRemoved = false\r\n            };\r\n\r\n            entries.Add(entry);\r\n\r\n            registeredCount++;\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// エージェントが登録されているか判定する。\r\n        /// </summary>\r\n        /// <param name=\"agent\">検索対象</param>\r\n        /// <returns>登録されている場合はtrue</returns>\r\n        public bool Contains(IAgentTickable agent)\r\n        {\r\n            return FindEntry(agent) != null;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたエージェントの登録を解除する。\r\n        /// </summary>\r\n        /// <param name=\"agent\">登録解除対象</param>\r\n        /// <returns>登録解除に成功した場合はtrue</returns>\r\n        public bool TryUnregister(IAgentTickable agent)\r\n        {\r\n            AgentEntry entry = FindEntry(agent);\r\n\r\n            if (entry == null)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            MarkRemoved(entry);\r\n\r\n            // 更新処理中の一覧変更を回避する。\r\n            if (!isTicking)\r\n            {\r\n                CompactEntries();\r\n            }\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたエージェントの更新間隔を変更する。\r\n        /// </summary>\r\n        /// <param name=\"agent\">変更対象</param>\r\n        /// <param name=\"interval\">新しい更新間隔。単位は秒</param>\r\n        /// <returns>変更対象が登録済みの場合はtrue</returns>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 更新間隔が不正な場合に発生する。\r\n        /// </exception>\r\n        public bool TrySetInterval(\r\n            IAgentTickable agent,\r\n            float interval)\r\n        {\r\n            ValidateInterval(interval);\r\n\r\n            AgentEntry entry = FindEntry(agent);\r\n\r\n            if (entry == null)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            entry.Interval = interval;\r\n\r\n            entry.NextUpdateTime =\r\n                entry.LastUpdateTime + interval;\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 通常の更新予定を待たずに更新するよう要求する。\r\n        /// </summary>\r\n        /// <param name=\"agent\">更新要求対象</param>\r\n        /// <returns>要求対象が登録済みの場合はtrue</returns>\r\n        /// <remarks>\r\n        /// 更新処理を直接実行するものではない。\r\n        /// 最大実行件数の制限は維持される。\r\n        /// 複数の要求は一回の更新要求としてまとめられる。\r\n        /// </remarks>\r\n        public bool RequestUpdate(IAgentTickable agent)\r\n        {\r\n            AgentEntry entry = FindEntry(agent);\r\n\r\n            if (entry == null)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            entry.UpdateRequested = true;\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 更新処理を一時停止または再開する。\r\n        /// </summary>\r\n        /// <param name=\"paused\">一時停止する場合はtrue</param>\r\n        public void SetPaused(bool paused)\r\n        {\r\n            isPaused = paused;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 更新処理を一時停止する。\r\n        /// </summary>\r\n        public void Pause()\r\n        {\r\n            SetPaused(true);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 更新処理を再開する。\r\n        /// </summary>\r\n        public void Resume()\r\n        {\r\n            SetPaused(false);\r\n        }\r\n\r\n        /// <summary>\r\n        /// エージェントの間隔更新を実行する。\r\n        /// </summary>\r\n        /// <param name=\"deltaTime\">経過時間。単位は秒</param>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 経過時間が不正な場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 更新処理中に再度呼び出された場合に発生する。\r\n        /// </exception>\r\n        public void Tick(float deltaTime)\r\n        {\r\n            if (float.IsNaN(deltaTime) ||\r\n                float.IsInfinity(deltaTime) ||\r\n                deltaTime < 0f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(deltaTime));\r\n            }\r\n\r\n            if (isTicking)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"更新処理中にTickを再実行できません。\");\r\n            }\r\n\r\n            lastTickUpdateCount = 0;\r\n\r\n            if (isPaused || deltaTime == 0f)\r\n            {\r\n                return;\r\n            }\r\n\r\n            elapsedTime += deltaTime;\r\n\r\n            if (entries.Count == 0)\r\n            {\r\n                return;\r\n            }\r\n\r\n            isTicking = true;\r\n\r\n            try\r\n            {\r\n                ExecuteScheduledUpdates();\r\n            }\r\n            finally\r\n            {\r\n                isTicking = false;\r\n\r\n                if (hasRemovedEntries)\r\n                {\r\n                    CompactEntries();\r\n                }\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 更新予定に到達したエージェントを分散実行する。\r\n        /// </summary>\r\n        private void ExecuteScheduledUpdates()\r\n        {\r\n            // 更新中に新規登録された対象は次回から処理する。\r\n            int scanLimit = entries.Count;\r\n\r\n            int scannedCount = 0;\r\n\r\n            int maxUpdates = settings.MaxUpdatesPerTick;\r\n\r\n            while (scannedCount < scanLimit &&\r\n                   lastTickUpdateCount < maxUpdates &&\r\n                   !isPaused)\r\n            {\r\n                if (nextIndex >= scanLimit)\r\n                {\r\n                    nextIndex = 0;\r\n                }\r\n\r\n                AgentEntry entry = entries[nextIndex];\r\n\r\n                // 次のエージェントから走査を再開できるようにする。\r\n                nextIndex++;\r\n\r\n                scannedCount++;\r\n\r\n                if (entry.IsRemoved)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                if (IsInvalidAgent(entry.Agent))\r\n                {\r\n                    MarkRemoved(entry);\r\n\r\n                    continue;\r\n                }\r\n\r\n                if (!entry.Agent.IsTickEnabled)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                bool isDue =\r\n                    elapsedTime >= entry.NextUpdateTime;\r\n\r\n                if (!isDue && !entry.UpdateRequested)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                ExecuteAgent(entry);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 単一エージェントの更新処理を実行する。\r\n        /// </summary>\r\n        /// <param name=\"entry\">更新対象の管理情報</param>\r\n        private void ExecuteAgent(AgentEntry entry)\r\n        {\r\n            // 前回の実行からの実際の経過時間を算出する。\r\n            double elapsed =\r\n                elapsedTime - entry.LastUpdateTime;\r\n\r\n            float agentDeltaTime =\r\n                (float)Math.Min(elapsed, float.MaxValue);\r\n\r\n            // コールバック内からの再要求を保持できるよう、\r\n            // 実行前に現在の更新要求を解除する。\r\n            entry.UpdateRequested = false;\r\n\r\n            entry.LastUpdateTime = elapsedTime;\r\n\r\n            entry.NextUpdateTime =\r\n                elapsedTime + entry.Interval;\r\n\r\n            lastTickUpdateCount++;\r\n\r\n            totalUpdateCount++;\r\n\r\n            try\r\n            {\r\n                entry.Agent.Tick(agentDeltaTime);\r\n            }\r\n            catch (Exception exception)\r\n            {\r\n                // 異常のあるエージェントを登録解除し、\r\n                // 他のエージェントの更新を継続する。\r\n                MarkRemoved(entry);\r\n\r\n                Debug.LogException(exception, this);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたエージェントの登録情報を検索する。\r\n        /// </summary>\r\n        /// <param name=\"agent\">検索対象</param>\r\n        /// <returns>登録情報。未登録の場合はnull</returns>\r\n        private AgentEntry FindEntry(IAgentTickable agent)\r\n        {\r\n            for (int i = 0; i < entries.Count; i++)\r\n            {\r\n                AgentEntry entry = entries[i];\r\n\r\n                if (!entry.IsRemoved &&\r\n                    ReferenceEquals(entry.Agent, agent))\r\n                {\r\n                    return entry;\r\n                }\r\n            }\r\n\r\n            return null;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された登録情報を削除済みとして扱う。\r\n        /// </summary>\r\n        /// <param name=\"entry\">削除対象</param>\r\n        private void MarkRemoved(AgentEntry entry)\r\n        {\r\n            if (entry.IsRemoved)\r\n            {\r\n                return;\r\n            }\r\n\r\n            entry.IsRemoved = true;\r\n\r\n            registeredCount--;\r\n\r\n            hasRemovedEntries = true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 削除済みの登録情報を一覧から除去する。\r\n        /// </summary>\r\n        private void CompactEntries()\r\n        {\r\n            // 走査位置を補正しながら削除済み情報を除去する。\r\n            for (int i = entries.Count - 1; i >= 0; i--)\r\n            {\r\n                if (!entries[i].IsRemoved)\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                if (i < nextIndex)\r\n                {\r\n                    nextIndex--;\r\n                }\r\n\r\n                entries.RemoveAt(i);\r\n            }\r\n\r\n            if (nextIndex >= entries.Count)\r\n            {\r\n                nextIndex = 0;\r\n            }\r\n\r\n            hasRemovedEntries = false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべてのエージェントの登録を解除する。\r\n        /// </summary>\r\n        public void Clear()\r\n        {\r\n            if (isTicking)\r\n            {\r\n                // 更新中は物理的な削除を行わない。\r\n                for (int i = 0; i < entries.Count; i++)\r\n                {\r\n                    MarkRemoved(entries[i]);\r\n                }\r\n\r\n                return;\r\n            }\r\n\r\n            entries.Clear();\r\n\r\n            registeredCount = 0;\r\n\r\n            nextIndex = 0;\r\n\r\n            hasRemovedEntries = false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 更新統計情報をリセットする。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// 登録情報と更新予定時間は維持する。\r\n        /// </remarks>\r\n        public void ResetStatistics()\r\n        {\r\n            if (isTicking)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"更新処理中は統計をリセットできません。\");\r\n            }\r\n\r\n            lastTickUpdateCount = 0;\r\n\r\n            totalUpdateCount = 0;\r\n        }\r\n\r\n        /// <summary>\r\n        /// エージェントが無効な参照かどうか判定する。\r\n        /// </summary>\r\n        /// <param name=\"agent\">判定対象</param>\r\n        /// <returns>無効な参照の場合はtrue</returns>\r\n        private static bool IsInvalidAgent(\r\n            IAgentTickable agent)\r\n        {\r\n            if (ReferenceEquals(agent, null))\r\n            {\r\n                return true;\r\n            }\r\n\r\n            // Unityオブジェクトの破棄済み参照にも対応する。\r\n            if (agent is UnityEngine.Object unityObject)\r\n            {\r\n                return unityObject == null;\r\n            }\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 更新間隔が有効であることを検証する。\r\n        /// </summary>\r\n        /// <param name=\"interval\">更新間隔。単位は秒</param>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 更新間隔が不正な場合に発生する。\r\n        /// </exception>\r\n        private static void ValidateInterval(float interval)\r\n        {\r\n            if (float.IsNaN(interval) ||\r\n                float.IsInfinity(interval) ||\r\n                interval < 0.001f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(interval),\r\n                    \"更新間隔は0.001秒以上である必要があります。\");\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.134Z"
+}

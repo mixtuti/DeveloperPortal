@@ -1,0 +1,434 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Perception.PerceptionStimulus",
+    "name": "PerceptionStimulus",
+    "fileName": "PerceptionStimulus.cs",
+    "namespace": "Framework.AI.Perception",
+    "type": "struct",
+    "accessibility": "public",
+    "modifiers": [
+        "readonly"
+    ],
+    "declaration": "public readonly struct PerceptionStimulus<TPosition>",
+    "typeParameters": [
+        {
+            "name": "TPosition",
+            "description": "認識位置を表現する型。"
+        }
+    ],
+    "summary": "エージェントが認識した刺激の情報を保持する。",
+    "remarks": "認識時点の情報を保持する。 対象の現在位置を自動的に追跡するものではない。",
+    "inheritance": [],
+    "dependencies": [
+        "System"
+    ],
+    "members": [
+        {
+            "name": "SourceId",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Guid SourceId",
+            "returnType": "",
+            "valueType": "Guid",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "認識した対象の識別子。 対象不明の場合はGuid.Emptyを使用する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Type",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public PerceptionType Type",
+            "returnType": "",
+            "valueType": "PerceptionType",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "情報を認識した手段。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Position",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public TPosition Position",
+            "returnType": "",
+            "valueType": "TPosition",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "認識時点における対象の位置。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Confidence",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Confidence",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "認識情報の信頼度。0から1の範囲。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Timestamp",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public double Timestamp",
+            "returnType": "",
+            "valueType": "double",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "情報を認識した時刻。単位は秒。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsValid",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsValid",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "正常に生成された認識情報かどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "PerceptionStimulus",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public PerceptionStimulus(\r\n            Guid sourceId,\r\n            PerceptionType type,\r\n            TPosition position,\r\n            float confidence,\r\n            double timestamp)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "sourceId",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識対象の識別子"
+                },
+                {
+                    "name": "type",
+                    "type": "PerceptionType",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識手段"
+                },
+                {
+                    "name": "position",
+                    "type": "TPosition",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識位置"
+                },
+                {
+                    "name": "confidence",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "信頼度。0から1"
+                },
+                {
+                    "name": "timestamp",
+                    "type": "double",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識時刻。単位は秒"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "認識した刺激の情報を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "認識手段、信頼度、認識時刻が不正な場合に発生する。"
+                },
+                {
+                    "name": "ArgumentNullException",
+                    "description": "認識位置がnullの場合に発生する。"
+                }
+            ]
+        }
+    ],
+    "types": [
+        {
+            "name": "PerceptionStimulus",
+            "fullName": "PerceptionStimulus",
+            "kind": "struct",
+            "accessibility": "public",
+            "modifiers": [
+                "readonly"
+            ],
+            "summary": "エージェントが認識した刺激の情報を保持する。",
+            "remarks": "認識時点の情報を保持する。 対象の現在位置を自動的に追跡するものではない。",
+            "attributes": [],
+            "declaration": "public readonly struct PerceptionStimulus<TPosition>",
+            "inheritance": [],
+            "typeParameters": [
+                {
+                    "name": "TPosition",
+                    "description": "認識位置を表現する型。"
+                }
+            ],
+            "members": [
+                {
+                    "name": "SourceId",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Guid SourceId",
+                    "returnType": "",
+                    "valueType": "Guid",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "認識した対象の識別子。 対象不明の場合はGuid.Emptyを使用する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Type",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public PerceptionType Type",
+                    "returnType": "",
+                    "valueType": "PerceptionType",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "情報を認識した手段。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Position",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public TPosition Position",
+                    "returnType": "",
+                    "valueType": "TPosition",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "認識時点における対象の位置。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Confidence",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Confidence",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "認識情報の信頼度。0から1の範囲。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Timestamp",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public double Timestamp",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "情報を認識した時刻。単位は秒。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsValid",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsValid",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "正常に生成された認識情報かどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "PerceptionStimulus",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public PerceptionStimulus(\r\n            Guid sourceId,\r\n            PerceptionType type,\r\n            TPosition position,\r\n            float confidence,\r\n            double timestamp)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "sourceId",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識対象の識別子"
+                        },
+                        {
+                            "name": "type",
+                            "type": "PerceptionType",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識手段"
+                        },
+                        {
+                            "name": "position",
+                            "type": "TPosition",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識位置"
+                        },
+                        {
+                            "name": "confidence",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "信頼度。0から1"
+                        },
+                        {
+                            "name": "timestamp",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識時刻。単位は秒"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識した刺激の情報を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "認識手段、信頼度、認識時刻が不正な場合に発生する。"
+                        },
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "認識位置がnullの場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 16
+        }
+    ],
+    "source": "\r\nusing System;\r\n\r\nnamespace Framework.AI.Perception\r\n{\r\n    /// <summary>\r\n    /// エージェントが認識した刺激の情報を保持する。\r\n    /// </summary>\r\n    /// <typeparam name=\"TPosition\">\r\n    /// 認識位置を表現する型。\r\n    /// </typeparam>\r\n    /// <remarks>\r\n    /// 認識時点の情報を保持する。\r\n    /// 対象の現在位置を自動的に追跡するものではない。\r\n    /// </remarks>\r\n    public readonly struct PerceptionStimulus<TPosition>\r\n    {\r\n        /// <summary>\r\n        /// 認識した対象の識別子。\r\n        /// 対象不明の場合はGuid.Emptyを使用する。\r\n        /// </summary>\r\n        public Guid SourceId { get; }\r\n\r\n        /// <summary>\r\n        /// 情報を認識した手段。\r\n        /// </summary>\r\n        public PerceptionType Type { get; }\r\n\r\n        /// <summary>\r\n        /// 認識時点における対象の位置。\r\n        /// </summary>\r\n        public TPosition Position { get; }\r\n\r\n        /// <summary>\r\n        /// 認識情報の信頼度。0から1の範囲。\r\n        /// </summary>\r\n        public float Confidence { get; }\r\n\r\n        /// <summary>\r\n        /// 情報を認識した時刻。単位は秒。\r\n        /// </summary>\r\n        public double Timestamp { get; }\r\n\r\n        /// <summary>\r\n        /// 正常に生成された認識情報かどうか。\r\n        /// </summary>\r\n        public bool IsValid { get; }\r\n\r\n        /// <summary>\r\n        /// 認識した刺激の情報を生成する。\r\n        /// </summary>\r\n        /// <param name=\"sourceId\">認識対象の識別子</param>\r\n        /// <param name=\"type\">認識手段</param>\r\n        /// <param name=\"position\">認識位置</param>\r\n        /// <param name=\"confidence\">信頼度。0から1</param>\r\n        /// <param name=\"timestamp\">認識時刻。単位は秒</param>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 認識手段、信頼度、認識時刻が不正な場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 認識位置がnullの場合に発生する。\r\n        /// </exception>\r\n        public PerceptionStimulus(\r\n            Guid sourceId,\r\n            PerceptionType type,\r\n            TPosition position,\r\n            float confidence,\r\n            double timestamp)\r\n        {\r\n            if (type != PerceptionType.Sight &&\r\n                type != PerceptionType.Hearing &&\r\n                type != PerceptionType.Contact &&\r\n                type != PerceptionType.External)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(type));\r\n            }\r\n\r\n            if (position is null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(position));\r\n            }\r\n\r\n            if (float.IsNaN(confidence) ||\r\n                float.IsInfinity(confidence) ||\r\n                confidence < 0f ||\r\n                confidence > 1f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(confidence));\r\n            }\r\n\r\n            if (double.IsNaN(timestamp) ||\r\n                double.IsInfinity(timestamp) ||\r\n                timestamp < 0d)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(timestamp));\r\n            }\r\n\r\n            SourceId = sourceId;\r\n            Type = type;\r\n            Position = position;\r\n            Confidence = confidence;\r\n            Timestamp = timestamp;\r\n            IsValid = true;\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:01.034Z"
+}

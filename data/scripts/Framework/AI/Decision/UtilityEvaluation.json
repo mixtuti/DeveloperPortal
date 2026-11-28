@@ -1,0 +1,402 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Decision.UtilityEvaluation",
+    "name": "UtilityEvaluation",
+    "fileName": "UtilityEvaluation.cs",
+    "namespace": "Framework.AI.Decision",
+    "type": "struct",
+    "accessibility": "public",
+    "modifiers": [
+        "readonly"
+    ],
+    "declaration": "public readonly struct UtilityEvaluation<TAction>",
+    "typeParameters": [
+        {
+            "name": "TAction",
+            "description": "行動識別子の型"
+        }
+    ],
+    "summary": "行動候補の評価結果を保持する。",
+    "remarks": "",
+    "inheritance": [],
+    "dependencies": [
+        "System"
+    ],
+    "members": [
+        {
+            "name": "ActionId",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public TAction ActionId",
+            "returnType": "",
+            "valueType": "TAction",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "評価対象の行動識別子。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RawScore",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float RawScore",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "継続優遇を含まない評価値。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SelectionScore",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float SelectionScore",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "継続優遇を含む比較用評価値。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsCurrentAction",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsCurrentAction",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在実行している行動かどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsValid",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsValid",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "有効な評価結果かどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsSelectable",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsSelectable =>\r\n            IsValid && RawScore > 0f",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "選択可能な評価結果かどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "UtilityEvaluation",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public UtilityEvaluation(\r\n            TAction actionId,\r\n            float rawScore,\r\n            bool isCurrentAction,\r\n            float continuationBonus = 0f)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "actionId",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動識別子"
+                },
+                {
+                    "name": "rawScore",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "基本評価値"
+                },
+                {
+                    "name": "isCurrentAction",
+                    "type": "bool",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "現在の行動かどうか"
+                },
+                {
+                    "name": "continuationBonus",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": "0f",
+                    "description": "継続優遇値。0から1"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動候補の評価結果を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "UtilityEvaluation",
+            "fullName": "UtilityEvaluation",
+            "kind": "struct",
+            "accessibility": "public",
+            "modifiers": [
+                "readonly"
+            ],
+            "summary": "行動候補の評価結果を保持する。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public readonly struct UtilityEvaluation<TAction>",
+            "inheritance": [],
+            "typeParameters": [
+                {
+                    "name": "TAction",
+                    "description": "行動識別子の型"
+                }
+            ],
+            "members": [
+                {
+                    "name": "ActionId",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public TAction ActionId",
+                    "returnType": "",
+                    "valueType": "TAction",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "評価対象の行動識別子。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RawScore",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float RawScore",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "継続優遇を含まない評価値。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SelectionScore",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float SelectionScore",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "継続優遇を含む比較用評価値。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsCurrentAction",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsCurrentAction",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在実行している行動かどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsValid",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsValid",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "有効な評価結果かどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsSelectable",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsSelectable =>\r\n            IsValid && RawScore > 0f",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "選択可能な評価結果かどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "UtilityEvaluation",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public UtilityEvaluation(\r\n            TAction actionId,\r\n            float rawScore,\r\n            bool isCurrentAction,\r\n            float continuationBonus = 0f)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "actionId",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動識別子"
+                        },
+                        {
+                            "name": "rawScore",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "基本評価値"
+                        },
+                        {
+                            "name": "isCurrentAction",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "現在の行動かどうか"
+                        },
+                        {
+                            "name": "continuationBonus",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "0f",
+                            "description": "継続優遇値。0から1"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動候補の評価結果を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 10
+        }
+    ],
+    "source": "\r\nusing System;\r\n\r\nnamespace Framework.AI.Decision\r\n{\r\n    /// <summary>\r\n    /// 行動候補の評価結果を保持する。\r\n    /// </summary>\r\n    /// <typeparam name=\"TAction\">行動識別子の型</typeparam>\r\n    public readonly struct UtilityEvaluation<TAction>\r\n    {\r\n        /// <summary>\r\n        /// 評価対象の行動識別子。\r\n        /// </summary>\r\n        public TAction ActionId { get; }\r\n\r\n        /// <summary>\r\n        /// 継続優遇を含まない評価値。\r\n        /// </summary>\r\n        public float RawScore { get; }\r\n\r\n        /// <summary>\r\n        /// 継続優遇を含む比較用評価値。\r\n        /// </summary>\r\n        public float SelectionScore { get; }\r\n\r\n        /// <summary>\r\n        /// 現在実行している行動かどうか。\r\n        /// </summary>\r\n        public bool IsCurrentAction { get; }\r\n\r\n        /// <summary>\r\n        /// 有効な評価結果かどうか。\r\n        /// </summary>\r\n        public bool IsValid { get; }\r\n\r\n        /// <summary>\r\n        /// 選択可能な評価結果かどうか。\r\n        /// </summary>\r\n        public bool IsSelectable =>\r\n            IsValid && RawScore > 0f;\r\n\r\n        /// <summary>\r\n        /// 行動候補の評価結果を生成する。\r\n        /// </summary>\r\n        /// <param name=\"actionId\">行動識別子</param>\r\n        /// <param name=\"rawScore\">基本評価値</param>\r\n        /// <param name=\"isCurrentAction\">現在の行動かどうか</param>\r\n        /// <param name=\"continuationBonus\">継続優遇値。0から1</param>\r\n        public UtilityEvaluation(\r\n            TAction actionId,\r\n            float rawScore,\r\n            bool isCurrentAction,\r\n            float continuationBonus = 0f)\r\n        {\r\n            if (actionId is null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(actionId));\r\n            }\r\n\r\n            if (float.IsNaN(continuationBonus) ||\r\n                float.IsInfinity(continuationBonus) ||\r\n                continuationBonus < 0f ||\r\n                continuationBonus > 1f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(continuationBonus));\r\n            }\r\n\r\n            ActionId = actionId;\r\n            RawScore = UtilityMath.Clamp01(rawScore);\r\n            IsCurrentAction = isCurrentAction;\r\n            IsValid = true;\r\n\r\n            // 評価値が0の行動には継続優遇を適用しない。\r\n            SelectionScore =\r\n                isCurrentAction && RawScore > 0f\r\n                ? RawScore + continuationBonus\r\n                : RawScore;\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:01.138Z"
+}

@@ -1,5 +1,5 @@
 {
-    "parserVersion": 2,
+    "parserVersion": 3,
     "id": "Framework.CameraSystem.GridCameraFitter",
     "name": "GridCameraFitter",
     "fileName": "GridCameraFitter.cs",
@@ -322,6 +322,390 @@
             "exceptions": []
         }
     ],
+    "types": [
+        {
+            "name": "GridCameraFitter",
+            "fullName": "GridCameraFitter",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "summary": "グリッド全体が画面内に収まるように Orthographic Cameraを調整する汎用クラス。 ゲーム固有のデータには依存せず、 グリッドの範囲と座標変換情報のみを使用する。",
+            "remarks": "",
+            "attributes": [],
+            "declaration": "public static class GridCameraFitter",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "MinimumOrthographicSize",
+                    "kind": "constant",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "public const float MinimumOrthographicSize = 0.01f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "0.01f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "カメラ表示サイズの最小値。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "0.01f",
+                    "inspector": null
+                },
+                {
+                    "name": "DefaultPadding",
+                    "kind": "constant",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "public const float DefaultPadding = 1f",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "1f",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "カメラ周囲の標準余白。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "1f",
+                    "inspector": null
+                },
+                {
+                    "name": "GetWorldBounds",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static Bounds GetWorldBounds(\r\n            GridCoordinateConverter converter,\r\n            RectInt cellBounds)",
+                    "returnType": "Bounds",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "converter",
+                            "type": "GridCoordinateConverter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "座標変換クラス"
+                        },
+                        {
+                            "name": "cellBounds",
+                            "type": "RectInt",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象セル範囲"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたグリッド範囲のワールド座標上の 境界を取得する。",
+                    "returns": "ワールド座標上の境界",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetWorldBounds",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static Bounds GetWorldBounds<T>(\r\n            GridCoordinateConverter converter,\r\n            GridMap<T> map)",
+                    "returnType": "Bounds",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "converter",
+                            "type": "GridCoordinateConverter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "座標変換クラス"
+                        },
+                        {
+                            "name": "map",
+                            "type": "GridMap<T>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象グリッドマップ"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "T",
+                            "description": "セルデータの型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "グリッドマップ全体のワールド境界を取得する。",
+                    "returns": "ワールド座標上の境界",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CalculateOrthographicSize",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static float CalculateOrthographicSize(\r\n            float width,\r\n            float height,\r\n            float aspect,\r\n            float padding = DefaultPadding)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "width",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象範囲の横幅"
+                        },
+                        {
+                            "name": "height",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象範囲の高さ"
+                        },
+                        {
+                            "name": "aspect",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "画面の横幅と高さの比率"
+                        },
+                        {
+                            "name": "padding",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "DefaultPadding",
+                            "description": "各辺の余白"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定範囲を画面内に収めるために必要な Orthographic Sizeを計算する。",
+                    "returns": "必要なOrthographic Size",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Fit",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static void Fit(\r\n            Camera targetCamera,\r\n            Bounds worldBounds,\r\n            float padding = DefaultPadding)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "targetCamera",
+                            "type": "Camera",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "調整対象カメラ"
+                        },
+                        {
+                            "name": "worldBounds",
+                            "type": "Bounds",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象ワールド境界"
+                        },
+                        {
+                            "name": "padding",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "DefaultPadding",
+                            "description": "各辺の余白"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたワールド境界にカメラを合わせる。 XY平面を正面から撮影する Orthographic Cameraを対象とする。 カメラのZ座標と回転は維持する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Fit",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static void Fit(\r\n            Camera targetCamera,\r\n            GridCoordinateConverter converter,\r\n            RectInt cellBounds,\r\n            float padding = DefaultPadding)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "targetCamera",
+                            "type": "Camera",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "調整対象カメラ"
+                        },
+                        {
+                            "name": "converter",
+                            "type": "GridCoordinateConverter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "座標変換クラス"
+                        },
+                        {
+                            "name": "cellBounds",
+                            "type": "RectInt",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象セル範囲"
+                        },
+                        {
+                            "name": "padding",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "DefaultPadding",
+                            "description": "各辺の余白"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたセル範囲にカメラを合わせる。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Fit",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static void Fit<T>(\r\n            Camera targetCamera,\r\n            GridCoordinateConverter converter,\r\n            GridMap<T> map,\r\n            float padding = DefaultPadding)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "targetCamera",
+                            "type": "Camera",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "調整対象カメラ"
+                        },
+                        {
+                            "name": "converter",
+                            "type": "GridCoordinateConverter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "座標変換クラス"
+                        },
+                        {
+                            "name": "map",
+                            "type": "GridMap<T>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象グリッドマップ"
+                        },
+                        {
+                            "name": "padding",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "DefaultPadding",
+                            "description": "各辺の余白"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "T",
+                            "description": "セルデータの型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "グリッドマップ全体にカメラを合わせる。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValidateNonNegative",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static void ValidateNonNegative(\r\n            float value,\r\n            string parameterName)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検証対象の値"
+                        },
+                        {
+                            "name": "parameterName",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "引数名"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "値が有限かつ0以上であることを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 15
+        }
+    ],
     "source": "\r\nusing System;\r\nusing UnityEngine;\r\nusing Framework.Grid;\r\n\r\nnamespace Framework.CameraSystem\r\n{\r\n    /// <summary>\r\n    /// グリッド全体が画面内に収まるように\r\n    /// Orthographic Cameraを調整する汎用クラス。\r\n    ///\r\n    /// ゲーム固有のデータには依存せず、\r\n    /// グリッドの範囲と座標変換情報のみを使用する。\r\n    /// </summary>\r\n    public static class GridCameraFitter\r\n    {\r\n        #region Constants\r\n\r\n        /// <summary>カメラ表示サイズの最小値。</summary>\r\n        public const float MinimumOrthographicSize = 0.01f;\r\n\r\n        /// <summary>カメラ周囲の標準余白。</summary>\r\n        public const float DefaultPadding = 1f;\r\n\r\n        #endregion\r\n\r\n        #region Bounds Methods\r\n\r\n        /// <summary>\r\n        /// 指定されたグリッド範囲のワールド座標上の\r\n        /// 境界を取得する。\r\n        /// </summary>\r\n        /// <param name=\"converter\">座標変換クラス</param>\r\n        /// <param name=\"cellBounds\">対象セル範囲</param>\r\n        /// <returns>ワールド座標上の境界</returns>\r\n        public static Bounds GetWorldBounds(\r\n            GridCoordinateConverter converter,\r\n            RectInt cellBounds)\r\n        {\r\n            if (converter == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(converter));\r\n            }\r\n\r\n            if (cellBounds.width <= 0 ||\r\n                cellBounds.height <= 0)\r\n            {\r\n                throw new ArgumentException(\r\n                    \"グリッド範囲は正の大きさが必要です。\",\r\n                    nameof(cellBounds));\r\n            }\r\n\r\n            // グリッド範囲の四隅をワールド座標へ変換する。\r\n            Vector3 bottomLeft = converter.CellToWorld(\r\n                new Vector2Int(\r\n                    cellBounds.xMin,\r\n                    cellBounds.yMin));\r\n\r\n            Vector3 bottomRight = converter.CellToWorld(\r\n                new Vector2Int(\r\n                    cellBounds.xMax,\r\n                    cellBounds.yMin));\r\n\r\n            Vector3 topLeft = converter.CellToWorld(\r\n                new Vector2Int(\r\n                    cellBounds.xMin,\r\n                    cellBounds.yMax));\r\n\r\n            Vector3 topRight = converter.CellToWorld(\r\n                new Vector2Int(\r\n                    cellBounds.xMax,\r\n                    cellBounds.yMax));\r\n\r\n            // 四隅を含むワールド座標上の境界を構築する。\r\n            Bounds bounds = new Bounds(\r\n                bottomLeft,\r\n                Vector3.zero);\r\n\r\n            bounds.Encapsulate(bottomRight);\r\n            bounds.Encapsulate(topLeft);\r\n            bounds.Encapsulate(topRight);\r\n\r\n            return bounds;\r\n        }\r\n\r\n        /// <summary>\r\n        /// グリッドマップ全体のワールド境界を取得する。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">セルデータの型</typeparam>\r\n        /// <param name=\"converter\">座標変換クラス</param>\r\n        /// <param name=\"map\">対象グリッドマップ</param>\r\n        /// <returns>ワールド座標上の境界</returns>\r\n        public static Bounds GetWorldBounds<T>(\r\n            GridCoordinateConverter converter,\r\n            GridMap<T> map)\r\n        {\r\n            if (map == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(map));\r\n            }\r\n\r\n            return GetWorldBounds(\r\n                converter,\r\n                map.Bounds);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Calculation Methods\r\n\r\n        /// <summary>\r\n        /// 指定範囲を画面内に収めるために必要な\r\n        /// Orthographic Sizeを計算する。\r\n        /// </summary>\r\n        /// <param name=\"width\">対象範囲の横幅</param>\r\n        /// <param name=\"height\">対象範囲の高さ</param>\r\n        /// <param name=\"aspect\">画面の横幅と高さの比率</param>\r\n        /// <param name=\"padding\">各辺の余白</param>\r\n        /// <returns>必要なOrthographic Size</returns>\r\n        public static float CalculateOrthographicSize(\r\n            float width,\r\n            float height,\r\n            float aspect,\r\n            float padding = DefaultPadding)\r\n        {\r\n            ValidateNonNegative(width, nameof(width));\r\n            ValidateNonNegative(height, nameof(height));\r\n            ValidateNonNegative(padding, nameof(padding));\r\n\r\n            if (float.IsNaN(aspect) ||\r\n                float.IsInfinity(aspect) ||\r\n                aspect <= 0f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(aspect));\r\n            }\r\n\r\n            // 左右・上下それぞれに余白を追加する。\r\n            float paddedWidth = width + padding * 2f;\r\n            float paddedHeight = height + padding * 2f;\r\n\r\n            // 高さを基準とした表示サイズ。\r\n            float verticalSize = paddedHeight * 0.5f;\r\n\r\n            // 横幅を基準とした表示サイズ。\r\n            float horizontalSize =\r\n                paddedWidth / (2f * aspect);\r\n\r\n            // 両方の条件を満たす大きい方を採用する。\r\n            float requiredSize = Mathf.Max(\r\n                verticalSize,\r\n                horizontalSize);\r\n\r\n            return Mathf.Max(\r\n                MinimumOrthographicSize,\r\n                requiredSize);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Camera Fit Methods\r\n\r\n        /// <summary>\r\n        /// 指定されたワールド境界にカメラを合わせる。\r\n        ///\r\n        /// XY平面を正面から撮影する\r\n        /// Orthographic Cameraを対象とする。\r\n        /// カメラのZ座標と回転は維持する。\r\n        /// </summary>\r\n        /// <param name=\"targetCamera\">調整対象カメラ</param>\r\n        /// <param name=\"worldBounds\">対象ワールド境界</param>\r\n        /// <param name=\"padding\">各辺の余白</param>\r\n        public static void Fit(\r\n            Camera targetCamera,\r\n            Bounds worldBounds,\r\n            float padding = DefaultPadding)\r\n        {\r\n            if (targetCamera == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(targetCamera));\r\n            }\r\n\r\n            if (!targetCamera.orthographic)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"Orthographic Cameraが必要です。\");\r\n            }\r\n\r\n            // XY平面を正面から撮影するカメラのみ対応する。\r\n            if (Quaternion.Angle(\r\n                    targetCamera.transform.rotation,\r\n                    Quaternion.identity) > 0.01f)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"カメラのワールド回転を(0, 0, 0)にしてください。\");\r\n            }\r\n\r\n            // 横幅・高さの両方を考慮して表示サイズを計算する。\r\n            float requiredSize = CalculateOrthographicSize(\r\n                worldBounds.size.x,\r\n                worldBounds.size.y,\r\n                targetCamera.aspect,\r\n                padding);\r\n\r\n            // 現在のZ座標を維持したまま中心位置を変更する。\r\n            Vector3 cameraPosition =\r\n                targetCamera.transform.position;\r\n\r\n            cameraPosition.x = worldBounds.center.x;\r\n            cameraPosition.y = worldBounds.center.y;\r\n\r\n            targetCamera.transform.position = cameraPosition;\r\n            targetCamera.orthographicSize = requiredSize;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたセル範囲にカメラを合わせる。\r\n        /// </summary>\r\n        /// <param name=\"targetCamera\">調整対象カメラ</param>\r\n        /// <param name=\"converter\">座標変換クラス</param>\r\n        /// <param name=\"cellBounds\">対象セル範囲</param>\r\n        /// <param name=\"padding\">各辺の余白</param>\r\n        public static void Fit(\r\n            Camera targetCamera,\r\n            GridCoordinateConverter converter,\r\n            RectInt cellBounds,\r\n            float padding = DefaultPadding)\r\n        {\r\n            Bounds worldBounds = GetWorldBounds(\r\n                converter,\r\n                cellBounds);\r\n\r\n            Fit(targetCamera, worldBounds, padding);\r\n        }\r\n\r\n        /// <summary>\r\n        /// グリッドマップ全体にカメラを合わせる。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">セルデータの型</typeparam>\r\n        /// <param name=\"targetCamera\">調整対象カメラ</param>\r\n        /// <param name=\"converter\">座標変換クラス</param>\r\n        /// <param name=\"map\">対象グリッドマップ</param>\r\n        /// <param name=\"padding\">各辺の余白</param>\r\n        public static void Fit<T>(\r\n            Camera targetCamera,\r\n            GridCoordinateConverter converter,\r\n            GridMap<T> map,\r\n            float padding = DefaultPadding)\r\n        {\r\n            Bounds worldBounds = GetWorldBounds(\r\n                converter,\r\n                map);\r\n\r\n            Fit(targetCamera, worldBounds, padding);\r\n        }\r\n\r\n        #endregion\r\n\r\n        #region Validation Methods\r\n\r\n        /// <summary>\r\n        /// 値が有限かつ0以上であることを検証する。\r\n        /// </summary>\r\n        /// <param name=\"value\">検証対象の値</param>\r\n        /// <param name=\"parameterName\">引数名</param>\r\n        private static void ValidateNonNegative(\r\n            float value,\r\n            string parameterName)\r\n        {\r\n            if (float.IsNaN(value) ||\r\n                float.IsInfinity(value) ||\r\n                value < 0f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    parameterName);\r\n            }\r\n        }\r\n\r\n        #endregion\r\n    }\r\n}\r\n",
     "tips": [
         {
@@ -395,5 +779,5 @@
     "notes": [],
     "related": [],
     "tests": [],
-    "generatedAt": "2026-11-26T16:10:17.929Z"
+    "generatedAt": "2026-11-28T15:50:00.200Z"
 }

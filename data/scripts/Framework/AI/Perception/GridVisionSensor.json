@@ -1,0 +1,736 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Perception.GridVisionSensor",
+    "name": "GridVisionSensor",
+    "fileName": "GridVisionSensor.cs",
+    "namespace": "Framework.AI.Perception",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class GridVisionSensor<T>",
+    "typeParameters": [
+        {
+            "name": "T",
+            "description": "グリッドのセルデータ型"
+        }
+    ],
+    "summary": "グリッド上における視覚認識を提供する。",
+    "remarks": "距離、視野角、遮蔽物の順に判定する。 認識対象の検索や更新タイミングの管理は行わない。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "Framework.Grid",
+        "UnityEngine"
+    ],
+    "members": [
+        {
+            "name": "Map",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridMap<T> Map => map",
+            "returnType": "",
+            "valueType": "GridMap<T>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "認識判定に使用するグリッドを取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Range",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Range => range",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の認識距離を取得する。単位はセル。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "FieldOfView",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float FieldOfView => fieldOfView",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の視野角を取得する。単位は度。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GridVisionSensor",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public GridVisionSensor(\r\n            GridMap<T> map,\r\n            Func<Vector2Int, bool> blocksSight,\r\n            float range = 5f,\r\n            float fieldOfView = 360f)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "map",
+                    "type": "GridMap<T>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "判定対象のグリッド"
+                },
+                {
+                    "name": "blocksSight",
+                    "type": "Func<Vector2Int, bool>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "視線の遮蔽判定処理"
+                },
+                {
+                    "name": "range",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": "5f",
+                    "description": "認識距離。単位はセル"
+                },
+                {
+                    "name": "fieldOfView",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": "360f",
+                    "description": "視野角。0から360度"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "グリッド視覚センサーを生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "グリッドまたは遮蔽判定処理がnullの場合に発生する。"
+                },
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "認識距離または視野角が不正な場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "Configure",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Configure(\r\n            float newRange,\r\n            float newFieldOfView)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "newRange",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識距離。単位はセル"
+                },
+                {
+                    "name": "newFieldOfView",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "視野角。単位は度"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "認識距離と視野角を変更する。",
+            "returns": "",
+            "remarks": "不正な設定の場合は既存設定を維持する。",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "認識距離または視野角が不正な場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "CanSee",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool CanSee(\r\n            Vector2Int origin,\r\n            Vector2Int facingDirection,\r\n            Vector2Int target)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "origin",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "観測者のグリッド座標"
+                },
+                {
+                    "name": "facingDirection",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "観測者の向き。正規化は不要。"
+                },
+                {
+                    "name": "target",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "対象のグリッド座標"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "対象が視覚認識可能か判定する。",
+            "returns": "対象を視認できる場合はtrue",
+            "remarks": "視野角360度の場合は向きを使用しない。 同一セルの対象は視認可能とする。 視野角が360度未満で向きがゼロの場合は、 同一セル以外の対象を認識しない。",
+            "exceptions": []
+        },
+        {
+            "name": "TryObserve",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryObserve(\r\n            Guid sourceId,\r\n            Vector2Int origin,\r\n            Vector2Int facingDirection,\r\n            Vector2Int target,\r\n            double timestamp,\r\n            out PerceptionStimulus<Vector2Int> stimulus)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "sourceId",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識対象の識別子"
+                },
+                {
+                    "name": "origin",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "観測者のグリッド座標"
+                },
+                {
+                    "name": "facingDirection",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "観測者の向き"
+                },
+                {
+                    "name": "target",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "対象のグリッド座標"
+                },
+                {
+                    "name": "timestamp",
+                    "type": "double",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "認識時刻。単位は秒"
+                },
+                {
+                    "name": "stimulus",
+                    "type": "PerceptionStimulus<Vector2Int>",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "成功時は認識情報。失敗時は既定値。"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "対象の視覚認識を試みる。",
+            "returns": "対象を認識した場合はtrue",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "認識時刻が不正な場合に発生する。"
+                }
+            ]
+        }
+    ],
+    "types": [
+        {
+            "name": "GridVisionSensor",
+            "fullName": "GridVisionSensor",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "グリッド上における視覚認識を提供する。",
+            "remarks": "距離、視野角、遮蔽物の順に判定する。 認識対象の検索や更新タイミングの管理は行わない。",
+            "attributes": [],
+            "declaration": "public sealed class GridVisionSensor<T>",
+            "inheritance": [],
+            "typeParameters": [
+                {
+                    "name": "T",
+                    "description": "グリッドのセルデータ型"
+                }
+            ],
+            "members": [
+                {
+                    "name": "map",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly GridMap<T> map",
+                    "returnType": "",
+                    "valueType": "GridMap<T>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識判定に使用するグリッド。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "blocksSight",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Func<Vector2Int, bool> blocksSight",
+                    "returnType": "",
+                    "valueType": "Func<Vector2Int, bool>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "視線を遮るセルの判定処理。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "range",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float range",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の認識距離。単位はセル。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "squaredRange",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private double squaredRange",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識距離の二乗。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "fieldOfView",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float fieldOfView",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の視野角。単位は度。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "cosineHalfFieldOfView",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private double cosineHalfFieldOfView",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "視野角の半分に対する余弦値。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "AngleTolerance",
+                    "kind": "constant",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "const"
+                    ],
+                    "signature": "private const double AngleTolerance = 0.0000001d",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "0.0000001d",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "視野角の境界判定に使用する許容誤差。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "0.0000001d",
+                    "inspector": null
+                },
+                {
+                    "name": "Map",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public GridMap<T> Map => map",
+                    "returnType": "",
+                    "valueType": "GridMap<T>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "認識判定に使用するグリッドを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Range",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Range => range",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の認識距離を取得する。単位はセル。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "FieldOfView",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float FieldOfView => fieldOfView",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の視野角を取得する。単位は度。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GridVisionSensor",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public GridVisionSensor(\r\n            GridMap<T> map,\r\n            Func<Vector2Int, bool> blocksSight,\r\n            float range = 5f,\r\n            float fieldOfView = 360f)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "map",
+                            "type": "GridMap<T>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "判定対象のグリッド"
+                        },
+                        {
+                            "name": "blocksSight",
+                            "type": "Func<Vector2Int, bool>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "視線の遮蔽判定処理"
+                        },
+                        {
+                            "name": "range",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "5f",
+                            "description": "認識距離。単位はセル"
+                        },
+                        {
+                            "name": "fieldOfView",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": "360f",
+                            "description": "視野角。0から360度"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "グリッド視覚センサーを生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "グリッドまたは遮蔽判定処理がnullの場合に発生する。"
+                        },
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "認識距離または視野角が不正な場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Configure",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Configure(\r\n            float newRange,\r\n            float newFieldOfView)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "newRange",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識距離。単位はセル"
+                        },
+                        {
+                            "name": "newFieldOfView",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "視野角。単位は度"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "認識距離と視野角を変更する。",
+                    "returns": "",
+                    "remarks": "不正な設定の場合は既存設定を維持する。",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "認識距離または視野角が不正な場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CanSee",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool CanSee(\r\n            Vector2Int origin,\r\n            Vector2Int facingDirection,\r\n            Vector2Int target)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "origin",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "観測者のグリッド座標"
+                        },
+                        {
+                            "name": "facingDirection",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "観測者の向き。正規化は不要。"
+                        },
+                        {
+                            "name": "target",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象のグリッド座標"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "対象が視覚認識可能か判定する。",
+                    "returns": "対象を視認できる場合はtrue",
+                    "remarks": "視野角360度の場合は向きを使用しない。 同一セルの対象は視認可能とする。 視野角が360度未満で向きがゼロの場合は、 同一セル以外の対象を認識しない。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryObserve",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryObserve(\r\n            Guid sourceId,\r\n            Vector2Int origin,\r\n            Vector2Int facingDirection,\r\n            Vector2Int target,\r\n            double timestamp,\r\n            out PerceptionStimulus<Vector2Int> stimulus)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "sourceId",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識対象の識別子"
+                        },
+                        {
+                            "name": "origin",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "観測者のグリッド座標"
+                        },
+                        {
+                            "name": "facingDirection",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "観測者の向き"
+                        },
+                        {
+                            "name": "target",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "対象のグリッド座標"
+                        },
+                        {
+                            "name": "timestamp",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "認識時刻。単位は秒"
+                        },
+                        {
+                            "name": "stimulus",
+                            "type": "PerceptionStimulus<Vector2Int>",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "成功時は認識情報。失敗時は既定値。"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "対象の視覚認識を試みる。",
+                    "returns": "対象を認識した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "認識時刻が不正な場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 16
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing Framework.Grid;\r\nusing UnityEngine;\r\n\r\nnamespace Framework.AI.Perception\r\n{\r\n    /// <summary>\r\n    /// グリッド上における視覚認識を提供する。\r\n    /// </summary>\r\n    /// <typeparam name=\"T\">グリッドのセルデータ型</typeparam>\r\n    /// <remarks>\r\n    /// 距離、視野角、遮蔽物の順に判定する。\r\n    /// 認識対象の検索や更新タイミングの管理は行わない。\r\n    /// </remarks>\r\n    public sealed class GridVisionSensor<T>\r\n    {\r\n        /// <summary>\r\n        /// 認識判定に使用するグリッド。\r\n        /// </summary>\r\n        private readonly GridMap<T> map;\r\n\r\n        /// <summary>\r\n        /// 視線を遮るセルの判定処理。\r\n        /// </summary>\r\n        private readonly Func<Vector2Int, bool> blocksSight;\r\n\r\n        /// <summary>\r\n        /// 現在の認識距離。単位はセル。\r\n        /// </summary>\r\n        private float range;\r\n\r\n        /// <summary>\r\n        /// 認識距離の二乗。\r\n        /// </summary>\r\n        private double squaredRange;\r\n\r\n        /// <summary>\r\n        /// 現在の視野角。単位は度。\r\n        /// </summary>\r\n        private float fieldOfView;\r\n\r\n        /// <summary>\r\n        /// 視野角の半分に対する余弦値。\r\n        /// </summary>\r\n        private double cosineHalfFieldOfView;\r\n\r\n        /// <summary>\r\n        /// 視野角の境界判定に使用する許容誤差。\r\n        /// </summary>\r\n        private const double AngleTolerance = 0.0000001d;\r\n\r\n        /// <summary>\r\n        /// 認識判定に使用するグリッドを取得する。\r\n        /// </summary>\r\n        public GridMap<T> Map => map;\r\n\r\n        /// <summary>\r\n        /// 現在の認識距離を取得する。単位はセル。\r\n        /// </summary>\r\n        public float Range => range;\r\n\r\n        /// <summary>\r\n        /// 現在の視野角を取得する。単位は度。\r\n        /// </summary>\r\n        public float FieldOfView => fieldOfView;\r\n\r\n        /// <summary>\r\n        /// グリッド視覚センサーを生成する。\r\n        /// </summary>\r\n        /// <param name=\"map\">判定対象のグリッド</param>\r\n        /// <param name=\"blocksSight\">視線の遮蔽判定処理</param>\r\n        /// <param name=\"range\">認識距離。単位はセル</param>\r\n        /// <param name=\"fieldOfView\">視野角。0から360度</param>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// グリッドまたは遮蔽判定処理がnullの場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 認識距離または視野角が不正な場合に発生する。\r\n        /// </exception>\r\n        public GridVisionSensor(\r\n            GridMap<T> map,\r\n            Func<Vector2Int, bool> blocksSight,\r\n            float range = 5f,\r\n            float fieldOfView = 360f)\r\n        {\r\n            if (map == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(map));\r\n            }\r\n\r\n            if (blocksSight == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(blocksSight));\r\n            }\r\n\r\n            this.map = map;\r\n            this.blocksSight = blocksSight;\r\n\r\n            Configure(range, fieldOfView);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 認識距離と視野角を変更する。\r\n        /// </summary>\r\n        /// <param name=\"newRange\">認識距離。単位はセル</param>\r\n        /// <param name=\"newFieldOfView\">視野角。単位は度</param>\r\n        /// <remarks>\r\n        /// 不正な設定の場合は既存設定を維持する。\r\n        /// </remarks>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 認識距離または視野角が不正な場合に発生する。\r\n        /// </exception>\r\n        public void Configure(\r\n            float newRange,\r\n            float newFieldOfView)\r\n        {\r\n            if (float.IsNaN(newRange) ||\r\n                float.IsInfinity(newRange) ||\r\n                newRange < 0f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(newRange));\r\n            }\r\n\r\n            if (float.IsNaN(newFieldOfView) ||\r\n                float.IsInfinity(newFieldOfView) ||\r\n                newFieldOfView < 0f ||\r\n                newFieldOfView > 360f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(newFieldOfView));\r\n            }\r\n\r\n            range = newRange;\r\n            fieldOfView = newFieldOfView;\r\n\r\n            // 距離判定用の二乗値を事前計算する。\r\n            squaredRange = (double)range * range;\r\n\r\n            // 視野角の判定に使用する余弦値を事前計算する。\r\n            cosineHalfFieldOfView = Math.Cos(\r\n                fieldOfView * Math.PI / 360d);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 対象が視覚認識可能か判定する。\r\n        /// </summary>\r\n        /// <param name=\"origin\">観測者のグリッド座標</param>\r\n        /// <param name=\"facingDirection\">\r\n        /// 観測者の向き。正規化は不要。\r\n        /// </param>\r\n        /// <param name=\"target\">対象のグリッド座標</param>\r\n        /// <returns>対象を視認できる場合はtrue</returns>\r\n        /// <remarks>\r\n        /// 視野角360度の場合は向きを使用しない。\r\n        /// 同一セルの対象は視認可能とする。\r\n        /// 視野角が360度未満で向きがゼロの場合は、\r\n        /// 同一セル以外の対象を認識しない。\r\n        /// </remarks>\r\n        public bool CanSee(\r\n            Vector2Int origin,\r\n            Vector2Int facingDirection,\r\n            Vector2Int target)\r\n        {\r\n            if (!map.IsInside(origin) ||\r\n                !map.IsInside(target))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (origin == target)\r\n            {\r\n                return true;\r\n            }\r\n\r\n            // 対象までの相対座標を計算する。\r\n            double offsetX = (double)target.x - origin.x;\r\n            double offsetY = (double)target.y - origin.y;\r\n\r\n            double squaredDistance =\r\n                offsetX * offsetX +\r\n                offsetY * offsetY;\r\n\r\n            // 距離の二乗を使用して平方根の計算を省略する。\r\n            if (squaredDistance > squaredRange)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (fieldOfView < 360f)\r\n            {\r\n                if (facingDirection == Vector2Int.zero)\r\n                {\r\n                    return false;\r\n                }\r\n\r\n                // 対象方向と観測者の向きの内積を計算する。\r\n                double facingX = facingDirection.x;\r\n                double facingY = facingDirection.y;\r\n\r\n                double squaredFacingLength =\r\n                    facingX * facingX +\r\n                    facingY * facingY;\r\n\r\n                double dot =\r\n                    facingX * offsetX +\r\n                    facingY * offsetY;\r\n\r\n                double cosine = dot / Math.Sqrt(\r\n                    squaredFacingLength * squaredDistance);\r\n\r\n                // 視野角の範囲外であれば認識しない。\r\n                if (cosine + AngleTolerance <\r\n                    cosineHalfFieldOfView)\r\n                {\r\n                    return false;\r\n                }\r\n            }\r\n\r\n            // 距離と視野角の条件を満たした場合のみ、\r\n            // グリッド上の遮蔽物を検査する。\r\n            return GridLineOfSight.HasLineOfSight(\r\n                map,\r\n                origin,\r\n                target,\r\n                blocksSight);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 対象の視覚認識を試みる。\r\n        /// </summary>\r\n        /// <param name=\"sourceId\">認識対象の識別子</param>\r\n        /// <param name=\"origin\">観測者のグリッド座標</param>\r\n        /// <param name=\"facingDirection\">観測者の向き</param>\r\n        /// <param name=\"target\">対象のグリッド座標</param>\r\n        /// <param name=\"timestamp\">認識時刻。単位は秒</param>\r\n        /// <param name=\"stimulus\">\r\n        /// 成功時は認識情報。失敗時は既定値。\r\n        /// </param>\r\n        /// <returns>対象を認識した場合はtrue</returns>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 認識時刻が不正な場合に発生する。\r\n        /// </exception>\r\n        public bool TryObserve(\r\n            Guid sourceId,\r\n            Vector2Int origin,\r\n            Vector2Int facingDirection,\r\n            Vector2Int target,\r\n            double timestamp,\r\n            out PerceptionStimulus<Vector2Int> stimulus)\r\n        {\r\n            stimulus = default(\r\n                PerceptionStimulus<Vector2Int>);\r\n\r\n            if (double.IsNaN(timestamp) ||\r\n                double.IsInfinity(timestamp) ||\r\n                timestamp < 0d)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(timestamp));\r\n            }\r\n\r\n            if (!CanSee(origin, facingDirection, target))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 現段階では視認できた対象の信頼度を1とする。\r\n            stimulus = new PerceptionStimulus<Vector2Int>(\r\n                sourceId,\r\n                PerceptionType.Sight,\r\n                target,\r\n                1f,\r\n                timestamp);\r\n\r\n            return true;\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.354Z"
+}

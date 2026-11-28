@@ -1,0 +1,1429 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.Parameters.RuntimeParameter",
+    "name": "RuntimeParameter",
+    "fileName": "RuntimeParameter.cs",
+    "namespace": "Framework.Parameters",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class RuntimeParameter<TParameter>",
+    "typeParameters": [
+        {
+            "name": "TParameter",
+            "description": "パラメーターを識別する型。"
+        }
+    ],
+    "summary": "単一パラメーターの実行時の値と補正情報を管理する。",
+    "remarks": "定義情報は共有可能だが、実行時の状態は個体ごとに保持する。 最終値は状態変更時に再計算し、参照時には再計算しない。 メインスレッドからの利用を想定する。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "System.Collections.ObjectModel"
+    ],
+    "members": [
+        {
+            "name": "Definition",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public ParameterDefinition<TParameter> Definition",
+            "returnType": "",
+            "valueType": "ParameterDefinition<TParameter>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "パラメーターの共通定義を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Id",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public TParameter Id => Definition.Id",
+            "returnType": "",
+            "valueType": "TParameter",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "パラメーターの識別子を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "InitialValue",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float InitialValue",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "個体生成時に指定された初期値を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "BaseValue",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float BaseValue => baseValue",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の補正前の基本値を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Value",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float Value => currentValue",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "すべての補正を適用した最終値を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "NormalizedValue",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float NormalizedValue =>\r\n            Definition.Normalize(currentValue)",
+            "returnType": "",
+            "valueType": "float",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "最終値を0から1に正規化した値を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ModifierCount",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int ModifierCount => modifiers.Count",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "登録されている補正の件数を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasModifiers",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasModifiers => modifiers.Count > 0",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "補正が登録されているかどうかを取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Modifiers",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public IReadOnlyList<ParameterModifier> Modifiers =>\r\n            readOnlyModifiers",
+            "returnType": "",
+            "valueType": "IReadOnlyList<ParameterModifier>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "登録されている補正の読み取り専用一覧を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ValueChanged",
+            "kind": "event",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public event Action<float, float> ValueChanged",
+            "returnType": "",
+            "valueType": "Action<float, float>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "最終値が変化した際に発生するイベント。 引数は変更前の値、変更後の値の順となる。",
+            "returns": "",
+            "remarks": "状態更新後に通知する。 通知中の同一パラメーターへの変更は禁止する。",
+            "exceptions": []
+        },
+        {
+            "name": "RuntimeParameter",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public RuntimeParameter(\r\n            ParameterDefinition<TParameter> definition)\r\n            : this(\r\n                definition,\r\n                definition != null\r\n                    ? definition.DefaultValue\r\n                    : 0f)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "definition",
+                    "type": "ParameterDefinition<TParameter>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "パラメーターの定義"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "定義の標準初期値を使用して生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "定義がnullの場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "RuntimeParameter",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public RuntimeParameter(\r\n            ParameterDefinition<TParameter> definition,\r\n            float initialValue)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "definition",
+                    "type": "ParameterDefinition<TParameter>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "パラメーターの定義"
+                },
+                {
+                    "name": "initialValue",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "個体固有の初期値"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "個体固有の初期値を指定して生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "定義がnullの場合に発生する。"
+                },
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "初期値が有限値ではない場合、 または定義の有効範囲外の場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "SetBaseValue",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool SetBaseValue(float value)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "新しい基本値"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "補正前の基本値を変更する。",
+            "returns": "基本値が変化した場合はtrue",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "指定値が有限値ではない場合に発生する。"
+                },
+                {
+                    "name": "InvalidOperationException",
+                    "description": "変更通知中に呼び出された場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "AddBaseValue",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool AddBaseValue(float amount)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "amount",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "加算量。負数の場合は減算となる。"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在の基本値に指定された数値を加算する。",
+            "returns": "基本値が変化した場合はtrue",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "加算量が有限値ではない場合に発生する。"
+                },
+                {
+                    "name": "InvalidOperationException",
+                    "description": "変更通知中に呼び出された場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "TryAddModifier",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryAddModifier(ParameterModifier modifier)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "modifier",
+                    "type": "ParameterModifier",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "追加する補正情報"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "補正情報を追加する。",
+            "returns": "追加に成功した場合はtrue。 同一IDの補正が登録済みの場合はfalse。",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "補正情報がnullの場合に発生する。"
+                },
+                {
+                    "name": "InvalidOperationException",
+                    "description": "変更通知中に呼び出された場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "HasModifier",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasModifier(Guid id)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "検索対象の補正ID"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたIDの補正が登録されているか判定する。",
+            "returns": "登録されている場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetModifier",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryGetModifier(\r\n            Guid id,\r\n            out ParameterModifier modifier)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "検索対象の補正ID"
+                },
+                {
+                    "name": "modifier",
+                    "type": "ParameterModifier",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "取得した補正情報。失敗時はnull。"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたIDの補正情報を取得する。",
+            "returns": "取得に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryRemoveModifier",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryRemoveModifier(Guid id)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "解除対象の補正ID"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたIDの補正を解除する。",
+            "returns": "解除に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "InvalidOperationException",
+                    "description": "変更通知中に呼び出された場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "RemoveModifiersBySource",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int RemoveModifiersBySource(object source)",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "source",
+                    "type": "object",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "解除対象の補正元"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された補正元による補正をすべて解除する。",
+            "returns": "解除した補正の件数。 補正元がnullの場合は0。",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "InvalidOperationException",
+                    "description": "変更通知中に呼び出された場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "ClearModifiers",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int ClearModifiers()",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "登録されているすべての補正を解除する。",
+            "returns": "解除した補正の件数",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "InvalidOperationException",
+                    "description": "変更通知中に呼び出された場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "ResetBaseValue",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool ResetBaseValue()",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "基本値のみを個体生成時の初期値に戻す。",
+            "returns": "基本値が変化した場合はtrue",
+            "remarks": "登録済みの補正は維持する。",
+            "exceptions": [
+                {
+                    "name": "InvalidOperationException",
+                    "description": "変更通知中に呼び出された場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "Reset",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Reset()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "基本値と補正情報を個体生成時の状態に戻す。",
+            "returns": "",
+            "remarks": "基本値を初期値に戻し、すべての補正を解除する。 変更通知は最大で一度だけ発生する。",
+            "exceptions": [
+                {
+                    "name": "InvalidOperationException",
+                    "description": "変更通知中に呼び出された場合に発生する。"
+                }
+            ]
+        }
+    ],
+    "types": [
+        {
+            "name": "RuntimeParameter",
+            "fullName": "RuntimeParameter",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "単一パラメーターの実行時の値と補正情報を管理する。",
+            "remarks": "定義情報は共有可能だが、実行時の状態は個体ごとに保持する。 最終値は状態変更時に再計算し、参照時には再計算しない。 メインスレッドからの利用を想定する。",
+            "attributes": [],
+            "declaration": "public sealed class RuntimeParameter<TParameter>",
+            "inheritance": [],
+            "typeParameters": [
+                {
+                    "name": "TParameter",
+                    "description": "パラメーターを識別する型。"
+                }
+            ],
+            "members": [
+                {
+                    "name": "modifiers",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly List<ParameterModifier> modifiers =\r\n            new List<ParameterModifier>()",
+                    "returnType": "",
+                    "valueType": "List<ParameterModifier>",
+                    "value": "new List<ParameterModifier>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "登録されている補正情報の一覧。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new List<ParameterModifier>()",
+                    "inspector": null
+                },
+                {
+                    "name": "readOnlyModifiers",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly ReadOnlyCollection<ParameterModifier>\r\n            readOnlyModifiers",
+                    "returnType": "",
+                    "valueType": "ReadOnlyCollection<ParameterModifier>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "外部公開用の読み取り専用補正一覧。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "baseValue",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float baseValue",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の補正前の基本値。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "currentValue",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float currentValue",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "補正適用後のキャッシュされた最終値。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "isNotifying",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isNotifying",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "変更通知を実行しているかどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Definition",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public ParameterDefinition<TParameter> Definition",
+                    "returnType": "",
+                    "valueType": "ParameterDefinition<TParameter>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "パラメーターの共通定義を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Id",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public TParameter Id => Definition.Id",
+                    "returnType": "",
+                    "valueType": "TParameter",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "パラメーターの識別子を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "InitialValue",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float InitialValue",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "個体生成時に指定された初期値を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "BaseValue",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float BaseValue => baseValue",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の補正前の基本値を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Value",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float Value => currentValue",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "すべての補正を適用した最終値を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "NormalizedValue",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float NormalizedValue =>\r\n            Definition.Normalize(currentValue)",
+                    "returnType": "",
+                    "valueType": "float",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "最終値を0から1に正規化した値を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ModifierCount",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int ModifierCount => modifiers.Count",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "登録されている補正の件数を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HasModifiers",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool HasModifiers => modifiers.Count > 0",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "補正が登録されているかどうかを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Modifiers",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public IReadOnlyList<ParameterModifier> Modifiers =>\r\n            readOnlyModifiers",
+                    "returnType": "",
+                    "valueType": "IReadOnlyList<ParameterModifier>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "登録されている補正の読み取り専用一覧を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValueChanged",
+                    "kind": "event",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public event Action<float, float> ValueChanged",
+                    "returnType": "",
+                    "valueType": "Action<float, float>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "最終値が変化した際に発生するイベント。 引数は変更前の値、変更後の値の順となる。",
+                    "returns": "",
+                    "remarks": "状態更新後に通知する。 通知中の同一パラメーターへの変更は禁止する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RuntimeParameter",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public RuntimeParameter(\r\n            ParameterDefinition<TParameter> definition)\r\n            : this(\r\n                definition,\r\n                definition != null\r\n                    ? definition.DefaultValue\r\n                    : 0f)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "definition",
+                            "type": "ParameterDefinition<TParameter>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "パラメーターの定義"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "定義の標準初期値を使用して生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "定義がnullの場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RuntimeParameter",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public RuntimeParameter(\r\n            ParameterDefinition<TParameter> definition,\r\n            float initialValue)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "definition",
+                            "type": "ParameterDefinition<TParameter>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "パラメーターの定義"
+                        },
+                        {
+                            "name": "initialValue",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "個体固有の初期値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個体固有の初期値を指定して生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "定義がnullの場合に発生する。"
+                        },
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "初期値が有限値ではない場合、 または定義の有効範囲外の場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SetBaseValue",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool SetBaseValue(float value)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "新しい基本値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "補正前の基本値を変更する。",
+                    "returns": "基本値が変化した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "指定値が有限値ではない場合に発生する。"
+                        },
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "変更通知中に呼び出された場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "AddBaseValue",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool AddBaseValue(float amount)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "amount",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "加算量。負数の場合は減算となる。"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の基本値に指定された数値を加算する。",
+                    "returns": "基本値が変化した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "加算量が有限値ではない場合に発生する。"
+                        },
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "変更通知中に呼び出された場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryAddModifier",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryAddModifier(ParameterModifier modifier)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "modifier",
+                            "type": "ParameterModifier",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "追加する補正情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "補正情報を追加する。",
+                    "returns": "追加に成功した場合はtrue。 同一IDの補正が登録済みの場合はfalse。",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "補正情報がnullの場合に発生する。"
+                        },
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "変更通知中に呼び出された場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HasModifier",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool HasModifier(Guid id)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検索対象の補正ID"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたIDの補正が登録されているか判定する。",
+                    "returns": "登録されている場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetModifier",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetModifier(\r\n            Guid id,\r\n            out ParameterModifier modifier)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検索対象の補正ID"
+                        },
+                        {
+                            "name": "modifier",
+                            "type": "ParameterModifier",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得した補正情報。失敗時はnull。"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたIDの補正情報を取得する。",
+                    "returns": "取得に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryRemoveModifier",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryRemoveModifier(Guid id)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "解除対象の補正ID"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたIDの補正を解除する。",
+                    "returns": "解除に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "変更通知中に呼び出された場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RemoveModifiersBySource",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int RemoveModifiersBySource(object source)",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "source",
+                            "type": "object",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "解除対象の補正元"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された補正元による補正をすべて解除する。",
+                    "returns": "解除した補正の件数。 補正元がnullの場合は0。",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "変更通知中に呼び出された場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ClearModifiers",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int ClearModifiers()",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "登録されているすべての補正を解除する。",
+                    "returns": "解除した補正の件数",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "変更通知中に呼び出された場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ResetBaseValue",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool ResetBaseValue()",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "基本値のみを個体生成時の初期値に戻す。",
+                    "returns": "基本値が変化した場合はtrue",
+                    "remarks": "登録済みの補正は維持する。",
+                    "exceptions": [
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "変更通知中に呼び出された場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Reset",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Reset()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "基本値と補正情報を個体生成時の状態に戻す。",
+                    "returns": "",
+                    "remarks": "基本値を初期値に戻し、すべての補正を解除する。 変更通知は最大で一度だけ発生する。",
+                    "exceptions": [
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "変更通知中に呼び出された場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RecalculateValue",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void RecalculateValue()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "基本値と補正情報から最終値を再計算する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ClampCalculatedValue",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private float ClampCalculatedValue(double value)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "type": "double",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "制限対象の計算結果"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "計算結果を定義の有効範囲内に制限する。",
+                    "returns": "有効範囲内に制限された値",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "NotifyValueChanged",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void NotifyValueChanged(\r\n            float previousValue,\r\n            float newValue)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "previousValue",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更前の最終値"
+                        },
+                        {
+                            "name": "newValue",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更後の最終値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "最終値の変更を購読者へ通知する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "EnsureCanModify",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void EnsureCanModify()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の状態でパラメーターを変更可能か検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "変更通知中の場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 19
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing System.Collections.ObjectModel;\r\n\r\nnamespace Framework.Parameters\r\n{\r\n    /// <summary>\r\n    /// 単一パラメーターの実行時の値と補正情報を管理する。\r\n    /// </summary>\r\n    /// <typeparam name=\"TParameter\">\r\n    /// パラメーターを識別する型。\r\n    /// </typeparam>\r\n    /// <remarks>\r\n    /// 定義情報は共有可能だが、実行時の状態は個体ごとに保持する。\r\n    /// 最終値は状態変更時に再計算し、参照時には再計算しない。\r\n    /// メインスレッドからの利用を想定する。\r\n    /// </remarks>\r\n    public sealed class RuntimeParameter<TParameter>\r\n    {\r\n        /// <summary>\r\n        /// 登録されている補正情報の一覧。\r\n        /// </summary>\r\n        private readonly List<ParameterModifier> modifiers =\r\n            new List<ParameterModifier>();\r\n\r\n        /// <summary>\r\n        /// 外部公開用の読み取り専用補正一覧。\r\n        /// </summary>\r\n        private readonly ReadOnlyCollection<ParameterModifier>\r\n            readOnlyModifiers;\r\n\r\n        /// <summary>\r\n        /// 現在の補正前の基本値。\r\n        /// </summary>\r\n        private float baseValue;\r\n\r\n        /// <summary>\r\n        /// 補正適用後のキャッシュされた最終値。\r\n        /// </summary>\r\n        private float currentValue;\r\n\r\n        /// <summary>\r\n        /// 変更通知を実行しているかどうか。\r\n        /// </summary>\r\n        private bool isNotifying;\r\n\r\n        /// <summary>\r\n        /// パラメーターの共通定義を取得する。\r\n        /// </summary>\r\n        public ParameterDefinition<TParameter> Definition { get; }\r\n\r\n        /// <summary>\r\n        /// パラメーターの識別子を取得する。\r\n        /// </summary>\r\n        public TParameter Id => Definition.Id;\r\n\r\n        /// <summary>\r\n        /// 個体生成時に指定された初期値を取得する。\r\n        /// </summary>\r\n        public float InitialValue { get; }\r\n\r\n        /// <summary>\r\n        /// 現在の補正前の基本値を取得する。\r\n        /// </summary>\r\n        public float BaseValue => baseValue;\r\n\r\n        /// <summary>\r\n        /// すべての補正を適用した最終値を取得する。\r\n        /// </summary>\r\n        public float Value => currentValue;\r\n\r\n        /// <summary>\r\n        /// 最終値を0から1に正規化した値を取得する。\r\n        /// </summary>\r\n        public float NormalizedValue =>\r\n            Definition.Normalize(currentValue);\r\n\r\n        /// <summary>\r\n        /// 登録されている補正の件数を取得する。\r\n        /// </summary>\r\n        public int ModifierCount => modifiers.Count;\r\n\r\n        /// <summary>\r\n        /// 補正が登録されているかどうかを取得する。\r\n        /// </summary>\r\n        public bool HasModifiers => modifiers.Count > 0;\r\n\r\n        /// <summary>\r\n        /// 登録されている補正の読み取り専用一覧を取得する。\r\n        /// </summary>\r\n        public IReadOnlyList<ParameterModifier> Modifiers =>\r\n            readOnlyModifiers;\r\n\r\n        /// <summary>\r\n        /// 最終値が変化した際に発生するイベント。\r\n        /// 引数は変更前の値、変更後の値の順となる。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// 状態更新後に通知する。\r\n        /// 通知中の同一パラメーターへの変更は禁止する。\r\n        /// </remarks>\r\n        public event Action<float, float> ValueChanged;\r\n\r\n        /// <summary>\r\n        /// 定義の標準初期値を使用して生成する。\r\n        /// </summary>\r\n        /// <param name=\"definition\">パラメーターの定義</param>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 定義がnullの場合に発生する。\r\n        /// </exception>\r\n        public RuntimeParameter(\r\n            ParameterDefinition<TParameter> definition)\r\n            : this(\r\n                definition,\r\n                definition != null\r\n                    ? definition.DefaultValue\r\n                    : 0f)\r\n        {\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個体固有の初期値を指定して生成する。\r\n        /// </summary>\r\n        /// <param name=\"definition\">パラメーターの定義</param>\r\n        /// <param name=\"initialValue\">個体固有の初期値</param>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 定義がnullの場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 初期値が有限値ではない場合、\r\n        /// または定義の有効範囲外の場合に発生する。\r\n        /// </exception>\r\n        public RuntimeParameter(\r\n            ParameterDefinition<TParameter> definition,\r\n            float initialValue)\r\n        {\r\n            if (definition == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(definition));\r\n            }\r\n\r\n            if (!definition.IsInRange(initialValue))\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(initialValue),\r\n                    \"初期値が有効範囲外です。\");\r\n            }\r\n\r\n            Definition = definition;\r\n            InitialValue = initialValue;\r\n\r\n            baseValue = initialValue;\r\n            currentValue = initialValue;\r\n\r\n            // 読み取り専用一覧は生成時に一度だけ作成する。\r\n            readOnlyModifiers = modifiers.AsReadOnly();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 補正前の基本値を変更する。\r\n        /// </summary>\r\n        /// <param name=\"value\">新しい基本値</param>\r\n        /// <returns>基本値が変化した場合はtrue</returns>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 指定値が有限値ではない場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 変更通知中に呼び出された場合に発生する。\r\n        /// </exception>\r\n        public bool SetBaseValue(float value)\r\n        {\r\n            EnsureCanModify();\r\n\r\n            float clampedValue = Definition.Clamp(value);\r\n\r\n            // 基本値が変化しない場合は再計算しない。\r\n            if (baseValue == clampedValue)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            baseValue = clampedValue;\r\n\r\n            RecalculateValue();\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在の基本値に指定された数値を加算する。\r\n        /// </summary>\r\n        /// <param name=\"amount\">\r\n        /// 加算量。負数の場合は減算となる。\r\n        /// </param>\r\n        /// <returns>基本値が変化した場合はtrue</returns>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 加算量が有限値ではない場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 変更通知中に呼び出された場合に発生する。\r\n        /// </exception>\r\n        public bool AddBaseValue(float amount)\r\n        {\r\n            EnsureCanModify();\r\n\r\n            if (float.IsNaN(amount) ||\r\n                float.IsInfinity(amount))\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(amount));\r\n            }\r\n\r\n            // 中間計算をdoubleで行い、floatの範囲超過を防ぐ。\r\n            double result = (double)baseValue + amount;\r\n\r\n            return SetBaseValue(ClampCalculatedValue(result));\r\n        }\r\n\r\n        /// <summary>\r\n        /// 補正情報を追加する。\r\n        /// </summary>\r\n        /// <param name=\"modifier\">追加する補正情報</param>\r\n        /// <returns>\r\n        /// 追加に成功した場合はtrue。\r\n        /// 同一IDの補正が登録済みの場合はfalse。\r\n        /// </returns>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 補正情報がnullの場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 変更通知中に呼び出された場合に発生する。\r\n        /// </exception>\r\n        public bool TryAddModifier(ParameterModifier modifier)\r\n        {\r\n            EnsureCanModify();\r\n\r\n            if (modifier == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(modifier));\r\n            }\r\n\r\n            if (HasModifier(modifier.Id))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            modifiers.Add(modifier);\r\n\r\n            RecalculateValue();\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたIDの補正が登録されているか判定する。\r\n        /// </summary>\r\n        /// <param name=\"id\">検索対象の補正ID</param>\r\n        /// <returns>登録されている場合はtrue</returns>\r\n        public bool HasModifier(Guid id)\r\n        {\r\n            for (int i = 0; i < modifiers.Count; i++)\r\n            {\r\n                if (modifiers[i].MatchesId(id))\r\n                {\r\n                    return true;\r\n                }\r\n            }\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたIDの補正情報を取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">検索対象の補正ID</param>\r\n        /// <param name=\"modifier\">\r\n        /// 取得した補正情報。失敗時はnull。\r\n        /// </param>\r\n        /// <returns>取得に成功した場合はtrue</returns>\r\n        public bool TryGetModifier(\r\n            Guid id,\r\n            out ParameterModifier modifier)\r\n        {\r\n            for (int i = 0; i < modifiers.Count; i++)\r\n            {\r\n                if (modifiers[i].MatchesId(id))\r\n                {\r\n                    modifier = modifiers[i];\r\n\r\n                    return true;\r\n                }\r\n            }\r\n\r\n            modifier = null;\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたIDの補正を解除する。\r\n        /// </summary>\r\n        /// <param name=\"id\">解除対象の補正ID</param>\r\n        /// <returns>解除に成功した場合はtrue</returns>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 変更通知中に呼び出された場合に発生する。\r\n        /// </exception>\r\n        public bool TryRemoveModifier(Guid id)\r\n        {\r\n            EnsureCanModify();\r\n\r\n            for (int i = 0; i < modifiers.Count; i++)\r\n            {\r\n                if (!modifiers[i].MatchesId(id))\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                modifiers.RemoveAt(i);\r\n\r\n                RecalculateValue();\r\n\r\n                return true;\r\n            }\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された補正元による補正をすべて解除する。\r\n        /// </summary>\r\n        /// <param name=\"source\">解除対象の補正元</param>\r\n        /// <returns>\r\n        /// 解除した補正の件数。\r\n        /// 補正元がnullの場合は0。\r\n        /// </returns>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 変更通知中に呼び出された場合に発生する。\r\n        /// </exception>\r\n        public int RemoveModifiersBySource(object source)\r\n        {\r\n            EnsureCanModify();\r\n\r\n            if (source == null)\r\n            {\r\n                return 0;\r\n            }\r\n\r\n            int removedCount = 0;\r\n\r\n            // 削除によるインデックスの変化を避けるため逆順に走査する。\r\n            for (int i = modifiers.Count - 1; i >= 0; i--)\r\n            {\r\n                if (!modifiers[i].IsFromSource(source))\r\n                {\r\n                    continue;\r\n                }\r\n\r\n                modifiers.RemoveAt(i);\r\n\r\n                removedCount++;\r\n            }\r\n\r\n            // 一括解除後に一度だけ再計算する。\r\n            if (removedCount > 0)\r\n            {\r\n                RecalculateValue();\r\n            }\r\n\r\n            return removedCount;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 登録されているすべての補正を解除する。\r\n        /// </summary>\r\n        /// <returns>解除した補正の件数</returns>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 変更通知中に呼び出された場合に発生する。\r\n        /// </exception>\r\n        public int ClearModifiers()\r\n        {\r\n            EnsureCanModify();\r\n\r\n            int removedCount = modifiers.Count;\r\n\r\n            if (removedCount == 0)\r\n            {\r\n                return 0;\r\n            }\r\n\r\n            modifiers.Clear();\r\n\r\n            RecalculateValue();\r\n\r\n            return removedCount;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 基本値のみを個体生成時の初期値に戻す。\r\n        /// </summary>\r\n        /// <returns>基本値が変化した場合はtrue</returns>\r\n        /// <remarks>\r\n        /// 登録済みの補正は維持する。\r\n        /// </remarks>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 変更通知中に呼び出された場合に発生する。\r\n        /// </exception>\r\n        public bool ResetBaseValue()\r\n        {\r\n            return SetBaseValue(InitialValue);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 基本値と補正情報を個体生成時の状態に戻す。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// 基本値を初期値に戻し、すべての補正を解除する。\r\n        /// 変更通知は最大で一度だけ発生する。\r\n        /// </remarks>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 変更通知中に呼び出された場合に発生する。\r\n        /// </exception>\r\n        public void Reset()\r\n        {\r\n            EnsureCanModify();\r\n\r\n            baseValue = InitialValue;\r\n\r\n            modifiers.Clear();\r\n\r\n            RecalculateValue();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 基本値と補正情報から最終値を再計算する。\r\n        /// </summary>\r\n        private void RecalculateValue()\r\n        {\r\n            // 加算補正の合計値。\r\n            double additiveTotal = 0d;\r\n\r\n            // 乗算補正の累積倍率。\r\n            double multiplierTotal = 1d;\r\n\r\n            // ゼロ倍率の補正が存在するかどうか。\r\n            bool hasZeroMultiplier = false;\r\n\r\n            for (int i = 0; i < modifiers.Count; i++)\r\n            {\r\n                ParameterModifier modifier = modifiers[i];\r\n\r\n                switch (modifier.Type)\r\n                {\r\n                    case ParameterModifierType.Additive:\r\n\r\n                        additiveTotal += modifier.Value;\r\n\r\n                        break;\r\n\r\n                    case ParameterModifierType.Multiplicative:\r\n\r\n                        if (modifier.Value == 0f)\r\n                        {\r\n                            hasZeroMultiplier = true;\r\n                        }\r\n                        else\r\n                        {\r\n                            multiplierTotal *= modifier.Value;\r\n                        }\r\n\r\n                        break;\r\n                }\r\n            }\r\n\r\n            // 加算補正後の値を計算する。\r\n            double additiveValue =\r\n                (double)baseValue + additiveTotal;\r\n\r\n            double result;\r\n\r\n            // 無限大とゼロの乗算によるNaNを回避する。\r\n            if (hasZeroMultiplier || additiveValue == 0d)\r\n            {\r\n                result = 0d;\r\n            }\r\n            else\r\n            {\r\n                result = additiveValue * multiplierTotal;\r\n            }\r\n\r\n            float newValue = ClampCalculatedValue(result);\r\n\r\n            // 最終値が変化していない場合は通知しない。\r\n            if (currentValue == newValue)\r\n            {\r\n                return;\r\n            }\r\n\r\n            float previousValue = currentValue;\r\n\r\n            // 状態を更新してからイベントを通知する。\r\n            currentValue = newValue;\r\n\r\n            NotifyValueChanged(previousValue, currentValue);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 計算結果を定義の有効範囲内に制限する。\r\n        /// </summary>\r\n        /// <param name=\"value\">制限対象の計算結果</param>\r\n        /// <returns>有効範囲内に制限された値</returns>\r\n        private float ClampCalculatedValue(double value)\r\n        {\r\n            if (value <= Definition.MinValue)\r\n            {\r\n                return Definition.MinValue;\r\n            }\r\n\r\n            if (value >= Definition.MaxValue)\r\n            {\r\n                return Definition.MaxValue;\r\n            }\r\n\r\n            return (float)value;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 最終値の変更を購読者へ通知する。\r\n        /// </summary>\r\n        /// <param name=\"previousValue\">変更前の最終値</param>\r\n        /// <param name=\"newValue\">変更後の最終値</param>\r\n        private void NotifyValueChanged(\r\n            float previousValue,\r\n            float newValue)\r\n        {\r\n            isNotifying = true;\r\n\r\n            try\r\n            {\r\n                ValueChanged?.Invoke(\r\n                    previousValue,\r\n                    newValue);\r\n            }\r\n            finally\r\n            {\r\n                // 購読側で例外が発生した場合も通知状態を解除する。\r\n                isNotifying = false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在の状態でパラメーターを変更可能か検証する。\r\n        /// </summary>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 変更通知中の場合に発生する。\r\n        /// </exception>\r\n        private void EnsureCanModify()\r\n        {\r\n            if (isNotifying)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"変更通知中は同一パラメーターを変更できません。\");\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:01.057Z"
+}

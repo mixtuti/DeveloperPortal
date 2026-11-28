@@ -1,0 +1,385 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Actions.IAgentAction",
+    "name": "IAgentAction",
+    "fileName": "IAgentAction.cs",
+    "namespace": "Framework.AI.Actions",
+    "type": "interface",
+    "accessibility": "public",
+    "modifiers": [],
+    "declaration": "public interface IAgentAction<TAction, TContext>",
+    "typeParameters": [
+        {
+            "name": "TAction",
+            "description": "行動識別子の型"
+        },
+        {
+            "name": "TContext",
+            "description": "行動実行情報の型"
+        }
+    ],
+    "summary": "エージェントが実行する行動の共通インターフェース。",
+    "remarks": "内部状態を持つ行動インスタンスは エージェントごとに生成する。",
+    "inheritance": [],
+    "dependencies": [],
+    "members": [
+        {
+            "name": "Id",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "TAction Id",
+            "returnType": "",
+            "valueType": "TAction",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "行動の識別子を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Settings",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "AgentActionSettings Settings",
+            "returnType": "",
+            "valueType": "AgentActionSettings",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "行動実行設定を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CanEnter",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "bool CanEnter(TContext context)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "TContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動実行情報"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在の状況で行動を開始できるか判定する。",
+            "returns": "開始可能な場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Enter",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "void Enter(TContext context)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "TContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動実行情報"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動開始時の初期化処理を実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Tick",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "AgentActionStatus Tick(\r\n            TContext context,\r\n            float deltaTime)",
+            "returnType": "AgentActionStatus",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "TContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動実行情報"
+                },
+                {
+                    "name": "deltaTime",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "前回更新からの経過秒数"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "実行中の行動を更新する。",
+            "returns": "行動の更新結果",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Exit",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "void Exit(\r\n            TContext context,\r\n            AgentActionExitReason reason)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "TContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動実行情報"
+                },
+                {
+                    "name": "reason",
+                    "type": "AgentActionExitReason",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動の終了理由"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動終了時の後処理を実行する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "IAgentAction",
+            "fullName": "IAgentAction",
+            "kind": "interface",
+            "accessibility": "public",
+            "modifiers": [],
+            "summary": "エージェントが実行する行動の共通インターフェース。",
+            "remarks": "内部状態を持つ行動インスタンスは エージェントごとに生成する。",
+            "attributes": [],
+            "declaration": "public interface IAgentAction<TAction, TContext>",
+            "inheritance": [],
+            "typeParameters": [
+                {
+                    "name": "TAction",
+                    "description": "行動識別子の型"
+                },
+                {
+                    "name": "TContext",
+                    "description": "行動実行情報の型"
+                }
+            ],
+            "members": [
+                {
+                    "name": "Id",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "TAction Id",
+                    "returnType": "",
+                    "valueType": "TAction",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "行動の識別子を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Settings",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "AgentActionSettings Settings",
+                    "returnType": "",
+                    "valueType": "AgentActionSettings",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "行動実行設定を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CanEnter",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "bool CanEnter(TContext context)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動実行情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の状況で行動を開始できるか判定する。",
+                    "returns": "開始可能な場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Enter",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "void Enter(TContext context)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動実行情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動開始時の初期化処理を実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Tick",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "AgentActionStatus Tick(\r\n            TContext context,\r\n            float deltaTime)",
+                    "returnType": "AgentActionStatus",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動実行情報"
+                        },
+                        {
+                            "name": "deltaTime",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "前回更新からの経過秒数"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "実行中の行動を更新する。",
+                    "returns": "行動の更新結果",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Exit",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "void Exit(\r\n            TContext context,\r\n            AgentActionExitReason reason)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動実行情報"
+                        },
+                        {
+                            "name": "reason",
+                            "type": "AgentActionExitReason",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動の終了理由"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動終了時の後処理を実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 13
+        }
+    ],
+    "source": "\r\nnamespace Framework.AI.Actions\r\n{\r\n    /// <summary>\r\n    /// エージェントが実行する行動の共通インターフェース。\r\n    /// </summary>\r\n    /// <typeparam name=\"TAction\">行動識別子の型</typeparam>\r\n    /// <typeparam name=\"TContext\">行動実行情報の型</typeparam>\r\n    /// <remarks>\r\n    /// 内部状態を持つ行動インスタンスは\r\n    /// エージェントごとに生成する。\r\n    /// </remarks>\r\n    public interface IAgentAction<TAction, TContext>\r\n    {\r\n        /// <summary>\r\n        /// 行動の識別子を取得する。\r\n        /// </summary>\r\n        TAction Id { get; }\r\n\r\n        /// <summary>\r\n        /// 行動実行設定を取得する。\r\n        /// </summary>\r\n        AgentActionSettings Settings { get; }\r\n\r\n        /// <summary>\r\n        /// 現在の状況で行動を開始できるか判定する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動実行情報</param>\r\n        /// <returns>開始可能な場合はtrue</returns>\r\n        bool CanEnter(TContext context);\r\n\r\n        /// <summary>\r\n        /// 行動開始時の初期化処理を実行する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動実行情報</param>\r\n        void Enter(TContext context);\r\n\r\n        /// <summary>\r\n        /// 実行中の行動を更新する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動実行情報</param>\r\n        /// <param name=\"deltaTime\">前回更新からの経過秒数</param>\r\n        /// <returns>行動の更新結果</returns>\r\n        AgentActionStatus Tick(\r\n            TContext context,\r\n            float deltaTime);\r\n\r\n        /// <summary>\r\n        /// 行動終了時の後処理を実行する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動実行情報</param>\r\n        /// <param name=\"reason\">行動の終了理由</param>\r\n        void Exit(\r\n            TContext context,\r\n            AgentActionExitReason reason);\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.368Z"
+}

@@ -1,0 +1,359 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Core.AgentContext",
+    "name": "AgentContext",
+    "fileName": "AgentContext.cs",
+    "namespace": "Framework.AI.Core",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class AgentContext<TParameter>",
+    "typeParameters": [
+        {
+            "name": "TParameter",
+            "description": "パラメーターを識別する型。"
+        }
+    ],
+    "summary": "エージェントの各機能が共有する基本情報を保持する。",
+    "remarks": "パラメーター集合の所有権は生成元が保持する。 Contextはパラメーター集合を破棄しない。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "Framework.Parameters"
+    ],
+    "members": [
+        {
+            "name": "Id",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public Guid Id",
+            "returnType": "",
+            "valueType": "Guid",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "エージェント固有の識別子を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Name",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public string Name",
+            "returnType": "",
+            "valueType": "string",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "エージェントの表示名を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Parameters",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public ParameterSet<TParameter> Parameters",
+            "returnType": "",
+            "valueType": "ParameterSet<TParameter>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "個体固有のパラメーター集合を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "AgentContext",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public AgentContext(\r\n            string name,\r\n            ParameterSet<TParameter> parameters)\r\n            : this(Guid.NewGuid(), name, parameters)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "エージェントの表示名"
+                },
+                {
+                    "name": "parameters",
+                    "type": "ParameterSet<TParameter>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "個体固有のパラメーター集合"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "新しい識別子を使用して共有情報を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "AgentContext",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public AgentContext(\r\n            Guid id,\r\n            string name,\r\n            ParameterSet<TParameter> parameters)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "エージェント固有の識別子"
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "エージェントの表示名"
+                },
+                {
+                    "name": "parameters",
+                    "type": "ParameterSet<TParameter>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "個体固有のパラメーター集合"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された識別子を使用して共有情報を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentException",
+                    "description": "識別子または表示名が不正な場合に発生する。"
+                },
+                {
+                    "name": "ArgumentNullException",
+                    "description": "パラメーター集合がnullの場合に発生する。"
+                },
+                {
+                    "name": "ObjectDisposedException",
+                    "description": "パラメーター集合が破棄済みの場合に発生する。"
+                }
+            ]
+        }
+    ],
+    "types": [
+        {
+            "name": "AgentContext",
+            "fullName": "AgentContext",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "エージェントの各機能が共有する基本情報を保持する。",
+            "remarks": "パラメーター集合の所有権は生成元が保持する。 Contextはパラメーター集合を破棄しない。",
+            "attributes": [],
+            "declaration": "public sealed class AgentContext<TParameter>",
+            "inheritance": [],
+            "typeParameters": [
+                {
+                    "name": "TParameter",
+                    "description": "パラメーターを識別する型。"
+                }
+            ],
+            "members": [
+                {
+                    "name": "Id",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public Guid Id",
+                    "returnType": "",
+                    "valueType": "Guid",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "エージェント固有の識別子を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Name",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public string Name",
+                    "returnType": "",
+                    "valueType": "string",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "エージェントの表示名を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Parameters",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public ParameterSet<TParameter> Parameters",
+                    "returnType": "",
+                    "valueType": "ParameterSet<TParameter>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "個体固有のパラメーター集合を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "AgentContext",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public AgentContext(\r\n            string name,\r\n            ParameterSet<TParameter> parameters)\r\n            : this(Guid.NewGuid(), name, parameters)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "エージェントの表示名"
+                        },
+                        {
+                            "name": "parameters",
+                            "type": "ParameterSet<TParameter>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "個体固有のパラメーター集合"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "新しい識別子を使用して共有情報を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "AgentContext",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public AgentContext(\r\n            Guid id,\r\n            string name,\r\n            ParameterSet<TParameter> parameters)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "エージェント固有の識別子"
+                        },
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "エージェントの表示名"
+                        },
+                        {
+                            "name": "parameters",
+                            "type": "ParameterSet<TParameter>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "個体固有のパラメーター集合"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された識別子を使用して共有情報を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentException",
+                            "description": "識別子または表示名が不正な場合に発生する。"
+                        },
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "パラメーター集合がnullの場合に発生する。"
+                        },
+                        {
+                            "name": "ObjectDisposedException",
+                            "description": "パラメーター集合が破棄済みの場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 17
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing Framework.Parameters;\r\n\r\nnamespace Framework.AI.Core\r\n{\r\n    /// <summary>\r\n    /// エージェントの各機能が共有する基本情報を保持する。\r\n    /// </summary>\r\n    /// <typeparam name=\"TParameter\">\r\n    /// パラメーターを識別する型。\r\n    /// </typeparam>\r\n    /// <remarks>\r\n    /// パラメーター集合の所有権は生成元が保持する。\r\n    /// Contextはパラメーター集合を破棄しない。\r\n    /// </remarks>\r\n    public sealed class AgentContext<TParameter>\r\n    {\r\n        /// <summary>\r\n        /// エージェント固有の識別子を取得する。\r\n        /// </summary>\r\n        public Guid Id { get; }\r\n\r\n        /// <summary>\r\n        /// エージェントの表示名を取得する。\r\n        /// </summary>\r\n        public string Name { get; }\r\n\r\n        /// <summary>\r\n        /// 個体固有のパラメーター集合を取得する。\r\n        /// </summary>\r\n        public ParameterSet<TParameter> Parameters { get; }\r\n\r\n        /// <summary>\r\n        /// 新しい識別子を使用して共有情報を生成する。\r\n        /// </summary>\r\n        /// <param name=\"name\">エージェントの表示名</param>\r\n        /// <param name=\"parameters\">個体固有のパラメーター集合</param>\r\n        public AgentContext(\r\n            string name,\r\n            ParameterSet<TParameter> parameters)\r\n            : this(Guid.NewGuid(), name, parameters)\r\n        {\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された識別子を使用して共有情報を生成する。\r\n        /// </summary>\r\n        /// <param name=\"id\">エージェント固有の識別子</param>\r\n        /// <param name=\"name\">エージェントの表示名</param>\r\n        /// <param name=\"parameters\">個体固有のパラメーター集合</param>\r\n        /// <exception cref=\"ArgumentException\">\r\n        /// 識別子または表示名が不正な場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// パラメーター集合がnullの場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"ObjectDisposedException\">\r\n        /// パラメーター集合が破棄済みの場合に発生する。\r\n        /// </exception>\r\n        public AgentContext(\r\n            Guid id,\r\n            string name,\r\n            ParameterSet<TParameter> parameters)\r\n        {\r\n            if (id == Guid.Empty)\r\n            {\r\n                throw new ArgumentException(\r\n                    \"空の識別子は使用できません。\",\r\n                    nameof(id));\r\n            }\r\n\r\n            if (string.IsNullOrWhiteSpace(name))\r\n            {\r\n                throw new ArgumentException(\r\n                    \"表示名を指定してください。\",\r\n                    nameof(name));\r\n            }\r\n\r\n            if (parameters == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(parameters));\r\n            }\r\n\r\n            if (parameters.IsDisposed)\r\n            {\r\n                throw new ObjectDisposedException(\r\n                    nameof(parameters));\r\n            }\r\n\r\n            Id = id;\r\n            Name = name;\r\n            Parameters = parameters;\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.099Z"
+}

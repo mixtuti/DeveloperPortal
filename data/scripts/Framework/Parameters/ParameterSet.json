@@ -1,0 +1,1724 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.Parameters.ParameterSet",
+    "name": "ParameterSet",
+    "fileName": "ParameterSet.cs",
+    "namespace": "Framework.Parameters",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class ParameterSet<TParameter> : IDisposable",
+    "typeParameters": [
+        {
+            "name": "TParameter",
+            "description": "パラメーターを識別する型。"
+        }
+    ],
+    "summary": "複数の実行時パラメーターを識別子によって一括管理する。",
+    "remarks": "パラメーターの状態は個体ごとに保持する。 識別子には不変の値型やenumの使用を推奨する。 メインスレッドからの利用を想定する。",
+    "inheritance": [
+        "IDisposable"
+    ],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic",
+        "IDisposable"
+    ],
+    "members": [
+        {
+            "name": "Count",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int Count => parameters.Count",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "登録されているパラメーターの件数を取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasParameters",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasParameters => parameters.Count > 0",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "パラメーターが登録されているかどうかを取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsDisposed",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsDisposed => isDisposed",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "破棄済みかどうかを取得する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Ids",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public IEnumerable<TParameter> Ids => parameters.Keys",
+            "returnType": "",
+            "valueType": "IEnumerable<TParameter>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "登録されているパラメーターの識別子一覧を取得する。",
+            "returns": "",
+            "remarks": "登録内容を反映する列挙可能な一覧を返す。 列挙中の登録および削除は行わないこと。",
+            "exceptions": []
+        },
+        {
+            "name": "ValueChanged",
+            "kind": "event",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public event Action<TParameter, float, float> ValueChanged",
+            "returnType": "",
+            "valueType": "Action<TParameter, float, float>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "パラメーターの最終値が変化した際に発生する。 引数は識別子、変更前の値、変更後の値の順となる。",
+            "returns": "",
+            "remarks": "パラメーターの状態更新後に通知する。 通知中のParameterSetに対する変更操作は禁止する。",
+            "exceptions": []
+        },
+        {
+            "name": "ParameterSet",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public ParameterSet()",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "空のパラメーター集合を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ParameterSet",
+            "kind": "constructor",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public ParameterSet(\r\n            IEnumerable<ParameterDefinition<TParameter>> definitions)",
+            "returnType": "",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "definitions",
+                    "type": "IEnumerable<ParameterDefinition<TParameter>>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "登録する定義の一覧"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "複数の定義を使用してパラメーター集合を生成する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "定義一覧または個別の定義がnullの場合に発生する。"
+                },
+                {
+                    "name": "ArgumentException",
+                    "description": "同一識別子の定義が含まれる場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "TryRegister",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryRegister(\r\n            ParameterDefinition<TParameter> definition)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "definition",
+                    "type": "ParameterDefinition<TParameter>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "登録する定義"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "標準初期値を使用してパラメーターを登録する。",
+            "returns": "登録に成功した場合はtrue。 同一識別子が登録済みの場合はfalse。",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "定義がnullの場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "TryRegister",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryRegister(\r\n            ParameterDefinition<TParameter> definition,\r\n            float initialValue)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "definition",
+                    "type": "ParameterDefinition<TParameter>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "登録する定義"
+                },
+                {
+                    "name": "initialValue",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "個体固有の初期値"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "個体固有の初期値を指定して登録する。",
+            "returns": "登録に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "定義がnullの場合に発生する。"
+                },
+                {
+                    "name": "ArgumentOutOfRangeException",
+                    "description": "初期値が有効範囲外の場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "Contains",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Contains(TParameter id)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "検索対象の識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された識別子が登録されているか判定する。",
+            "returns": "登録されている場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetParameter",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryGetParameter(\r\n            TParameter id,\r\n            out RuntimeParameter<TParameter> parameter)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "検索対象の識別子"
+                },
+                {
+                    "name": "parameter",
+                    "type": "RuntimeParameter<TParameter>",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "取得したパラメーター。失敗時はnull。"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターを取得する。",
+            "returns": "取得に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetParameter",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public RuntimeParameter<TParameter> GetParameter(\r\n            TParameter id)",
+            "returnType": "RuntimeParameter<TParameter>",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象の識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターを取得する。",
+            "returns": "登録されている実行時パラメーター",
+            "remarks": "",
+            "exceptions": [
+                {
+                    "name": "KeyNotFoundException",
+                    "description": "指定された識別子が登録されていない場合に発生する。"
+                }
+            ]
+        },
+        {
+            "name": "GetValue",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float GetValue(TParameter id)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象の識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターの最終値を取得する。",
+            "returns": "補正適用後の最終値",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetValue",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryGetValue(\r\n            TParameter id,\r\n            out float value)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象の識別子"
+                },
+                {
+                    "name": "value",
+                    "type": "float",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "取得した値。失敗時は0"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターの最終値を取得する。",
+            "returns": "取得に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetBaseValue",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float GetBaseValue(TParameter id)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象の識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターの基本値を取得する。",
+            "returns": "補正前の基本値",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetNormalizedValue",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float GetNormalizedValue(TParameter id)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "取得対象の識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターの正規化値を取得する。",
+            "returns": "0から1の正規化値",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "SetBaseValue",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool SetBaseValue(\r\n            TParameter id,\r\n            float value)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "変更対象の識別子"
+                },
+                {
+                    "name": "value",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "新しい基本値"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターの基本値を変更する。",
+            "returns": "基本値が変化した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "AddBaseValue",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool AddBaseValue(\r\n            TParameter id,\r\n            float amount)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "変更対象の識別子"
+                },
+                {
+                    "name": "amount",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "加算量"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターの基本値に加算する。",
+            "returns": "基本値が変化した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryAddModifier",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryAddModifier(\r\n            TParameter id,\r\n            ParameterModifier modifier)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "追加対象の識別子"
+                },
+                {
+                    "name": "modifier",
+                    "type": "ParameterModifier",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "追加する補正情報"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターに補正を追加する。",
+            "returns": "追加に成功した場合はtrue。 未登録または重複補正の場合はfalse。",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryRemoveModifier",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryRemoveModifier(\r\n            TParameter id,\r\n            Guid modifierId)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "解除対象の識別子"
+                },
+                {
+                    "name": "modifierId",
+                    "type": "Guid",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "解除する補正のID"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターの補正を解除する。",
+            "returns": "解除に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "RemoveModifiersBySource",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int RemoveModifiersBySource(object source)",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "source",
+                    "type": "object",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "解除対象の補正元"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された補正元による補正を全体から解除する。",
+            "returns": "解除した補正の合計件数",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ClearModifiers",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int ClearModifiers()",
+            "returnType": "int",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "全パラメーターの補正を解除する。",
+            "returns": "解除した補正の合計件数",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ResetParameter",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void ResetParameter(TParameter id)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "リセット対象の識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターを初期状態に戻す。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ResetAll",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void ResetAll()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "全パラメーターを個体生成時の初期状態に戻す。",
+            "returns": "",
+            "remarks": "基本値を初期値に戻し、すべての補正を解除する。",
+            "exceptions": []
+        },
+        {
+            "name": "TryUnregister",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryUnregister(TParameter id)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TParameter",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "解除対象の識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定されたパラメーターの登録を解除する。",
+            "returns": "登録解除に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Clear",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Clear()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべてのパラメーターの登録を解除する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Dispose",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Dispose()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "登録情報とイベント購読を解放する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "ParameterSet",
+            "fullName": "ParameterSet",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "複数の実行時パラメーターを識別子によって一括管理する。",
+            "remarks": "パラメーターの状態は個体ごとに保持する。 識別子には不変の値型やenumの使用を推奨する。 メインスレッドからの利用を想定する。",
+            "attributes": [],
+            "declaration": "public sealed class ParameterSet<TParameter> : IDisposable",
+            "inheritance": [
+                "IDisposable"
+            ],
+            "typeParameters": [
+                {
+                    "name": "TParameter",
+                    "description": "パラメーターを識別する型。"
+                }
+            ],
+            "members": [
+                {
+                    "name": "parameters",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Dictionary<\r\n            TParameter,\r\n            RuntimeParameter<TParameter>> parameters =\r\n            new Dictionary<\r\n                TParameter,\r\n                RuntimeParameter<TParameter>>()",
+                    "returnType": "",
+                    "valueType": "Dictionary<\r\n            TParameter,\r\n            RuntimeParameter<TParameter>>",
+                    "value": "new Dictionary<\r\n                TParameter,\r\n                RuntimeParameter<TParameter>>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "識別子と実行時パラメーターの対応表。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new Dictionary<\r\n                TParameter,\r\n                RuntimeParameter<TParameter>>()",
+                    "inspector": null
+                },
+                {
+                    "name": "handlers",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Dictionary<\r\n            TParameter,\r\n            Action<float, float>> handlers =\r\n            new Dictionary<\r\n                TParameter,\r\n                Action<float, float>>()",
+                    "returnType": "",
+                    "valueType": "Dictionary<\r\n            TParameter,\r\n            Action<float, float>>",
+                    "value": "new Dictionary<\r\n                TParameter,\r\n                Action<float, float>>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "パラメーターごとの変更通知ハンドラー。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new Dictionary<\r\n                TParameter,\r\n                Action<float, float>>()",
+                    "inspector": null
+                },
+                {
+                    "name": "isNotifying",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isNotifying",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "変更通知中かどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "isBulkOperating",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isBulkOperating",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "一括操作中かどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "isDisposed",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isDisposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "破棄済みかどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Count",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int Count => parameters.Count",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "登録されているパラメーターの件数を取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HasParameters",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool HasParameters => parameters.Count > 0",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "パラメーターが登録されているかどうかを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsDisposed",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsDisposed => isDisposed",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "破棄済みかどうかを取得する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Ids",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public IEnumerable<TParameter> Ids => parameters.Keys",
+                    "returnType": "",
+                    "valueType": "IEnumerable<TParameter>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "登録されているパラメーターの識別子一覧を取得する。",
+                    "returns": "",
+                    "remarks": "登録内容を反映する列挙可能な一覧を返す。 列挙中の登録および削除は行わないこと。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ValueChanged",
+                    "kind": "event",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public event Action<TParameter, float, float> ValueChanged",
+                    "returnType": "",
+                    "valueType": "Action<TParameter, float, float>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "パラメーターの最終値が変化した際に発生する。 引数は識別子、変更前の値、変更後の値の順となる。",
+                    "returns": "",
+                    "remarks": "パラメーターの状態更新後に通知する。 通知中のParameterSetに対する変更操作は禁止する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ParameterSet",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public ParameterSet()",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "空のパラメーター集合を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ParameterSet",
+                    "kind": "constructor",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public ParameterSet(\r\n            IEnumerable<ParameterDefinition<TParameter>> definitions)",
+                    "returnType": "",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "definitions",
+                            "type": "IEnumerable<ParameterDefinition<TParameter>>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "登録する定義の一覧"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "複数の定義を使用してパラメーター集合を生成する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "定義一覧または個別の定義がnullの場合に発生する。"
+                        },
+                        {
+                            "name": "ArgumentException",
+                            "description": "同一識別子の定義が含まれる場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryRegister",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryRegister(\r\n            ParameterDefinition<TParameter> definition)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "definition",
+                            "type": "ParameterDefinition<TParameter>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "登録する定義"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "標準初期値を使用してパラメーターを登録する。",
+                    "returns": "登録に成功した場合はtrue。 同一識別子が登録済みの場合はfalse。",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "定義がnullの場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryRegister",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryRegister(\r\n            ParameterDefinition<TParameter> definition,\r\n            float initialValue)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "definition",
+                            "type": "ParameterDefinition<TParameter>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "登録する定義"
+                        },
+                        {
+                            "name": "initialValue",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "個体固有の初期値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "個体固有の初期値を指定して登録する。",
+                    "returns": "登録に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "定義がnullの場合に発生する。"
+                        },
+                        {
+                            "name": "ArgumentOutOfRangeException",
+                            "description": "初期値が有効範囲外の場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Contains",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool Contains(TParameter id)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検索対象の識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された識別子が登録されているか判定する。",
+                    "returns": "登録されている場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetParameter",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetParameter(\r\n            TParameter id,\r\n            out RuntimeParameter<TParameter> parameter)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "検索対象の識別子"
+                        },
+                        {
+                            "name": "parameter",
+                            "type": "RuntimeParameter<TParameter>",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得したパラメーター。失敗時はnull。"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターを取得する。",
+                    "returns": "取得に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetParameter",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public RuntimeParameter<TParameter> GetParameter(\r\n            TParameter id)",
+                    "returnType": "RuntimeParameter<TParameter>",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得対象の識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターを取得する。",
+                    "returns": "登録されている実行時パラメーター",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "KeyNotFoundException",
+                            "description": "指定された識別子が登録されていない場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetValue",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float GetValue(TParameter id)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得対象の識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターの最終値を取得する。",
+                    "returns": "補正適用後の最終値",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetValue",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetValue(\r\n            TParameter id,\r\n            out float value)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得対象の識別子"
+                        },
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得した値。失敗時は0"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターの最終値を取得する。",
+                    "returns": "取得に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetBaseValue",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float GetBaseValue(TParameter id)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得対象の識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターの基本値を取得する。",
+                    "returns": "補正前の基本値",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetNormalizedValue",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float GetNormalizedValue(TParameter id)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "取得対象の識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターの正規化値を取得する。",
+                    "returns": "0から1の正規化値",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SetBaseValue",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool SetBaseValue(\r\n            TParameter id,\r\n            float value)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更対象の識別子"
+                        },
+                        {
+                            "name": "value",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "新しい基本値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターの基本値を変更する。",
+                    "returns": "基本値が変化した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "AddBaseValue",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool AddBaseValue(\r\n            TParameter id,\r\n            float amount)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更対象の識別子"
+                        },
+                        {
+                            "name": "amount",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "加算量"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターの基本値に加算する。",
+                    "returns": "基本値が変化した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryAddModifier",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryAddModifier(\r\n            TParameter id,\r\n            ParameterModifier modifier)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "追加対象の識別子"
+                        },
+                        {
+                            "name": "modifier",
+                            "type": "ParameterModifier",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "追加する補正情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターに補正を追加する。",
+                    "returns": "追加に成功した場合はtrue。 未登録または重複補正の場合はfalse。",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryRemoveModifier",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryRemoveModifier(\r\n            TParameter id,\r\n            Guid modifierId)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "解除対象の識別子"
+                        },
+                        {
+                            "name": "modifierId",
+                            "type": "Guid",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "解除する補正のID"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターの補正を解除する。",
+                    "returns": "解除に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "RemoveModifiersBySource",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int RemoveModifiersBySource(object source)",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "source",
+                            "type": "object",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "解除対象の補正元"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された補正元による補正を全体から解除する。",
+                    "returns": "解除した補正の合計件数",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ClearModifiers",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int ClearModifiers()",
+                    "returnType": "int",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "全パラメーターの補正を解除する。",
+                    "returns": "解除した補正の合計件数",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ResetParameter",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void ResetParameter(TParameter id)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "リセット対象の識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターを初期状態に戻す。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ResetAll",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void ResetAll()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "全パラメーターを個体生成時の初期状態に戻す。",
+                    "returns": "",
+                    "remarks": "基本値を初期値に戻し、すべての補正を解除する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryUnregister",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryUnregister(TParameter id)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "解除対象の識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定されたパラメーターの登録を解除する。",
+                    "returns": "登録解除に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Clear",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Clear()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべてのパラメーターの登録を解除する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "NotifyValueChanged",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void NotifyValueChanged(\r\n            TParameter id,\r\n            float previousValue,\r\n            float newValue)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TParameter",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更された識別子"
+                        },
+                        {
+                            "name": "previousValue",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更前の値"
+                        },
+                        {
+                            "name": "newValue",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "変更後の値"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "パラメーターの変更を集合の購読者へ通知する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ClearInternal",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void ClearInternal()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "イベント購読を解除し、登録情報を消去する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "EnsureCanModify",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void EnsureCanModify()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の状態で変更可能か検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "変更通知中または一括操作中の場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ThrowIfDisposed",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void ThrowIfDisposed()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "破棄済みではないことを検証する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "ObjectDisposedException",
+                            "description": "破棄済みの場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Dispose",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Dispose()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "登録情報とイベント購読を解放する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 18
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\n\r\nnamespace Framework.Parameters\r\n{\r\n    /// <summary>\r\n    /// 複数の実行時パラメーターを識別子によって一括管理する。\r\n    /// </summary>\r\n    /// <typeparam name=\"TParameter\">\r\n    /// パラメーターを識別する型。\r\n    /// </typeparam>\r\n    /// <remarks>\r\n    /// パラメーターの状態は個体ごとに保持する。\r\n    /// 識別子には不変の値型やenumの使用を推奨する。\r\n    /// メインスレッドからの利用を想定する。\r\n    /// </remarks>\r\n    public sealed class ParameterSet<TParameter> : IDisposable\r\n    {\r\n        /// <summary>\r\n        /// 識別子と実行時パラメーターの対応表。\r\n        /// </summary>\r\n        private readonly Dictionary<\r\n            TParameter,\r\n            RuntimeParameter<TParameter>> parameters =\r\n            new Dictionary<\r\n                TParameter,\r\n                RuntimeParameter<TParameter>>();\r\n\r\n        /// <summary>\r\n        /// パラメーターごとの変更通知ハンドラー。\r\n        /// </summary>\r\n        private readonly Dictionary<\r\n            TParameter,\r\n            Action<float, float>> handlers =\r\n            new Dictionary<\r\n                TParameter,\r\n                Action<float, float>>();\r\n\r\n        /// <summary>\r\n        /// 変更通知中かどうか。\r\n        /// </summary>\r\n        private bool isNotifying;\r\n\r\n        /// <summary>\r\n        /// 一括操作中かどうか。\r\n        /// </summary>\r\n        private bool isBulkOperating;\r\n\r\n        /// <summary>\r\n        /// 破棄済みかどうか。\r\n        /// </summary>\r\n        private bool isDisposed;\r\n\r\n        /// <summary>\r\n        /// 登録されているパラメーターの件数を取得する。\r\n        /// </summary>\r\n        public int Count => parameters.Count;\r\n\r\n        /// <summary>\r\n        /// パラメーターが登録されているかどうかを取得する。\r\n        /// </summary>\r\n        public bool HasParameters => parameters.Count > 0;\r\n\r\n        /// <summary>\r\n        /// 破棄済みかどうかを取得する。\r\n        /// </summary>\r\n        public bool IsDisposed => isDisposed;\r\n\r\n        /// <summary>\r\n        /// 登録されているパラメーターの識別子一覧を取得する。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// 登録内容を反映する列挙可能な一覧を返す。\r\n        /// 列挙中の登録および削除は行わないこと。\r\n        /// </remarks>\r\n        public IEnumerable<TParameter> Ids => parameters.Keys;\r\n\r\n        /// <summary>\r\n        /// パラメーターの最終値が変化した際に発生する。\r\n        /// 引数は識別子、変更前の値、変更後の値の順となる。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// パラメーターの状態更新後に通知する。\r\n        /// 通知中のParameterSetに対する変更操作は禁止する。\r\n        /// </remarks>\r\n        public event Action<TParameter, float, float> ValueChanged;\r\n\r\n        /// <summary>\r\n        /// 空のパラメーター集合を生成する。\r\n        /// </summary>\r\n        public ParameterSet()\r\n        {\r\n        }\r\n\r\n        /// <summary>\r\n        /// 複数の定義を使用してパラメーター集合を生成する。\r\n        /// </summary>\r\n        /// <param name=\"definitions\">登録する定義の一覧</param>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 定義一覧または個別の定義がnullの場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentException\">\r\n        /// 同一識別子の定義が含まれる場合に発生する。\r\n        /// </exception>\r\n        public ParameterSet(\r\n            IEnumerable<ParameterDefinition<TParameter>> definitions)\r\n        {\r\n            if (definitions == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(definitions));\r\n            }\r\n\r\n            try\r\n            {\r\n                foreach (var definition in definitions)\r\n                {\r\n                    if (!TryRegister(definition))\r\n                    {\r\n                        throw new ArgumentException(\r\n                            \"同一識別子の定義が含まれています。\",\r\n                            nameof(definitions));\r\n                    }\r\n                }\r\n            }\r\n            catch\r\n            {\r\n                // 初期化に失敗した場合は登録済み情報を解放する。\r\n                Dispose();\r\n\r\n                throw;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 標準初期値を使用してパラメーターを登録する。\r\n        /// </summary>\r\n        /// <param name=\"definition\">登録する定義</param>\r\n        /// <returns>\r\n        /// 登録に成功した場合はtrue。\r\n        /// 同一識別子が登録済みの場合はfalse。\r\n        /// </returns>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 定義がnullの場合に発生する。\r\n        /// </exception>\r\n        public bool TryRegister(\r\n            ParameterDefinition<TParameter> definition)\r\n        {\r\n            EnsureCanModify();\r\n\r\n            if (definition == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(definition));\r\n            }\r\n\r\n            return TryRegister(\r\n                definition,\r\n                definition.DefaultValue);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 個体固有の初期値を指定して登録する。\r\n        /// </summary>\r\n        /// <param name=\"definition\">登録する定義</param>\r\n        /// <param name=\"initialValue\">個体固有の初期値</param>\r\n        /// <returns>登録に成功した場合はtrue</returns>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// 定義がnullの場合に発生する。\r\n        /// </exception>\r\n        /// <exception cref=\"ArgumentOutOfRangeException\">\r\n        /// 初期値が有効範囲外の場合に発生する。\r\n        /// </exception>\r\n        public bool TryRegister(\r\n            ParameterDefinition<TParameter> definition,\r\n            float initialValue)\r\n        {\r\n            EnsureCanModify();\r\n\r\n            if (definition == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(definition));\r\n            }\r\n\r\n            if (!definition.IsInRange(initialValue))\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(initialValue));\r\n            }\r\n\r\n            TParameter id = definition.Id;\r\n\r\n            if (parameters.ContainsKey(id))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 個体専用の実行時パラメーターを生成する。\r\n            var parameter =\r\n                new RuntimeParameter<TParameter>(\r\n                    definition,\r\n                    initialValue);\r\n\r\n            // 識別子を含む変更通知へ変換する。\r\n            Action<float, float> handler =\r\n                (previous, current) =>\r\n                {\r\n                    NotifyValueChanged(\r\n                        id,\r\n                        previous,\r\n                        current);\r\n                };\r\n\r\n            parameters.Add(id, parameter);\r\n            handlers.Add(id, handler);\r\n\r\n            parameter.ValueChanged += handler;\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された識別子が登録されているか判定する。\r\n        /// </summary>\r\n        /// <param name=\"id\">検索対象の識別子</param>\r\n        /// <returns>登録されている場合はtrue</returns>\r\n        public bool Contains(TParameter id)\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            return parameters.ContainsKey(id);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターを取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">検索対象の識別子</param>\r\n        /// <param name=\"parameter\">\r\n        /// 取得したパラメーター。失敗時はnull。\r\n        /// </param>\r\n        /// <returns>取得に成功した場合はtrue</returns>\r\n        public bool TryGetParameter(\r\n            TParameter id,\r\n            out RuntimeParameter<TParameter> parameter)\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            return parameters.TryGetValue(\r\n                id,\r\n                out parameter);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターを取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">取得対象の識別子</param>\r\n        /// <returns>登録されている実行時パラメーター</returns>\r\n        /// <exception cref=\"KeyNotFoundException\">\r\n        /// 指定された識別子が登録されていない場合に発生する。\r\n        /// </exception>\r\n        public RuntimeParameter<TParameter> GetParameter(\r\n            TParameter id)\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            return parameters[id];\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターの最終値を取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">取得対象の識別子</param>\r\n        /// <returns>補正適用後の最終値</returns>\r\n        public float GetValue(TParameter id)\r\n        {\r\n            return GetParameter(id).Value;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターの最終値を取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">取得対象の識別子</param>\r\n        /// <param name=\"value\">取得した値。失敗時は0</param>\r\n        /// <returns>取得に成功した場合はtrue</returns>\r\n        public bool TryGetValue(\r\n            TParameter id,\r\n            out float value)\r\n        {\r\n            if (TryGetParameter(id, out var parameter))\r\n            {\r\n                value = parameter.Value;\r\n\r\n                return true;\r\n            }\r\n\r\n            value = 0f;\r\n\r\n            return false;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターの基本値を取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">取得対象の識別子</param>\r\n        /// <returns>補正前の基本値</returns>\r\n        public float GetBaseValue(TParameter id)\r\n        {\r\n            return GetParameter(id).BaseValue;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターの正規化値を取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">取得対象の識別子</param>\r\n        /// <returns>0から1の正規化値</returns>\r\n        public float GetNormalizedValue(TParameter id)\r\n        {\r\n            return GetParameter(id).NormalizedValue;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターの基本値を変更する。\r\n        /// </summary>\r\n        /// <param name=\"id\">変更対象の識別子</param>\r\n        /// <param name=\"value\">新しい基本値</param>\r\n        /// <returns>基本値が変化した場合はtrue</returns>\r\n        public bool SetBaseValue(\r\n            TParameter id,\r\n            float value)\r\n        {\r\n            EnsureCanModify();\r\n\r\n            return GetParameter(id).SetBaseValue(value);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターの基本値に加算する。\r\n        /// </summary>\r\n        /// <param name=\"id\">変更対象の識別子</param>\r\n        /// <param name=\"amount\">加算量</param>\r\n        /// <returns>基本値が変化した場合はtrue</returns>\r\n        public bool AddBaseValue(\r\n            TParameter id,\r\n            float amount)\r\n        {\r\n            EnsureCanModify();\r\n\r\n            return GetParameter(id).AddBaseValue(amount);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターに補正を追加する。\r\n        /// </summary>\r\n        /// <param name=\"id\">追加対象の識別子</param>\r\n        /// <param name=\"modifier\">追加する補正情報</param>\r\n        /// <returns>\r\n        /// 追加に成功した場合はtrue。\r\n        /// 未登録または重複補正の場合はfalse。\r\n        /// </returns>\r\n        public bool TryAddModifier(\r\n            TParameter id,\r\n            ParameterModifier modifier)\r\n        {\r\n            EnsureCanModify();\r\n\r\n            if (modifier == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(modifier));\r\n            }\r\n\r\n            if (!TryGetParameter(id, out var parameter))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return parameter.TryAddModifier(modifier);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターの補正を解除する。\r\n        /// </summary>\r\n        /// <param name=\"id\">解除対象の識別子</param>\r\n        /// <param name=\"modifierId\">解除する補正のID</param>\r\n        /// <returns>解除に成功した場合はtrue</returns>\r\n        public bool TryRemoveModifier(\r\n            TParameter id,\r\n            Guid modifierId)\r\n        {\r\n            EnsureCanModify();\r\n\r\n            if (!TryGetParameter(id, out var parameter))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            return parameter.TryRemoveModifier(modifierId);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された補正元による補正を全体から解除する。\r\n        /// </summary>\r\n        /// <param name=\"source\">解除対象の補正元</param>\r\n        /// <returns>解除した補正の合計件数</returns>\r\n        public int RemoveModifiersBySource(object source)\r\n        {\r\n            EnsureCanModify();\r\n\r\n            if (source == null)\r\n            {\r\n                return 0;\r\n            }\r\n\r\n            int removedCount = 0;\r\n\r\n            isBulkOperating = true;\r\n\r\n            try\r\n            {\r\n                // 全パラメーターから対象の補正を解除する。\r\n                foreach (var parameter in parameters.Values)\r\n                {\r\n                    removedCount +=\r\n                        parameter.RemoveModifiersBySource(source);\r\n                }\r\n            }\r\n            finally\r\n            {\r\n                isBulkOperating = false;\r\n            }\r\n\r\n            return removedCount;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 全パラメーターの補正を解除する。\r\n        /// </summary>\r\n        /// <returns>解除した補正の合計件数</returns>\r\n        public int ClearModifiers()\r\n        {\r\n            EnsureCanModify();\r\n\r\n            int removedCount = 0;\r\n\r\n            isBulkOperating = true;\r\n\r\n            try\r\n            {\r\n                foreach (var parameter in parameters.Values)\r\n                {\r\n                    removedCount += parameter.ClearModifiers();\r\n                }\r\n            }\r\n            finally\r\n            {\r\n                isBulkOperating = false;\r\n            }\r\n\r\n            return removedCount;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターを初期状態に戻す。\r\n        /// </summary>\r\n        /// <param name=\"id\">リセット対象の識別子</param>\r\n        public void ResetParameter(TParameter id)\r\n        {\r\n            EnsureCanModify();\r\n\r\n            GetParameter(id).Reset();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 全パラメーターを個体生成時の初期状態に戻す。\r\n        /// </summary>\r\n        /// <remarks>\r\n        /// 基本値を初期値に戻し、すべての補正を解除する。\r\n        /// </remarks>\r\n        public void ResetAll()\r\n        {\r\n            EnsureCanModify();\r\n\r\n            isBulkOperating = true;\r\n\r\n            try\r\n            {\r\n                foreach (var parameter in parameters.Values)\r\n                {\r\n                    parameter.Reset();\r\n                }\r\n            }\r\n            finally\r\n            {\r\n                isBulkOperating = false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定されたパラメーターの登録を解除する。\r\n        /// </summary>\r\n        /// <param name=\"id\">解除対象の識別子</param>\r\n        /// <returns>登録解除に成功した場合はtrue</returns>\r\n        public bool TryUnregister(TParameter id)\r\n        {\r\n            EnsureCanModify();\r\n\r\n            if (!parameters.TryGetValue(id, out var parameter))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 登録解除前に変更イベントの購読を解除する。\r\n            parameter.ValueChanged -= handlers[id];\r\n\r\n            handlers.Remove(id);\r\n            parameters.Remove(id);\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべてのパラメーターの登録を解除する。\r\n        /// </summary>\r\n        public void Clear()\r\n        {\r\n            EnsureCanModify();\r\n\r\n            ClearInternal();\r\n        }\r\n\r\n        /// <summary>\r\n        /// パラメーターの変更を集合の購読者へ通知する。\r\n        /// </summary>\r\n        /// <param name=\"id\">変更された識別子</param>\r\n        /// <param name=\"previousValue\">変更前の値</param>\r\n        /// <param name=\"newValue\">変更後の値</param>\r\n        private void NotifyValueChanged(\r\n            TParameter id,\r\n            float previousValue,\r\n            float newValue)\r\n        {\r\n            // 入れ子の通知が発生しても以前の状態を維持する。\r\n            bool previousState = isNotifying;\r\n\r\n            isNotifying = true;\r\n\r\n            try\r\n            {\r\n                ValueChanged?.Invoke(\r\n                    id,\r\n                    previousValue,\r\n                    newValue);\r\n            }\r\n            finally\r\n            {\r\n                isNotifying = previousState;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// イベント購読を解除し、登録情報を消去する。\r\n        /// </summary>\r\n        private void ClearInternal()\r\n        {\r\n            foreach (var pair in parameters)\r\n            {\r\n                pair.Value.ValueChanged -= handlers[pair.Key];\r\n            }\r\n\r\n            handlers.Clear();\r\n            parameters.Clear();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在の状態で変更可能か検証する。\r\n        /// </summary>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 変更通知中または一括操作中の場合に発生する。\r\n        /// </exception>\r\n        private void EnsureCanModify()\r\n        {\r\n            ThrowIfDisposed();\r\n\r\n            if (isNotifying || isBulkOperating)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"変更通知中または一括操作中は変更できません。\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 破棄済みではないことを検証する。\r\n        /// </summary>\r\n        /// <exception cref=\"ObjectDisposedException\">\r\n        /// 破棄済みの場合に発生する。\r\n        /// </exception>\r\n        private void ThrowIfDisposed()\r\n        {\r\n            if (isDisposed)\r\n            {\r\n                throw new ObjectDisposedException(\r\n                    GetType().Name);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 登録情報とイベント購読を解放する。\r\n        /// </summary>\r\n        public void Dispose()\r\n        {\r\n            if (isDisposed)\r\n            {\r\n                return;\r\n            }\r\n\r\n            EnsureCanModify();\r\n\r\n            ClearInternal();\r\n\r\n            ValueChanged = null;\r\n\r\n            isDisposed = true;\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:01.000Z"
+}

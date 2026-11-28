@@ -1,0 +1,1332 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Actions.AgentActionController",
+    "name": "AgentActionController",
+    "fileName": "AgentActionController.cs",
+    "namespace": "Framework.AI.Actions",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "sealed"
+    ],
+    "declaration": "public sealed class AgentActionController<TAction, TContext>",
+    "typeParameters": [
+        {
+            "name": "TAction",
+            "description": "行動識別子の型"
+        },
+        {
+            "name": "TContext",
+            "description": "行動実行情報の型"
+        }
+    ],
+    "summary": "エージェントの行動実行と状態遷移を管理する。",
+    "remarks": "1つのエージェントにつき1つ生成する。 時間はTickによって進行する。 コールバック中の再入操作は許可しない。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "System.Collections.Generic"
+    ],
+    "members": [
+        {
+            "name": "Count",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public int Count => actions.Count",
+            "returnType": "",
+            "valueType": "int",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "登録されている行動数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasCurrentAction",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasCurrentAction => currentAction != null",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "行動を実行中かどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CurrentAction",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public IAgentAction<TAction, TContext>\r\n            CurrentAction => currentAction",
+            "returnType": "",
+            "valueType": "IAgentAction<TAction, TContext>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在実行中の行動。 行動が存在しない場合はnull。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ActionElapsedTime",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public double ActionElapsedTime => actionElapsedTime",
+            "returnType": "",
+            "valueType": "double",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の行動の経過秒数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TotalElapsedTime",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public double TotalElapsedTime => totalElapsedTime",
+            "returnType": "",
+            "valueType": "double",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "コントローラーの累積経過秒数。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsPaused",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsPaused => isPaused",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "一時停止中かどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "CanInterruptCurrent",
+            "kind": "property",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool CanInterruptCurrent =>\r\n            currentAction == null ||\r\n            (currentAction.Settings.CanInterrupt &&\r\n             actionElapsedTime >=\r\n                currentAction.Settings.MinimumDuration)",
+            "returnType": "",
+            "valueType": "bool",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [
+                "get"
+            ],
+            "summary": "現在の行動を通常中断できるかどうか。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ActionStarted",
+            "kind": "event",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public event Action<TAction> ActionStarted",
+            "returnType": "",
+            "valueType": "Action<TAction>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動が開始されたときに通知する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ActionEnded",
+            "kind": "event",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public event Action<TAction, AgentActionExitReason>\r\n            ActionEnded",
+            "returnType": "",
+            "valueType": "Action<TAction, AgentActionExitReason>",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動が終了したときに通知する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryRegister",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryRegister(\r\n            IAgentAction<TAction, TContext> action)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "action",
+                    "type": "IAgentAction<TAction, TContext>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "登録する行動"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動を登録する。",
+            "returns": "登録に成功した場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "HasAction",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool HasAction(TAction id)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された行動が登録されているか判定する。",
+            "returns": "登録されている場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryUnregister",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryUnregister(TAction id)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された行動を登録解除する。",
+            "returns": "登録解除に成功した場合はtrue",
+            "remarks": "実行中の行動は登録解除できない。",
+            "exceptions": []
+        },
+        {
+            "name": "TryGetCurrentActionId",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryGetCurrentActionId(out TAction id)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TAction",
+                    "modifier": "out",
+                    "defaultValue": null,
+                    "description": "取得した行動識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在の行動識別子を取得する。",
+            "returns": "行動を実行中の場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "GetCooldownRemaining",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public float GetCooldownRemaining(TAction id)",
+            "returnType": "float",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された行動のクールダウン残り秒数を取得する。",
+            "returns": "クールダウン残り秒数",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "IsOnCooldown",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool IsOnCooldown(TAction id)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動識別子"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された行動がクールダウン中か判定する。",
+            "returns": "クールダウン中の場合はtrue",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "TryStartAction",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool TryStartAction(\r\n            TAction id,\r\n            TContext context,\r\n            bool forceInterrupt = false)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "id",
+                    "type": "TAction",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "開始する行動識別子"
+                },
+                {
+                    "name": "context",
+                    "type": "TContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動実行情報"
+                },
+                {
+                    "name": "forceInterrupt",
+                    "type": "bool",
+                    "modifier": "",
+                    "defaultValue": "false",
+                    "description": "現在の行動の中断制限を無視するか。"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "指定された行動を開始または切り替える。",
+            "returns": "要求した行動が実行中になった場合はtrue",
+            "remarks": "同一行動への要求では再初期化を行わない。 強制割り込みでも開始条件とクールダウンは維持する。",
+            "exceptions": []
+        },
+        {
+            "name": "Tick",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Tick(\r\n            TContext context,\r\n            float deltaTime)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "TContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動実行情報"
+                },
+                {
+                    "name": "deltaTime",
+                    "type": "float",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "経過秒数"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "時間と実行中の行動を更新する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Stop",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public bool Stop(TContext context)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "TContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動実行情報"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "現在の行動を外部要求によって停止する。",
+            "returns": "停止した行動が存在する場合はtrue",
+            "remarks": "最低継続時間や一時停止状態に関係なく停止する。",
+            "exceptions": []
+        },
+        {
+            "name": "SetPaused",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void SetPaused(bool paused)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "paused",
+                    "type": "bool",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "一時停止する場合はtrue"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "一時停止状態を変更する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "ClearCooldowns",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void ClearCooldowns()",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "すべてのクールダウンを解除する。",
+            "returns": "",
+            "remarks": "",
+            "exceptions": []
+        },
+        {
+            "name": "Reset",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [],
+            "signature": "public void Reset(TContext context)",
+            "returnType": "void",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "context",
+                    "type": "TContext",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "行動実行情報"
+                }
+            ],
+            "typeParameters": [],
+            "accessors": [],
+            "summary": "行動を停止し、実行状態と時間を初期化する。",
+            "returns": "",
+            "remarks": "登録された行動は維持する。",
+            "exceptions": []
+        }
+    ],
+    "types": [
+        {
+            "name": "AgentActionController",
+            "fullName": "AgentActionController",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "sealed"
+            ],
+            "summary": "エージェントの行動実行と状態遷移を管理する。",
+            "remarks": "1つのエージェントにつき1つ生成する。 時間はTickによって進行する。 コールバック中の再入操作は許可しない。",
+            "attributes": [],
+            "declaration": "public sealed class AgentActionController<TAction, TContext>",
+            "inheritance": [],
+            "typeParameters": [
+                {
+                    "name": "TAction",
+                    "description": "行動識別子の型"
+                },
+                {
+                    "name": "TContext",
+                    "description": "行動実行情報の型"
+                }
+            ],
+            "members": [
+                {
+                    "name": "actions",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Dictionary<\r\n            TAction, IAgentAction<TAction, TContext>> actions =\r\n                new Dictionary<\r\n                    TAction, IAgentAction<TAction, TContext>>()",
+                    "returnType": "",
+                    "valueType": "Dictionary<\r\n            TAction, IAgentAction<TAction, TContext>>",
+                    "value": "new Dictionary<\r\n                    TAction, IAgentAction<TAction, TContext>>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "登録された行動。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new Dictionary<\r\n                    TAction, IAgentAction<TAction, TContext>>()",
+                    "inspector": null
+                },
+                {
+                    "name": "cooldownEndTimes",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "readonly"
+                    ],
+                    "signature": "private readonly Dictionary<TAction, double>\r\n            cooldownEndTimes =\r\n                new Dictionary<TAction, double>()",
+                    "returnType": "",
+                    "valueType": "Dictionary<TAction, double>",
+                    "value": "new Dictionary<TAction, double>()",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "各行動のクールダウン終了時刻。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": "new Dictionary<TAction, double>()",
+                    "inspector": null
+                },
+                {
+                    "name": "currentAction",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private IAgentAction<TAction, TContext> currentAction",
+                    "returnType": "",
+                    "valueType": "IAgentAction<TAction, TContext>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在実行中の行動。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "totalElapsedTime",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private double totalElapsedTime",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "コントローラーの累積経過時間。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "actionElapsedTime",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private double actionElapsedTime",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の行動の経過時間。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "isProcessing",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isProcessing",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動処理またはイベント通知中かどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "isPaused",
+                    "kind": "field",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private bool isPaused",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "一時停止中かどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Count",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public int Count => actions.Count",
+                    "returnType": "",
+                    "valueType": "int",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "登録されている行動数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HasCurrentAction",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool HasCurrentAction => currentAction != null",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "行動を実行中かどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CurrentAction",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public IAgentAction<TAction, TContext>\r\n            CurrentAction => currentAction",
+                    "returnType": "",
+                    "valueType": "IAgentAction<TAction, TContext>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在実行中の行動。 行動が存在しない場合はnull。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ActionElapsedTime",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public double ActionElapsedTime => actionElapsedTime",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の行動の経過秒数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TotalElapsedTime",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public double TotalElapsedTime => totalElapsedTime",
+                    "returnType": "",
+                    "valueType": "double",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "コントローラーの累積経過秒数。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsPaused",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsPaused => isPaused",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "一時停止中かどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "CanInterruptCurrent",
+                    "kind": "property",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool CanInterruptCurrent =>\r\n            currentAction == null ||\r\n            (currentAction.Settings.CanInterrupt &&\r\n             actionElapsedTime >=\r\n                currentAction.Settings.MinimumDuration)",
+                    "returnType": "",
+                    "valueType": "bool",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [
+                        "get"
+                    ],
+                    "summary": "現在の行動を通常中断できるかどうか。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ActionStarted",
+                    "kind": "event",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public event Action<TAction> ActionStarted",
+                    "returnType": "",
+                    "valueType": "Action<TAction>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動が開始されたときに通知する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ActionEnded",
+                    "kind": "event",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public event Action<TAction, AgentActionExitReason>\r\n            ActionEnded",
+                    "returnType": "",
+                    "valueType": "Action<TAction, AgentActionExitReason>",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動が終了したときに通知する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryRegister",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryRegister(\r\n            IAgentAction<TAction, TContext> action)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "type": "IAgentAction<TAction, TContext>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "登録する行動"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動を登録する。",
+                    "returns": "登録に成功した場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HasAction",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool HasAction(TAction id)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された行動が登録されているか判定する。",
+                    "returns": "登録されている場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryUnregister",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryUnregister(TAction id)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された行動を登録解除する。",
+                    "returns": "登録解除に成功した場合はtrue",
+                    "remarks": "実行中の行動は登録解除できない。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryGetCurrentActionId",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryGetCurrentActionId(out TAction id)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TAction",
+                            "modifier": "out",
+                            "defaultValue": null,
+                            "description": "取得した行動識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の行動識別子を取得する。",
+                    "returns": "行動を実行中の場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "GetCooldownRemaining",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public float GetCooldownRemaining(TAction id)",
+                    "returnType": "float",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された行動のクールダウン残り秒数を取得する。",
+                    "returns": "クールダウン残り秒数",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsOnCooldown",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool IsOnCooldown(TAction id)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動識別子"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された行動がクールダウン中か判定する。",
+                    "returns": "クールダウン中の場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "TryStartAction",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool TryStartAction(\r\n            TAction id,\r\n            TContext context,\r\n            bool forceInterrupt = false)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "type": "TAction",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "開始する行動識別子"
+                        },
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動実行情報"
+                        },
+                        {
+                            "name": "forceInterrupt",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": "false",
+                            "description": "現在の行動の中断制限を無視するか。"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "指定された行動を開始または切り替える。",
+                    "returns": "要求した行動が実行中になった場合はtrue",
+                    "remarks": "同一行動への要求では再初期化を行わない。 強制割り込みでも開始条件とクールダウンは維持する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Tick",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Tick(\r\n            TContext context,\r\n            float deltaTime)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動実行情報"
+                        },
+                        {
+                            "name": "deltaTime",
+                            "type": "float",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "経過秒数"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "時間と実行中の行動を更新する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Stop",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public bool Stop(TContext context)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動実行情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の行動を外部要求によって停止する。",
+                    "returns": "停止した行動が存在する場合はtrue",
+                    "remarks": "最低継続時間や一時停止状態に関係なく停止する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "SetPaused",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void SetPaused(bool paused)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "paused",
+                            "type": "bool",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "一時停止する場合はtrue"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "一時停止状態を変更する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "ClearCooldowns",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void ClearCooldowns()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "すべてのクールダウンを解除する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "Reset",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [],
+                    "signature": "public void Reset(TContext context)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動実行情報"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動を停止し、実行状態と時間を初期化する。",
+                    "returns": "",
+                    "remarks": "登録された行動は維持する。",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "EndCurrentAction",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void EndCurrentAction(\r\n            TContext context,\r\n            AgentActionExitReason reason)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動実行情報"
+                        },
+                        {
+                            "name": "reason",
+                            "type": "AgentActionExitReason",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動終了理由"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "現在の行動を終了する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "HandleActionFault",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void HandleActionFault(\r\n            TContext context,\r\n            Exception originalException)",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "type": "TContext",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "行動実行情報"
+                        },
+                        {
+                            "name": "originalException",
+                            "type": "Exception",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "元の例外"
+                        }
+                    ],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動処理中の例外に対する終了処理を実行する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "EnsureNotProcessing",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [],
+                    "signature": "private void EnsureNotProcessing()",
+                    "returnType": "void",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [],
+                    "typeParameters": [],
+                    "accessors": [],
+                    "summary": "行動処理中の再入操作を防止する。",
+                    "returns": "",
+                    "remarks": "",
+                    "exceptions": [
+                        {
+                            "name": "InvalidOperationException",
+                            "description": "行動処理中に変更操作が呼び出された場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 17
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing System.Collections.Generic;\r\n\r\nnamespace Framework.AI.Actions\r\n{\r\n    /// <summary>\r\n    /// エージェントの行動実行と状態遷移を管理する。\r\n    /// </summary>\r\n    /// <typeparam name=\"TAction\">行動識別子の型</typeparam>\r\n    /// <typeparam name=\"TContext\">行動実行情報の型</typeparam>\r\n    /// <remarks>\r\n    /// 1つのエージェントにつき1つ生成する。\r\n    /// 時間はTickによって進行する。\r\n    /// コールバック中の再入操作は許可しない。\r\n    /// </remarks>\r\n    public sealed class AgentActionController<TAction, TContext>\r\n    {\r\n        /// <summary>\r\n        /// 登録された行動。\r\n        /// </summary>\r\n        private readonly Dictionary<\r\n            TAction, IAgentAction<TAction, TContext>> actions =\r\n                new Dictionary<\r\n                    TAction, IAgentAction<TAction, TContext>>();\r\n\r\n        /// <summary>\r\n        /// 各行動のクールダウン終了時刻。\r\n        /// </summary>\r\n        private readonly Dictionary<TAction, double>\r\n            cooldownEndTimes =\r\n                new Dictionary<TAction, double>();\r\n\r\n        /// <summary>\r\n        /// 現在実行中の行動。\r\n        /// </summary>\r\n        private IAgentAction<TAction, TContext> currentAction;\r\n\r\n        /// <summary>\r\n        /// コントローラーの累積経過時間。\r\n        /// </summary>\r\n        private double totalElapsedTime;\r\n\r\n        /// <summary>\r\n        /// 現在の行動の経過時間。\r\n        /// </summary>\r\n        private double actionElapsedTime;\r\n\r\n        /// <summary>\r\n        /// 行動処理またはイベント通知中かどうか。\r\n        /// </summary>\r\n        private bool isProcessing;\r\n\r\n        /// <summary>\r\n        /// 一時停止中かどうか。\r\n        /// </summary>\r\n        private bool isPaused;\r\n\r\n        /// <summary>\r\n        /// 登録されている行動数。\r\n        /// </summary>\r\n        public int Count => actions.Count;\r\n\r\n        /// <summary>\r\n        /// 行動を実行中かどうか。\r\n        /// </summary>\r\n        public bool HasCurrentAction => currentAction != null;\r\n\r\n        /// <summary>\r\n        /// 現在実行中の行動。\r\n        /// 行動が存在しない場合はnull。\r\n        /// </summary>\r\n        public IAgentAction<TAction, TContext>\r\n            CurrentAction => currentAction;\r\n\r\n        /// <summary>\r\n        /// 現在の行動の経過秒数。\r\n        /// </summary>\r\n        public double ActionElapsedTime => actionElapsedTime;\r\n\r\n        /// <summary>\r\n        /// コントローラーの累積経過秒数。\r\n        /// </summary>\r\n        public double TotalElapsedTime => totalElapsedTime;\r\n\r\n        /// <summary>\r\n        /// 一時停止中かどうか。\r\n        /// </summary>\r\n        public bool IsPaused => isPaused;\r\n\r\n        /// <summary>\r\n        /// 現在の行動を通常中断できるかどうか。\r\n        /// </summary>\r\n        public bool CanInterruptCurrent =>\r\n            currentAction == null ||\r\n            (currentAction.Settings.CanInterrupt &&\r\n             actionElapsedTime >=\r\n                currentAction.Settings.MinimumDuration);\r\n\r\n        /// <summary>\r\n        /// 行動が開始されたときに通知する。\r\n        /// </summary>\r\n        public event Action<TAction> ActionStarted;\r\n\r\n        /// <summary>\r\n        /// 行動が終了したときに通知する。\r\n        /// </summary>\r\n        public event Action<TAction, AgentActionExitReason>\r\n            ActionEnded;\r\n\r\n        /// <summary>\r\n        /// 行動を登録する。\r\n        /// </summary>\r\n        /// <param name=\"action\">登録する行動</param>\r\n        /// <returns>登録に成功した場合はtrue</returns>\r\n        public bool TryRegister(\r\n            IAgentAction<TAction, TContext> action)\r\n        {\r\n            EnsureNotProcessing();\r\n\r\n            if (action == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(action));\r\n            }\r\n\r\n            if (action.Id is null || action.Settings == null)\r\n            {\r\n                throw new ArgumentException(\r\n                    \"行動識別子または設定が不正です。\",\r\n                    nameof(action));\r\n            }\r\n\r\n            if (actions.ContainsKey(action.Id))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            actions.Add(action.Id, action);\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された行動が登録されているか判定する。\r\n        /// </summary>\r\n        /// <param name=\"id\">行動識別子</param>\r\n        /// <returns>登録されている場合はtrue</returns>\r\n        public bool HasAction(TAction id)\r\n        {\r\n            return !(id is null) &&\r\n                   actions.ContainsKey(id);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された行動を登録解除する。\r\n        /// </summary>\r\n        /// <param name=\"id\">行動識別子</param>\r\n        /// <returns>登録解除に成功した場合はtrue</returns>\r\n        /// <remarks>\r\n        /// 実行中の行動は登録解除できない。\r\n        /// </remarks>\r\n        public bool TryUnregister(TAction id)\r\n        {\r\n            EnsureNotProcessing();\r\n\r\n            if (id is null)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (currentAction != null &&\r\n                EqualityComparer<TAction>.Default.Equals(\r\n                    currentAction.Id, id))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (!actions.Remove(id))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            cooldownEndTimes.Remove(id);\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在の行動識別子を取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">取得した行動識別子</param>\r\n        /// <returns>行動を実行中の場合はtrue</returns>\r\n        public bool TryGetCurrentActionId(out TAction id)\r\n        {\r\n            if (currentAction == null)\r\n            {\r\n                id = default(TAction);\r\n\r\n                return false;\r\n            }\r\n\r\n            id = currentAction.Id;\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された行動のクールダウン残り秒数を取得する。\r\n        /// </summary>\r\n        /// <param name=\"id\">行動識別子</param>\r\n        /// <returns>クールダウン残り秒数</returns>\r\n        public float GetCooldownRemaining(TAction id)\r\n        {\r\n            if (id is null ||\r\n                !cooldownEndTimes.TryGetValue(\r\n                    id, out double endTime))\r\n            {\r\n                return 0f;\r\n            }\r\n\r\n            return (float)Math.Max(\r\n                0d, endTime - totalElapsedTime);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された行動がクールダウン中か判定する。\r\n        /// </summary>\r\n        /// <param name=\"id\">行動識別子</param>\r\n        /// <returns>クールダウン中の場合はtrue</returns>\r\n        public bool IsOnCooldown(TAction id)\r\n        {\r\n            return GetCooldownRemaining(id) > 0f;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定された行動を開始または切り替える。\r\n        /// </summary>\r\n        /// <param name=\"id\">開始する行動識別子</param>\r\n        /// <param name=\"context\">行動実行情報</param>\r\n        /// <param name=\"forceInterrupt\">\r\n        /// 現在の行動の中断制限を無視するか。\r\n        /// </param>\r\n        /// <returns>要求した行動が実行中になった場合はtrue</returns>\r\n        /// <remarks>\r\n        /// 同一行動への要求では再初期化を行わない。\r\n        /// 強制割り込みでも開始条件とクールダウンは維持する。\r\n        /// </remarks>\r\n        public bool TryStartAction(\r\n            TAction id,\r\n            TContext context,\r\n            bool forceInterrupt = false)\r\n        {\r\n            EnsureNotProcessing();\r\n\r\n            if (isPaused ||\r\n                id is null ||\r\n                !actions.TryGetValue(id, out var nextAction))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            // 同じ行動を再要求しても初期化し直さない。\r\n            if (ReferenceEquals(currentAction, nextAction))\r\n            {\r\n                return true;\r\n            }\r\n\r\n            if (IsOnCooldown(id))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (!forceInterrupt && !CanInterruptCurrent)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            isProcessing = true;\r\n\r\n            try\r\n            {\r\n                // 新しい行動の開始条件を先に確認する。\r\n                if (!nextAction.CanEnter(context))\r\n                {\r\n                    return false;\r\n                }\r\n\r\n                if (currentAction != null)\r\n                {\r\n                    EndCurrentAction(\r\n                        context,\r\n                        AgentActionExitReason.Interrupted);\r\n                }\r\n\r\n                currentAction = nextAction;\r\n                actionElapsedTime = 0d;\r\n\r\n                try\r\n                {\r\n                    currentAction.Enter(context);\r\n                }\r\n                catch (Exception exception)\r\n                {\r\n                    HandleActionFault(context, exception);\r\n\r\n                    throw;\r\n                }\r\n\r\n                ActionStarted?.Invoke(id);\r\n\r\n                return true;\r\n            }\r\n            finally\r\n            {\r\n                isProcessing = false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 時間と実行中の行動を更新する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動実行情報</param>\r\n        /// <param name=\"deltaTime\">経過秒数</param>\r\n        public void Tick(\r\n            TContext context,\r\n            float deltaTime)\r\n        {\r\n            EnsureNotProcessing();\r\n\r\n            if (float.IsNaN(deltaTime) ||\r\n                float.IsInfinity(deltaTime) ||\r\n                deltaTime < 0f)\r\n            {\r\n                throw new ArgumentOutOfRangeException(\r\n                    nameof(deltaTime));\r\n            }\r\n\r\n            if (isPaused || deltaTime == 0f)\r\n            {\r\n                return;\r\n            }\r\n\r\n            // 行動が存在しなくてもクールダウンを進める。\r\n            totalElapsedTime += deltaTime;\r\n\r\n            if (currentAction == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            actionElapsedTime += deltaTime;\r\n\r\n            isProcessing = true;\r\n\r\n            try\r\n            {\r\n                AgentActionStatus status;\r\n\r\n                try\r\n                {\r\n                    status = currentAction.Tick(\r\n                        context, deltaTime);\r\n\r\n                    if (status != AgentActionStatus.Running &&\r\n                        status != AgentActionStatus.Succeeded &&\r\n                        status != AgentActionStatus.Failed)\r\n                    {\r\n                        throw new InvalidOperationException(\r\n                            \"不正な行動更新結果です。\");\r\n                    }\r\n                }\r\n                catch (Exception exception)\r\n                {\r\n                    HandleActionFault(context, exception);\r\n\r\n                    throw;\r\n                }\r\n\r\n                switch (status)\r\n                {\r\n                    case AgentActionStatus.Succeeded:\r\n\r\n                        EndCurrentAction(\r\n                            context,\r\n                            AgentActionExitReason.Succeeded);\r\n\r\n                        break;\r\n\r\n                    case AgentActionStatus.Failed:\r\n\r\n                        EndCurrentAction(\r\n                            context,\r\n                            AgentActionExitReason.Failed);\r\n\r\n                        break;\r\n                }\r\n            }\r\n            finally\r\n            {\r\n                isProcessing = false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在の行動を外部要求によって停止する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動実行情報</param>\r\n        /// <returns>停止した行動が存在する場合はtrue</returns>\r\n        /// <remarks>\r\n        /// 最低継続時間や一時停止状態に関係なく停止する。\r\n        /// </remarks>\r\n        public bool Stop(TContext context)\r\n        {\r\n            EnsureNotProcessing();\r\n\r\n            if (currentAction == null)\r\n            {\r\n                return false;\r\n            }\r\n\r\n            isProcessing = true;\r\n\r\n            try\r\n            {\r\n                EndCurrentAction(\r\n                    context,\r\n                    AgentActionExitReason.Cancelled);\r\n\r\n                return true;\r\n            }\r\n            finally\r\n            {\r\n                isProcessing = false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 一時停止状態を変更する。\r\n        /// </summary>\r\n        /// <param name=\"paused\">一時停止する場合はtrue</param>\r\n        public void SetPaused(bool paused)\r\n        {\r\n            EnsureNotProcessing();\r\n\r\n            isPaused = paused;\r\n        }\r\n\r\n        /// <summary>\r\n        /// すべてのクールダウンを解除する。\r\n        /// </summary>\r\n        public void ClearCooldowns()\r\n        {\r\n            EnsureNotProcessing();\r\n\r\n            cooldownEndTimes.Clear();\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動を停止し、実行状態と時間を初期化する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動実行情報</param>\r\n        /// <remarks>\r\n        /// 登録された行動は維持する。\r\n        /// </remarks>\r\n        public void Reset(TContext context)\r\n        {\r\n            EnsureNotProcessing();\r\n\r\n            try\r\n            {\r\n                Stop(context);\r\n            }\r\n            finally\r\n            {\r\n                cooldownEndTimes.Clear();\r\n\r\n                totalElapsedTime = 0d;\r\n                actionElapsedTime = 0d;\r\n\r\n                isPaused = false;\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 現在の行動を終了する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動実行情報</param>\r\n        /// <param name=\"reason\">行動終了理由</param>\r\n        private void EndCurrentAction(\r\n            TContext context,\r\n            AgentActionExitReason reason)\r\n        {\r\n            var endedAction = currentAction;\r\n\r\n            if (endedAction == null)\r\n            {\r\n                return;\r\n            }\r\n\r\n            // 後処理で例外が発生しても実行状態を残さない。\r\n            currentAction = null;\r\n            actionElapsedTime = 0d;\r\n\r\n            if (endedAction.Settings.Cooldown > 0f)\r\n            {\r\n                cooldownEndTimes[endedAction.Id] =\r\n                    totalElapsedTime +\r\n                    endedAction.Settings.Cooldown;\r\n            }\r\n\r\n            endedAction.Exit(context, reason);\r\n\r\n            ActionEnded?.Invoke(endedAction.Id, reason);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動処理中の例外に対する終了処理を実行する。\r\n        /// </summary>\r\n        /// <param name=\"context\">行動実行情報</param>\r\n        /// <param name=\"originalException\">元の例外</param>\r\n        private void HandleActionFault(\r\n            TContext context,\r\n            Exception originalException)\r\n        {\r\n            try\r\n            {\r\n                EndCurrentAction(\r\n                    context,\r\n                    AgentActionExitReason.Faulted);\r\n            }\r\n            catch (Exception cleanupException)\r\n            {\r\n                // 元の例外と終了処理の例外を両方保持する。\r\n                throw new AggregateException(\r\n                    originalException,\r\n                    cleanupException);\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 行動処理中の再入操作を防止する。\r\n        /// </summary>\r\n        /// <exception cref=\"InvalidOperationException\">\r\n        /// 行動処理中に変更操作が呼び出された場合に発生する。\r\n        /// </exception>\r\n        private void EnsureNotProcessing()\r\n        {\r\n            if (isProcessing)\r\n            {\r\n                throw new InvalidOperationException(\r\n                    \"行動処理中はこの操作を実行できません。\");\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.057Z"
+}

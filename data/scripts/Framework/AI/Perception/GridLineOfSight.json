@@ -1,0 +1,221 @@
+{
+    "parserVersion": 3,
+    "id": "Framework.AI.Perception.GridLineOfSight",
+    "name": "GridLineOfSight",
+    "fileName": "GridLineOfSight.cs",
+    "namespace": "Framework.AI.Perception",
+    "type": "class",
+    "accessibility": "public",
+    "modifiers": [
+        "static"
+    ],
+    "declaration": "public static class GridLineOfSight",
+    "typeParameters": [],
+    "summary": "グリッド上の2点間における視線の遮断を判定する。",
+    "remarks": "セル中心間の直線を対象とする。 セルの角を通過する場合は隣接する両側のセルも検査する。",
+    "inheritance": [],
+    "dependencies": [
+        "System",
+        "Framework.Grid",
+        "UnityEngine"
+    ],
+    "members": [
+        {
+            "name": "HasLineOfSight",
+            "kind": "method",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "signature": "public static bool HasLineOfSight<T>(\r\n            GridMap<T> map,\r\n            Vector2Int origin,\r\n            Vector2Int target,\r\n            Func<Vector2Int, bool> blocksSight)",
+            "returnType": "bool",
+            "valueType": "",
+            "value": "",
+            "parameters": [
+                {
+                    "name": "map",
+                    "type": "GridMap<T>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "判定対象のグリッド"
+                },
+                {
+                    "name": "origin",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "視線の始点。グリッド座標"
+                },
+                {
+                    "name": "target",
+                    "type": "Vector2Int",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "視線の終点。グリッド座標"
+                },
+                {
+                    "name": "blocksSight",
+                    "type": "Func<Vector2Int, bool>",
+                    "modifier": "",
+                    "defaultValue": null,
+                    "description": "指定セルが視線を遮る場合にtrueを返す判定処理。"
+                }
+            ],
+            "typeParameters": [
+                {
+                    "name": "T",
+                    "description": "グリッドのセルデータ型"
+                }
+            ],
+            "accessors": [],
+            "summary": "指定された2点間の視線が通っているか判定する。",
+            "returns": "視線が通っている場合はtrue。 範囲外または遮蔽物がある場合はfalse。",
+            "remarks": "始点セルは遮蔽判定から除外する。 終点セルは遮蔽判定に含める。 判定中にグリッドを変更しないこと。",
+            "exceptions": [
+                {
+                    "name": "ArgumentNullException",
+                    "description": "グリッドまたは判定処理がnullの場合に発生する。"
+                }
+            ]
+        }
+    ],
+    "types": [
+        {
+            "name": "GridLineOfSight",
+            "fullName": "GridLineOfSight",
+            "kind": "class",
+            "accessibility": "public",
+            "modifiers": [
+                "static"
+            ],
+            "summary": "グリッド上の2点間における視線の遮断を判定する。",
+            "remarks": "セル中心間の直線を対象とする。 セルの角を通過する場合は隣接する両側のセルも検査する。",
+            "attributes": [],
+            "declaration": "public static class GridLineOfSight",
+            "inheritance": [],
+            "typeParameters": [],
+            "members": [
+                {
+                    "name": "HasLineOfSight",
+                    "kind": "method",
+                    "accessibility": "public",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "public static bool HasLineOfSight<T>(\r\n            GridMap<T> map,\r\n            Vector2Int origin,\r\n            Vector2Int target,\r\n            Func<Vector2Int, bool> blocksSight)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "map",
+                            "type": "GridMap<T>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "判定対象のグリッド"
+                        },
+                        {
+                            "name": "origin",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "視線の始点。グリッド座標"
+                        },
+                        {
+                            "name": "target",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "視線の終点。グリッド座標"
+                        },
+                        {
+                            "name": "blocksSight",
+                            "type": "Func<Vector2Int, bool>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "指定セルが視線を遮る場合にtrueを返す判定処理。"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "T",
+                            "description": "グリッドのセルデータ型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定された2点間の視線が通っているか判定する。",
+                    "returns": "視線が通っている場合はtrue。 範囲外または遮蔽物がある場合はfalse。",
+                    "remarks": "始点セルは遮蔽判定から除外する。 終点セルは遮蔽判定に含める。 判定中にグリッドを変更しないこと。",
+                    "exceptions": [
+                        {
+                            "name": "ArgumentNullException",
+                            "description": "グリッドまたは判定処理がnullの場合に発生する。"
+                        }
+                    ],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                },
+                {
+                    "name": "IsBlocked",
+                    "kind": "method",
+                    "accessibility": "private",
+                    "modifiers": [
+                        "static"
+                    ],
+                    "signature": "private static bool IsBlocked<T>(\r\n            GridMap<T> map,\r\n            Vector2Int position,\r\n            Func<Vector2Int, bool> blocksSight)",
+                    "returnType": "bool",
+                    "valueType": "",
+                    "value": "",
+                    "parameters": [
+                        {
+                            "name": "map",
+                            "type": "GridMap<T>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "判定対象のグリッド"
+                        },
+                        {
+                            "name": "position",
+                            "type": "Vector2Int",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "判定位置"
+                        },
+                        {
+                            "name": "blocksSight",
+                            "type": "Func<Vector2Int, bool>",
+                            "modifier": "",
+                            "defaultValue": null,
+                            "description": "遮蔽判定処理"
+                        }
+                    ],
+                    "typeParameters": [
+                        {
+                            "name": "T",
+                            "description": "セルデータ型"
+                        }
+                    ],
+                    "accessors": [],
+                    "summary": "指定セルが視線を遮るか判定する。",
+                    "returns": "範囲外または遮蔽物の場合はtrue",
+                    "remarks": "",
+                    "exceptions": [],
+                    "attributes": [],
+                    "initialValue": null,
+                    "inspector": null
+                }
+            ],
+            "nestedTypes": [],
+            "enumValues": [],
+            "line": 15
+        }
+    ],
+    "source": "\r\nusing System;\r\nusing Framework.Grid;\r\nusing UnityEngine;\r\n\r\nnamespace Framework.AI.Perception\r\n{\r\n    /// <summary>\r\n    /// グリッド上の2点間における視線の遮断を判定する。\r\n    /// </summary>\r\n    /// <remarks>\r\n    /// セル中心間の直線を対象とする。\r\n    /// セルの角を通過する場合は隣接する両側のセルも検査する。\r\n    /// </remarks>\r\n    public static class GridLineOfSight\r\n    {\r\n        /// <summary>\r\n        /// 指定された2点間の視線が通っているか判定する。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">グリッドのセルデータ型</typeparam>\r\n        /// <param name=\"map\">判定対象のグリッド</param>\r\n        /// <param name=\"origin\">視線の始点。グリッド座標</param>\r\n        /// <param name=\"target\">視線の終点。グリッド座標</param>\r\n        /// <param name=\"blocksSight\">\r\n        /// 指定セルが視線を遮る場合にtrueを返す判定処理。\r\n        /// </param>\r\n        /// <returns>\r\n        /// 視線が通っている場合はtrue。\r\n        /// 範囲外または遮蔽物がある場合はfalse。\r\n        /// </returns>\r\n        /// <remarks>\r\n        /// 始点セルは遮蔽判定から除外する。\r\n        /// 終点セルは遮蔽判定に含める。\r\n        /// 判定中にグリッドを変更しないこと。\r\n        /// </remarks>\r\n        /// <exception cref=\"ArgumentNullException\">\r\n        /// グリッドまたは判定処理がnullの場合に発生する。\r\n        /// </exception>\r\n        public static bool HasLineOfSight<T>(\r\n            GridMap<T> map,\r\n            Vector2Int origin,\r\n            Vector2Int target,\r\n            Func<Vector2Int, bool> blocksSight)\r\n        {\r\n            if (map == null)\r\n            {\r\n                throw new ArgumentNullException(nameof(map));\r\n            }\r\n\r\n            if (blocksSight == null)\r\n            {\r\n                throw new ArgumentNullException(\r\n                    nameof(blocksSight));\r\n            }\r\n\r\n            if (!map.IsInside(origin) ||\r\n                !map.IsInside(target))\r\n            {\r\n                return false;\r\n            }\r\n\r\n            if (origin == target)\r\n            {\r\n                return true;\r\n            }\r\n\r\n            // 各軸における移動距離。\r\n            int distanceX = Math.Abs(target.x - origin.x);\r\n            int distanceY = Math.Abs(target.y - origin.y);\r\n\r\n            // 各軸における走査方向。\r\n            int stepX = Math.Sign(target.x - origin.x);\r\n            int stepY = Math.Sign(target.y - origin.y);\r\n\r\n            // 現在走査しているセル。\r\n            int x = origin.x;\r\n            int y = origin.y;\r\n\r\n            // 各軸における走査済みの移動量。\r\n            int traversedX = 0;\r\n            int traversedY = 0;\r\n\r\n            while (traversedX < distanceX ||\r\n                   traversedY < distanceY)\r\n            {\r\n                // 次に通過するセル境界を比較する。\r\n                // 浮動小数点による角判定の誤差を避ける。\r\n                long boundaryX =\r\n                    (1L + 2L * traversedX) * distanceY;\r\n\r\n                long boundaryY =\r\n                    (1L + 2L * traversedY) * distanceX;\r\n\r\n                if (boundaryX == boundaryY)\r\n                {\r\n                    // セルの角を通過する場合は、\r\n                    // 両側の隣接セルも遮蔽判定する。\r\n                    var horizontal =\r\n                        new Vector2Int(x + stepX, y);\r\n\r\n                    var vertical =\r\n                        new Vector2Int(x, y + stepY);\r\n\r\n                    if (IsBlocked(\r\n                            map, horizontal, blocksSight) ||\r\n                        IsBlocked(\r\n                            map, vertical, blocksSight))\r\n                    {\r\n                        return false;\r\n                    }\r\n\r\n                    x += stepX;\r\n                    y += stepY;\r\n\r\n                    traversedX++;\r\n                    traversedY++;\r\n                }\r\n                else if (boundaryX < boundaryY)\r\n                {\r\n                    x += stepX;\r\n                    traversedX++;\r\n                }\r\n                else\r\n                {\r\n                    y += stepY;\r\n                    traversedY++;\r\n                }\r\n\r\n                // 移動先のセルによる遮蔽を確認する。\r\n                var position = new Vector2Int(x, y);\r\n\r\n                if (IsBlocked(map, position, blocksSight))\r\n                {\r\n                    return false;\r\n                }\r\n            }\r\n\r\n            return true;\r\n        }\r\n\r\n        /// <summary>\r\n        /// 指定セルが視線を遮るか判定する。\r\n        /// </summary>\r\n        /// <typeparam name=\"T\">セルデータ型</typeparam>\r\n        /// <param name=\"map\">判定対象のグリッド</param>\r\n        /// <param name=\"position\">判定位置</param>\r\n        /// <param name=\"blocksSight\">遮蔽判定処理</param>\r\n        /// <returns>範囲外または遮蔽物の場合はtrue</returns>\r\n        private static bool IsBlocked<T>(\r\n            GridMap<T> map,\r\n            Vector2Int position,\r\n            Func<Vector2Int, bool> blocksSight)\r\n        {\r\n            return !map.IsInside(position) ||\r\n                   blocksSight(position);\r\n        }\r\n    }\r\n}\r\n",
+    "tips": [],
+    "examples": [],
+    "notes": [],
+    "related": [],
+    "tests": [],
+    "generatedAt": "2026-11-28T15:50:00.258Z"
+}
